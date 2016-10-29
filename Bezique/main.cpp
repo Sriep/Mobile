@@ -2,7 +2,7 @@
 #include <QQmlApplicationEngine>
 
 #include "beziquehand.h"
-#include "game.h" 
+#include "gamestate.h"
 #include "player.h"
 #include "card.h"
 #include "gamedata.h"

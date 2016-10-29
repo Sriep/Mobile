@@ -1,7 +1,7 @@
 #include "player.h"
 
-Player::Player(Game& game, QQuickItem *parent)
-    : QQuickItem(parent), game(game), score(0)
+Player::Player(QQuickItem *parent)
+    : QQuickItem(parent), score(0)
 {
 
 }
@@ -48,6 +48,11 @@ void Player::giveCard(int iCard)
 void Player::incScore(int increment)
 {
     score += increment;
+}
+
+Card* Player::playCard(int index)
+{
+    return hand.playCard(index);
 }
 
 int Player::getScore() const

@@ -6,7 +6,9 @@
 class AiPlayer : public Player
 {
 public:
-    AiPlayer(Game& game, QQuickItem *parent = 0);
+    AiPlayer( QQuickItem *parent = 0);
+    virtual bool isControlled() {return false;}
+    virtual ~AiPlayer() {}
 };
 
 #endif // AIPLAYER_H

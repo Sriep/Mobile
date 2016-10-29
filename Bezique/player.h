@@ -6,7 +6,7 @@
 #include <QObject>
 #include "beziqueDeck.h"
 #include "beziquehand.h"
-#include "game.h"
+#include "gamestate.h"
 
 using namespace std;
 
@@ -17,7 +17,7 @@ class Player : public QQuickItem
 public:
     static const int winningThreshold = 1000;
 
-    Player(Game& game, QQuickItem *parent = 0);
+    Player(QQuickItem *parent = 0);
 
     void dealtHand(QList<int> dealtHand);
     virtual Card* playFirstCard();
@@ -29,14 +29,17 @@ public:
     bool handEmpty() const;
     bool won() const;
     void incScore(int increment);
+    Card* playCard(int index);
 
     int getScore() const;
     void setScore(int value);
 
+    virtual bool isControlled() = 0;
+
 private:
     //vector<Card> hand;
     BeziqueHand hand;
-    Game& game;
+    //GameState& game;
     int score;
 };
 

@@ -3,24 +3,24 @@ QT += qml quick
 CONFIG += c++11
 HEADERS += \
     beziqueDeck.h \
-    game.h \
     player.h \
     aiplayer.h \
     controledplayer.h \
     card.h \
     test.h \
     beziquehand.h \
-    gamedata.h
+    gamedata.h \
+    gamestate.h
 SOURCES += main.cpp \
     beziqueDeck.cpp \
-    game.cpp \
     player.cpp \
     aiplayer.cpp \
     controledplayer.cpp \
     card.cpp \
     test.cpp \
     beziquehand.cpp \
-    gamedata.cpp
+    gamedata.cpp \
+    gamestate.cpp
 
 RESOURCES += qml.qrc
 

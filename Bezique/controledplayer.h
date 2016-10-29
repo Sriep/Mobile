@@ -5,7 +5,9 @@
 class ControledPlayer : public Player
 {
 public:
-    ControledPlayer(Game& game, QQuickItem *parent = 0);
+    ControledPlayer( QQuickItem *parent = 0);
+    virtual bool isControlled() {return true;}
+    virtual ~ControledPlayer() {}
 };
 
 #endif // CONTROLEDPLAYER_H

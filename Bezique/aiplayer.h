@@ -6,7 +6,7 @@
 class AiPlayer : public Player
 {
 public:
-    AiPlayer(Game& game);
+    AiPlayer(Game& game, QQuickItem *parent = 0);
 };
 
 #endif // AIPLAYER_H

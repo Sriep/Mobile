@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.0
 Item {
     property alias textField1: textField1
     property alias button1: button1
+    //property alias button2: button2
 
     RowLayout {
         anchors.horizontalCenter: parent.horizontalCenter
@@ -21,4 +22,11 @@ Item {
             text: qsTr("Press Me")
         }
     }
+
+   // Button {
+   //     id: button2
+  //      x: 247
+  //      y: 182
+   //     text: qsTr("Start")
+  //  }
 }

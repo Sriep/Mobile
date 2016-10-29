@@ -3,6 +3,45 @@
         <file>main.qml</file>
         <file>Page1.qml</file>
         <file>Page1Form.ui.qml</file>
-        <file>GameCanvas.qml</file>
+        <file>Page2.qml</file>
+        <file>Page2Form.ui.qml</file>
+        <file>content/gfx/b1fh.bmp</file>
+        <file>content/gfx/b1fv.bmp</file>
+        <file>content/gfx/b2fh.bmp</file>
+        <file>content/gfx/b2fv.bmp</file>
+        <file>content/gfx/back.bmp</file>
+        <file>content/gfx/c01.bmp</file>
+        <file>content/gfx/c07.bmp</file>
+        <file>content/gfx/c08.bmp</file>
+        <file>content/gfx/c09.bmp</file>
+        <file>content/gfx/c10.bmp</file>
+        <file>content/gfx/c11.bmp</file>
+        <file>content/gfx/c12.bmp</file>
+        <file>content/gfx/c13.bmp</file>
+        <file>content/gfx/d01.bmp</file>
+        <file>content/gfx/d07.bmp</file>
+        <file>content/gfx/d08.bmp</file>
+        <file>content/gfx/d09.bmp</file>
+        <file>content/gfx/d10.bmp</file>
+        <file>content/gfx/d11.bmp</file>
+        <file>content/gfx/d12.bmp</file>
+        <file>content/gfx/d13.bmp</file>
+        <file>content/gfx/h01.bmp</file>
+        <file>content/gfx/h07.bmp</file>
+        <file>content/gfx/h08.bmp</file>
+        <file>content/gfx/h09.bmp</file>
+        <file>content/gfx/h10.bmp</file>
+        <file>content/gfx/h11.bmp</file>
+        <file>content/gfx/h12.bmp</file>
+        <file>content/gfx/h13.bmp</file>
+        <file>content/gfx/s01.bmp</file>
+        <file>content/gfx/s07.bmp</file>
+        <file>content/gfx/s08.bmp</file>
+        <file>content/gfx/s09.bmp</file>
+        <file>content/gfx/s10.bmp</file>
+        <file>content/gfx/s11.bmp</file>
+        <file>content/gfx/s12.bmp</file>
+        <file>content/gfx/s13.bmp</file>
+        <file>CardImage.qml</file>
     </qresource>
 </RCC>

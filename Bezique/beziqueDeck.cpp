@@ -20,12 +20,13 @@ void BeziqueDeck::shuffle()
     }
 }
 
-vector<Card> BeziqueDeck::dealHand()
+QList<int> BeziqueDeck::dealHand()
 {
-    vector<Card> hand;
+    QList<int> hand;
     for ( unsigned int i = 0 ; i < beziqueHandSize ; i++ )
     {
-        hand.push_back(Card::intToCard(deck.back()));
+       // hand.push_back(Card::intToCard(deck.back()));
+        hand.push_back(deck.back());
         deck.pop_back();
     }
     return hand;
@@ -33,14 +34,16 @@ vector<Card> BeziqueDeck::dealHand()
 
 
 
-Card BeziqueDeck::peekBottom() const
+int BeziqueDeck::peekBottom() const
 {
-    return Card::intToCard(deck.front());
+    //return Card::intToCard(deck.front());
+    return deck.front();
 }
 
-Card BeziqueDeck::dealTop()
+int BeziqueDeck::dealTop()
 {
-    Card card = Card::intToCard(deck.back());
+   // Card card = Card::intToCard(deck.back());
+    int card = deck.back();
     deck.pop_back();
     return card;
 }
@@ -52,10 +55,10 @@ bool BeziqueDeck::empty() const
 
 void BeziqueDeck::stackDeck()
 {
-    deck.resize(beziqueDeckSize);
+    deck.reserve(beziqueDeckSize);
     for ( unsigned int i = 0 ; i < beziqueDeckSize ; i++ )
     {
-        deck[i] = i;
+        deck.push_back(i);
     }
 }
 

@@ -1,14 +1,28 @@
+#include <QtDebug>
+
 #include "card.h"
 
 
 
-Card::Card(int rank, int suit)
-    : rank(rank), suit(suit)
+void Card::cardPlayed(int index, int x, int y)
+{
+    qDebug("Mouse pressed");
+    //qDebug  << "Mouse pressed index " << index;
+}
+
+Card::Card(QQuickItem *parent)
+    : QQuickItem(parent)
 {
 }
 
-Card::~Card()
+Card::Card(int iCard, QQuickItem *parent)
+    : QQuickItem(parent)
+    , rank(iCard / 8)
+    , suit(iCard % 4)
+    , cardId(iCard)
+    , imageFile(getFilename(rank, suit))
 {
+    emit imageChanged();
 }
 
 bool Card::beats(const Card &c, int trumps)
@@ -18,25 +32,28 @@ bool Card::beats(const Card &c, int trumps)
     return true;
 }
 
-Card::Card(const Card& c)
-    : rank(c.rank), suit(c.suit)
-{}
-
-Card::Card()
-    : rank(0), suit(0)
+int Card::getRank() const
 {
+    return rank;
 }
 
-Card::Card(int iCard)
-    : rank(intToCard(iCard).rank), suit(intToCard(iCard).suit)
+int Card::getSuit() const
 {
+    return suit;
 }
 
-
-Card Card::intToCard(int intCard)
+QString Card::getFilename(int rank, int suit)
 {
-    Card card;
-    card.rank = intCard / 8;
-    card.suit = intCard % 4;
-    return card;
+    return QString("content/gfx/" + suitStr[suit] + rankStr[rank] + ".bmp");
 }
+
+QString Card::getImage() const
+{
+    return imageFile;
+}
+
+void Card::setImage(QString image)
+{
+    imageFile = image;
+}
+

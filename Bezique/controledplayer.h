@@ -5,7 +5,7 @@
 class ControledPlayer : public Player
 {
 public:
-    ControledPlayer(Game& game);
+    ControledPlayer(Game& game, QQuickItem *parent = 0);
 };
 
 #endif // CONTROLEDPLAYER_H

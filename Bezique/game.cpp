@@ -5,20 +5,30 @@
 #include "controledplayer.h"
 #include "aiplayer.h"
 #include "card.h"
+#include "gamedata.h"
 
-Game::Game()
-  //  : player1(new AiPlayer(*this)), player2(new AiPlayer(*this))
+Game::Game(GameData* gameData, QStateMachine *parent)
+    : QStateMachine(parent), gameData(gameData)
 {
     player1.reset( new Player(*this));
     player2.reset( new Player(*this));
     init();
 }
 
+Game::~Game()
+{
+}
+
 void Game::init()
 {
     QState *cutForDeal = new QState();
     QState *dealCards = new QState();
+
+    QState *leadToTrick = new QState();
+    QState *followToTrick = new QState();
+    QState *meld = new QState();
     QState *mainGameTrick = new QState();
+
     QState *endGameTrick = new QState();
     QFinalState *cleanUp = new QFinalState();
 
@@ -65,21 +75,21 @@ void Game::dealCards()
     deck.shuffle();
     player1->dealtHand(deck.dealHand());
     player2->dealtHand(deck.dealHand());
-    faceCard = deck.peekBottom();
-    trumps = faceCard.suit;
+    faceCard = new Card(deck.peekBottom());
+    trumps = faceCard->getSuit();
     emit handsDealt();
 }
 
 void Game::playMainTrick()
 {
-    Card firstCard = activePlayer->playFirstCard();
+    Card* firstCard = activePlayer->playFirstCard();
     switchActivePlayer();
-    Card secondCard = activePlayer->playSecondCard();
+    Card* secondCard = activePlayer->playSecondCard();
 
-    activePlayer = firstCard.beats(secondCard, trumps) ? player1 : player2;
-    if (Card::Ace == firstCard.rank || Card::Ten == firstCard.rank)
+    activePlayer = firstCard->beats(*secondCard, trumps) ? player1 : player2;
+    if (Card::Ace == firstCard->getRank() || Card::Ten == firstCard->getRank())
         activePlayer->incScore(10);
-    if (Card::Ace == secondCard.rank || Card::Ten == secondCard.rank)
+    if (Card::Ace == secondCard->getRank() || Card::Ten == secondCard->getRank())
         activePlayer->incScore(10);
 
     activePlayer->meld();
@@ -95,14 +105,14 @@ void Game::playMainTrick()
 
 void Game::playEndTrick()
 {
-    Card firstCard = activePlayer->playFirstCardEndgame();
+    Card* firstCard = activePlayer->playFirstCardEndgame();
     switchActivePlayer();
-    Card secondCard = activePlayer->playSecondCardEndgame();
+    Card* secondCard = activePlayer->playSecondCardEndgame();
 
-    activePlayer = firstCard.beats(secondCard, trumps) ? player1 : player2;
-    if (Card::Ace == firstCard.rank || Card::Ten == firstCard.rank)
+    activePlayer = firstCard->beats(*secondCard, trumps) ? player1 : player2;
+    if (Card::Ace == firstCard->getRank() || Card::Ten == firstCard->getRank())
         activePlayer->incScore(10);
-    if (Card::Ace == secondCard.rank || Card::Ten == secondCard.rank)
+    if (Card::Ace == secondCard->getRank() || Card::Ten == secondCard->getRank())
         activePlayer->incScore(10);
 
     if (activePlayer->won())
@@ -117,11 +127,6 @@ void Game::playEndTrick()
     }
     else
         emit trickFinished();
-}
-
-void Game::endHand()
-{
-
 }
 
 void Game::endGame()

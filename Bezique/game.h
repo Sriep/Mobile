@@ -3,24 +3,26 @@
 #include <QStateMachine>
 #include <memory>
 
-#include "card.h"
+//#include "card.h"
 #include "beziqueDeck.h"
 
 using namespace std;
 class Player;
+class Card;
+class GameData;
 
 class Game : public QStateMachine
 {
     Q_OBJECT
 public:
-    Game();
+    Game(GameData* gameData, QStateMachine *parent = 0);
+    virtual ~Game();
 
 private slots:
     void cutForDeal();
     void dealCards();
     void playMainTrick();
     void playEndTrick();
-    void endHand();
     void endGame();
 signals:
     void deckCut();
@@ -39,7 +41,8 @@ private:
     std::shared_ptr<Player> player2;
     std::shared_ptr<Player> activePlayer;
     int trumps;
-    Card faceCard;
+    Card* faceCard;
+    GameData* gameData;
 };
 
 

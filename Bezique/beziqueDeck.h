@@ -1,11 +1,9 @@
 #ifndef DECK_H
 #define DECK_H
-#include <vector>
+#include <QList>
 #include "card.h"
 
 using namespace std;
-
-
 
 class BeziqueDeck
 {
@@ -16,13 +14,13 @@ public:
     BeziqueDeck();
 
     void shuffle();
-    vector<Card> dealHand();
-    Card peekBottom() const;
-    Card dealTop();
+    QList<int> dealHand();
+    int peekBottom() const;
+    int dealTop();
     bool empty() const;
 private:
     void stackDeck();
-    vector<int> deck;
+    QList<int> deck;
 };
 
 #endif // DECK_H

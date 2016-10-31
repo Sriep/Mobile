@@ -7,6 +7,7 @@
 #include "beziqueDeck.h"
 #include "beziquehand.h"
 #include "gamestate.h"
+#include "card.h"
 
 using namespace std;
 
@@ -15,7 +16,7 @@ class Player : public QQuickItem
     Q_OBJECT
     Q_PROPERTY(BeziqueHand* hand READ getHand WRITE setHand)
     Q_PROPERTY(bool ai READ isAi WRITE setAi)
-    Q_PROPERTY(bool score READ getScore WRITE setScore NOTIFY scoreChanged)
+    Q_PROPERTY(int score READ getScore WRITE setScore NOTIFY scoreChanged)
 public:
     static const int winningThreshold = 1000;
 
@@ -23,12 +24,12 @@ public:
     //Player();
 
     void dealtHand(QList<int> dealtHand);
-    virtual Card* playFirstCard();
-    virtual Card* playSecondCard();
-    virtual Card* playFirstCardEndgame();
-    virtual Card* playSecondCardEndgame();
+    virtual int playFirstCard();
+    virtual int playSecondCard();
+    virtual int playFirstCardEndgame();
+    virtual int playSecondCardEndgame();
     virtual void meld();
-    void giveCard(int iCard);
+    void giveCard(int iCard, int index = 7);
     bool handEmpty() const;
     bool won() const;
     void incScore(int increment);
@@ -46,12 +47,14 @@ public:
     void setAi(bool value);
 signals:
     void scoreChanged();
+    //void enginPlayedCard(const Card* playedCard);
+    //void enginPlayedCard(int index);
 protected:
     BeziqueHand* hand;
 private:
     void init();
 
-    int score;
+    int score = 0;
     bool ai;
 };
 

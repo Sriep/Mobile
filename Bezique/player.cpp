@@ -28,26 +28,28 @@ bool Player::isAi() const
 
 void Player::dealtHand(QList<int> dealtHand)
 {
-
     hand->resetCards(dealtHand);
 }
 
-Card* Player::playFirstCard()
+int Player::playFirstCard()
 {
-    return hand->playCard(0);
+    hand->playCard(0);
+    return 0;
+    //Card* playedCard = new Card(hand->cards[0]);
+    //return playedCard;
 }
 
-Card* Player::playSecondCard()
-{
-    return playFirstCard();
-}
-
-Card* Player::playFirstCardEndgame()
+int Player::playSecondCard()
 {
     return playFirstCard();
 }
 
-Card *Player::playSecondCardEndgame()
+int Player::playFirstCardEndgame()
+{
+    return playFirstCard();
+}
+
+int Player::playSecondCardEndgame()
 {
     return playFirstCard();
 }
@@ -57,10 +59,9 @@ void Player::meld()
 
 }
 
-void Player::giveCard(int iCard)
+void Player::giveCard(int iCard, int index)
 {
-    //hand.cards.push_back(card);
-    hand->addCard(iCard);
+    hand->addCard(iCard, index);
 }
 
 void Player::incScore(int increment)
@@ -96,7 +97,6 @@ void Player::setHand(BeziqueHand *value)
 bool Player::handEmpty() const
 {
     return hand->isEmpty();
-    //return hand.cards.empty();
 }
 
 bool Player::won() const

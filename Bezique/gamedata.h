@@ -10,14 +10,15 @@
 class GameData : public QQuickItem
 {
     Q_OBJECT
-    Q_PROPERTY(Card* faceCard READ getFaceCard WRITE setFaceCard NOTIFY changedFaceCard)
-    Q_PROPERTY(Card* humansCard READ getHumansCard WRITE setHumansCard NOTIFY changedHumansCard)
-    Q_PROPERTY(Card* aisCard READ getAisCard WRITE setAisCard NOTIFY changedAisCard)
+    Q_PROPERTY(Card* faceCard READ getFaceCard
+               WRITE setFaceCard NOTIFY changedFaceCard)
+    Q_PROPERTY(int humansCardIndex READ getHumansCardIndex
+               WRITE setHumansCardIndex NOTIFY changedHumansCardIndex)
+    Q_PROPERTY(int aisCardIndex READ getAisCardIndex
+               WRITE setAisCardIndex NOTIFY changedAisCardIndex)
 
     Q_PROPERTY(Player* humanPlayer READ getHumanPlayer WRITE setHumanPlayer)
     Q_PROPERTY(Player* aiPlayer READ getAiPlayer WRITE setAiPlayer)
-
-
 public:
     friend class GameState;
     GameData(QQuickItem *parent = 0);
@@ -40,10 +41,10 @@ public:
     Player *getAiPlayer() const;
     void setAiPlayer(Player *value);
 
-    Card *getAisCard() const;
-    void setAisCard(Card *value);
-    Card *getHumansCard() const;
-    void setHumansCard(Card *value);
+    int getAisCardIndex() const;
+    void setAisCardIndex(int value);
+    int getHumansCardIndex() const;
+    void setHumansCardIndex(int value);
 
 signals:
     void deckCut();
@@ -59,8 +60,8 @@ signals:
     void waitingForMeld();
     void melded();
     void changedFaceCard();
-    void changedHumansCard();
-    void changedAisCard();
+    void changedHumansCardIndex();
+    void changedAisCardIndex();
     //void cardsChanged();
 private slots:
     void cutForDeal();
@@ -80,12 +81,11 @@ private:
     Card* faceCard;
     Player* aiPlayer;
     Player* humanPlayer;
-
+    int aisCardIndex;
+    int humansCardIndex;
 
     int startPlayer;
     Player* activePlayer;
-    Card* aisCard;
-    Card* humansCard;
     bool isPlayFirstCard = false;
     int trumps;
     BeziqueDeck deck;

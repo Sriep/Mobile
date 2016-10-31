@@ -12,20 +12,20 @@ class BeziqueHand : public QQuickItem
     Q_OBJECT
     Q_PROPERTY(QQmlListProperty<Card> cards READ getCards)
 public:
-    friend class GameData;
+    friend class Player;
    // BeziqueHand(bool isHidden = true, QQuickItem *parent = 0);
     BeziqueHand(QQuickItem *parent = 0);
     virtual ~BeziqueHand();
 
     void resetCards(QList<int> newHand);
     bool isEmpty() const;
-    void addCard(int cardId);
-    Card *peek(int index);
+    void addCard(int cardId, int index);
+    const Card *peek(int index);
     Card *playCard(int index);
 
-    int getScore() const;
-    void setScore(int value);
-    void incScore(int amount);
+    //int getScore() const;
+    //void setScore(int value);
+    //void incScore(int amount);
     QQmlListProperty<Card> getCards();
     //Q_INVOKABLE void selectCard(int x, int y);
     //setCards(QQmlListProperty<Card> cards);
@@ -34,7 +34,7 @@ public:
     //void setIsHidden(bool value);
 
 signals:
-    void scoreChanged();
+    void enginPlayedCard(int index);
 public slots:
 private:
     static void appendCard(QQmlListProperty<Card> *list, Card *card);

@@ -28,12 +28,12 @@ bool BeziqueHand::isEmpty() const
     return true;
 }
 
-void BeziqueHand::addCard(int cardId)
+void BeziqueHand::addCard(int cardId, int index)
 {
-    cards.last()->setCard(cardId);
+    cards.at(index)->setCard(cardId);
 }
 
-Card *BeziqueHand::peek(int index)
+const Card *BeziqueHand::peek(int index)
 {
     return cards[index];
 }
@@ -41,11 +41,12 @@ Card *BeziqueHand::peek(int index)
 Card* BeziqueHand::playCard(int index)
 {
     Card* playedCard = new Card(cards[index]);
-    cards[index]->setCard(cards.last()->getCardId());
-    cards.last()->setCard(playedCard->getCardId());
+    emit enginPlayedCard(index);
+    //cards[index]->setCard(cards.last()->getCardId());
+    //cards.last()->setCard(playedCard->getCardId());
     return playedCard;
 }
-
+/*
 int BeziqueHand::getScore() const
 {
     return playerScore;
@@ -68,7 +69,7 @@ void BeziqueHand::incScore(int amount)
         emit scoreChanged();
     }
 }
-
+*/
 QQmlListProperty<Card> BeziqueHand::getCards()
 {
     return QQmlListProperty<Card>(this, 0, &BeziqueHand::appendCard, 0, 0, 0);

@@ -27,7 +27,7 @@ public:
     //Card(int iCard, QObject *parent = 0);
     //Card(const Card& card, QObject *parent = 0);
 
-    bool beats(const Card& c, int trumps);
+    bool beats(const Card& c, int trumps) const;
 
     void setCard(int cardId);
     int getCardId() const;

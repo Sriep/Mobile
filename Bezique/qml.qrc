@@ -3,13 +3,11 @@
         <file>main.qml</file>
         <file>Page1.qml</file>
         <file>Page1Form.ui.qml</file>
-        <file>Page2.qml</file>
         <file>Page2Form.ui.qml</file>
         <file>content/gfx/b1fh.bmp</file>
         <file>content/gfx/b1fv.bmp</file>
         <file>content/gfx/b2fh.bmp</file>
         <file>content/gfx/b2fv.bmp</file>
-        <file>content/gfx/back.bmp</file>
         <file>content/gfx/c01.bmp</file>
         <file>content/gfx/c07.bmp</file>
         <file>content/gfx/c08.bmp</file>
@@ -44,5 +42,10 @@
         <file>content/gfx/s13.bmp</file>
         <file>content/gfx/onePixel.png</file>
         <file>CardImage.qml</file>
+        <file>AiCardRow.qml</file>
+        <file>content/gfx/up.png</file>
+        <file>content/gfx/down.png</file>
+        <file>Page2.qml</file>
+        <file>HumanCardRow.qml</file>
     </qresource>
 </RCC>

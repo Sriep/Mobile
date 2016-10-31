@@ -19,11 +19,11 @@ ApplicationWindow {
     //    }
 
         Page2 {
-            id: page2id
-            Label {
-                text: qsTr("Second page")
-                anchors.centerIn: parent
-            }
+            //id: page2id
+            //Label {
+            //    text: qsTr("Second page")
+            //    anchors.centerIn: parent
+            //}
    //     }
 
         /*Image {

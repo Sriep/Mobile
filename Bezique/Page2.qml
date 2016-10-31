@@ -1,4 +1,5 @@
 import QtQuick 2.4
+import QtQml 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import Bezique 1.0
@@ -9,11 +10,21 @@ Page2Form {
         width: 640
         height: 480
         GameData {
-            id: gameData2
+            id: gameData
             faceCard: Card { id: faceCard; }
+            humansCardIndex: -1;
+            onHumansCardIndexChanged: {
+                console.log("cards image",
+                    humanPlayer.data[gameData.humansCardIndex].image);
+            }
+            aisCardIndex: -1
+            property bool waitingForCard: false
             humanPlayer: Player {
+                id: humanPlayer
                 ai: false
                 hand: BeziqueHand {
+                    id: humanHand
+                    property string humanPlayedCardImage: "content/gfx/down.png"
                     cards: [
                         Card { id: card1 },
                         Card { id: card2 },
@@ -23,9 +34,16 @@ Page2Form {
                         Card { id: card6 },
                         Card { id: card7 },
                         Card { id: card8 }
-                    ] //cards
+                    ] //card
+                    onEnginPlayedCard: {
+                        console.log("card played :", index);
+                        console.log("rank of card played :", data[index].rank);
+                        humanHand.humanPlayedCardImage = data[index].image;
+                        console.log("new image :", aiHand.aiPlayedCardImage);
+                        data[index].image =  "content/gfx/onePixel.png"
+                    }
                     /*
-                    Component.onCompleted: {
+                    Component.onPlayedCardIndex: {
                         console.log("Name of first state:", cards[0].image)
                         for (var i = 0; i < cards.length; i++)
                             console.log("state", i, cards[i].image)
@@ -38,7 +56,10 @@ Page2Form {
 
            aiPlayer: Player {
                ai: true
+               score: 0
                hand: BeziqueHand {
+                    id: aiHand
+                    property string aiPlayedCardImage: "content/gfx/up.png"
                     cards: [
                         Card { id: aiCard1 },
                         Card { id: aiCard2 },
@@ -49,55 +70,29 @@ Page2Form {
                         Card { id: aiCard7 },
                         Card { id: aiCard8 }
                     ] //cards
+                    onEnginPlayedCard: {
+                        console.log("card played :", index);
+                        console.log("rank of card played :", data[index].rank);
+                        aiHand.aiPlayedCardImage = data[index].image;
+                        console.log("new image :", aiHand.aiPlayedCardImage);
+                        data[index].image =  "content/gfx/onePixel.png"
+                    }
                 } // aiHand: BeziqueHand
+
            } // aiPlayer: Player
 
+           onWaitingForCard:{
+               waitingForCard = true;
+           }
+           onTrickFinished: {
+               humanHand.humanPlayedCardImage =  "content/gfx/down.png";
+               aiHand.aiPlayedCardImage =  "content/gfx/up.png";
+           }
         } //GameData
 
-        Row {
-            id: playerRow
-            anchors.bottom: parent.bottom
-            Rectangle {
-                id: rect1
-                width: 80; height: 100;
-                Image { source: card1.image }
-            }
-            Rectangle {
-                id: rect2
-                width: 80; height: 100;
-                Image {  source:  card2.image}
-            }
-            Rectangle {
-                id: rect3
-                width: 80; height: 100;
-                Image {  source:  card3.image }
-            }
-            Rectangle {
-                id: rect4
-                width: 80; height: 100;
-                Image { source: card4.image }
-            }
-            Rectangle {
-                id: rect5
-                width: 80; height: 100;
-                Image {  source:  card5.image}
-            }
-            Rectangle {
-                id: rect6
-                width: 80; height: 100;
-                Image {  source:  card6.image }
-            }
-            Rectangle {
-                id: rect7
-                width: 80; height: 100;
-                Image { source: card7.image }
-            }
-            Rectangle {
-                id: rect8
-                width: 80; height: 100;
-                Image {  source:  card8.image}
-            }
-        } //Row
+        HumanCardRow {
+            //property bool wantCard: gameData.waitingForCard
+        }
 
         Row {
             anchors.verticalCenter: parent.verticalCenter;
@@ -110,51 +105,45 @@ Page2Form {
                 width: 80; height: 100;
                 Image { source: faceCard.image }
             }
-
         } //Row
 
         Row {
+            anchors.centerIn: parent;
             Rectangle {
-                id: airect1
                 width: 80; height: 100;
-                Image { source: aiCard1.image }
+                //Image {  source: "content/gfx/up.png" }
+                Image {  source: aiHand.aiPlayedCardImage }
             }
             Rectangle {
-                id: airect2
                 width: 80; height: 100;
-                Image {  source:  aiCard2.image}
-            }
-            Rectangle {
-                id: airect3
-                width: 80; height: 100;
-                Image {  source:  aiCard3.image }
-            }
-            Rectangle {
-                id: airect4
-                width: 80; height: 100;
-                Image { source: aiCard4.image }
-            }
-            Rectangle {
-                id: airect5
-                width: 80; height: 100;
-                Image {  source:  aiCard5.image}
-            }
-            Rectangle {
-                id: airect6
-                width: 80; height: 100;
-                Image {  source:  aiCard6.image }
-            }
-            Rectangle {
-                id: airect7
-                width: 80; height: 100;
-                Image { source: aiCard7.image }
-            }
-            Rectangle {
-                id: airect8
-                width: 80; height: 100;
-                Image {  source:  aiCard8.image}
+                //Image { source: "content/gfx/down.png" }
+                Image {  source: humanHand.humanPlayedCardImage }
             }
         } //Row
+
+        Row {
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.right: parent.rigth
+            Column {
+                spacing: 20
+                //Rectangle{
+                    Text {
+                       horizontalAlignment: Text.AlignRight
+                       text : "computer: " + gameData.aiPlayer.score.toString()
+                    }
+               // }
+              //  Rectangle {
+                    Text {
+                        horizontalAlignment: Text.AlignRight
+                        text : "human: " + gameData.humanPlayer.score.toString()
+                    }
+               // }
+            }
+        }
+
+
+        AiCardRow {
+        }
 
 /*
         Button {
@@ -162,7 +151,6 @@ Page2Form {
             x: 247
             y: 182
             text: qsTr("Start")
-
             onClicked: {
                 //gameData1.startNewGame();
                 swipeView.currentIndex = 1;
@@ -171,5 +159,40 @@ Page2Form {
         } //Button
 */
 
-    }
+    } // Item
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

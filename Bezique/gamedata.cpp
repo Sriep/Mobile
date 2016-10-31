@@ -15,24 +15,24 @@ void GameData::init()
     game.start();
 }
 
-Card *GameData::getHumansCard() const
+int GameData::getHumansCardIndex() const
 {
-    return humansCard;
+    return humansCardIndex;
 }
 
-void GameData::setHumansCard(Card *value)
+void GameData::setHumansCardIndex(int value)
 {
-    humansCard = value;
+    humansCardIndex = value;
 }
 
-Card *GameData::getAisCard() const
+int GameData::getAisCardIndex() const
 {
-    return aisCard;
+    return aisCardIndex;
 }
 
-void GameData::setAisCard(Card *value)
+void GameData::setAisCardIndex(int value)
 {
-    aisCard = value;
+    aisCardIndex = value;
 }
 
 Player *GameData::getAiPlayer() const
@@ -90,24 +90,10 @@ void GameData::startNewGame()
     game.start();
 }
 
-void GameData::cardPlayed(int index)
-{
-  /*  if (isPlayFirstCard)
-    {
-        firstCard = activePlayer->playCard(index);
-        switchActivePlayer();
-        emit leadCardPlayed();
-    }
-    else
-    {
-        secondCard = activePlayer->playCard(index);
-        emit followedToTrick();
-    }*/
-}
-
 void GameData::cutForDeal()
 {
-    activePlayer = rand() % 2 ? aiPlayer : humanPlayer;
+    //activePlayer = rand() % 2 ? aiPlayer : humanPlayer;
+    activePlayer = aiPlayer;
     emit deckCut();
 }
 
@@ -126,7 +112,8 @@ void GameData::leadToTrick()
 {
     if (activePlayer->isAi())
     {
-        aisCard = activePlayer->playFirstCard();
+        //aisCard = activePlayer->playFirstCard();
+        aisCardIndex = activePlayer->playFirstCard();
         switchActivePlayer();
         emit leadCardPlayed();
     }
@@ -141,7 +128,8 @@ void GameData::followToTrick()
 {
     if (activePlayer->isAi())
     {
-        aisCard = activePlayer->playFirstCard();
+        //aisCard = activePlayer->playFirstCard();
+        aisCardIndex = activePlayer->playFirstCard();
         switchActivePlayer();
         emit followedToTrick();
     }
@@ -152,13 +140,41 @@ void GameData::followToTrick()
     }
 }
 
+void GameData::cardPlayed(int index)
+{
+    if (isPlayFirstCard)
+    {
+        //firstCard = activePlayer->playCard(index);
+        activePlayer->playCard(index);
+        switchActivePlayer();
+        emit leadCardPlayed();
+    }
+    else
+    {
+        //secondCard = activePlayer->playCard(index);
+        activePlayer->playCard(index);
+        emit followedToTrick();
+    }
+}
+//Player* aiPlayer;
+//Player* humanPlayer;
+//int aisCardIndex;
+//int humansCardIndex;
 void GameData::meld()
 {
     //activePlayer = firstCard->beats(*secondCard, trumps) ? aiPlayer : humanPlayer;
-    //if (Card::Ace == firstCard->getRank() || Card::Ten == firstCard->getRank())
-   //     activePlayer->incScore(10);
-   // if (Card::Ace == secondCard->getRank() || Card::Ten == secondCard->getRank())
-   //     activePlayer->incScore(10);
+    const Card* playerCard = humanPlayer->getHand()->peek(humansCardIndex);
+    const Card* aiCard = aiPlayer->getHand()->peek(aisCardIndex);
+    if (activePlayer == aiPlayer )
+        activePlayer = playerCard->beats(*aiCard, trumps) ? humanPlayer : aiPlayer;
+    else
+        activePlayer = aiCard->beats(*playerCard, trumps) ? aiPlayer : humanPlayer;
+
+    if (Card::Ace == playerCard->getRank() || Card::Ten == playerCard->getRank())
+        activePlayer->incScore(10);
+    if (Card::Ace == aiCard->getRank() || Card::Ten == aiCard->getRank())
+        activePlayer->incScore(10);
+    emit trickFinished();
     if (activePlayer->isAi())
     {
         activePlayer->meld();
@@ -167,8 +183,8 @@ void GameData::meld()
     {
         emit waitingForMeld();
     }
-    aiPlayer->giveCard(deck.dealTop());
-    humanPlayer->giveCard(deck.dealTop());
+    aiPlayer->giveCard(deck.dealTop(), aisCardIndex);
+    humanPlayer->giveCard(deck.dealTop(), humansCardIndex);
     if (activePlayer->won())
         emit gameOver();
     else if (deck.empty())
@@ -194,15 +210,15 @@ void GameData::switchActivePlayer()
 
 void GameData::playEndTrick()
 {
-    Card* firstCard = activePlayer->playFirstCardEndgame();
-    switchActivePlayer();
-    Card* secondCard = activePlayer->playSecondCardEndgame();
+    //Card* firstCard = activePlayer->playFirstCardEndgame();
+   // switchActivePlayer();
+   // Card* secondCard = activePlayer->playSecondCardEndgame();
 
-    activePlayer = firstCard->beats(*secondCard, trumps) ? aiPlayer : humanPlayer;
-    if (Card::Ace == firstCard->getRank() || Card::Ten == firstCard->getRank())
-        activePlayer->incScore(10);
-    if (Card::Ace == secondCard->getRank() || Card::Ten == secondCard->getRank())
-        activePlayer->incScore(10);
+    //activePlayer = firstCard->beats(*secondCard, trumps) ? aiPlayer : humanPlayer;
+    //if (Card::Ace == firstCard->getRank() || Card::Ten == firstCard->getRank())
+    //    activePlayer->incScore(10);
+    //if (Card::Ace == secondCard->getRank() || Card::Ten == secondCard->getRank())
+    //    activePlayer->incScore(10);
 
     if (activePlayer->won())
         emit gameOver();

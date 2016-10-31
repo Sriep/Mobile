@@ -10,10 +10,12 @@
 class BeziqueHand : public QQuickItem
 {
     Q_OBJECT
-    Q_PROPERTY(int score READ getScore WRITE setScore NOTIFY scoreChanged)
     Q_PROPERTY(QQmlListProperty<Card> cards READ getCards)
 public:
+    friend class GameData;
+   // BeziqueHand(bool isHidden = true, QQuickItem *parent = 0);
     BeziqueHand(QQuickItem *parent = 0);
+    virtual ~BeziqueHand();
 
     void resetCards(QList<int> newHand);
     bool isEmpty() const;
@@ -25,17 +27,19 @@ public:
     void setScore(int value);
     void incScore(int amount);
     QQmlListProperty<Card> getCards();
-    Q_INVOKABLE void selectCard(int x, int y);
-
+    //Q_INVOKABLE void selectCard(int x, int y);
     //setCards(QQmlListProperty<Card> cards);
 
-    virtual ~BeziqueHand();
+    //bool getIsHidden() const;
+    //void setIsHidden(bool value);
+
 signals:
     void scoreChanged();
 public slots:
 private:
     static void appendCard(QQmlListProperty<Card> *list, Card *card);
     QList<Card*> cards;
+    //bool isHidden = true;
     int playerScore;
 };
 

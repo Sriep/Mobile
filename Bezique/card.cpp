@@ -1,8 +1,5 @@
 #include <QtDebug>
-
 #include "card.h"
-
-
 
 void Card::cardPlayed(int index, int x, int y)
 {
@@ -22,7 +19,15 @@ Card::Card(int iCard, QQuickItem *parent)
     , cardId(iCard)
     , imageFile(getFilename(rank, suit))
 {
-    emit imageChanged();
+}
+
+Card::Card(const Card &card, QQuickItem *parent)
+    : QQuickItem(parent)
+    , rank(card.rank)
+    , suit(card.suit)
+    , cardId(card.cardId)
+    , imageFile(card.imageFile)
+{
 }
 
 bool Card::beats(const Card &c, int trumps)
@@ -30,6 +35,29 @@ bool Card::beats(const Card &c, int trumps)
     if ( suit == c.suit ) return rank > c.rank;
     if ( c.suit == trumps ) return false;
     return true;
+}
+
+void Card::setCard(int cardId)
+{
+    rank = cardId / 8;
+    suit  = cardId % 4;
+    cardId = cardId;
+    imageFile = getFilename(rank, suit);
+    emit cardChanged();
+}
+
+void Card::clearCard()
+{
+    rank = -1;
+    suit  = -1;
+    cardId = -1;
+    imageFile = emptyBitmap;
+    emit cardChanged();
+}
+
+bool Card::isCleard()
+{
+    return emptyBitmap == imageFile;
 }
 
 int Card::getRank() const
@@ -44,7 +72,29 @@ int Card::getSuit() const
 
 QString Card::getFilename(int rank, int suit)
 {
-    return QString("content/gfx/" + suitStr[suit] + rankStr[rank] + ".bmp");
+    if (Rank::NumRanks > rank && Suit::NumSuits > suit
+          && 0 <= rank && 0 <= suit  )
+        return QString("content/gfx/" + suitStr[suit] + rankStr[rank] + ".bmp");
+    else
+    {
+        qWarning("rank or suit out of range in Card::getFilename");
+        return emptyBitmap;
+    }
+}
+
+void Card::setSuit(int value)
+{
+    suit = value;
+}
+
+void Card::setRank(int value)
+{
+    rank = value;
+}
+
+int Card::getCardId() const
+{
+    return cardId;
 }
 
 QString Card::getImage() const
@@ -54,6 +104,38 @@ QString Card::getImage() const
 
 void Card::setImage(QString image)
 {
-    imageFile = image;
+    if (imageFile != image)
+    {
+         imageFile = image;
+         emit cardChanged();
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -10,16 +10,13 @@ ApplicationWindow {
     height: 480
     title: qsTr("Hello World")
 
-    GameData {
-        id: gameData1
-    }
-    SwipeView {
-        id: swipeView
-        anchors.fill: parent
-        currentIndex: 0
+   // SwipeView {
+     //   id: swipeView
+   //     anchors.fill: parent
+   //     currentIndex: 0
 
-        Page1 {
-        }
+     //   Page1 {
+    //    }
 
         Page2 {
             id: page2id
@@ -27,7 +24,7 @@ ApplicationWindow {
                 text: qsTr("Second page")
                 anchors.centerIn: parent
             }
-        }
+   //     }
 
         /*Image {
             source: "content/gfx/button-play.png"

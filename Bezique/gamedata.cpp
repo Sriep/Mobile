@@ -1,21 +1,85 @@
 #include "gamedata.h"
 #include "gamestate.h"
 #include "aiplayer.h"
-
+#include "controledplayer.h"
 GameData::GameData(QQuickItem *parent)
     : QQuickItem(parent)
     , game(this)
 
 {
-    player1 = new AiPlayer();
-    player2 = new AiPlayer();
+    init();
+}
+
+void GameData::init()
+{
+    game.start();
+}
+
+Card *GameData::getHumansCard() const
+{
+    return humansCard;
+}
+
+void GameData::setHumansCard(Card *value)
+{
+    humansCard = value;
+}
+
+Card *GameData::getAisCard() const
+{
+    return aisCard;
+}
+
+void GameData::setAisCard(Card *value)
+{
+    aisCard = value;
+}
+
+Player *GameData::getAiPlayer() const
+{
+    return aiPlayer;
+}
+
+void GameData::setAiPlayer(Player *value)
+{
+    aiPlayer = value;
+}
+
+Player *GameData::getHumanPlayer() const
+{
+    return humanPlayer;
+}
+
+void GameData::setHumanPlayer(Player *value)
+{
+    humanPlayer = value;
 }
 
 Card *GameData::getFaceCard() const
 {
     return faceCard;
 }
+/*
+BeziqueHand *GameData::playerHand() const
+{
+    return humanPlayer->getHand();
+}
 
+BeziqueHand *GameData::aiHand() const
+{
+    return aiPlayer->getHand();
+}
+
+void GameData::setPlayerHand(BeziqueHand *hand)
+{
+    humanPlayer->setHand(hand);
+}
+
+void GameData::setAiHand(BeziqueHand *hand)
+{
+    aiPlayer->setHand(hand);
+}
+*/
 void GameData::setFaceCard(Card *value)
 {
     faceCard = value;
@@ -28,7 +92,7 @@ void GameData::startNewGame()
 
 void GameData::cardPlayed(int index)
 {
-    if (isPlayFirstCard)
+  /*  if (isPlayFirstCard)
     {
         firstCard = activePlayer->playCard(index);
         switchActivePlayer();
@@ -38,72 +102,73 @@ void GameData::cardPlayed(int index)
     {
         secondCard = activePlayer->playCard(index);
         emit followedToTrick();
-    }
+    }*/
 }
 
 void GameData::cutForDeal()
 {
-    activePlayer = rand() % 2 ? player1 : player2;
+    activePlayer = rand() % 2 ? aiPlayer : humanPlayer;
     emit deckCut();
 }
 
 void GameData::dealCards()
 {
     deck.shuffle();
-    player1->dealtHand(deck.dealHand());
-    player2->dealtHand(deck.dealHand());
-    faceCard = new Card(deck.peekBottom());
+    aiPlayer->dealtHand(deck.dealHand());
+    humanPlayer->dealtHand(deck.dealHand());
+    faceCard->setCard(deck.peekBottom());
+    emit changedFaceCard();
     trumps = faceCard->getSuit();
     emit handsDealt();
 }
 
 void GameData::leadToTrick()
 {
-    if (activePlayer->isControlled())
+    if (activePlayer->isAi())
     {
-        isPlayFirstCard = true;
-        emit waitingForCard();
+        aisCard = activePlayer->playFirstCard();
+        switchActivePlayer();
+        emit leadCardPlayed();
     }
     else
     {
-        firstCard = activePlayer->playFirstCard();
-        switchActivePlayer();
-        emit leadCardPlayed();
+        isPlayFirstCard = true;
+        emit waitingForCard();
     }
 }
 
 void GameData::followToTrick()
 {
-    if (activePlayer->isControlled())
+    if (activePlayer->isAi())
+    {
+        aisCard = activePlayer->playFirstCard();
+        switchActivePlayer();
+        emit followedToTrick();
+    }
+   else
     {
         isPlayFirstCard = false;
         emit waitingForCard();
-    }
-    else
-    {
-        secondCard = activePlayer->playFirstCard();
-        switchActivePlayer();
-        emit followedToTrick();
     }
 }
 
 void GameData::meld()
 {
-    activePlayer = firstCard->beats(*secondCard, trumps) ? player1 : player2;
-    if (Card::Ace == firstCard->getRank() || Card::Ten == firstCard->getRank())
-        activePlayer->incScore(10);
-    if (Card::Ace == secondCard->getRank() || Card::Ten == secondCard->getRank())
-        activePlayer->incScore(10);
-    if (activePlayer->isControlled())
-    {
-        emit waitingForMeld();
-    }
-    else
+    //activePlayer = firstCard->beats(*secondCard, trumps) ? aiPlayer : humanPlayer;
+    //if (Card::Ace == firstCard->getRank() || Card::Ten == firstCard->getRank())
+   //     activePlayer->incScore(10);
+   // if (Card::Ace == secondCard->getRank() || Card::Ten == secondCard->getRank())
+   //     activePlayer->incScore(10);
+    if (activePlayer->isAi())
     {
         activePlayer->meld();
     }
-    player1->giveCard(deck.dealTop());
-    player2->giveCard(deck.dealTop());
+    else
+    {
+        emit waitingForMeld();
+    }
+    aiPlayer->giveCard(deck.dealTop());
+    humanPlayer->giveCard(deck.dealTop());
     if (activePlayer->won())
         emit gameOver();
     else if (deck.empty())
@@ -111,10 +176,20 @@ void GameData::meld()
     else
         emit melded();
 }
+/*
+void GameData::appendCard(QQmlListProperty<Card> *list, Card *card)
+{
+    return humanPlayer->getHand()->appendCard(list, card);
+}
 
+QQmlListProperty<Card> GameData::getCards()
+{
+    return humanPlayer->getHand()->getCards();
+}
+*/
 void GameData::switchActivePlayer()
 {
-    activePlayer = activePlayer == player1 ? player2 : player1;
+    activePlayer = activePlayer == aiPlayer ? humanPlayer : aiPlayer;
 }
 
 void GameData::playEndTrick()
@@ -123,7 +198,7 @@ void GameData::playEndTrick()
     switchActivePlayer();
     Card* secondCard = activePlayer->playSecondCardEndgame();
 
-    activePlayer = firstCard->beats(*secondCard, trumps) ? player1 : player2;
+    activePlayer = firstCard->beats(*secondCard, trumps) ? aiPlayer : humanPlayer;
     if (Card::Ace == firstCard->getRank() || Card::Ten == firstCard->getRank())
         activePlayer->incScore(10);
     if (Card::Ace == secondCard->getRank() || Card::Ten == secondCard->getRank())
@@ -131,7 +206,7 @@ void GameData::playEndTrick()
 
     if (activePlayer->won())
         emit gameOver();
-    if (player1->handEmpty())
+    if (aiPlayer->handEmpty())
     {
         activePlayer->incScore(10);
         if (activePlayer->won())

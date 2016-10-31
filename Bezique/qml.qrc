@@ -42,6 +42,7 @@
         <file>content/gfx/s11.bmp</file>
         <file>content/gfx/s12.bmp</file>
         <file>content/gfx/s13.bmp</file>
+        <file>content/gfx/onePixel.png</file>
         <file>CardImage.qml</file>
     </qresource>
 </RCC>

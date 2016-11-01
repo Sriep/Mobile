@@ -6,9 +6,15 @@ import Bezique 1.0
 
 Page2Form {
     Item {
+        id: root
         visible: true
         width: 640
         height: 480
+        property int cardWidth: 46
+        property int cardHeight: 66
+        property string emptyImage: "content/gfx/onePixel.png"
+        property string backImage: "content/gfx/tinydeck/back111.gif"
+
         GameData {
             id: gameData
             faceCard: Card { id: faceCard; }
@@ -85,11 +91,14 @@ Page2Form {
             anchors.verticalCenter: parent.verticalCenter;
             anchors.left: parent.left;
             Rectangle {
-                width: 80; height: 100;
-                Image {  source: "content/gfx/b1fv.bmp" }
+                //width: 80; height: 100;
+                width: root.cardWidth; height: root.cardHeight;
+               // Image {  source: "content/gfx/b1fv.bmp" }
+                Image {  source: root.backImage }
             }
             Rectangle {
-                width: 80; height: 100;
+                //width: 80; height: 100;
+                width: root.cardWidth; height: root.cardHeight;
                 Image { source: faceCard.image }
             }
         } //Row
@@ -97,12 +106,14 @@ Page2Form {
         Row {
             anchors.centerIn: parent;
             Rectangle {
-                width: 80; height: 100;
+                //width: 80; height: 100;
+                width: root.cardWidth; height: root.cardHeight;
                 //Image {  source: "content/gfx/up.png" }
                 Image {  source: aiHand.aiPlayedCardImage }
             }
             Rectangle {
-                width: 80; height: 100;
+                //width: 80; height: 100;
+                width: root.cardWidth; height: root.cardHeight;
                 //Image { source: "content/gfx/down.png" }
                 Image {  source: humanHand.humanPlayedCardImage }
             }

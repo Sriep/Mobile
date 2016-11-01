@@ -74,7 +74,12 @@ QString Card::getFilename(int rank, int suit)
 {
     if (Rank::NumRanks > rank && Suit::NumSuits > suit
           && 0 <= rank && 0 <= suit  )
-        return QString("content/gfx/" + suitStr[suit] + rankStr[rank] + ".bmp");
+    {
+       // return QString("content/gfx/" + suitStr[suit] + rankStr[rank] + ".bmp");
+        QString path("content/gfx/tinydeck/");
+        QString name = path + rankStr[rank] + suitStr[suit] + ".gif";
+        return name;
+    }
     else
     {
         qWarning("rank or suit out of range in Card::getFilename");

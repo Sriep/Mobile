@@ -47,5 +47,63 @@
         <file>content/gfx/down.png</file>
         <file>Page2.qml</file>
         <file>HumanCardRow.qml</file>
+        <file>content/gfx/tinydeck/01c.gif</file>
+        <file>content/gfx/tinydeck/01d.gif</file>
+        <file>content/gfx/tinydeck/01h.gif</file>
+        <file>content/gfx/tinydeck/01s.gif</file>
+        <file>content/gfx/tinydeck/02c.gif</file>
+        <file>content/gfx/tinydeck/02d.gif</file>
+        <file>content/gfx/tinydeck/02h.gif</file>
+        <file>content/gfx/tinydeck/02s.gif</file>
+        <file>content/gfx/tinydeck/03c.gif</file>
+        <file>content/gfx/tinydeck/03d.gif</file>
+        <file>content/gfx/tinydeck/03h.gif</file>
+        <file>content/gfx/tinydeck/03s.gif</file>
+        <file>content/gfx/tinydeck/04c.gif</file>
+        <file>content/gfx/tinydeck/04d.gif</file>
+        <file>content/gfx/tinydeck/04h.gif</file>
+        <file>content/gfx/tinydeck/04s.gif</file>
+        <file>content/gfx/tinydeck/05c.gif</file>
+        <file>content/gfx/tinydeck/05d.gif</file>
+        <file>content/gfx/tinydeck/05h.gif</file>
+        <file>content/gfx/tinydeck/05s.gif</file>
+        <file>content/gfx/tinydeck/06c.gif</file>
+        <file>content/gfx/tinydeck/06d.gif</file>
+        <file>content/gfx/tinydeck/06h.gif</file>
+        <file>content/gfx/tinydeck/06s.gif</file>
+        <file>content/gfx/tinydeck/07c.gif</file>
+        <file>content/gfx/tinydeck/07d.gif</file>
+        <file>content/gfx/tinydeck/07h.gif</file>
+        <file>content/gfx/tinydeck/07s.gif</file>
+        <file>content/gfx/tinydeck/08c.gif</file>
+        <file>content/gfx/tinydeck/08d.gif</file>
+        <file>content/gfx/tinydeck/08h.gif</file>
+        <file>content/gfx/tinydeck/08s.gif</file>
+        <file>content/gfx/tinydeck/09c.gif</file>
+        <file>content/gfx/tinydeck/09d.gif</file>
+        <file>content/gfx/tinydeck/09h.gif</file>
+        <file>content/gfx/tinydeck/09s.gif</file>
+        <file>content/gfx/tinydeck/10c.gif</file>
+        <file>content/gfx/tinydeck/10d.gif</file>
+        <file>content/gfx/tinydeck/10h.gif</file>
+        <file>content/gfx/tinydeck/10s.gif</file>
+        <file>content/gfx/tinydeck/11c.gif</file>
+        <file>content/gfx/tinydeck/11d.gif</file>
+        <file>content/gfx/tinydeck/11h.gif</file>
+        <file>content/gfx/tinydeck/11s.gif</file>
+        <file>content/gfx/tinydeck/12c.gif</file>
+        <file>content/gfx/tinydeck/12d.gif</file>
+        <file>content/gfx/tinydeck/12h.gif</file>
+        <file>content/gfx/tinydeck/12s.gif</file>
+        <file>content/gfx/tinydeck/13c.gif</file>
+        <file>content/gfx/tinydeck/13d.gif</file>
+        <file>content/gfx/tinydeck/13h.gif</file>
+        <file>content/gfx/tinydeck/13s.gif</file>
+        <file>content/gfx/tinydeck/back041.gif</file>
+        <file>content/gfx/tinydeck/back101.gif</file>
+        <file>content/gfx/tinydeck/back102.gif</file>
+        <file>content/gfx/tinydeck/back111.gif</file>
+        <file>content/gfx/tinydeck/COPYRIGHT.txt</file>
+        <file>content/gfx/tinydeck/tinydeck.zip</file>
     </qresource>
 </RCC>

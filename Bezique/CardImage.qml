@@ -3,7 +3,7 @@ import QtQuick 2.0
 Rectangle {
     id: cardImage
     //width: 80; height: 100;
-    width: 40; height: 100;
+    width: root.cardWidth; height: root.cardHeight;
     property string image : "content/gfx/b1fv.bmp"
     property int rowPos : 0
 

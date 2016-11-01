@@ -16,7 +16,7 @@ public:
     const QString rankStr[8]  {"07", "08", "09", "10", "11", "12", "13", "01"};
     const QString suitStr[4]  {"d", "c", "h", "s"};
     const QString emptyBitmap = "content/gfx/onePixel.png";
-    const QString backBitmap = "content/gfx/b1fv.png";
+    const QString backBitmap = "content/gfx/tinydeck/back111.gif";
     const int maxId = 63;
 
     Card(QQuickItem *parent = 0);

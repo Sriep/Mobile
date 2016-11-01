@@ -24,16 +24,16 @@ public:
     //Player();
 
     void dealtHand(QList<int> dealtHand);
-    virtual int playFirstCard();
-    virtual int playSecondCard();
-    virtual int playFirstCardEndgame();
-    virtual int playSecondCardEndgame();
+    virtual Card *playFirstCard();
+    virtual Card *playSecondCard();
+    virtual Card* playFirstCardEndgame();
+    virtual Card *playSecondCardEndgame();
     virtual void meld();
-    void giveCard(int iCard, int index = 7);
+    void giveCard(int iCard);
     bool handEmpty() const;
     bool won() const;
     void incScore(int increment);
-    Card* playCard(int index);
+    Card* playCard(int index, bool melded = false);
 
     int getScore() const;
     void setScore(int value);

@@ -17,24 +17,24 @@ void GameData::init()
     game.start();
 }
 
-int GameData::getHumansCardIndex() const
+Card* GameData::getHumansCard() const
 {
-    return humansCardIndex;
+    return humansCard;
 }
 
-void GameData::setHumansCardIndex(int value)
+void GameData::setHumansCard(Card* value)
 {
-    humansCardIndex = value;
+    humansCard = value;
 }
 
-int GameData::getAisCardIndex() const
+Card* GameData::getAisCard() const
 {
-    return aisCardIndex;
+    return aisCard;
 }
 
-void GameData::setAisCardIndex(int value)
+void GameData::setAisCard(Card* value)
 {
-    aisCardIndex = value;
+    aisCard = value;
 }
 
 Player *GameData::getAiPlayer() const
@@ -115,7 +115,7 @@ void GameData::leadToTrick()
     if (activePlayer->isAi())
     {
         //aisCard = activePlayer->playFirstCard();
-        aisCardIndex = activePlayer->playFirstCard();
+        aisCard = activePlayer->playFirstCard();
         switchActivePlayer();
         emit leadCardPlayed();
     }
@@ -131,7 +131,7 @@ void GameData::followToTrick()
     if (activePlayer->isAi())
     {
         //aisCard = activePlayer->playFirstCard();
-        aisCardIndex = activePlayer->playFirstCard();
+        aisCard = activePlayer->playFirstCard();
         switchActivePlayer();
         emit followedToTrick();
     }
@@ -142,19 +142,19 @@ void GameData::followToTrick()
     }
 }
 
-void GameData::cardPlayed(int index)
+void GameData::cardPlayed(int index, bool melded)
 {
     if (isPlayFirstCard)
     {
         //firstCard = activePlayer->playCard(index);
-        activePlayer->playCard(index);
+        humansCard = activePlayer->playCard(index, melded);
         switchActivePlayer();
         emit leadCardPlayed();
     }
     else
     {
         //secondCard = activePlayer->playCard(index);
-        activePlayer->playCard(index);
+        humansCard = activePlayer->playCard(index, melded);
         emit followedToTrick();
     }
 }
@@ -165,16 +165,16 @@ void GameData::cardPlayed(int index)
 void GameData::meld()
 {
     //activePlayer = firstCard->beats(*secondCard, trumps) ? aiPlayer : humanPlayer;
-    const Card* playerCard = humanPlayer->getHand()->peek(humansCardIndex);
-    const Card* aiCard = aiPlayer->getHand()->peek(aisCardIndex);
+    //const Card* playerCard = humansCard;
+    //const Card* aiCard = aisCard;
     if (activePlayer == aiPlayer )
-        activePlayer = playerCard->beats(*aiCard, trumps) ? humanPlayer : aiPlayer;
+        activePlayer = humansCard->beats(*aisCard, trumps) ? humanPlayer : aiPlayer;
     else
-        activePlayer = aiCard->beats(*playerCard, trumps) ? aiPlayer : humanPlayer;
+        activePlayer = aisCard->beats(*humansCard, trumps) ? aiPlayer : humanPlayer;
 
-    if (Card::Ace == playerCard->getRank() || Card::Ten == playerCard->getRank())
+    if (Card::Ace == humansCard->getRank() || Card::Ten == humansCard->getRank())
         activePlayer->incScore(10);
-    if (Card::Ace == aiCard->getRank() || Card::Ten == aiCard->getRank())
+    if (Card::Ace == aisCard->getRank() || Card::Ten == aisCard->getRank())
         activePlayer->incScore(10);
     //QThread::sleep(1);
     emit trickFinished();
@@ -186,8 +186,8 @@ void GameData::meld()
     {
         emit waitingForMeld();
     }
-    aiPlayer->giveCard(deck.dealTop(), aisCardIndex);
-    humanPlayer->giveCard(deck.dealTop(), humansCardIndex);
+    aiPlayer->giveCard(deck.dealTop());//, aisCardIndex);
+    humanPlayer->giveCard(deck.dealTop());//, humansCardIndex);
     //QThread::sleep(1);
     if (activePlayer->won())
         emit gameOver();

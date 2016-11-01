@@ -12,10 +12,12 @@ class GameData : public QQuickItem
     Q_OBJECT
     Q_PROPERTY(Card* faceCard READ getFaceCard
                WRITE setFaceCard NOTIFY changedFaceCard)
-    Q_PROPERTY(int humansCardIndex READ getHumansCardIndex
-               WRITE setHumansCardIndex NOTIFY changedHumansCardIndex)
-    Q_PROPERTY(int aisCardIndex READ getAisCardIndex
-               WRITE setAisCardIndex NOTIFY changedAisCardIndex)
+   // Q_PROPERTY(int humansCardIndex READ getHumansCardIndex
+   //            WRITE setHumansCardIndex NOTIFY changedHumansCardIndex)
+   // Q_PROPERTY(int aisCardIndex READ getAisCardIndex
+   //            WRITE setAisCardIndex NOTIFY changedAisCardIndex)
+     Q_PROPERTY(Card* humansCard READ getHumansCard WRITE setHumansCard NOTIFY changedHumansCard)
+     Q_PROPERTY(Card* aisCard READ getAisCard WRITE setAisCard NOTIFY changedAisCard)
 
     Q_PROPERTY(Player* humanPlayer READ getHumanPlayer WRITE setHumanPlayer)
     Q_PROPERTY(Player* aiPlayer READ getAiPlayer WRITE setAiPlayer)
@@ -34,17 +36,17 @@ public:
     //QQmlListProperty<Card> getCards();
 
     Q_INVOKABLE void startNewGame();
-    Q_INVOKABLE void cardPlayed(int index);
+    Q_INVOKABLE void cardPlayed(int index, bool melded = false);
 
     Player *getHumanPlayer() const;
     void setHumanPlayer(Player *value);
     Player *getAiPlayer() const;
     void setAiPlayer(Player *value);
 
-    int getAisCardIndex() const;
-    void setAisCardIndex(int value);
-    int getHumansCardIndex() const;
-    void setHumansCardIndex(int value);
+    Card* getAisCard() const;
+    void setAisCard(Card* value);
+    Card* getHumansCard() const;
+    void setHumansCard(Card* value);
 
 signals:
     void deckCut();
@@ -60,8 +62,8 @@ signals:
     void waitingForMeld();
     void melded();
     void changedFaceCard();
-    void changedHumansCardIndex();
-    void changedAisCardIndex();
+    void changedHumansCard();
+    void changedAisCard();
     //void cardsChanged();
 private slots:
     void cutForDeal();
@@ -81,8 +83,8 @@ private:
     Card* faceCard;
     Player* aiPlayer;
     Player* humanPlayer;
-    int aisCardIndex;
-    int humansCardIndex;
+    Card* aisCard;
+    Card* humansCard;
 
     int startPlayer;
     Player* activePlayer;

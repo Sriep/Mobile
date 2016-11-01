@@ -13,19 +13,22 @@ public:
 
     enum Rank { Seven = 0, Eight, Nine, Jack, Queen, King, Ten, Ace, NumRanks };
     enum Suit { Diamonds = 0, Clubs, Hearts, Spades, NumSuits };
+    static const int EMPTY = 8;
+
     const QString rankStr[8]  {"07", "08", "09", "10", "11", "12", "13", "01"};
     const QString suitStr[4]  {"d", "c", "h", "s"};
     const QString emptyBitmap = "content/gfx/onePixel.png";
     const QString backBitmap = "content/gfx/tinydeck/back111.gif";
     const int maxId = 63;
 
-    Card(QQuickItem *parent = 0);
-    Card(int iCard, QQuickItem *parent = 0);
+    Card();
+    explicit Card(int iCard, QQuickItem *parent = 0);
+    explicit Card(const Card* card, QQuickItem *parent = 0);
     Card(const Card& card, QQuickItem *parent = 0);
 
     bool beats(const Card& c, int trumps) const;
 
-    void setCard(int cardId);
+    void setCard(int cardId, int newLink = EMPTY);
     int getCardId() const;
     void clearCard();
     bool isCleard();
@@ -38,6 +41,9 @@ public:
     QString getImage() const;
     void setImage(QString image);
 
+    int getLink() const;
+    void setLink(int value);
+
 signals:
     void cardChanged();
 public slots:
@@ -48,8 +54,8 @@ private:
     int rank;
     int suit;
     QString imageFile = emptyBitmap;
-    bool melded;
 
+    int link = EMPTY;
     int cardId;
 
 };

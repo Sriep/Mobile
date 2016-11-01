@@ -13,9 +13,14 @@ BeziqueHand::~BeziqueHand()
 
 void BeziqueHand::resetCards(QList<int> newHand)
 {
+    //if (newHand.size() > cards.size()) qFatal("Hand length mismatch");
+    //for (int i = 0; i < newHand.size(); ++i) {
+    //    cards[i]->setCard(newHand[i]);
+    //}
     if (newHand.size() > cards.size()) qFatal("Hand length mismatch");
     for (int i = 0; i < newHand.size(); ++i) {
-        cards[i]->setCard(newHand[i]);
+        cards[i]->setCard(newHand[i], i);
+        hiddedCards[i]->setCard(newHand[i], i);
     }
 }
 
@@ -28,9 +33,18 @@ bool BeziqueHand::isEmpty() const
     return true;
 }
 
-void BeziqueHand::addCard(int cardId, int index)
+void BeziqueHand::addCard(int cardId)
 {
-    cards.at(index)->setCard(cardId);
+    //cards.at(index)->setCard(cardId);
+    int iCard = 0;
+    while ( cards[iCard]->getLink() < HAND_SIZE && iCard < HAND_SIZE )
+        iCard++;
+    cards.at(iCard)->setCard(cardId, iCard);
+
+    int iHide = 0;
+    while ( hiddedCards[iHide]->getLink() < HAND_SIZE && iHide < HAND_SIZE )
+        iHide++;
+    hiddedCards.at(iHide)->setCard(cardId, iCard);
 }
 
 const Card *BeziqueHand::peek(int index)
@@ -38,14 +52,41 @@ const Card *BeziqueHand::peek(int index)
     return cards[index];
 }
 
-Card* BeziqueHand::playCard(int index)
+Card* BeziqueHand::playCard(int index, bool melded)
 {
-    Card* playedCard = new Card(cards[index]);
+    int link = findLink(index, melded);
+    Card* playedCard;
+    if (melded)
+    {
+        playedCard = new Card( meldedCards[link] );
+        meldedCards[index]->clearCard();
+    }
+    else
+    {
+        playedCard = new Card( hiddedCards[link]);
+        hiddedCards[index]->clearCard();
+    }
+    cards[link]->clearCard();
+    //Card* playedCard = new Card( melded ? meldedCards[link] : hiddedCards[link]);
+    //melded ? meldedCards[index]->clearCard() : hiddedCards[index]->clearCard();
+
     emit enginPlayedCard(index);
-    //cards[index]->setCard(cards.last()->getCardId());
-    //cards.last()->setCard(playedCard->getCardId());
     return playedCard;
 }
+
+int BeziqueHand::findLink(int index, bool melded)
+{
+    QList<Card*>& list = melded ? meldedCards : hiddedCards;
+    for ( int i = 0 ; i < list.size() ; i++)
+    {
+        if (list[i]->getLink() == index)
+            return i;
+    }
+    return -1;
+}
+
+
+
 /*
 int BeziqueHand::getScore() const
 {

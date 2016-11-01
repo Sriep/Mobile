@@ -4,8 +4,9 @@ Rectangle {
     id: cardImage
     //width: 80; height: 100;
     width: root.cardWidth; height: root.cardHeight;
-    property string image : "content/gfx/b1fv.bmp"
-    property int rowPos : 0
+    property string image: "content/gfx/b1fv.bmp"
+    property int rowPos: 0
+    property bool melded: false
 
     Image { source: cardImage.image }
     MouseArea {
@@ -16,7 +17,7 @@ Rectangle {
         if (gameData.waitingForCard) {
             gameData.humansCardIndex = rowPos;
             gameData.waitingForCard = false;
-            gameData.cardPlayed(rowPos);
+            gameData.cardPlayed(rowPos, melded);
         }
     }}
 }

@@ -7,8 +7,7 @@ void Card::cardPlayed(int index, int x, int y)
     //qDebug  << "Mouse pressed index " << index;
 }
 
-Card::Card(QQuickItem *parent)
-    : QQuickItem(parent)
+Card::Card()
 {
 }
 
@@ -18,7 +17,19 @@ Card::Card(int iCard, QQuickItem *parent)
     , suit(iCard % 4)
     , cardId(iCard)
     , imageFile(getFilename(rank, suit))
+    , link(link)
 {
+}
+
+Card::Card(const Card *card, QQuickItem *parent)
+    : QQuickItem(parent)
+    , rank(card->rank)
+    , suit(card->suit)
+    , cardId(card->cardId)
+    , imageFile(card->imageFile)
+    , link(card->link)
+{
+
 }
 
 Card::Card(const Card &card, QQuickItem *parent)
@@ -27,6 +38,7 @@ Card::Card(const Card &card, QQuickItem *parent)
     , suit(card.suit)
     , cardId(card.cardId)
     , imageFile(card.imageFile)
+    , link(card.link)
 {
 }
 
@@ -37,12 +49,13 @@ bool Card::beats(const Card &c, int trumps) const
     return true;
 }
 
-void Card::setCard(int cardId)
+void Card::setCard(int cardId, int newLink)
 {
     rank = cardId / 8;
     suit  = cardId % 4;
     cardId = cardId;
     imageFile = getFilename(rank, suit);
+    link = newLink;
     emit cardChanged();
 }
 
@@ -52,12 +65,14 @@ void Card::clearCard()
     suit  = -1;
     cardId = -1;
     imageFile = emptyBitmap;
+    link = EMPTY;
     emit cardChanged();
 }
 
 bool Card::isCleard()
 {
     return emptyBitmap == imageFile;
+    //return EMPTY == link;
 }
 
 int Card::getRank() const
@@ -85,6 +100,16 @@ QString Card::getFilename(int rank, int suit)
         qWarning("rank or suit out of range in Card::getFilename");
         return emptyBitmap;
     }
+}
+
+int Card::getLink() const
+{
+    return link;
+}
+
+void Card::setLink(int value)
+{
+    link = value;
 }
 
 void Card::setSuit(int value)

@@ -31,25 +31,25 @@ void Player::dealtHand(QList<int> dealtHand)
     hand->resetCards(dealtHand);
 }
 
-int Player::playFirstCard()
+Card* Player::playFirstCard()
 {
-    hand->playCard(0);
-    return 0;
+    //hand->playCard(0);
+    return hand->playCard(0);;
     //Card* playedCard = new Card(hand->cards[0]);
     //return playedCard;
 }
 
-int Player::playSecondCard()
+Card* Player::playSecondCard()
 {
     return playFirstCard();
 }
 
-int Player::playFirstCardEndgame()
+Card *Player::playFirstCardEndgame()
 {
     return playFirstCard();
 }
 
-int Player::playSecondCardEndgame()
+Card* Player::playSecondCardEndgame()
 {
     return playFirstCard();
 }
@@ -59,9 +59,9 @@ void Player::meld()
 
 }
 
-void Player::giveCard(int iCard, int index)
+void Player::giveCard(int iCard)
 {
-    hand->addCard(iCard, index);
+    hand->addCard(iCard);
 }
 
 void Player::incScore(int increment)
@@ -69,9 +69,9 @@ void Player::incScore(int increment)
     score += increment;
 }
 
-Card* Player::playCard(int index)
+Card* Player::playCard(int index, bool melded)
 {
-    return hand->playCard(index);
+    return hand->playCard(index, melded);
 }
 
 int Player::getScore() const

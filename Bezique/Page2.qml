@@ -18,19 +18,18 @@ Page2Form {
         GameData {
             id: gameData
             faceCard: Card { id: faceCard; }
-            humansCardIndex: -1;
-            onHumansCardIndexChanged: {
-                console.log("cards image",
-                    humanPlayer.data[gameData.humansCardIndex].image);
+            onHumansCardChanged: {
+              //  console.log("cards image",
+              //      humanPlayer.data[gameData.humansCardIndex].image);
             }
-            aisCardIndex: -1
+
             property bool waitingForCard: false
             humanPlayer: Player {
                 id: humanPlayer
                 ai: false
                 hand: BeziqueHand {
                     id: humanHand
-                    property string humanPlayedCardImage: "content/gfx/down.png"
+                    //property string humanPlayedCardImage: "content/gfx/down.png"
                     cards: [
                         Card { id: card1 },
                         Card { id: card2 },
@@ -42,9 +41,30 @@ Page2Form {
                         Card { id: card8 }
                     ] //card
                     onEnginPlayedCard: {
-                        humanHand.humanPlayedCardImage = data[index].image;
-                        data[index].image =  "content/gfx/onePixel.png"
+                        //humanHand.humanPlayedCardImage = cards[index].image;
+                        //data[index].image =  "content/gfx/onePixel.png"
                     }
+                    hiddedCards: [
+                        Card { id: hidden1 },
+                        Card { id: hidden2 },
+                        Card { id: hidden3 },
+                        Card { id: hidden4 },
+                        Card { id: hidden5 },
+                        Card { id: hidden6 },
+                        Card { id: hidden7 },
+                        Card { id: hidden8 }
+                    ] //card
+                    meldedCards: [
+                        Card { id: melded1 },
+                        Card { id: melded2 },
+                        Card { id: melded3 },
+                        Card { id: melded4 },
+                        Card { id: melded5 },
+                        Card { id: melded6 },
+                        Card { id: melded7 },
+                        Card { id: melded8 }
+                    ] //card
+
                 } // playerHand: BeziqueHand
 
 
@@ -55,7 +75,7 @@ Page2Form {
                score: 0
                hand: BeziqueHand {
                     id: aiHand
-                    property string aiPlayedCardImage: "content/gfx/up.png"
+                    //property string aiPlayedCardImage: "content/gfx/up.png"
                     cards: [
                         Card { id: aiCard1 },
                         Card { id: aiCard2 },
@@ -67,9 +87,32 @@ Page2Form {
                         Card { id: aiCard8 }
                     ] //cards
                     onEnginPlayedCard: {
-                        aiHand.aiPlayedCardImage = data[index].image;
-                        data[index].image =  "content/gfx/onePixel.png"
+                        //aiHand.aiPlayedCardImage = data[index].image;
+                        //console.log("index", index);
+                        //console.log("image", cards[index].imag);
+                        //data[index].image =  "content/gfx/onePixel.png"
                     }
+                    hiddedCards: [
+                        Card { id: aiHidden1 },
+                        Card { id: aiHidden2 },
+                        Card { id: aiHidden3 },
+                        Card { id: aiHidden4 },
+                        Card { id: aiHidden5 },
+                        Card { id: aiHidden6 },
+                        Card { id: aiHidden7 },
+                        Card { id: aiHidden8 }
+                    ] //card
+                    meldedCards: [
+                        Card { id: aiMelded1 },
+                        Card { id: aiMelded2 },
+                        Card { id: aiMelded3 },
+                        Card { id: aiMelded4 },
+                        Card { id: aiMelded5 },
+                        Card { id: aiMelded6 },
+                        Card { id: aiMelded7 },
+                        Card { id: aiMelded8 }
+                    ] //card
+
                 } // aiHand: BeziqueHand
 
            } // aiPlayer: Player
@@ -78,8 +121,8 @@ Page2Form {
                waitingForCard = true;
            }
            onTrickFinished: {
-               humanHand.humanPlayedCardImage =  "content/gfx/down.png";
-               aiHand.aiPlayedCardImage =  "content/gfx/up.png";
+               gameData.humansCard.image =  "content/gfx/down.png";
+               gameData.aisCard.image =  "content/gfx/up.png";
            }
         } //GameData
 
@@ -102,23 +145,25 @@ Page2Form {
                 Image { source: faceCard.image }
             }
         } //Row
-
+/*
         Row {
             anchors.centerIn: parent;
             Rectangle {
                 //width: 80; height: 100;
                 width: root.cardWidth; height: root.cardHeight;
                 //Image {  source: "content/gfx/up.png" }
-                Image {  source: aiHand.aiPlayedCardImage }
+                //Image {  source: aiHand.aiPlayedCardImage }
+                Image {  source: gameData.aisCard.image }
             }
             Rectangle {
                 //width: 80; height: 100;
                 width: root.cardWidth; height: root.cardHeight;
                 //Image { source: "content/gfx/down.png" }
-                Image {  source: humanHand.humanPlayedCardImage }
+                //Image {  source: humanHand.humanPlayedCardImage }
+                Image {  source: gameData.humansCard.image }
             }
         } //Row
-
+*/
         Row {
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.rigth

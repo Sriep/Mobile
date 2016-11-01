@@ -15,14 +15,17 @@ class BeziqueHand : public QQuickItem
     Q_PROPERTY(QQmlListProperty<Card> hiddedCards READ getHiddenCards)
 public:
     friend class Player;
+    static const int HAND_SIZE = 8;
+
     BeziqueHand(QQuickItem *parent = 0);
     virtual ~BeziqueHand();
 
     void resetCards(QList<int> newHand);
     bool isEmpty() const;
-    void addCard(int cardId, int index);
+    void addCard(int cardId);
     const Card *peek(int index);
-    Card *playCard(int index);
+    Card *playCard(int index, bool melded = false);
+    int findLink(int index, bool melded = false);
 
     QQmlListProperty<Card> getCards();
     QQmlListProperty<Card> getMeldedCards();

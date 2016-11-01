@@ -36,19 +36,9 @@ Page2Form {
                         Card { id: card8 }
                     ] //card
                     onEnginPlayedCard: {
-                        console.log("card played :", index);
-                        console.log("rank of card played :", data[index].rank);
                         humanHand.humanPlayedCardImage = data[index].image;
-                        console.log("new image :", aiHand.aiPlayedCardImage);
                         data[index].image =  "content/gfx/onePixel.png"
                     }
-                    /*
-                    Component.onPlayedCardIndex: {
-                        console.log("Name of first state:", cards[0].image)
-                        for (var i = 0; i < cards.length; i++)
-                            console.log("state", i, cards[i].image)
-                    }
-                    */
                 } // playerHand: BeziqueHand
 
 
@@ -71,10 +61,7 @@ Page2Form {
                         Card { id: aiCard8 }
                     ] //cards
                     onEnginPlayedCard: {
-                        console.log("card played :", index);
-                        console.log("rank of card played :", data[index].rank);
                         aiHand.aiPlayedCardImage = data[index].image;
-                        console.log("new image :", aiHand.aiPlayedCardImage);
                         data[index].image =  "content/gfx/onePixel.png"
                     }
                 } // aiHand: BeziqueHand

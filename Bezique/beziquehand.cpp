@@ -75,6 +75,16 @@ QQmlListProperty<Card> BeziqueHand::getCards()
     return QQmlListProperty<Card>(this, 0, &BeziqueHand::appendCard, 0, 0, 0);
 }
 
+QQmlListProperty<Card> BeziqueHand::getMeldedCards()
+{
+    return QQmlListProperty<Card>(this, 0, &BeziqueHand::appendMeldedCard, 0, 0, 0);
+}
+
+QQmlListProperty<Card> BeziqueHand::getHiddenCards()
+{
+    return QQmlListProperty<Card>(this, 0, &BeziqueHand::appendHiddenCard, 0, 0, 0);
+}
+
 
 void BeziqueHand::appendCard(QQmlListProperty<Card> *list, Card *card)
 {
@@ -82,6 +92,24 @@ void BeziqueHand::appendCard(QQmlListProperty<Card> *list, Card *card)
     if (hand) {
         card->setParentItem(hand);
         hand->cards.append(card);
+    }
+}
+
+void BeziqueHand::appendMeldedCard(QQmlListProperty<Card> *list, Card *card)
+{
+    BeziqueHand *hand = qobject_cast<BeziqueHand*>(list->object);
+    if (hand) {
+        card->setParentItem(hand);
+        hand->meldedCards.append(card);
+    }
+}
+
+void BeziqueHand::appendHiddenCard(QQmlListProperty<Card> *list, Card *card)
+{
+    BeziqueHand *hand = qobject_cast<BeziqueHand*>(list->object);
+    if (hand) {
+        card->setParentItem(hand);
+        hand->hiddedCards.append(card);
     }
 }
 

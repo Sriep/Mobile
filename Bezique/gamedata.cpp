@@ -1,3 +1,5 @@
+#include <QThread>
+
 #include "gamedata.h"
 #include "gamestate.h"
 #include "aiplayer.h"
@@ -174,6 +176,7 @@ void GameData::meld()
         activePlayer->incScore(10);
     if (Card::Ace == aiCard->getRank() || Card::Ten == aiCard->getRank())
         activePlayer->incScore(10);
+    //QThread::sleep(1);
     emit trickFinished();
     if (activePlayer->isAi())
     {
@@ -185,6 +188,7 @@ void GameData::meld()
     }
     aiPlayer->giveCard(deck.dealTop(), aisCardIndex);
     humanPlayer->giveCard(deck.dealTop(), humansCardIndex);
+    //QThread::sleep(1);
     if (activePlayer->won())
         emit gameOver();
     else if (deck.empty())

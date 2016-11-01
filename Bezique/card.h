@@ -16,16 +16,12 @@ public:
     const QString rankStr[8]  {"07", "08", "09", "10", "11", "12", "13", "01"};
     const QString suitStr[4]  {"d", "c", "h", "s"};
     const QString emptyBitmap = "content/gfx/onePixel.png";
-    //const QString emptyBitmap = "content/gfx/back.png";
+    const QString backBitmap = "content/gfx/b1fv.png";
     const int maxId = 63;
 
     Card(QQuickItem *parent = 0);
     Card(int iCard, QQuickItem *parent = 0);
     Card(const Card& card, QQuickItem *parent = 0);
-
-    //Card(QObject *parent = 0);
-    //Card(int iCard, QObject *parent = 0);
-    //Card(const Card& card, QObject *parent = 0);
 
     bool beats(const Card& c, int trumps) const;
 
@@ -34,7 +30,7 @@ public:
     void clearCard();
     bool isCleard();
 
-    // qml Properties
+    // qml Properties access
     int getRank() const;
     int getSuit() const;
     void setRank(int value);
@@ -52,6 +48,7 @@ private:
     int rank;
     int suit;
     QString imageFile = emptyBitmap;
+    bool melded;
 
     int cardId;
 

@@ -22,6 +22,14 @@ Page2Form {
               //  console.log("cards image",
               //      humanPlayer.data[gameData.humansCardIndex].image);
             }
+            //gameData.aisCard.image
+            //gameData.humansCard.image
+            aisCard: Card {
+
+            }
+            humansCard: Card {
+
+            }
 
             property bool waitingForCard: false
             humanPlayer: Player {
@@ -145,7 +153,7 @@ Page2Form {
                 Image { source: faceCard.image }
             }
         } //Row
-/*
+
         Row {
             anchors.centerIn: parent;
             Rectangle {
@@ -163,7 +171,7 @@ Page2Form {
                 Image {  source: gameData.humansCard.image }
             }
         } //Row
-*/
+
         Row {
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.rigth

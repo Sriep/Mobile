@@ -116,6 +116,7 @@ void GameData::leadToTrick()
     {
         //aisCard = activePlayer->playFirstCard();
         aisCard = activePlayer->playFirstCard();
+        emit changedAisCard();
         switchActivePlayer();
         emit leadCardPlayed();
     }
@@ -132,6 +133,7 @@ void GameData::followToTrick()
     {
         //aisCard = activePlayer->playFirstCard();
         aisCard = activePlayer->playFirstCard();
+        emit changedAisCard();
         switchActivePlayer();
         emit followedToTrick();
     }
@@ -148,6 +150,7 @@ void GameData::cardPlayed(int index, bool melded)
     {
         //firstCard = activePlayer->playCard(index);
         humansCard = activePlayer->playCard(index, melded);
+        emit changedHumansCard();
         switchActivePlayer();
         emit leadCardPlayed();
     }
@@ -155,13 +158,11 @@ void GameData::cardPlayed(int index, bool melded)
     {
         //secondCard = activePlayer->playCard(index);
         humansCard = activePlayer->playCard(index, melded);
+        emit changedHumansCard();
         emit followedToTrick();
     }
 }
-//Player* aiPlayer;
-//Player* humanPlayer;
-//int aisCardIndex;
-//int humansCardIndex;
+
 void GameData::meld()
 {
     //activePlayer = firstCard->beats(*secondCard, trumps) ? aiPlayer : humanPlayer;

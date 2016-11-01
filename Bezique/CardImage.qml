@@ -15,14 +15,12 @@ Rectangle {
         signal playedCardIndex(int rowPos);
         onClicked: {
         if (gameData.waitingForCard) {
-            gameData.humansCardIndex = rowPos;
+            //gameData.humansCard = rowPos;
             gameData.waitingForCard = false;
             gameData.cardPlayed(rowPos, melded);
         }
     }}
 }
-
-
 
 /*
 Flipable {

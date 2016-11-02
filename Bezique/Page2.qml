@@ -27,11 +27,15 @@ Page2Form {
             aisCard: Card {}
             humansCard: Card {}
 
-            property bool humanMelding: false
-            onWaitingForMeld: humanMelding = true;
-            onMelded: humanMelding = false;
+            property bool aiPlayedCard: aisCard.image !== root.emptyImage
 
             property bool waitingForCard: false
+            onWaitingForCard: waitingForCard = true;
+
+            property bool humanMelding: false
+            onWaitingForMeld: { humanMelding = true; waitingForCard = false; }
+            onMelded: humanMelding = false;
+
             humanPlayer: Player {
                 id: humanPlayer
                 ai: false
@@ -125,9 +129,7 @@ Page2Form {
 
            } // aiPlayer: Player
 
-           onWaitingForCard:{
-               waitingForCard = true;
-           }
+
            onTrickFinished: {
                gameData.humansCard.image =  "content/gfx/down.png";
                gameData.aisCard.image =  "content/gfx/up.png";

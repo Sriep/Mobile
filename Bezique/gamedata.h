@@ -28,6 +28,8 @@ public:
     Card *getFaceCard() const;
     void setFaceCard(Card *value);
 
+    static const int NO_MELD = -1;
+
     //BeziqueHand *playerHand() const;
     //BeziqueHand *aiHand() const;
     //void setPlayerHand(BeziqueHand* hand);
@@ -37,6 +39,7 @@ public:
 
     Q_INVOKABLE void startNewGame();
     Q_INVOKABLE void cardPlayed(int index, bool melded = false);
+    Q_INVOKABLE void humanMeld(bool meldMade, int index = NO_MELD);
 
     Player *getHumanPlayer() const;
     void setHumanPlayer(Player *value);
@@ -78,6 +81,7 @@ private:
 
     void switchActivePlayer();
     void init();
+    void finishTrick();
 
     // qml properties
     Card* faceCard;

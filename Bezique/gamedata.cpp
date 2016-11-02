@@ -163,6 +163,32 @@ void GameData::cardPlayed(int index, bool melded)
     }
 }
 
+void GameData::humanMeld(bool meldMade, int index)
+{
+    if (meldMade) {
+        humanPlayer->getHand()->meld(index);
+        humanPlayer->getHand()->refreshMelds(trumps, meldedSeven);
+        if (humanPlayer->canMeld())
+            emit waitingForMeld();
+        else
+            finishTrick();
+    }
+    else
+        finishTrick();
+}
+
+void GameData::finishTrick()
+{
+    aiPlayer->giveCard(deck.dealTop());//, aisCardIndex);
+    humanPlayer->giveCard(deck.dealTop());//, humansCardIndex);
+    if (activePlayer->won())
+        emit gameOver();
+    else if (deck.empty())
+        emit startEndgame();
+    else
+        emit melded();
+}
+
 void GameData::meld()
 {
     if (activePlayer == aiPlayer )
@@ -176,22 +202,18 @@ void GameData::meld()
         activePlayer->incScore(10);
 
     emit trickFinished();
-    activePlayer->getHand()->refreshMelds(trumps, meldedSeven);
+    // activePlayer->getHand()->refreshMelds(trumps, meldedSeven);
     if (activePlayer->isAi())
     {
-        activePlayer->meld(trumps, meldedSeven);
-        aiPlayer->giveCard(deck.dealTop());//, aisCardIndex);
-        humanPlayer->giveCard(deck.dealTop());//, humansCardIndex);
-        if (activePlayer->won())
-            emit gameOver();
-        else if (deck.empty())
-            emit startEndgame();
-        else
-            emit melded();
+        finishTrick();
     }
     else
     {
-        emit waitingForMeld();
+        humanPlayer->getHand()->refreshMelds(trumps, meldedSeven);
+        if (humanPlayer->canMeld())
+            emit waitingForMeld();
+        else
+            finishTrick();
     }
 
 }

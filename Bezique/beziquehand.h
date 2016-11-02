@@ -44,6 +44,7 @@ public:
     Card *playCard(int index, bool melded = false);
     int findLink(int index, bool melded = false);
     void refreshMelds(int trumps, bool seven);
+    int meld(int index);
 
     QQmlListProperty<Card> getCards();
     QQmlListProperty<Card> getMeldedCards();
@@ -63,8 +64,6 @@ private:
     bool canMeldTen(int index, int trumps) const;
     bool canMeldAce(int index, int trumps) const;
 
-
-    int meld(int index);
     int findFlush(QList<int>& meld) const;
     int findBezique(QList<int>& meld) const;
     int findFourKind(QList<int>& meld) const;

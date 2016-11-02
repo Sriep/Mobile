@@ -34,6 +34,7 @@ public:
     bool won() const;
     void incScore(int increment);
     Card* playCard(int index, bool melded = false);
+    bool canMeld();
 
     int getScore() const;
     void setScore(int value);

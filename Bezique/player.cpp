@@ -111,6 +111,15 @@ Card* Player::playCard(int index, bool melded)
     return hand->playCard(index, melded);
 }
 
+bool Player::canMeld()
+{
+    QList<Card*>::const_iterator i;
+    for ( i = hand->cards.constBegin() ; i != hand->cards.constEnd() ; ++i )
+        if (!(**i).getCanMeld())
+            return false;
+    return true;
+}
+
 int Player::getScore() const
 {
     return score;

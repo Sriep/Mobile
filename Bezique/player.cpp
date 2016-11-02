@@ -34,9 +34,32 @@ void Player::dealtHand(QList<int> dealtHand)
 Card* Player::playFirstCard()
 {
     //hand->playCard(0);
-    return hand->playCard(0);;
-    //Card* playedCard = new Card(hand->cards[0]);
-    //return playedCard;
+    int minRank = 15;
+    int index = 0;
+    for ( int i = 0 ; i < BeziqueHand::HAND_SIZE ; i++ )
+    {
+        if (hand->cards[i]->getRank() == Card::Rank::Ten)
+        {
+            index = i;
+            break;
+        }
+
+        if ( hand->cards[i]->getRank() < minRank)
+        {
+            index = i;
+            minRank = hand->cards[i]->getRank();
+        }
+    }
+
+    int meldedId = hand->findLinkMelded(index);
+    if (meldedId != BeziqueHand::NOT_FOUND)
+        return hand->playCard(meldedId, true);
+
+    int hiddenId = hand->findLinkHidden(index);
+    if (hiddenId != BeziqueHand::NOT_FOUND)
+        return hand->playCard(hiddenId, false);
+
+    return hand->playCard(index);
 }
 
 Card* Player::playSecondCard()
@@ -54,9 +77,21 @@ Card* Player::playSecondCardEndgame()
     return playFirstCard();
 }
 
-void Player::meld()
+void Player::meld(int trumps, bool seven)
 {
-
+    hand->refreshMelds(trumps, seven);
+    bool melded = false;
+    int index = 0;
+    while(!melded && index < BeziqueHand::HAND_SIZE)
+    {
+        if (hand->cards[index]->getCanMeld())
+        {
+            hand->meld(index);
+            melded = true;
+        }
+        index++;
+    }
+    if (melded) meld(trumps, seven);
 }
 
 void Player::giveCard(int iCard)
@@ -67,6 +102,8 @@ void Player::giveCard(int iCard)
 void Player::incScore(int increment)
 {
     score += increment;
+    if (increment != 0)
+        emit scoreChanged();
 }
 
 Card* Player::playCard(int index, bool melded)
@@ -81,6 +118,8 @@ int Player::getScore() const
 
 void Player::setScore(int value)
 {
+    if (score != value)
+        emit scoreChanged();
     score = value;
 }
 

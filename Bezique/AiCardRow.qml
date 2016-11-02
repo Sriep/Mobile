@@ -5,48 +5,48 @@ Row {
         id: airect1
         //width: 80; height: 100;
         width: root.cardWidth; height: root.cardHeight;
-        Image { source: aiCard1.image }
+        Image { source: aiHidden1.image }
     }
     Rectangle {
         id: airect2
         //width: 80; height: 100;
         width: root.cardWidth; height: root.cardHeight;
-        Image {  source:  aiCard2.image}
+        Image {  source:  aiHidden2.image}
     }
     Rectangle {
         id: airect3
         //width: 80; height: 100;
         width: root.cardWidth; height: root.cardHeight;
-        Image {  source:  aiCard3.image }
+        Image {  source:  aiHidden3.image }
     }
     Rectangle {
         id: airect4
         //width: 80; height: 100;
         width: root.cardWidth; height: root.cardHeight;
-        Image { source: aiCard4.image }
+        Image { source: aiHidden4.image }
     }
     Rectangle {
         id: airect5
         //width: 80; height: 100;
         width: root.cardWidth; height: root.cardHeight;
-        Image {  source:  aiCard5.image}
+        Image {  source:  aiHidden5.image}
     }
     Rectangle {
         id: airect6
         //width: 80; height: 100;
         width: root.cardWidth; height: root.cardHeight;
-        Image {  source:  aiCard6.image }
+        Image {  source:  aiHidden6.image }
     }
     Rectangle {
         id: airect7
         //width: 80; height: 100;
         width: root.cardWidth; height: root.cardHeight;
-        Image { source: aiCard7.image }
+        Image { source: aiHidden7.image }
     }
     Rectangle {
         id: airect8
         //width: 80; height: 100;
         width: root.cardWidth; height: root.cardHeight;
-        Image {  source:  aiCard8.image}
+        Image {  source:  aiHidden8.image}
     }
 } //Row

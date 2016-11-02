@@ -105,5 +105,8 @@
         <file>content/gfx/tinydeck/back111.gif</file>
         <file>content/gfx/tinydeck/COPYRIGHT.txt</file>
         <file>content/gfx/tinydeck/tinydeck.zip</file>
+        <file>StockCards.qml</file>
+        <file>TrickCards.qml</file>
+        <file>AiMeldRow.qml</file>
     </qresource>
 </RCC>

@@ -85,6 +85,7 @@ private:
     Player* humanPlayer;
     Card* aisCard;
     Card* humansCard;
+    bool meldedSeven = false;
 
     int startPlayer;
     Player* activePlayer;

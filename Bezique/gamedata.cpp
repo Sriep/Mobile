@@ -165,9 +165,6 @@ void GameData::cardPlayed(int index, bool melded)
 
 void GameData::meld()
 {
-    //activePlayer = firstCard->beats(*secondCard, trumps) ? aiPlayer : humanPlayer;
-    //const Card* playerCard = humansCard;
-    //const Card* aiCard = aisCard;
     if (activePlayer == aiPlayer )
         activePlayer = humansCard->beats(*aisCard, trumps) ? humanPlayer : aiPlayer;
     else
@@ -177,25 +174,26 @@ void GameData::meld()
         activePlayer->incScore(10);
     if (Card::Ace == aisCard->getRank() || Card::Ten == aisCard->getRank())
         activePlayer->incScore(10);
-    //QThread::sleep(1);
+
     emit trickFinished();
+    activePlayer->getHand()->refreshMelds(trumps, meldedSeven);
     if (activePlayer->isAi())
     {
-        activePlayer->meld();
+        activePlayer->meld(trumps, meldedSeven);
+        aiPlayer->giveCard(deck.dealTop());//, aisCardIndex);
+        humanPlayer->giveCard(deck.dealTop());//, humansCardIndex);
+        if (activePlayer->won())
+            emit gameOver();
+        else if (deck.empty())
+            emit startEndgame();
+        else
+            emit melded();
     }
     else
     {
         emit waitingForMeld();
     }
-    aiPlayer->giveCard(deck.dealTop());//, aisCardIndex);
-    humanPlayer->giveCard(deck.dealTop());//, humansCardIndex);
-    //QThread::sleep(1);
-    if (activePlayer->won())
-        emit gameOver();
-    else if (deck.empty())
-        emit startEndgame();
-    else
-        emit melded();
+
 }
 /*
 void GameData::appendCard(QQmlListProperty<Card> *list, Card *card)

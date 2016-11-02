@@ -1,138 +1,24 @@
 import QtQuick 2.0
 
 Row {
-    id: playerRow
+    //id: humanHidden
+    spacing: 5
     anchors.bottom: parent.bottom
-    CardImage { image: card1.image; rowPos: 0; }
-    CardImage { image: card2.image; rowPos: 1; }
-    CardImage { image: card2.image; rowPos: 1; }
-    CardImage { image: card3.image; rowPos: 2; }
-    CardImage { image: card4.image; rowPos: 3; }
-    CardImage { image: card5.image; rowPos: 4; }
-    CardImage { image: card6.image; rowPos: 5; }
-    CardImage { image: card7.image; rowPos: 6; }
-    CardImage { image: card8.image; rowPos: 7; }
- /*   Rectangle {
-        width: 80; height: 100;
-        Image { source: card1.image }
-        MouseArea {
-            anchors.fill: parent;
-            onClicked: {
-                if (gameData.waitingForCard) {
-                    //humanHand.humanPlayedCardImage = card1.image;
-                    //card1.image = "content/gfx/onePixel.png"
-                    gameData.humansCardIndex = 0;
-                    gameData.waitingForCard = false;
-                    gameData.cardPlayed(0);
-                }
-            }
-        }
-    }
-
-    Rectangle {
-        width: 80; height: 100;
-        Image { source: card2.image }
-        MouseArea {
-            anchors.fill: parent;
-            onClicked: {
-                if (gameData.waitingForCard) {
-                    humanHand.humanPlayedCardImage = card2.image;
-                    card2.image = "content/gfx/onePixel.png"
-                    gameData.waitingForCard = false;
-                    gameData.humansCardIndex = 1;
-                }
-            }
-        }
-    }
-    Rectangle {
-        width: 80; height: 100;
-        Image { source: card3.image }
-        MouseArea {
-            anchors.fill: parent;
-            onClicked: {
-                if (gameData.waitingForCard) {
-                    humanHand.humanPlayedCardImage = card3.image;
-                    card3.image = "content/gfx/onePixel.png";
-                    gameData.waitingForCard = false;
-                    gameData.humansCardIndex = 2;
-                }
-            }
-        }
-    }
-    Rectangle {
-        width: 80; height: 100;
-        Image { source: card4.image }
-        MouseArea {
-            anchors.fill: parent;
-            onClicked: {
-                if (gameData.waitingForCard) {
-                    humanHand.humanPlayedCardImage = card4.image;
-                    card4.image = "content/gfx/onePixel.png"
-                    gameData.waitingForCard = false;
-                    gameData.humansCardIndex = 3;
-                }
-            }
-        }
-    }
-    Rectangle {
-        width: 80; height: 100;
-        Image { source: card5.image }
-        MouseArea {
-            anchors.fill: parent;
-            onClicked: {
-                if (gameData.waitingForCard) {
-                    humanHand.humanPlayedCardImage = parent.image;
-                    card5.image = "content/gfx/onePixel.png";
-                    gameData.waitingForCard = false;
-                    gameData.humansCardIndex = 4;
-                }
-            }
-        }
-    }
-    Rectangle {
-        width: 80; height: 100;
-        Image { source: card6.image }
-        MouseArea {
-            anchors.fill: parent;
-            onClicked: {
-                if (gameData.waitingForCard) {
-                    humanHand.humanPlayedCardImage = card6.image;
-                    card6.image = "content/gfx/onePixel.png";
-                    gameData.waitingForCard = false;
-                    gameData.humansCardIndex = 5;
-                }
-            }
-        }
-    }
-    Rectangle {
-        width: 80; height: 100;
-        Image { source: card7.image }
-        MouseArea {
-            anchors.fill: parent;
-            onClicked: {
-                if (gameData.waitingForCard) {
-                    humanHand.humanPlayedCardImage = card7.image;
-                    card7.image = "content/gfx/onePixel.png";
-                    gameData.waitingForCard = false;
-                    gameData.humansCardIndex = 6;
-                }
-            }
-        }
-    }
-    Rectangle {
-        width: 80; height: 100;
-        Image { source: card8.image }
-        MouseArea {
-            anchors.fill: parent;
-            onClicked: {
-                if (gameData.waitingForCard) {
-                    humanHand.humanPlayedCardImage = card8.image;
-                    card8.image = "content/gfx/onePixel.png";
-                    gameData.waitingForCard = false;
-                    gameData.humansCardIndex = 7;
-                }
-            }
-        }
-    }*/
-
+    CardImage { image: hidden1.image; rowPos: 0; canMeld: hidden1.canMeld }
+    CardImage { image: hidden2.image; rowPos: 1; canMeld: hidden2.canMeld }
+    CardImage { image: hidden3.image; rowPos: 2; canMeld: hidden3.canMeld }
+    CardImage { image: hidden4.image; rowPos: 3; canMeld: hidden4.canMeld }
+    CardImage { image: hidden5.image; rowPos: 4; canMeld: hidden5.canMeld }
+    CardImage { image: hidden6.image; rowPos: 5; canMeld: hidden6.canMeld }
+    CardImage { image: hidden7.image; rowPos: 6; canMeld: hidden7.canMeld }
+    CardImage { image: hidden8.image; rowPos: 7; canMeld: hidden8.canMeld }
+    /*
+    CardImage { hcard: hidden1; rowPos: 0; }
+    CardImage { hcard: hidden2; rowPos: 1; }
+    CardImage { hcard: hidden3; rowPos: 2; }
+    CardImage { hcard: hidden4; rowPos: 3; }
+    CardImage { hcard: hidden5; rowPos: 4; }
+    CardImage { hcard: hidden6; rowPos: 5; }
+    CardImage { hcard: hidden7; rowPos: 6; }
+    CardImage { hcard: hidden8; rowPos: 7; }*/
 } //Row

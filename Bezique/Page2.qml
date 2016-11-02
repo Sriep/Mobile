@@ -24,12 +24,12 @@ Page2Form {
             }
             //gameData.aisCard.image
             //gameData.humansCard.image
-            aisCard: Card {
+            aisCard: Card {}
+            humansCard: Card {}
 
-            }
-            humansCard: Card {
-
-            }
+            property bool humanMelding: false
+            onWaitingForMeld: humanMelding = true;
+            onMelded: humanMelding = false;
 
             property bool waitingForCard: false
             humanPlayer: Player {
@@ -110,7 +110,7 @@ Page2Form {
                         Card { id: aiHidden7 },
                         Card { id: aiHidden8 }
                     ] //card
-                    meldedCards: [
+                   meldedCards: [
                         Card { id: aiMelded1 },
                         Card { id: aiMelded2 },
                         Card { id: aiMelded3 },
@@ -135,41 +135,29 @@ Page2Form {
         } //GameData
 
         HumanCardRow {
+            id: humanHidden
             //property bool wantCard: gameData.waitingForCard
         }
 
         Row {
-            anchors.verticalCenter: parent.verticalCenter;
-            anchors.left: parent.left;
-            Rectangle {
-                //width: 80; height: 100;
-                width: root.cardWidth; height: root.cardHeight;
-               // Image {  source: "content/gfx/b1fv.bmp" }
-                Image {  source: root.backImage }
-            }
-            Rectangle {
-                //width: 80; height: 100;
-                width: root.cardWidth; height: root.cardHeight;
-                Image { source: faceCard.image }
-            }
+            anchors.bottom: humanHidden.top
+            CardImage { image: melded1.image; rowPos: 0; }
+            CardImage { image: melded2.image; rowPos: 1; }
+            CardImage { image: melded3.image; rowPos: 2; }
+            CardImage { image: melded4.image; rowPos: 3; }
+            CardImage { image: melded5.image; rowPos: 4; }
+            CardImage { image: melded6.image; rowPos: 5; }
+            CardImage { image: melded7.image; rowPos: 6; }
+            CardImage { image: melded8.image; rowPos: 7; }
         } //Row
 
-        Row {
-            anchors.centerIn: parent;
-            Rectangle {
-                //width: 80; height: 100;
-                width: root.cardWidth; height: root.cardHeight;
-                //Image {  source: "content/gfx/up.png" }
-                //Image {  source: aiHand.aiPlayedCardImage }
-                Image {  source: gameData.aisCard.image }
-            }
-            Rectangle {
-                //width: 80; height: 100;
-                width: root.cardWidth; height: root.cardHeight;
-                //Image { source: "content/gfx/down.png" }
-                //Image {  source: humanHand.humanPlayedCardImage }
-                Image {  source: gameData.humansCard.image }
-            }
+        StockCards {
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+        } //Row
+
+        TrickCards {
+            anchors.centerIn: parent
         } //Row
 
         Row {
@@ -194,7 +182,12 @@ Page2Form {
 
 
         AiCardRow {
+            id: aiHidden
         }
+
+        AiMeldRow {
+            anchors.top: aiHidden.bottom
+        } //Row
 
 /*
         Button {

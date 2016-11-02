@@ -59,6 +59,16 @@ void Card::setCard(int cardId, int newLink)
     emit cardChanged();
 }
 
+void Card::copyCard(const Card &card)
+{
+    rank = card.rank;
+    suit = card.suit;
+    cardId = card.cardId;
+    imageFile = card.imageFile;
+    link = card.link;
+    emit cardChanged();
+}
+
 void Card::clearCard()
 {
     rank = -1;
@@ -100,6 +110,26 @@ QString Card::getFilename(int rank, int suit)
         qWarning("rank or suit out of range in Card::getFilename");
         return emptyBitmap;
     }
+}
+
+void Card::clearMeldStatus()
+{
+    bool canMeld = false;
+    bool canSeven = false;
+    bool canMarry = false;
+    bool canFlush = false;
+    bool canBezique = false;
+    bool canFourKind = false;
+}
+
+bool Card::getCanMeld() const
+{
+    return canMeld;
+}
+
+void Card::setCanMeld(bool value)
+{
+    canMeld = value;
 }
 
 int Card::getLink() const

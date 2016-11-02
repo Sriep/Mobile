@@ -28,7 +28,7 @@ public:
     virtual Card *playSecondCard();
     virtual Card* playFirstCardEndgame();
     virtual Card *playSecondCardEndgame();
-    virtual void meld();
+    virtual void meld(int trumps, bool seven);
     void giveCard(int iCard);
     bool handEmpty() const;
     bool won() const;

@@ -77,21 +77,33 @@ Card* Player::playSecondCardEndgame()
     return playFirstCard();
 }
 
-void Player::meld(int trumps, bool seven)
+void Player::meldAuto(int trumps, bool seven)
 {
     hand->refreshMelds(trumps, seven);
+    meldRecursive(trumps, seven);
+}
+
+void Player::meldRecursive(int trumps, bool seven)
+{
     bool melded = false;
     int index = 0;
     while(!melded && index < BeziqueHand::HAND_SIZE)
     {
         if (hand->cards[index]->getCanMeld())
         {
-            hand->meld(index);
+            //incScore(hand->meld(index));
+            meldCard(index, trumps, seven);
             melded = true;
         }
         index++;
     }
-    if (melded) meld(trumps, seven);
+    if (melded) meldAuto(trumps, seven);
+}
+
+void Player::meldCard(int index, int trumps, bool seven)
+{
+    incScore(hand->meld(index));
+    hand->refreshMelds(trumps, seven);
 }
 
 void Player::giveCard(int iCard)
@@ -115,9 +127,13 @@ bool Player::canMeld()
 {
     QList<Card*>::const_iterator i;
     for ( i = hand->cards.constBegin() ; i != hand->cards.constEnd() ; ++i )
-        if (!(**i).getCanMeld())
-            return false;
-    return true;
+        if ((**i).getCanMeld())
+            return true;
+    //for ( int i = 0 ; i < hand->cards.size() ; i++ )
+    //{
+    //    if (hand->cards[i]->
+    //}
+    return false;
 }
 
 int Player::getScore() const

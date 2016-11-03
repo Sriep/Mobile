@@ -3,7 +3,8 @@ import QtQuick 2.0
 Row {
     //id: humanHidden
     spacing: 5
-    anchors.bottom: parent.bottom
+    //anchors.bottom: parent.bottom
+    width: root.cardWidth; height: root.cardHeight;
     CardImage { image: hidden1.image; rowPos: 0; canMeld: hidden1.canMeld }
     CardImage { image: hidden2.image; rowPos: 1; canMeld: hidden2.canMeld }
     CardImage { image: hidden3.image; rowPos: 2; canMeld: hidden3.canMeld }

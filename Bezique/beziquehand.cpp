@@ -360,10 +360,6 @@ int BeziqueHand::meld(int index)
 {
     if (!cards[index]->canMeld) qWarning("melding not possable");
 
-    //int ii = index;
-    //QList<int> m;
-    //m.append(ii);
-
     QList<int> meld;
     meld.append(index);
     int score = 0;

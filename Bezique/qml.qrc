@@ -108,5 +108,6 @@
         <file>StockCards.qml</file>
         <file>TrickCards.qml</file>
         <file>AiMeldRow.qml</file>
+        <file>HumanMeldRow.qml</file>
     </qresource>
 </RCC>

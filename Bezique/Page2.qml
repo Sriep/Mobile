@@ -136,60 +136,52 @@ Page2Form {
            }
         } //GameData
 
-        HumanCardRow {
-            id: humanHidden
-            //property bool wantCard: gameData.waitingForCard
-        }
+        Column {
+            spacing: 5
+           // anchors.left: parent.left
+           // anchors.verticalCenter: parent.verticalCenter
 
-        Row {
-            anchors.bottom: humanHidden.top
-            CardImage { image: melded1.image; rowPos: 0; }
-            CardImage { image: melded2.image; rowPos: 1; }
-            CardImage { image: melded3.image; rowPos: 2; }
-            CardImage { image: melded4.image; rowPos: 3; }
-            CardImage { image: melded5.image; rowPos: 4; }
-            CardImage { image: melded6.image; rowPos: 5; }
-            CardImage { image: melded7.image; rowPos: 6; }
-            CardImage { image: melded8.image; rowPos: 7; }
-        } //Row
+            AiCardRow {
+                id: aiHidden
+                width: root.cardWidth; height: root.cardHeight;
+            }
 
-        StockCards {
-            anchors.left: parent.left
-            anchors.verticalCenter: parent.verticalCenter
-        } //Row
+            AiMeldRow {
+                //anchors.top: aiHidden.bottom
+                width: root.cardWidth; height: root.cardHeight;
+            } //Row
 
-        TrickCards {
-            anchors.centerIn: parent
-        } //Row
+            Rectangle {
+                width: 100; height: 10;
+                Text {
+                   //horizontalAlignment: Text.AlignTop
+                   text : "computer: " + gameData.aiPlayer.score.toString()
+                }
+            }
+            StockCards {
+                id: stock;
+                width: root.cardWidth; height: root.cardHeight;
+                //anchors.left: parent.left
+               // anchors.verticalCenter: parent.verticalCenter
+            } //Row
 
-        Row {
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.right: parent.rigth
-            Column {
-                spacing: 20
-                //Rectangle{
-                    Text {
-                       horizontalAlignment: Text.AlignRight
-                       text : "computer: " + gameData.aiPlayer.score.toString()
-                    }
-               // }
-              //  Rectangle {
-                    Text {
-                        horizontalAlignment: Text.AlignRight
-                        text : "human: " + gameData.humanPlayer.score.toString()
-                    }
-               // }
+            Rectangle {
+                width: 100; height: 10;
+                Text {
+                    //horizontalAlignment: Text.AlignBottom
+                    text : "human: " + gameData.humanPlayer.score.toString()
+                }
+            }
+
+            HumanMeldRow {
+                width: root.cardWidth; height: root.cardHeight;
+            } //Row
+
+            HumanCardRow {
+                width: root.cardWidth; height: root.cardHeight;
+                id: humanHidden
             }
         }
-
-
-        AiCardRow {
-            id: aiHidden
-        }
-
-        AiMeldRow {
-            anchors.top: aiHidden.bottom
-        } //Row
 
 /*
         Button {

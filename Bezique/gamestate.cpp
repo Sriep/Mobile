@@ -49,11 +49,6 @@ void GameState::init()
     QObject::connect(followToTrick, SIGNAL(entered()), this->gameData, SLOT(followToTrick()));
     QObject::connect(meld, SIGNAL(entered()), this->gameData, SLOT(meld()));
 
-    //QObject::connect(mainGameTrick, SIGNAL(entered()), this, SLOT(playMainTrick()));
-    //mainGameTrick->addTransition(this, SIGNAL(trickFinished()), mainGameTrick);
-    //mainGameTrick->addTransition(this, SIGNAL(startEndgame()), endGameTrick);
-    //mainGameTrick->addTransition(this, SIGNAL(gameOver()), cleanUp);
-
     QObject::connect(endGameTrick, SIGNAL(entered()), this->gameData, SLOT(playEndTrick()));
     endGameTrick->addTransition(this->gameData, SIGNAL(trickFinished()), endGameTrick);
     endGameTrick->addTransition(this->gameData, SIGNAL(handOver()), dealCards);
@@ -74,77 +69,7 @@ void GameState::init()
 
     this->setInitialState(cutForDeal);
 }
-/*
-void GameState::switchActivePlayer()
-{
-    activePlayer = activePlayer == player1 ? player2 : player1;
-}
 
-void GameState::cutForDeal()
-{
-    activePlayer = rand() % 2 ? player1 : player2;
-    emit deckCut();
-}
-
-void GameState::dealCards()
-{
-    deck.shuffle();
-    player1->dealtHand(deck.dealHand());
-    player2->dealtHand(deck.dealHand());
-    faceCard = new Card(deck.peekBottom());
-    trumps = faceCard->getSuit();
-    emit handsDealt();
-}
-
-void GameState::playMainTrick()
-{
-    Card* firstCard = activePlayer->playFirstCard();
-    switchActivePlayer();
-    Card* secondCard = activePlayer->playSecondCard();
-
-    activePlayer = firstCard->beats(*secondCard, trumps) ? player1 : player2;
-    if (Card::Ace == firstCard->getRank() || Card::Ten == firstCard->getRank())
-        activePlayer->incScore(10);
-    if (Card::Ace == secondCard->getRank() || Card::Ten == secondCard->getRank())
-        activePlayer->incScore(10);
-
-    activePlayer->meld();
-    if (activePlayer->won())
-        emit gameOver();
-    player1->giveCard(deck.dealTop());
-    player2->giveCard(deck.dealTop());
-    if (deck.empty())
-        emit startEndgame();
-    else
-        emit trickFinished();
-}
-
-void GameState::playEndTrick()
-{
-    Card* firstCard = activePlayer->playFirstCardEndgame();
-    switchActivePlayer();
-    Card* secondCard = activePlayer->playSecondCardEndgame();
-
-    activePlayer = firstCard->beats(*secondCard, trumps) ? player1 : player2;
-    if (Card::Ace == firstCard->getRank() || Card::Ten == firstCard->getRank())
-        activePlayer->incScore(10);
-    if (Card::Ace == secondCard->getRank() || Card::Ten == secondCard->getRank())
-        activePlayer->incScore(10);
-
-    if (activePlayer->won())
-        emit gameOver();
-    if (player1->handEmpty())
-    {
-        activePlayer->incScore(10);
-        if (activePlayer->won())
-            emit gameOver();
-        else
-            emit handOver();
-    }
-    else
-        emit trickFinished();
-}
-*/
 void GameState::endGame()
 {
 

@@ -13,19 +13,22 @@ Rectangle {
     property int rowPos: 0
     property bool melded: false
     border.width: {
-        if (image === root.emptyImage) return 0;
-        if (gameData.waitingForCard)
-            return 2;
-        if (gameData.humanMelding && canMeld)
+        if (image === root.emptyImage)
+            return 0;
+        if (gameData.waitingForCard
+            || (gameData.humanMelding && canMeld) )
             return 2;
         return 0;
     }
     border.color: {
-        if (gameData.humanMelding
-                && canMeld
-                && cardImage.image !== root.emptyImage)
-            return "red";
-        return "yellow";
+        if (cardImage.image !== root.emptyImage) {
+            if (gameData.humanMelding)  {
+                if (canMeld)
+                    return "red";
+            } else if (gameData.waitingForCard) {
+                return "yellow";
+            }
+        }
     }
 
     Image { source: cardImage.image }
@@ -35,12 +38,11 @@ Rectangle {
         signal playedCardIndex(int rowPos);
         onClicked: {
             if (gameData.waitingForCard) {
-                //gameData.humansCard = rowPos;
                 gameData.waitingForCard = false;
                 gameData.cardPlayed(rowPos, melded);
             } else if (gameData.humanMelding) {
                 gameData.humanMelding = false;
-                gameData.humanMelding(true, rowPos);
+                gameData.humanMeld(true, rowPos);
             }
         }
     }

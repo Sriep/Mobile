@@ -134,7 +134,7 @@ void GameData::followToTrick()
         //aisCard = activePlayer->playFirstCard();
         aisCard = activePlayer->playFirstCard();
         emit changedAisCard();
-        switchActivePlayer();
+        //switchActivePlayer();
         emit followedToTrick();
     }
    else
@@ -163,11 +163,44 @@ void GameData::cardPlayed(int index, bool melded)
     }
 }
 
+
+
+void GameData::meld()
+{
+    if (activePlayer == aiPlayer )
+        activePlayer = humansCard->beats(*aisCard, trumps) ? humanPlayer : aiPlayer;
+    else
+        activePlayer = aisCard->beats(*humansCard, trumps) ? aiPlayer : humanPlayer;
+
+    if (Card::Ace == humansCard->getRank() || Card::Ten == humansCard->getRank())
+        activePlayer->incScore(10);
+    if (Card::Ace == aisCard->getRank() || Card::Ten == aisCard->getRank())
+        activePlayer->incScore(10);
+
+    emit trickFinished();
+    // activePlayer->getHand()->refreshMelds(trumps, meldedSeven);
+    if (activePlayer->isAi())
+    {
+        activePlayer->meldAuto(trumps, meldedSeven);
+        finishTrick();
+    }
+    else
+    {
+        humanPlayer->getHand()->refreshMelds(trumps, meldedSeven);
+        if (humanPlayer->canMeld())
+            emit waitingForMeld();
+        else
+            finishTrick();
+    }
+}
+
+// call from qml
 void GameData::humanMeld(bool meldMade, int index)
 {
     if (meldMade) {
-        humanPlayer->getHand()->meld(index);
-        humanPlayer->getHand()->refreshMelds(trumps, meldedSeven);
+        humanPlayer->meldCard(index, trumps, meldedSeven);
+        //humanPlayer->getHand()->meld(index);
+        //humanPlayer->getHand()->refreshMelds(trumps, meldedSeven);
         if (humanPlayer->canMeld())
             emit waitingForMeld();
         else
@@ -189,45 +222,6 @@ void GameData::finishTrick()
         emit melded();
 }
 
-void GameData::meld()
-{
-    if (activePlayer == aiPlayer )
-        activePlayer = humansCard->beats(*aisCard, trumps) ? humanPlayer : aiPlayer;
-    else
-        activePlayer = aisCard->beats(*humansCard, trumps) ? aiPlayer : humanPlayer;
-
-    if (Card::Ace == humansCard->getRank() || Card::Ten == humansCard->getRank())
-        activePlayer->incScore(10);
-    if (Card::Ace == aisCard->getRank() || Card::Ten == aisCard->getRank())
-        activePlayer->incScore(10);
-
-    emit trickFinished();
-    // activePlayer->getHand()->refreshMelds(trumps, meldedSeven);
-    if (activePlayer->isAi())
-    {
-        finishTrick();
-    }
-    else
-    {
-        humanPlayer->getHand()->refreshMelds(trumps, meldedSeven);
-        if (humanPlayer->canMeld())
-            emit waitingForMeld();
-        else
-            finishTrick();
-    }
-
-}
-/*
-void GameData::appendCard(QQmlListProperty<Card> *list, Card *card)
-{
-    return humanPlayer->getHand()->appendCard(list, card);
-}
-
-QQmlListProperty<Card> GameData::getCards()
-{
-    return humanPlayer->getHand()->getCards();
-}
-*/
 void GameData::switchActivePlayer()
 {
     activePlayer = activePlayer == aiPlayer ? humanPlayer : aiPlayer;

@@ -10,14 +10,9 @@
 class GameData : public QQuickItem
 {
     Q_OBJECT
-    Q_PROPERTY(Card* faceCard READ getFaceCard
-               WRITE setFaceCard NOTIFY changedFaceCard)
-   // Q_PROPERTY(int humansCardIndex READ getHumansCardIndex
-   //            WRITE setHumansCardIndex NOTIFY changedHumansCardIndex)
-   // Q_PROPERTY(int aisCardIndex READ getAisCardIndex
-   //            WRITE setAisCardIndex NOTIFY changedAisCardIndex)
-     Q_PROPERTY(Card* humansCard READ getHumansCard WRITE setHumansCard NOTIFY changedHumansCard)
-     Q_PROPERTY(Card* aisCard READ getAisCard WRITE setAisCard NOTIFY changedAisCard)
+    Q_PROPERTY(Card* faceCard READ getFaceCard WRITE setFaceCard NOTIFY changedFaceCard)
+    Q_PROPERTY(Card* humansCard READ getHumansCard WRITE setHumansCard NOTIFY changedHumansCard)
+    Q_PROPERTY(Card* aisCard READ getAisCard WRITE setAisCard NOTIFY changedAisCard)
 
     Q_PROPERTY(Player* humanPlayer READ getHumanPlayer WRITE setHumanPlayer)
     Q_PROPERTY(Player* aiPlayer READ getAiPlayer WRITE setAiPlayer)
@@ -29,13 +24,6 @@ public:
     void setFaceCard(Card *value);
 
     static const int NO_MELD = -1;
-
-    //BeziqueHand *playerHand() const;
-    //BeziqueHand *aiHand() const;
-    //void setPlayerHand(BeziqueHand* hand);
-    //void setAiHand(BeziqueHand* hand);
-
-    //QQmlListProperty<Card> getCards();
 
     Q_INVOKABLE void startNewGame();
     Q_INVOKABLE void cardPlayed(int index, bool melded = false);
@@ -76,9 +64,6 @@ private slots:
     void playEndTrick();
     void meld();
 private:
-    //static void appendCard(QQmlListProperty<Card> *list, Card *card);
-    //void appendCard(QQmlListProperty<Card> *list, Card *card);
-
     void switchActivePlayer();
     void init();
     void finishTrick();

@@ -44,8 +44,10 @@ Card::Card(const Card &card, QQuickItem *parent)
 
 bool Card::beats(const Card &c, int trumps) const
 {
-    if ( suit == c.suit ) return rank > c.rank;
-    if ( c.suit == trumps ) return false;
+    if ( suit == c.suit )
+        return rank >= c.rank;
+    if ( c.suit == trumps )
+        return false;
     return true;
 }
 

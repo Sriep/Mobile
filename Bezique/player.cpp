@@ -1,19 +1,29 @@
 #include "player.h"
+#include "aievaluate.h"
 
 Player::Player(QQuickItem *parent)
     : QQuickItem(parent), score(0)
 {
-    //init();
 }
 
-//Player::Player()
-//{
-//    //init();
-//}
 
 void Player::init()
 {
-   // hand = new BeziqueHand();
+}
+
+Player *Player::getOpponent() const
+{
+    return opponent;
+}
+
+void Player::setOpponent(Player *value)
+{
+    opponent = value;
+}
+
+UnseenCards Player::getUnseen()
+{
+    return unseen;
 }
 
 void Player::setAi(bool value)
@@ -29,12 +39,12 @@ bool Player::isAi() const
 void Player::dealtHand(QList<int> dealtHand)
 {
     hand->resetCards(dealtHand);
+    unseen.haveSeenHand(hand);
 }
 
-Card* Player::playFirstCard()
+int Player::semiRandomCard() const
 {
-    //hand->playCard(0);
-    int minRank = 15;
+/*    int minRank = 15;
     int index = 0;
     for ( int i = 0 ; i < BeziqueHand::HAND_SIZE ; i++ )
     {
@@ -53,13 +63,27 @@ Card* Player::playFirstCard()
 
     int meldedId = hand->findLinkMelded(index);
     if (meldedId != BeziqueHand::NOT_FOUND)
-        return hand->playCard(meldedId, true);
+        return (int) hand->playCard(meldedId, true);
 
     int hiddenId = hand->findLinkHidden(index);
     if (hiddenId != BeziqueHand::NOT_FOUND)
-        return hand->playCard(hiddenId, false);
+        return (int) hand->playCard(hiddenId, false);*/
+    return 0;
+}
 
-    return hand->playCard(index);
+void Player::setGameData(GameData *value)
+{
+    gameData = value;
+}
+
+Card* Player::playFirstCard()
+{
+    AiEvaluate aiEvaluate(hand
+                           , opponent->hand->meldedCardList()
+                           , &unseen
+                           , gameData
+                         );
+    return hand->playCard(aiEvaluate());
 }
 
 Card* Player::playSecondCard()
@@ -69,12 +93,12 @@ Card* Player::playSecondCard()
 
 Card *Player::playFirstCardEndgame()
 {
-    return playFirstCard();
+    return hand->playCard(semiRandomCard());
 }
 
 Card* Player::playSecondCardEndgame()
 {
-    return playFirstCard();
+    return hand->playCard(semiRandomCard());
 }
 
 void Player::meldAuto(int trumps, bool seven)
@@ -91,7 +115,6 @@ void Player::meldRecursive(int trumps, bool seven)
     {
         if (hand->cards[index]->getCanMeld())
         {
-            //incScore(hand->meld(index));
             meldCard(index, trumps, seven);
             melded = true;
         }
@@ -102,7 +125,7 @@ void Player::meldRecursive(int trumps, bool seven)
 
 void Player::meldCard(int index, int trumps, bool seven)
 {
-    incScore(hand->meld(index));
+    incScore(hand->meld(index, opponent));
     hand->refreshMelds(trumps, seven);
 }
 
@@ -129,10 +152,6 @@ bool Player::canMeld()
     for ( i = hand->cards.constBegin() ; i != hand->cards.constEnd() ; ++i )
         if ((**i).getCanMeld())
             return true;
-    //for ( int i = 0 ; i < hand->cards.size() ; i++ )
-    //{
-    //    if (hand->cards[i]->
-    //}
     return false;
 }
 

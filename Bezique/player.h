@@ -8,6 +8,7 @@
 #include "beziquehand.h"
 #include "gamestate.h"
 #include "card.h"
+#include "unseencards.h"
 
 using namespace std;
 
@@ -48,15 +49,24 @@ public:
 
     bool isAi() const;
     void setAi(bool value);
+    UnseenCards getUnseen();
+
+    Player *getOpponent() const;
+    void setOpponent(Player *value);
+
+    void setGameData(GameData *value);
+
 signals:
     void scoreChanged();
-    //void enginPlayedCard(const Card* playedCard);
-    //void enginPlayedCard(int index);
 protected:
     BeziqueHand* hand;
 private:
     void init();
+    int semiRandomCard() const;
 
+    Player* opponent;
+    UnseenCards unseen;
+    GameData* gameData;
     int score = 0;
     bool ai;
 };

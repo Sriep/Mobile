@@ -18,6 +18,7 @@ public:
     int peekBottom() const;
     int dealTop();
     bool empty() const;
+    int size() const;
 private:
     void stackDeck();
     QList<int> deck;

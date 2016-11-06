@@ -4,23 +4,23 @@ CONFIG += c++11
 HEADERS += \
     beziqueDeck.h \
     player.h \
-    aiplayer.h \
-    controledplayer.h \
     card.h \
     test.h \
     beziquehand.h \
     gamedata.h \
-    gamestate.h
+    gamestate.h \
+    unseencards.h \
+    aievaluate.h
 SOURCES += main.cpp \
     beziqueDeck.cpp \
     player.cpp \
-    aiplayer.cpp \
-    controledplayer.cpp \
     card.cpp \
     test.cpp \
     beziquehand.cpp \
     gamedata.cpp \
-    gamestate.cpp
+    gamestate.cpp \
+    unseencards.cpp \
+    aievaluate.cpp
 
 RESOURCES += qml.qrc
 

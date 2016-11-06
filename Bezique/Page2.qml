@@ -12,8 +12,24 @@ Page2Form {
         height: 480
         property int cardWidth: 46
         property int cardHeight: 66
-        property string emptyImage: "content/gfx/onePixel.png"
+        property string emptyImage: "content/gfx/onePixelGreen.png"
         property string backImage: "content/gfx/tinydeck/back111.gif"
+        property string backColor: "green"
+
+        Rectangle {
+            width: 640; height: 480;
+            color: root.backColor;
+            MouseArea {
+                id: gameArea
+                anchors.fill: parent;
+                onClicked: {
+                    if (gameData.drawCard) {
+                        gameData.statusMessage = ""
+                        gameData.finishTrick();
+                    }
+                }
+            }
+        }
 
         GameData {
             id: gameData
@@ -28,13 +44,29 @@ Page2Form {
             humansCard: Card {}
 
             property bool aiPlayedCard: aisCard.image !== root.emptyImage
-
+            property string statusMessage: "Play"
             property bool waitingForCard: false
-            onWaitingForCard: waitingForCard = true;
-
             property bool humanMelding: false
-            onWaitingForMeld: { humanMelding = true; waitingForCard = false; }
-            onMelded: humanMelding = false;
+            property bool drawCard: false
+
+            onWaitingForCard: {
+                waitingForCard = true;
+                statusMessage = "Play";
+            }
+
+            onWaitingForMeld: {
+                humanMelding = true;
+                waitingForCard = false;
+                statusMessage = "Meld";
+            }
+            onMelded: {
+                humanMelding = false;
+                statusMessage = ""
+            }
+            onDrawing: {
+                drawCard = true;
+                statusMessage = "Draw";
+            }
 
             humanPlayer: Player {
                 id: humanPlayer
@@ -78,8 +110,6 @@ Page2Form {
                     ] //card
 
                 } // playerHand: BeziqueHand
-
-
             } // humanPlayer: Player
 
            aiPlayer: Player {
@@ -141,6 +171,7 @@ Page2Form {
            // anchors.left: parent.left
            // anchors.verticalCenter: parent.verticalCenter
 
+            //color: "green";
             AiCardRow {
                 id: aiHidden
                 width: root.cardWidth; height: root.cardHeight;
@@ -152,8 +183,10 @@ Page2Form {
             } //Row
 
             Rectangle {
+                color: root.backColor;
                 width: 100; height: 10;
                 Text {
+                   color: "white"
                    //horizontalAlignment: Text.AlignTop
                    text : "computer: " + gameData.aiPlayer.score.toString()
                 }
@@ -166,8 +199,10 @@ Page2Form {
             } //Row
 
             Rectangle {
+                color: root.backColor;
                 width: 100; height: 10;
                 Text {
+                    color: "white"
                     //horizontalAlignment: Text.AlignBottom
                     text : "human: " + gameData.humanPlayer.score.toString()
                 }

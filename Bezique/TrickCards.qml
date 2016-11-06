@@ -5,15 +5,16 @@ import QtQuick.Controls 2.0
 import Bezique 1.0
 
 Row {
+  spacing: 5
   Rectangle {
-    //width: 80; height: 100;
+    color: root.backColor;
     width: root.cardWidth; height: root.cardHeight;
     //Image {  source: "content/gfx/up.png" }
     //Image {  source: aiHand.aiPlayedCardImage }
     Image {  source: gameData.aisCard.image }
   }
   Rectangle {
-    //width: 80; height: 100;
+    color: root.backColor;
     width: root.cardWidth; height: root.cardHeight;
     //Image { source: "content/gfx/down.png" }
     //Image {  source: humanHand.humanPlayedCardImage }

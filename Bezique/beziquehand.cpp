@@ -1,5 +1,9 @@
-#include "beziquehand.h"
 #include <QtDebug>
+
+
+#include "beziquehand.h"
+#include "player.h"
+#include "unseencards.h"
 
 BeziqueHand::BeziqueHand(QQuickItem *parent)
     : QQuickItem(parent)//, isHidden(isHidden)
@@ -13,10 +17,6 @@ BeziqueHand::~BeziqueHand()
 
 void BeziqueHand::resetCards(QList<int> newHand)
 {
-    //if (newHand.size() > cards.size()) qFatal("Hand length mismatch");
-    //for (int i = 0; i < newHand.size(); ++i) {
-    //    cards[i]->setCard(newHand[i]);
-    //}
     if (newHand.size() > cards.size()) qFatal("Hand length mismatch");
     for (int i = 0; i < newHand.size(); ++i) {
         cards[i]->setCard(newHand[i], i);
@@ -94,7 +94,17 @@ void BeziqueHand::refreshMelds(int trumps, bool seven)
     }
     for ( int i = 0 ; i < cards.size() ; i++ )
     {
-        cards[i]->setCanMeld(canMeld(i, trumps, seven));
+        bool can = canMeld(i, trumps, seven);
+        cards[i]->setCanMeld(can);
+        int hiddenLink = findLinkHidden(i);
+        if (hiddenLink != NOT_FOUND)
+            hiddedCards[i]->setCanMeld(can);
+        else
+        {
+            int meldedLink = findLinkMelded(i);
+            if (meldedLink != NOT_FOUND)
+                meldedCards[meldedLink]->setCanMeld(can);
+        }
     }
 }
 
@@ -356,7 +366,7 @@ bool BeziqueHand::canMeldAce(int index, int trumps) const
     return canMeld;
 }
 
-int BeziqueHand::meld(int index)
+int BeziqueHand::meld(int index, Player* opponent)
 {
     if (!cards[index]->canMeld) qWarning("melding not possable");
 
@@ -369,7 +379,7 @@ int BeziqueHand::meld(int index)
     else if (cards[index]->canFourKind) score = findFourKind(meld);
     else if (cards[index]->canMarry) score = findMarrage(meld);
 
-    moveMelded(meld, score);
+    moveMelded(meld, opponent);
     return score;
 }
 
@@ -393,11 +403,13 @@ int BeziqueHand::findFlush(QList<int> &meld) const
             }
         }
     }
+    cards[meld.first()]->hasFlushed = true;
     return SCORE_FLUSH;
 }
 
 int BeziqueHand::findBezique(QList<int> &meld) const
 {
+    cards[meld.first()]->hasBeziqued = true;
     int findRank = cards[meld.first()]->getRank() == Card::Rank::Jack ?
                 Card::Rank::Queen : Card::Rank::Jack;
     int findSuit = cards[meld.first()]->getSuit() == Card::Suit::Spades ?
@@ -413,10 +425,13 @@ int BeziqueHand::findBezique(QList<int> &meld) const
             return SCORE_BEZIQUE;
         }
     }
+    qWarning() << "End of BeziqueHand::findBezique, no bezique found.";
+    return 0;
 }
 
 int BeziqueHand::findFourKind(QList<int> &meld) const
 {
+    cards[meld.first()]->hasFourKinded = true;
     int rankMatches = 1;
     int rank = cards[meld.first()]->getRank();
     int i = 0;
@@ -434,20 +449,23 @@ int BeziqueHand::findFourKind(QList<int> &meld) const
     }
     switch (rank) {
     case Card::Rank::Jack:
-        return SCORE_FOURK_JACKS;
+        return SCORE_FOUR_JACKS;
     case Card::Rank::Queen:
-        return SCORE_FOURK_QUEENS;
+        return SCORE_FOUR_QUEENS;
     case Card::Rank::King:
-        return SCORE_FOURK_KINGS;
+        return SCORE_FOUR_KINGS;
     case Card::Rank::Ace:
-        return SCORE_FOURK_ACES;
+        return SCORE_FOUR_ACES;
     default:
         break;
     }
+    qWarning() << "End of BeziqueHand::findFourKind, no findFourKind found.";
+    return 0;
 }
 
 int BeziqueHand::findMarrage(QList<int> &meld) const
 {
+    cards[meld.first()]->hasMarried = true;
     int findRank = cards[meld.first()]->getRank() == Card::Rank::Queen ?
                 Card::Rank::King : Card::Rank::Queen;
     int findSuit = cards[meld.first()]->getSuit();
@@ -462,9 +480,11 @@ int BeziqueHand::findMarrage(QList<int> &meld) const
             return SCORE_MARRAGE;
         }
     }
+    qWarning() << "End of BeziqueHand::findMarrage, no Marrage found.";
+    return 0;
 }
 
-void BeziqueHand::moveMelded(const QList<int> &meld, int score)
+void BeziqueHand::moveMelded(const QList<int> &meld, Player* player)
 {
    // QList<int>::const_iterator i;
     for ( QList<int>::const_iterator  i = meld.begin(); i != meld.end(); ++i )
@@ -473,9 +493,10 @@ void BeziqueHand::moveMelded(const QList<int> &meld, int score)
         if (hiddenId != NOT_FOUND)
         {
             moveHiddenMelded(hiddenId);
-        }
-        else
-        {
+            if (player)
+            {
+                player->getUnseen().haveSeen(*cards[*i]);
+            }
         }
     }
 }
@@ -488,6 +509,112 @@ void BeziqueHand::moveHiddenMelded(int index)
         iMerge++;
     meldedCards[iMerge]->copyCard(*hiddedCards[index]);
     hiddedCards[index]->clearCard();
+}
+
+void BeziqueHand::moveMeldedHidden(int index)
+{
+    int iHide = 0;
+    while ( hiddedCards[iHide]->getLink() < HAND_SIZE
+            && iHide < HAND_SIZE )
+        iHide++;
+    hiddedCards[iHide]->copyCard(*hiddedCards[index]);
+    meldedCards[index]->clearCard();
+}
+
+void BeziqueHand::moveAllHidden()
+{
+    for ( int i = 0 ; i < meldedCards.size() ; i++ )
+    {
+        if (meldedCards[i]->getLink() != Card::EMPTY)
+        {
+            moveMeldedHidden(i);
+        }
+    }
+}
+
+int BeziqueHand::scoreMelds(int trumps) const
+{
+    int score = 0;
+    bool bezique = false;
+    bool flush = false;
+    bool doubleBezique = false;
+    int marrage[Card::Suit::NumSuits] = {false, false, false, false};
+    bool fourKind[5] = {false, false, false, false, false};
+
+    for ( int i=0 ; i<cards.length() ; i++ )
+    {
+        if (cards[i]->canBezique) bezique = true;
+        if (cards[i]->canFlush) flush = true;
+        if (cards[i]->canDoubleBezique) doubleBezique = true;
+        if (cards[i]->canMarry) marrage[cards[i]->getSuit()] = true;
+        if (cards[i]->canFourKind)
+            fourKind[cards[i]->getRank() - CONVERT_FLUSH_INDEX] = true;
+    }
+    score += bezique ? SCORE_BEZIQUE : 0;
+    score += flush ? SCORE_FLUSH : 0;
+    score += doubleBezique ? SCORE_DOUBLE_BEZIQUE : 0;
+    for ( int i=0 ; i < Card::Suit::NumSuits ; i++ )
+        if ( marrage[i])
+            score += i == trumps ? SCORE_ROYAL_MARRAGE : SCORE_MARRAGE;
+    for ( int j=0 ; j < 5 ; j++ )
+    {
+        if (fourKind[j])
+        {
+            switch (j) {
+            case 0:
+                score += SCORE_FOUR_JACKS;
+                break;
+            case 1:
+                score += SCORE_FOUR_QUEENS;
+                break;
+            case 2:
+                score += SCORE_FOUR_KINGS;
+                break;
+            case 4:
+                score += SCORE_FOUR_ACES;
+                break;
+            default:
+                break;
+            }
+        }
+    }
+
+    return score;
+}
+
+int BeziqueHand::countTensAces() const
+{
+    int count = 0;
+    for ( int i=0 ; i<cards.size() ; i++ )
+    {
+        if ( cards[i]->getRank() == Card::Rank::Ten
+             || cards[i]->getRank() == Card::Rank::Ace)
+            count++;
+    }
+    return count;
+}
+
+int BeziqueHand::count(Card::Rank rank, Card::Suit suit) const
+{
+    int count = 0;
+    for ( int i=0 ; i<cards.size() ; i++ )
+    {
+        if ( cards[i]->getRank() == rank
+             || cards[i]->getSuit() == suit)
+            count++;
+    }
+    return count;
+}
+
+int BeziqueHand::countRank(Card::Rank rank) const
+{
+    int count = 0;
+    for ( int i=0 ; i<cards.size() ; i++ )
+    {
+        if ( cards[i]->getRank() == rank )
+            count++;
+    }
+    return count;
 }
 
 QQmlListProperty<Card> BeziqueHand::getCards()
@@ -503,6 +630,16 @@ QQmlListProperty<Card> BeziqueHand::getMeldedCards()
 QQmlListProperty<Card> BeziqueHand::getHiddenCards()
 {
     return QQmlListProperty<Card>(this, 0, &BeziqueHand::appendHiddenCard, 0, 0, 0);
+}
+
+const QList<Card*> BeziqueHand::cardList() const
+{
+    return cards;
+}
+
+const QList<Card *> BeziqueHand::meldedCardList() const
+{
+    return meldedCards;
 }
 
 int BeziqueHand::findLinkHidden(int link) const

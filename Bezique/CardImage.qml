@@ -2,14 +2,10 @@ import QtQuick 2.0
 
 Rectangle {
     id: cardImage
-    //width: 80; height: 100;
+    color: root.backColor;
     width: root.cardWidth; height: root.cardHeight;
     property string image: "content/gfx/b1fv.bmp"
     property bool canMeld: false;
-
-    //property Card hcard: hidden1;
-    //property string image: hcard.image;
-
     property int rowPos: 0
     property bool melded: false
     border.width: {
@@ -28,6 +24,7 @@ Rectangle {
             } else if (gameData.waitingForCard) {
                 return "yellow";
             }
+            return "green";
         }
     }
 
@@ -42,7 +39,7 @@ Rectangle {
                 gameData.cardPlayed(rowPos, melded);
             } else if (gameData.humanMelding) {
                 gameData.humanMelding = false;
-                gameData.humanMeld(true, rowPos);
+                gameData.humanMeld(canMeld, rowPos);
             }
         }
     }

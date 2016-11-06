@@ -109,5 +109,7 @@
         <file>TrickCards.qml</file>
         <file>AiMeldRow.qml</file>
         <file>HumanMeldRow.qml</file>
+        <file>AiCardImage.qml</file>
+        <file>content/gfx/onePixelGreen.png</file>
     </qresource>
 </RCC>

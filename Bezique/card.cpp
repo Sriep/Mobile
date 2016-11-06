@@ -1,11 +1,10 @@
 #include <QtDebug>
 #include "card.h"
-
+/*
 void Card::cardPlayed(int index, int x, int y)
 {
     qDebug("Mouse pressed");
-    //qDebug  << "Mouse pressed index " << index;
-}
+}*/
 
 Card::Card()
 {
@@ -15,9 +14,9 @@ Card::Card(int iCard, QQuickItem *parent)
     : QQuickItem(parent)
     , rank(iCard / 8)
     , suit(iCard % 4)
-    , cardId(iCard)
     , imageFile(getFilename(rank, suit))
-    , link(link)
+    , link(0)
+    , cardId(iCard)
 {
 }
 
@@ -25,9 +24,9 @@ Card::Card(const Card *card, QQuickItem *parent)
     : QQuickItem(parent)
     , rank(card->rank)
     , suit(card->suit)
-    , cardId(card->cardId)
     , imageFile(card->imageFile)
     , link(card->link)
+    , cardId(card->cardId)
 {
 
 }
@@ -36,9 +35,9 @@ Card::Card(const Card &card, QQuickItem *parent)
     : QQuickItem(parent)
     , rank(card.rank)
     , suit(card.suit)
-    , cardId(card.cardId)
     , imageFile(card.imageFile)
     , link(card.link)
+    , cardId(card.cardId)
 {
 }
 
@@ -54,7 +53,7 @@ bool Card::beats(const Card &c, int trumps) const
 void Card::setCard(int cardId, int newLink)
 {
     rank = cardId / 8;
-    suit  = cardId % 4;
+    suit  = (Suit) (cardId % 4);
     cardId = cardId;
     imageFile = getFilename(rank, suit);
     link = newLink;
@@ -74,7 +73,7 @@ void Card::copyCard(const Card &card)
 void Card::clearCard()
 {
     rank = -1;
-    suit  = -1;
+    suit  = Suit::NumSuits;
     cardId = -1;
     imageFile = emptyBitmap;
     link = EMPTY;
@@ -116,12 +115,16 @@ QString Card::getFilename(int rank, int suit)
 
 void Card::clearMeldStatus()
 {
-    bool canMeld = false;
-    bool canSeven = false;
-    bool canMarry = false;
-    bool canFlush = false;
-    bool canBezique = false;
-    bool canFourKind = false;
+    if (canMeld)
+    {
+        canMeld = false;
+        emit canMeldChanged();
+    }
+    canSeven = false;
+    canMarry = false;
+    canFlush = false;
+    canBezique = false;
+    canFourKind = false;
 }
 
 bool Card::getCanMeld() const
@@ -131,7 +134,11 @@ bool Card::getCanMeld() const
 
 void Card::setCanMeld(bool value)
 {
-    canMeld = value;
+    if (canMeld != value)
+    {
+        canMeld = value;
+        emit canMeldChanged();
+    }
 }
 
 int Card::getLink() const
@@ -146,7 +153,7 @@ void Card::setLink(int value)
 
 void Card::setSuit(int value)
 {
-    suit = value;
+    suit = (Suit) value;
 }
 
 void Card::setRank(int value)

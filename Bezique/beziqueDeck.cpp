@@ -53,6 +53,11 @@ bool BeziqueDeck::empty() const
     return deck.empty();
 }
 
+int BeziqueDeck::size() const
+{
+    return deck.size();
+}
+
 void BeziqueDeck::stackDeck()
 {
     deck.reserve(beziqueDeckSize);

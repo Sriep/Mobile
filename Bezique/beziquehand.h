@@ -5,7 +5,24 @@
 
 #include "card.h"
 
+
 //using namespace std;
+class Player;
+class BeziqueHand;
+
+static const int SCORE_SEVEN = 10;
+static const int SCORE_MARRAGE = 20;
+static const int SCORE_ROYAL_MARRAGE = 40;
+static const int SCORE_FLUSH = 250;
+static const int SCORE_BEZIQUE = 40;
+static const int SCORE_DOUBLE_BEZIQUE = 500;
+static const int SCORE_ACE = 10;
+static const int SCORE_TEN = 10;
+static const int SCORE_LAST_TRICK = 10;
+static const int SCORE_FOUR_JACKS = 40;
+static const int SCORE_FOUR_QUEENS = 60;
+static const int SCORE_FOUR_KINGS = 80;
+static const int SCORE_FOUR_ACES = 100;
 
 class BeziqueHand : public QQuickItem
 {
@@ -20,20 +37,6 @@ public:
     static const int CONVERT_FLUSH_INDEX = 3;
     static const int NOT_FOUND = -1;
 
-    static const int SCORE_SEVEN = 10;
-    static const int SCORE_MARRAGE = 20;
-    static const int SCORE_ROYAL_MARRAGE = 40;
-    static const int SCORE_FLUSH = 250;
-    static const int SCORE_BEZIQUE = 40;
-    static const int SCORE_DOUBLE_BEZIQUE = 500;
-    static const int SCORE_ACE = 10;
-    static const int SCORE_TEN = 10;
-    static const int SCORE_LAST_TRICK = 10;
-    static const int SCORE_FOURK_JACKS = 40;
-    static const int SCORE_FOURK_QUEENS = 60;
-    static const int SCORE_FOURK_KINGS = 80;
-    static const int SCORE_FOURK_ACES = 100;
-
     BeziqueHand(QQuickItem *parent = 0);
     virtual ~BeziqueHand();
 
@@ -44,11 +47,18 @@ public:
     Card *playCard(int index, bool melded = false);
     int findLink(int index, bool melded = false);
     void refreshMelds(int trumps, bool seven);
-    int meld(int index);
+    int meld(int index, Player *opponent);
+    void moveAllHidden();
+    int scoreMelds(int trumps) const;
+    int countTensAces() const;
+    int count(Card::Rank rank, Card::Suit suit) const;
+    int countRank(Card::Rank rank) const;
 
     QQmlListProperty<Card> getCards();
     QQmlListProperty<Card> getMeldedCards();
     QQmlListProperty<Card> getHiddenCards();
+    const QList<Card*> cardList() const;
+    const QList<Card*> meldedCardList() const;
 
 signals:
     void enginPlayedCard(int index);
@@ -68,8 +78,9 @@ private:
     int findBezique(QList<int>& meld) const;
     int findFourKind(QList<int>& meld) const;
     int findMarrage(QList<int>& meld) const;
-    void moveMelded(const QList<int>& meld, int score);
+    void moveMelded(const QList<int>& meld, Player *player = 0);
     void moveHiddenMelded(int index);
+    void moveMeldedHidden(int index);
 
     static void appendCard(QQmlListProperty<Card> *list, Card *card);
     static void appendMeldedCard(QQmlListProperty<Card> *list, Card *card);

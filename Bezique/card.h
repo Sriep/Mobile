@@ -11,7 +11,7 @@ class Card : public QQuickItem
 
     Q_PROPERTY(bool canMeld READ getCanMeld WRITE setCanMeld NOTIFY canMeldChanged)
 public:
-    Q_INVOKABLE void cardPlayed(int index, int x, int y);
+    //Q_INVOKABLE void cardPlayed(int index, int x, int y);
     friend class BeziqueHand;
 
     enum Rank { Seven = 0, Eight, Nine, Jack, Queen, King, Ten, Ace, NumRanks };
@@ -20,7 +20,7 @@ public:
 
     const QString rankStr[8]  {"07", "08", "09", "11", "12", "13", "10", "01"};
     const QString suitStr[4]  {"d", "c", "h", "s"};
-    const QString emptyBitmap = "content/gfx/onePixel.png";
+    const QString emptyBitmap = "content/gfx/onePixelGreen.png";
     const QString backBitmap = "content/gfx/tinydeck/back111.gif";
     const int maxId = 63;
 
@@ -63,6 +63,9 @@ private:
     int suit;
     QString imageFile = emptyBitmap;
 
+    int link = EMPTY;
+    int cardId;
+
     bool canMeld = false;
     bool hasMarried = false;
     bool hasBeziqued = false;
@@ -75,10 +78,6 @@ private:
     bool canBezique = false;
     bool canDoubleBezique = false;
     bool canFourKind = false;
-
-    int link = EMPTY;
-    int cardId;
-
 };
 
 #endif // CARD_H

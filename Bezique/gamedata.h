@@ -28,6 +28,7 @@ public:
     Q_INVOKABLE void startNewGame();
     Q_INVOKABLE void cardPlayed(int index, bool melded = false);
     Q_INVOKABLE void humanMeld(bool meldMade, int index = NO_MELD);
+    Q_INVOKABLE void finishTrick();
 
     Player *getHumanPlayer() const;
     void setHumanPlayer(Player *value);
@@ -38,6 +39,12 @@ public:
     void setAisCard(Card* value);
     Card* getHumansCard() const;
     void setHumansCard(Card* value);
+
+    int getTrumps() const;
+
+    bool getMeldedSeven() const;
+
+    BeziqueDeck* getDeck();
 
 signals:
     void deckCut();
@@ -55,18 +62,23 @@ signals:
     void changedFaceCard();
     void changedHumansCard();
     void changedAisCard();
+    void playEndTrick();
+    void drawing();
     //void cardsChanged();
 private slots:
     void cutForDeal();
     void dealCards();
     void leadToTrick();
     void followToTrick();
-    void playEndTrick();
+    void ScoreEndTrick();
     void meld();
+    void endHand();
+    void endGame();
 private:
     void switchActivePlayer();
     void init();
-    void finishTrick();
+
+    void ResetBoardForEndgame();
 
     // qml properties
     Card* faceCard;

@@ -19,25 +19,14 @@ public:
     virtual ~GameState();
 
 private slots:
-    //void cutForDeal();
-    //void dealCards();
-    //void playMainTrick();
-    //void playEndTrick();
-    void endGame();
+   // void endGame();
 public:
 signals:
 
 private:
     void init();
-    void switchActivePlayer();
+    //void switchActivePlayer();
 
-  //  BeziqueDeck deck;
-   // int startPlayer;
-   // std::shared_ptr<Player> player1;
-    //std::shared_ptr<Player> player2;
-   // std::shared_ptr<Player> activePlayer;
-    //int trumps;
-    //Card* faceCard;
     GameData* gameData;
 };
 

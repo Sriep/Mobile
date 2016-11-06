@@ -2,8 +2,7 @@
 #include <QFinalState>
 #include <cstdlib>
 #include "gamestate.h"
-#include "controledplayer.h"
-#include "aiplayer.h"
+#include "player.h"
 #include "card.h"
 #include "gamedata.h"
 
@@ -27,34 +26,41 @@ void GameState::init()
     QState *leadToTrick = new QState();
     QState *followToTrick = new QState();
     QState *meld = new QState();
-    //QState *mainGameTrick = new QState();
 
-    QState *endGameTrick = new QState();
+    QState *leadEndTrick = new QState();
+    QState *followEndTrick = new QState();
+    QState *finishEndTrick = new QState();
+
     QFinalState *cleanUp = new QFinalState();
 
     QObject::connect(cutForDeal, SIGNAL(entered()), this->gameData, SLOT(cutForDeal()));
     cutForDeal->addTransition(this->gameData, SIGNAL(deckCut()), dealCards);
 
     QObject::connect(dealCards, SIGNAL(entered()), this->gameData, SLOT(dealCards()));
-    //dealCards->addTransition(this, SIGNAL(handsDealt()), mainGameTrick);
     dealCards->addTransition(this->gameData, SIGNAL(handsDealt()), leadToTrick);
 
     leadToTrick->addTransition(this->gameData, SIGNAL(leadCardPlayed()), followToTrick);
     followToTrick->addTransition(this->gameData, SIGNAL(followedToTrick()), meld);
     meld->addTransition(this->gameData, SIGNAL(melded()), leadToTrick);
-    meld->addTransition(this->gameData, SIGNAL(startEndgame()), endGameTrick);
+    meld->addTransition(this->gameData, SIGNAL(startEndgame()), leadEndTrick);
     meld->addTransition(this->gameData, SIGNAL(gameOver()), cleanUp);
 
     QObject::connect(leadToTrick, SIGNAL(entered()), this->gameData, SLOT(leadToTrick()));
     QObject::connect(followToTrick, SIGNAL(entered()), this->gameData, SLOT(followToTrick()));
     QObject::connect(meld, SIGNAL(entered()), this->gameData, SLOT(meld()));
 
-    QObject::connect(endGameTrick, SIGNAL(entered()), this->gameData, SLOT(playEndTrick()));
-    endGameTrick->addTransition(this->gameData, SIGNAL(trickFinished()), endGameTrick);
-    endGameTrick->addTransition(this->gameData, SIGNAL(handOver()), dealCards);
-    endGameTrick->addTransition(this->gameData, SIGNAL(gameOver()), cleanUp);
+    //QObject::connect(endGameTrick, SIGNAL(entered()), this->gameData, SLOT(playEndTrick()));
+    leadEndTrick->addTransition(this->gameData, SIGNAL(leadCardPlayed()), followEndTrick);
+    followEndTrick->addTransition(this->gameData, SIGNAL(leadCardPlayed()), finishEndTrick);
+    finishEndTrick->addTransition(this->gameData, SIGNAL(trickFinished()), leadEndTrick);
+    finishEndTrick->addTransition(this->gameData, SIGNAL(handOver()), dealCards);
+    finishEndTrick->addTransition(this->gameData, SIGNAL(gameOver()), cleanUp);
 
-    QObject::connect(cleanUp, SIGNAL(entered()), this, SLOT(endGame()));
+    QObject::connect(leadEndTrick, SIGNAL(entered()), this->gameData, SLOT(leadToTrick()));
+    QObject::connect(followEndTrick, SIGNAL(entered()), this->gameData, SLOT(followToTrick()));
+    QObject::connect(finishEndTrick, SIGNAL(entered()), this->gameData, SLOT(ScoreEndTrick()));
+
+    QObject::connect(cleanUp, SIGNAL(entered()), this->gameData, SLOT(endGame()));
 
     this->addState(cutForDeal);
     this->addState(dealCards);
@@ -62,18 +68,16 @@ void GameState::init()
     this->addState(leadToTrick);
     this->addState(followToTrick);
     this->addState(meld);
-    //this->addState(mainGameTrick);
+;
+    this->addState(leadEndTrick);
+    this->addState(followEndTrick);
+    this->addState(finishEndTrick);
 
-    this->addState(endGameTrick);
     this->addState(cleanUp);
 
     this->setInitialState(cutForDeal);
 }
 
-void GameState::endGame()
-{
-
-}
 
 
 

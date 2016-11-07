@@ -14,7 +14,8 @@ public:
     AiEvaluate(BeziqueHand* hand
                , QList<Card*> opponentMelds
                , UnseenCards* unseen
-               , GameData* gameData);
+               , GameData* gameData
+               , bool leadCard);
 
     int operator()() const;
 
@@ -39,19 +40,24 @@ private:
     float probOfBezique() const;
     float probOfDoubleBezique() const;
     float probOfMarrage(Card::Suit suit) const;
+    float probWinTrick(Card* card) const;
 
+    float probDealtCard(Card::Rank rank, Card::Suit suit) const;
+    float probDealt(float numLeft, float tricks, float unseenCount) const;
+    float probDealtN(int n, float numLeft) const;
 
     BeziqueHand* hand;
     QList<Card*> opponentMelds;
     QList<Card*> aiCards;
     UnseenCards* unseen;
-    int unseenCount;
+    float unseenCount;
     Card::Suit trumps;
     bool sevenPlayed;
     Card* opponentLead;
     Card* faceCard;
     BeziqueDeck* deck;
-    int tricksLeft;
+    float tricksLeft;
+    bool leadCard;
 };
 
 #endif // AIEVALUATE_H

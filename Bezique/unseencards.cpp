@@ -54,11 +54,14 @@ void UnseenCards::haveSeenHand(BeziqueHand *hand)
 
 int UnseenCards::numUnseen(int rank, int suit) const
 {
-    return unseenCards[rank][suit];
+    //Dump();
+    int count = unseenCards[rank][suit];
+    return count;
 }
 
 int UnseenCards::numUnseenRank(int rank) const
 {
+    //Dump();
     int count = 0;
     for ( int j = 0 ; j < Card::NumSuits ; j++ )
         count += unseenCards[rank][j];
@@ -67,6 +70,7 @@ int UnseenCards::numUnseenRank(int rank) const
 
 int UnseenCards::numUnseen() const
 {
+    //Dump();
     int count;
     for ( int i = 0 ; i < Card::NumRanks ; i++ )
         for ( int j = 0 ; j < Card::NumSuits ; j++ )
@@ -91,7 +95,7 @@ int UnseenCards::unseenThatBeat(Card *card, int trumps) const
     return count;
 }
 
-void UnseenCards::Dump()
+void UnseenCards::Dump() const
 {
     qDebug() << "Unseen cards\n";
     for ( int i = 0 ; i < unseenCards.size() ; i++ )

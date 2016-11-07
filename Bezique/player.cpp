@@ -1,5 +1,6 @@
 #include "player.h"
 #include "aievaluate.h"
+#include "gamedata.h"
 
 Player::Player(QQuickItem *parent)
     : QQuickItem(parent), score(0)
@@ -78,17 +79,12 @@ void Player::setGameData(GameData *value)
 
 Card* Player::playFirstCard()
 {
-    AiEvaluate aiEvaluate(hand
-                           , opponent->hand->meldedCardList()
-                           , &unseen
-                           , gameData
-                         );
-    return hand->playCard(aiEvaluate());
+    return aiPlayCard(true);
 }
 
 Card* Player::playSecondCard()
 {
-    return playFirstCard();
+    return aiPlayCard(false);
 }
 
 Card *Player::playFirstCardEndgame()
@@ -99,6 +95,27 @@ Card *Player::playFirstCardEndgame()
 Card* Player::playSecondCardEndgame()
 {
     return hand->playCard(semiRandomCard());
+}
+
+Card *Player::aiPlayCard(bool leadCard)
+{
+    AiEvaluate aiEvaluate(hand
+                           , opponent->hand->meldedCardList()
+                           , &unseen
+                           , gameData
+                           , leadCard
+                         );
+    int index = aiEvaluate();
+    int hiddenId = hand->findLinkHidden(index);
+    if (BeziqueHand::NOT_FOUND != hiddenId)
+    {
+        return hand->playCard(hiddenId, false);
+    }
+    else
+    {
+        int meldedId = hand->findLinkMelded(index);
+        return hand->playCard(meldedId, true);
+    }
 }
 
 void Player::meldAuto(int trumps, bool seven)
@@ -125,8 +142,24 @@ void Player::meldRecursive(int trumps, bool seven)
 
 void Player::meldCard(int index, int trumps, bool seven)
 {
-    incScore(hand->meld(index, opponent));
+    if (hand->cards[index]->getRank() == Card::Rank::Seven
+            && hand->cards[index]->getSuit() == trumps)
+    {
+        meldSeven(index);
+        seven = true;
+        incScore(SCORE_SEVEN);
+    }
+    else
+    {
+        incScore(hand->meld(index, opponent));
+    }
     hand->refreshMelds(trumps, seven);
+}
+
+void Player::meldSeven(int index)
+{
+    hand->cards[index]->copyCard(*gameData->getFaceCard());
+    gameData->meldSeven();
 }
 
 void Player::giveCard(int iCard)

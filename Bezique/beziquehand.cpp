@@ -37,12 +37,12 @@ void BeziqueHand::addCard(int cardId)
 {
     //cards.at(index)->setCard(cardId);
     int iCard = 0;
-    while ( cards[iCard]->getLink() < HAND_SIZE && iCard < HAND_SIZE )
+    while ( iCard < HAND_SIZE && cards[iCard]->getLink() < HAND_SIZE )
         iCard++;
     cards.at(iCard)->setCard(cardId, iCard);
 
     int iHide = 0;
-    while ( hiddedCards[iHide]->getLink() < HAND_SIZE && iHide < HAND_SIZE )
+    while ( iHide < HAND_SIZE && hiddedCards[iHide]->getLink() < HAND_SIZE )
         iHide++;
     hiddedCards.at(iHide)->setCard(cardId, iCard);
 }
@@ -600,7 +600,7 @@ int BeziqueHand::count(Card::Rank rank, Card::Suit suit) const
     for ( int i=0 ; i<cards.size() ; i++ )
     {
         if ( cards[i]->getRank() == rank
-             || cards[i]->getSuit() == suit)
+             && cards[i]->getSuit() == suit)
             count++;
     }
     return count;
@@ -615,6 +615,33 @@ int BeziqueHand::countRank(Card::Rank rank) const
             count++;
     }
     return count;
+}
+
+int BeziqueHand::countMelded() const
+{
+    int count = 0;
+    for ( int i=0 ; i< meldedCards.size() ; i++ )
+    {
+        if ( indexMelded(i) )
+            count++;
+    }
+    return count;
+}
+
+int BeziqueHand::indexMelded(int index) const
+{
+    return meldedCards[index]->link == NOT_FOUND;
+}
+
+const QList<Card *> BeziqueHand::meldedCardList() const
+{
+    QList<Card *> melds;
+    for ( int i=0 ; i< meldedCards.size() ; i++ )
+    {
+        if ( indexMelded(i) )
+            melds.append(meldedCards[i]);
+    }
+    return melds;
 }
 
 QQmlListProperty<Card> BeziqueHand::getCards()
@@ -635,11 +662,6 @@ QQmlListProperty<Card> BeziqueHand::getHiddenCards()
 const QList<Card*> BeziqueHand::cardList() const
 {
     return cards;
-}
-
-const QList<Card *> BeziqueHand::meldedCardList() const
-{
-    return meldedCards;
 }
 
 int BeziqueHand::findLinkHidden(int link) const

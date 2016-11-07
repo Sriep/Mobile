@@ -16,6 +16,7 @@ public:
     void shuffle();
     QList<int> dealHand();
     int peekBottom() const;
+    void swapBottom(int id);
     int dealTop();
     bool empty() const;
     int size() const;

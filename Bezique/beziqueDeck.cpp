@@ -32,12 +32,15 @@ QList<int> BeziqueDeck::dealHand()
     return hand;
 }
 
-
-
 int BeziqueDeck::peekBottom() const
 {
     //return Card::intToCard(deck.front());
     return deck.front();
+}
+
+void BeziqueDeck::swapBottom(int id)
+{
+    deck[0] = id;
 }
 
 int BeziqueDeck::dealTop()

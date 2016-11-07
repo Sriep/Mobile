@@ -9,8 +9,7 @@ Row {
     Rectangle {
         color: root.backColor;
         width: root.cardWidth; height: root.cardHeight;
-        // Image {  source: "content/gfx/b1fv.bmp" }
-        Image {  source: root.backImage }
+        Image {  source: gameData.stockImage }
     }
     Rectangle {
         color: root.backColor;
@@ -20,36 +19,21 @@ Row {
     Rectangle {
         color: root.backColor;
         width: root.cardWidth; height: root.cardHeight;
-        //Image { source: faceCard.image }
     }
     Rectangle {
         id: statusText
         color: root.backColor;
         width: root.cardWidth*3; height: root.cardHeight;
 
-        //property string message: "Play"
-        //Image { source: faceCard.image }
         Text {
             horizontalAlignment:  Text.AlignHCenter
-            //font.bold: bold
             font.family: "Helvetica"
             font.pointSize: 20
             color: "white"
             text: gameData.statusMessage
         }
     }
-/*
-    Rectangle {
-        color: root.backColor;
-        width: root.cardWidth; height: root.cardHeight;
-        //Image { source: faceCard.image }
-    }
-    Rectangle {
-        color: root.backColor;
-        width: root.cardWidth; height: root.cardHeight;
-        //Image { source: faceCard.image }
-    }
-*/
+
     TrickCards {
        // anchors.centerIn: parent
     } //Row

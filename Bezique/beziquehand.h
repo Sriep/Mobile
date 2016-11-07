@@ -53,6 +53,8 @@ public:
     int countTensAces() const;
     int count(Card::Rank rank, Card::Suit suit) const;
     int countRank(Card::Rank rank) const;
+    int countMelded() const;
+    int indexMelded(int index) const;
 
     QQmlListProperty<Card> getCards();
     QQmlListProperty<Card> getMeldedCards();

@@ -24,8 +24,8 @@ Rectangle {
             } else if (gameData.waitingForCard) {
                 return "yellow";
             }
-            return "green";
         }
+        return "green"
     }
 
     Image { source: cardImage.image }

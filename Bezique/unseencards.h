@@ -18,7 +18,7 @@ public:
     int numUnseen() const;
     int unseenThatBeat(Card* card, int trumps) const;
 
-    void Dump();
+    void Dump() const;
 private:
     QList<QList<int> > unseenCards;
 };

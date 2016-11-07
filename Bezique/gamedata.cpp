@@ -50,6 +50,19 @@ void GameData::setAiPlayer(Player *value)
     aiPlayer->setGameData(this);
 }
 
+void GameData::meldSeven()
+{
+    int sevenTrumps = BeziqueHand::HAND_SIZE * trumps;
+    deck.swapBottom(sevenTrumps);
+    faceCard->setCard(sevenTrumps);
+    emit changedFaceCard();
+    if (activePlayer != aiPlayer)
+        aiPlayer->getUnseen().haveSeen(deck.peekBottom());
+    if (activePlayer != humanPlayer)
+        humanPlayer->getUnseen().haveSeen(deck.peekBottom());
+    meldedSeven = true;
+}
+
 Player *GameData::getHumanPlayer() const
 {
     return humanPlayer;
@@ -120,7 +133,7 @@ void GameData::followToTrick()
 {
     if (activePlayer->isAi())
     {
-        aisCard = activePlayer->playFirstCard();
+        aisCard = activePlayer->playSecondCard();
         emit changedAisCard();
         emit followedToTrick();
     }
@@ -150,6 +163,7 @@ void GameData::cardPlayed(int index, bool melded)
 
 void GameData::meld()
 {
+    trickOver = false;
     if (activePlayer == aiPlayer )
         activePlayer = humansCard->beats(*aisCard, trumps) ? humanPlayer : aiPlayer;
     else
@@ -160,7 +174,7 @@ void GameData::meld()
     if (Card::Ace == aisCard->getRank() || Card::Ten == aisCard->getRank())
         activePlayer->incScore(10);
 
-    emit trickFinished();
+    //emit trickFinished();
     if (activePlayer->isAi())
     {
         activePlayer->meldAuto(trumps, meldedSeven);
@@ -185,7 +199,6 @@ void GameData::endHand()
 
 void GameData::endGame()
 {
-
 }
 
 // call from qml
@@ -207,6 +220,10 @@ void GameData::humanMeld(bool meldMade, int index)
 
 void GameData::finishTrick()
 {
+    if (trickOver) return;
+    emit trickFinished();
+    trickOver = true;
+
     humansCard = NULL;
     aisCard = NULL;
 
@@ -234,6 +251,7 @@ void GameData::ResetBoardForEndgame()
 {
     aiPlayer->getHand()->moveAllHidden();
     humanPlayer->getHand()->moveAllHidden();
+    faceCard->clearCard();
 }
 
 BeziqueDeck *GameData::getDeck()
@@ -258,6 +276,7 @@ void GameData::switchActivePlayer()
 
 void GameData::ScoreEndTrick()
 {
+    trickOver = false;
     Card* firstCard = activePlayer->playFirstCardEndgame();
     switchActivePlayer();
     Card* secondCard = activePlayer->playSecondCardEndgame();
@@ -278,8 +297,8 @@ void GameData::ScoreEndTrick()
         else
             emit handOver();
     }
-    else
-        emit trickFinished();
+   // else
+      //  emit trickFinished();
 }
 
 

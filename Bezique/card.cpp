@@ -96,6 +96,11 @@ int Card::getSuit() const
     return suit;
 }
 
+QString Card::getName() const
+{
+    return QString(rankName[rank] + suitStr[suit]);
+}
+
 QString Card::getFilename(int rank, int suit)
 {
     if (Rank::NumRanks > rank && Suit::NumSuits > suit

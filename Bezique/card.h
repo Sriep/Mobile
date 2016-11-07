@@ -19,6 +19,7 @@ public:
     static const int EMPTY = 8;
 
     const QString rankStr[8]  {"07", "08", "09", "11", "12", "13", "10", "01"};
+    const QString rankName[8]  {"7", "8", "9", "J", "Q", "K", "T", " A"};
     const QString suitStr[4]  {"d", "c", "h", "s"};
     const QString emptyBitmap = "content/gfx/onePixelGreen.png";
     const QString backBitmap = "content/gfx/tinydeck/back111.gif";
@@ -40,6 +41,7 @@ public:
     // qml Properties access
     int getRank() const;
     int getSuit() const;
+    QString getName() const;
     void setRank(int value);
     void setSuit(int value);
     QString getImage() const;

@@ -34,6 +34,7 @@ public:
     void setHumanPlayer(Player *value);
     Player *getAiPlayer() const;
     void setAiPlayer(Player *value);
+    void meldSeven();
 
     Card* getAisCard() const;
     void setAisCard(Card* value);
@@ -81,19 +82,20 @@ private:
     void ResetBoardForEndgame();
 
     // qml properties
-    Card* faceCard;
-    Player* aiPlayer;
-    Player* humanPlayer;
-    Card* aisCard;
-    Card* humansCard;
+    Card* faceCard = NULL;
+    Player* aiPlayer = NULL;
+    Player* humanPlayer = NULL;
+    Card* aisCard = NULL;
+    Card* humansCard = NULL;
     bool meldedSeven = false;
 
     int startPlayer;
-    Player* activePlayer;
+    Player* activePlayer = NULL;
     bool isPlayFirstCard = false;
     int trumps;
     BeziqueDeck deck;
     GameState game;
+    bool trickOver = false;
 };
 
 #endif // GAMEDATA_H

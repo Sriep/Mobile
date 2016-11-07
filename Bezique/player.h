@@ -25,12 +25,13 @@ public:
     //Player();
 
     void dealtHand(QList<int> dealtHand);
-    virtual Card *playFirstCard();
-    virtual Card *playSecondCard();
-    virtual Card* playFirstCardEndgame();
-    virtual Card *playSecondCardEndgame();
-    virtual void meldAuto(int trumps, bool seven);
-    virtual void meldRecursive(int trumps, bool seven);
+    Card *playFirstCard();
+    Card *playSecondCard();
+    Card* playFirstCardEndgame();
+    Card *playSecondCardEndgame();
+    Card* aiPlayCard(bool leadCard);
+    void meldAuto(int trumps, bool seven);
+    void meldRecursive(int trumps, bool seven);
     void meldCard(int index, int trumps, bool seven);
     void giveCard(int iCard);
     bool handEmpty() const;
@@ -38,6 +39,7 @@ public:
     void incScore(int increment);
     Card* playCard(int index, bool melded = false);
     bool canMeld();
+    void meldSeven(int index);
 
     int getScore() const;
     void setScore(int value);

@@ -1,12 +1,13 @@
 #include "player.h"
 #include "aievaluate.h"
 #include "gamedata.h"
+#include "aiendplay.h"
+#include "scores.h"
 
 Player::Player(QQuickItem *parent)
     : QQuickItem(parent), score(0)
 {
 }
-
 
 void Player::init()
 {
@@ -20,6 +21,14 @@ Player *Player::getOpponent() const
 void Player::setOpponent(Player *value)
 {
     opponent = value;
+}
+
+bool Player::cardExists(int index, bool melded)
+{
+    if (melded)
+        return hand->meldedCards[index]->getLink() != Card::EMPTY;
+    else
+        return hand->hiddedCards[index]->getLink() != Card::EMPTY;
 }
 
 UnseenCards Player::getUnseen()
@@ -77,24 +86,20 @@ void Player::setGameData(GameData *value)
     gameData = value;
 }
 
-Card* Player::playFirstCard()
+Card* Player::playFirstCard(bool isEndgame)
 {
-    return aiPlayCard(true);
+    if (!isEndgame)
+        return aiPlayCard(true);
+    else
+        return playFirstCardEndgame();
 }
 
-Card* Player::playSecondCard()
+Card* Player::playSecondCard(Card *leadCard, bool isEndgame)
 {
-    return aiPlayCard(false);
-}
-
-Card *Player::playFirstCardEndgame()
-{
-    return hand->playCard(semiRandomCard());
-}
-
-Card* Player::playSecondCardEndgame()
-{
-    return hand->playCard(semiRandomCard());
+    if (!isEndgame)
+        return aiPlayCard(false);
+    else
+        return playSecondCardEndgame(leadCard);
 }
 
 Card *Player::aiPlayCard(bool leadCard)
@@ -116,6 +121,24 @@ Card *Player::aiPlayCard(bool leadCard)
         int meldedId = hand->findLinkMelded(index);
         return hand->playCard(meldedId, true);
     }
+}
+
+Card *Player::playFirstCardEndgame()
+{
+    AiEndPlay aiEndPlay(hand->hiddedCards
+                        , opponent->hand->hiddedCards
+                        , (Card::Suit) gameData->getTrumps()
+                        , NULL);
+    return hand->playCard(aiEndPlay());
+}
+
+Card* Player::playSecondCardEndgame(Card *firstCard)
+{
+    AiEndPlay aiEndPlay(hand->hiddedCards
+                        , opponent->hand->hiddedCards
+                        , (Card::Suit) gameData->getTrumps()
+                        , firstCard);
+    return hand->playCard(aiEndPlay());
 }
 
 void Player::meldAuto(int trumps, bool seven)
@@ -159,6 +182,8 @@ void Player::meldCard(int index, int trumps, bool seven)
 void Player::meldSeven(int index)
 {
     hand->cards[index]->copyCard(*gameData->getFaceCard());
+    hand->cards[index]->setLink(index);
+    hand->syncIndex(index);
     gameData->meldSeven();
 }
 

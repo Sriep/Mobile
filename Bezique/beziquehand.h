@@ -9,7 +9,7 @@
 //using namespace std;
 class Player;
 class BeziqueHand;
-
+/*
 static const int SCORE_SEVEN = 10;
 static const int SCORE_MARRAGE = 20;
 static const int SCORE_ROYAL_MARRAGE = 40;
@@ -23,7 +23,7 @@ static const int SCORE_FOUR_JACKS = 40;
 static const int SCORE_FOUR_QUEENS = 60;
 static const int SCORE_FOUR_KINGS = 80;
 static const int SCORE_FOUR_ACES = 100;
-
+*/
 class BeziqueHand : public QQuickItem
 {
     Q_OBJECT
@@ -61,6 +61,10 @@ public:
     QQmlListProperty<Card> getHiddenCards();
     const QList<Card*> cardList() const;
     const QList<Card*> meldedCardList() const;
+
+    int getLink(int index, bool meldRow) const;
+    void syncIndex(int index);
+    void syncHands();
 
 signals:
     void enginPlayedCard(int index);

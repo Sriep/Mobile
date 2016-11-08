@@ -25,10 +25,10 @@ public:
     //Player();
 
     void dealtHand(QList<int> dealtHand);
-    Card *playFirstCard();
-    Card *playSecondCard();
+    Card *playFirstCard(bool isEndgame = false);
+    Card *playSecondCard(Card* leadCard = NULL, bool isEndgame = false);
     Card* playFirstCardEndgame();
-    Card *playSecondCardEndgame();
+    Card *playSecondCardEndgame(Card* firstCard);
     Card* aiPlayCard(bool leadCard);
     void meldAuto(int trumps, bool seven);
     void meldRecursive(int trumps, bool seven);
@@ -55,7 +55,7 @@ public:
 
     Player *getOpponent() const;
     void setOpponent(Player *value);
-
+    bool cardExists(int index, bool melded);
     void setGameData(GameData *value);
 
 signals:

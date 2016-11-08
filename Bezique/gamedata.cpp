@@ -52,7 +52,7 @@ void GameData::setAiPlayer(Player *value)
 
 void GameData::meldSeven()
 {
-    int sevenTrumps = BeziqueHand::HAND_SIZE * trumps;
+    int sevenTrumps = trumps;
     deck.swapBottom(sevenTrumps);
     faceCard->setCard(sevenTrumps);
     emit changedFaceCard();
@@ -108,16 +108,20 @@ void GameData::dealCards()
     faceCard->setCard(deck.peekBottom());
     aiPlayer->getUnseen().haveSeen(deck.peekBottom());
     humanPlayer->getUnseen().haveSeen(deck.peekBottom());
+    humanPlayer->getHand()->syncHands();
+    aiPlayer->getHand()->syncHands();
+
     emit changedFaceCard();
     trumps = faceCard->getSuit();
     emit handsDealt();
+
 }
 
 void GameData::leadToTrick()
 {
     if (activePlayer->isAi())
     {
-        aisCard = activePlayer->playFirstCard();
+        aisCard = activePlayer->playFirstCard(isEndgame);
         emit changedAisCard();
         switchActivePlayer();
         emit leadCardPlayed();
@@ -133,7 +137,7 @@ void GameData::followToTrick()
 {
     if (activePlayer->isAi())
     {
-        aisCard = activePlayer->playSecondCard();
+        aisCard = activePlayer->playSecondCard(humansCard, isEndgame);
         emit changedAisCard();
         emit followedToTrick();
     }
@@ -146,7 +150,9 @@ void GameData::followToTrick()
 
 void GameData::cardPlayed(int index, bool melded)
 {
-    if (isPlayFirstCard)
+    if (!activePlayer->cardExists(index, melded))
+        emit waitingForCard();
+    else if (isPlayFirstCard)
     {
         humansCard = activePlayer->playCard(index, melded);
         emit changedHumansCard();
@@ -194,28 +200,29 @@ void GameData::meld()
 
 void GameData::endHand()
 {
-
+    isEndgame = false;
 }
 
 void GameData::endGame()
 {
+    isEndgame  = false;
 }
 
 // call from qml
-void GameData::humanMeld(bool meldMade, int index)
+void GameData::humanMeld(bool meldMade, int index, bool meldRow)
 {
     if (meldMade)
     {
-        humanPlayer->meldCard(index, trumps, meldedSeven);
+        humanPlayer->meldCard(humanPlayer->getHand()->getLink(index, meldRow)
+                              , trumps
+                              , meldedSeven);
         if (humanPlayer->canMeld())
             emit waitingForMeld();
         else
             emit drawing();
-            //finishTrick();
     }
     else
         emit drawing();
-       // finishTrick();
 }
 
 void GameData::finishTrick()
@@ -235,12 +242,15 @@ void GameData::finishTrick()
     humanPlayer->giveCard(humanCardId);
     aiPlayer->getUnseen().haveSeen(humanCardId);
     qDebug() << "Deck size: " << deck.size();
+    humanPlayer->getHand()->syncHands();
+    aiPlayer->getHand()->syncHands();
 
     if (activePlayer->won())
         emit gameOver();
     else if (deck.empty())
     {
         ResetBoardForEndgame();
+        isEndgame = true;
         emit startEndgame();
     }
     else
@@ -279,7 +289,7 @@ void GameData::ScoreEndTrick()
     trickOver = false;
     Card* firstCard = activePlayer->playFirstCardEndgame();
     switchActivePlayer();
-    Card* secondCard = activePlayer->playSecondCardEndgame();
+    Card* secondCard = activePlayer->playSecondCardEndgame(firstCard);
 
     activePlayer = firstCard->beats(*secondCard, trumps) ? aiPlayer : humanPlayer;
     if (Card::Ace == firstCard->getRank() || Card::Ten == firstCard->getRank())

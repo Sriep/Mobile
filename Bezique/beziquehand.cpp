@@ -1,6 +1,7 @@
 #include <QtDebug>
 
-
+#include "scores.h"
+#include "aiendplay.h"
 #include "beziquehand.h"
 #include "player.h"
 #include "unseencards.h"
@@ -8,7 +9,6 @@
 BeziqueHand::BeziqueHand(QQuickItem *parent)
     : QQuickItem(parent)//, isHidden(isHidden)
 {
-
 }
 
 BeziqueHand::~BeziqueHand()
@@ -35,7 +35,6 @@ bool BeziqueHand::isEmpty() const
 
 void BeziqueHand::addCard(int cardId)
 {
-    //cards.at(index)->setCard(cardId);
     int iCard = 0;
     while ( iCard < HAND_SIZE && cards[iCard]->getLink() < HAND_SIZE )
         iCard++;
@@ -68,9 +67,6 @@ Card* BeziqueHand::playCard(int index, bool melded)
         hiddedCards[index]->clearCard();
     }
 
-    //Card* playedCard = new Card( melded ? meldedCards[link] : hiddedCards[link]);
-    //melded ? meldedCards[index]->clearCard() : hiddedCards[index]->clearCard();
-
     emit enginPlayedCard(index);
     return playedCard;
 }
@@ -98,7 +94,7 @@ void BeziqueHand::refreshMelds(int trumps, bool seven)
         cards[i]->setCanMeld(can);
         int hiddenLink = findLinkHidden(i);
         if (hiddenLink != NOT_FOUND)
-            hiddedCards[i]->setCanMeld(can);
+            hiddedCards[hiddenLink]->setCanMeld(can);
         else
         {
             int meldedLink = findLinkMelded(i);
@@ -112,7 +108,8 @@ bool BeziqueHand::canMeld(int index, int trumps, bool seven) const
 {
     switch (cards[index]->getRank()) {
     case Card::Rank::Seven:
-        if (cards[index]->getSuit() == trumps && seven)
+        if (cards[index]->getSuit() == trumps &&
+                cards[index]->getRank() == seven)
         {
             cards[index]->canSeven = true;
             return true;
@@ -139,6 +136,8 @@ bool BeziqueHand::canMeldJack(int index, int trumps) const
     int countJacks =1;
     bool canMeld = false;
     bool flush[5] = {true, false, false, false, false};
+    int countBeziqueCards;
+    bool hasMeldedOneBezique;
     for ( int i = 0 ; i < cards.size() ; i++ )
     {
         if (index != i && cards[i]->getLink() != Card::EMPTY)
@@ -150,12 +149,16 @@ bool BeziqueHand::canMeldJack(int index, int trumps) const
                 break;
             case Card::Rank::Queen:
                 if (Card::Suit::Spades == cards[i]->getSuit()
-                        && Card::Suit::Diamonds == cards[index]->getSuit()
-                        && !cards[i]->hasBeziqued
-                        && !cards[index]->hasBeziqued)
-                {
-                    cards[index]->canBezique = true;
-                    canMeld = true;
+                        && Card::Suit::Diamonds == cards[index]->getSuit() )
+                {                    
+                    if (!cards[i]->hasBeziqued && !cards[index]->hasBeziqued)
+                    {
+                        cards[index]->canBezique = true;
+                        countBeziqueCards++;
+                        canMeld = true;
+                    }
+
+
                 }
                 if (!cards[i]->hasFlushed)
                     flush[1] = true;
@@ -523,12 +526,9 @@ void BeziqueHand::moveMeldedHidden(int index)
 
 void BeziqueHand::moveAllHidden()
 {
-    for ( int i = 0 ; i < meldedCards.size() ; i++ )
+    for ( int i = 0 ; i < cards.size() ; i++ )
     {
-        if (meldedCards[i]->getLink() != Card::EMPTY)
-        {
-            moveMeldedHidden(i);
-        }
+        hiddedCards[i]->copyCard(*cards[i]);
     }
 }
 
@@ -644,6 +644,66 @@ const QList<Card *> BeziqueHand::meldedCardList() const
     return melds;
 }
 
+int BeziqueHand::getLink(int index, bool meldRow) const
+{
+    if (meldRow)
+        return meldedCards[index]->getLink();
+    else
+        return hiddedCards[index]->getLink();
+}
+
+void BeziqueHand::syncIndex(int index)
+{
+    int hiddenIndex = findLinkHidden(index);
+    if (hiddenIndex != NOT_FOUND)
+        hiddedCards[hiddenIndex]->copyCard(*cards[index]);
+    else
+    {
+        int meldedIndex = findLinkMelded(index);
+        if (meldedIndex != NOT_FOUND)
+            meldedCards[meldedIndex]->copyCard(*cards[index]);
+    }
+}
+
+void BeziqueHand::syncHands()
+{
+    QList<int> meldLinks;
+    for ( int i=0 ; i<meldedCards.length() ; i++ )
+    {
+        if (meldedCards[i]->getLink() != NOT_FOUND)
+        {
+            meldLinks << meldedCards[i]->getLink();
+            //int hiddenId = findLinkHidden(meldedCards[i]->getLink());
+            //if (hiddenId != NOT_FOUND)
+            //    hiddedCards[hiddenId]->clearCard();
+        }
+    }
+    QList<Card*> splitSuits [Card::Suit::NumSuits];
+    for ( int s=0 ; s < Card::Suit::NumSuits ; s++ )
+    {
+        for ( int i=0 ; i < cards.length() ; i++ )
+        {
+            if (cards[i]->getSuit() == s
+                 && cards[i]->getLink() != NOT_FOUND)
+               rankSortAppend(splitSuits[s], cards[i]);
+        }
+    }
+    int hiddenId = 0;
+    for ( int s=0 ; s < Card::Suit::NumSuits ; s++ )
+    {
+        for ( int i=0 ; i < splitSuits[s].length() ; i++ )
+        {
+            if (meldLinks.indexOf(splitSuits[s][i]->getLink()) == -1)
+                hiddedCards[hiddenId++]->copyCard(*splitSuits[s][i]);
+        }
+    }
+    for ( int j=hiddenId ; j < hiddedCards.length() ; j++ )
+    {
+        hiddedCards[j]->clearCard();
+    }
+
+}
+
 QQmlListProperty<Card> BeziqueHand::getCards()
 {
     return QQmlListProperty<Card>(this, 0, &BeziqueHand::appendCard, 0, 0, 0);
@@ -666,6 +726,8 @@ const QList<Card*> BeziqueHand::cardList() const
 
 int BeziqueHand::findLinkHidden(int link) const
 {
+    if (link == NOT_FOUND)
+        return NOT_FOUND;
     for ( int i = 0 ; i < HAND_SIZE ; i++ )
     {
         if (hiddedCards[i]->getLink() == link)
@@ -676,6 +738,8 @@ int BeziqueHand::findLinkHidden(int link) const
 
 int BeziqueHand::findLinkMelded(int link) const
 {
+    if (link == NOT_FOUND)
+        return NOT_FOUND;
     for ( int i = 0 ; i < HAND_SIZE ; i++ )
     {
         if (meldedCards[i]->getLink() == link)

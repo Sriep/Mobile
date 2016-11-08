@@ -39,7 +39,7 @@ Rectangle {
                 gameData.cardPlayed(rowPos, melded);
             } else if (gameData.humanMelding) {
                 gameData.humanMelding = false;
-                gameData.humanMeld(canMeld, rowPos);
+                gameData.humanMeld(canMeld, rowPos, melded);
             }
         }
     }

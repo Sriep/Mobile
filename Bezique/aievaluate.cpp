@@ -3,6 +3,7 @@
 #include <math.h>
 #include <cmath>
 
+#include "scores.h"
 #include "aievaluate.h"
 #include "beziquehand.h"
 #include "unseencards.h"
@@ -12,7 +13,8 @@ AiEvaluate::AiEvaluate(BeziqueHand *hand
                        , QList<Card *> opponentMelds
                        , UnseenCards *unseen
                        , GameData* gameData
-                       , bool leadCard)
+                       , bool leadCard
+                       , int score)
     :   hand(hand)
         , opponentMelds(opponentMelds)
         , aiCards(hand->cardList())
@@ -25,6 +27,7 @@ AiEvaluate::AiEvaluate(BeziqueHand *hand
         , deck(gameData->getDeck())
         , tricksLeft((float) deck->size() / 2)
         , leadCard(leadCard)
+        , score(score)
 {
     //deck = gameData->getDeck();
 }
@@ -78,6 +81,8 @@ float AiEvaluate::evaluate(Card *card) const
         //default:
     }
     score += costOfLead() * probWinTrick(card);
+    if (card->getSuit() == trumps)
+        score += VALUE_OF_A_TURMP;
     //qDebug() << card->getRank() << card->getSuit() << "Cost of card: " << score;
     return score;
 }
@@ -210,7 +215,8 @@ float AiEvaluate::evaluateSeven(Card* card) const
     float value = 0.0;
     if (1 == hand->count(Card::Seven, trumps))
     {
-        value += evaluate(faceCard)/2;
+        if (faceCard->getRank() != Card::Seven)
+            value += evaluate(faceCard)/2;
     }
     return value;
 }
@@ -230,7 +236,7 @@ float AiEvaluate::evaluateTen(Card *card) const
     float value = 0.0;
     if (card->getSuit() == trumps && hand->count(Card::Rank::Ten, trumps) < 2)
     {
-        value += SCORE_FLUSH * probOfFlush()
+        value += valueFlush(score) * probOfFlush()
                   * ( 1 - probDealtCard((Card::Rank)card->getRank(), trumps));
     }
 
@@ -264,13 +270,13 @@ float AiEvaluate::evaluateJack(Card *card) const
     float value = 0.0;
     if (card->getSuit() == trumps && hand->count(Card::Rank::Jack, trumps) < 2)
     {
-        value += SCORE_FLUSH * probOfFlush()
+        value += valueFlush(score) * probOfFlush()
             * ( 1 -  probDealtCard((Card::Rank)card->getRank(), trumps));
     }
 
     if (hand->countRank(Card::Rank::Jack) < 5)
     {
-        value += SCORE_FOUR_JACKS * probOfFourKind(Card::Rank::Jack)
+        value += valueFourJacks(score) * probOfFourKind(Card::Rank::Jack)
               * ( 1 -  probDealtN(1, unseen->numUnseenRank(Card::Rank::Jack)));
     }
 
@@ -278,12 +284,12 @@ float AiEvaluate::evaluateJack(Card *card) const
     {
         if (hand->count(Card::Rank::Jack, Card::Suit::Diamonds) == 1)
         {
-            value += SCORE_BEZIQUE * probOfBezique()
+            value += valueBezique(score) * probOfBezique()
                 * ( 1 -   probDealtCard(Card::Rank::Jack, Card::Suit::Diamonds));
         }
         if (hand->count(Card::Rank::Jack, Card::Suit::Diamonds) == 2)
         {
-            value += SCORE_DOUBLE_BEZIQUE * probOfDoubleBezique();
+            value += valueDoubleBezique(score) * probOfDoubleBezique();
         }
     }
 
@@ -296,34 +302,35 @@ float AiEvaluate::evaluateQueen(Card *card) const
 
     if (card->getSuit() == trumps && hand->count(Card::Rank::Queen, trumps) < 2)
     {
-        value += SCORE_FLUSH * probOfFlush()
+        value += valueFlush(score) * probOfFlush()
             * ( 1 -  probDealtCard((Card::Rank)card->getRank(), trumps));
     }
 
     if (hand->countRank(Card::Rank::Queen) < 5)
     {
-        value += SCORE_FOUR_QUEENS * probOfFourKind(Card::Rank::Queen)
+        value += valueFourQueens(score) * probOfFourKind(Card::Rank::Queen)
              * ( 1 -  probDealtN(1, unseen->numUnseenRank(Card::Rank::Queen)));
     }
 
-    if(card->getSuit() == Card::Suit::Diamonds)
+    if(card->getSuit() == Card::Suit::Spades)
     {
         if (hand->count(Card::Rank::Queen, Card::Suit::Spades) == 1)
         {
-            value += SCORE_BEZIQUE * probOfBezique()
+            value += valueBezique(score) * probOfBezique()
                  * ( 1 -   probDealtCard(Card::Rank::Queen, Card::Suit::Spades));
         }
         if (hand->count(Card::Rank::Queen, Card::Suit::Spades) == 2)
         {
-            value += SCORE_DOUBLE_BEZIQUE * probOfDoubleBezique();
+            value += valueDoubleBezique(score) * probOfDoubleBezique();
         }
     }
 
     if (hand->count(Card::Rank::Queen, (Card::Suit) card->getSuit()) == 1)
     {
-        int score = card->getSuit() == trumps ? SCORE_ROYAL_MARRAGE : SCORE_MARRAGE;
+        int score = card->getSuit() == trumps ? valueRoyalMarrage(score)
+                                              : valueMarrage(score);
         value += score * probOfMarrage((Card::Suit)card->getSuit())
-           * ( 1 -  probDealtCard(Card::Rank::Queen, (Card::Suit)card->getSuit()));
+        * ( 1 -  probDealtCard(Card::Rank::Queen, (Card::Suit)card->getSuit()));
     }
 
     return value;
@@ -335,19 +342,20 @@ float AiEvaluate::evaluateKing(Card *card) const
 
     if (card->getSuit() == trumps && hand->count(Card::Rank::King, trumps) < 2)
     {
-        value += SCORE_FLUSH * probOfFlush()
+        value += valueFlush(score) * probOfFlush()
             * ( 1 -  probDealtCard((Card::Rank)card->getRank(), trumps));
     }
 
     if (hand->countRank(Card::Rank::King) < 5)
     {
-        value += SCORE_FOUR_KINGS * probOfFourKind(Card::Rank::King)
+        value += valueFourKings(score)  * probOfFourKind(Card::Rank::King)
            * ( 1 -  probDealtN(1, unseen->numUnseenRank(Card::Rank::King)));
     }
 
     if (hand->count(Card::Rank::King, (Card::Suit) card->getSuit()) == 1)
     {
-        int score = card->getSuit() == trumps ? SCORE_ROYAL_MARRAGE : SCORE_MARRAGE;
+        int score = card->getSuit() == trumps ? valueRoyalMarrage(score)
+                                              : valueMarrage(score);
         value += score * probOfMarrage((Card::Suit)card->getSuit())
              * ( 1 -  probDealtCard(Card::Rank::King, (Card::Suit)card->getSuit()));
     }
@@ -361,13 +369,13 @@ float AiEvaluate::evaluateAce(Card *card) const
 
     if (card->getSuit() == trumps && hand->count(Card::Rank::Ace, trumps) < 2)
     {
-        value += SCORE_FLUSH * probOfFlush()
+        value += valueFlush(score) * probOfFlush()
              * ( 1 -  probDealtCard((Card::Rank)card->getRank(), trumps));
     }
 
     if (hand->countRank(Card::Rank::Ace) < 5)
     {
-        value += SCORE_FOUR_ACES * probOfFourKind(Card::Rank::Ace)
+        value += valueFourAces(score) * probOfFourKind(Card::Rank::Ace)
              * ( 1 -  probDealtN(1, unseen->numUnseenRank(Card::Rank::Ace)));
     }
 

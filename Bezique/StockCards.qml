@@ -14,7 +14,7 @@ Row {
     Rectangle {
         color: root.backColor;
         width: root.cardWidth; height: root.cardHeight;
-        Image { source: faceCard.image }
+        Image { source: gameData.faceCard.image }
     }
     Rectangle {
         color: root.backColor;

@@ -50,6 +50,21 @@ bool Card::beats(const Card &c, int trumps) const
     return true;
 }
 
+bool Card::beatsEnd(const Card &c, int trumps) const
+{
+    if ( suit == c.suit )
+    {
+        if (rank == Rank::Ten)
+            return (c.rank < Rank::Jack || c.rank == Rank::Ten);
+        if (c.rank == Rank::Ten)
+            return (rank > Rank::Nine);
+        return rank >= c.rank;
+    }
+    if ( c.suit == trumps )
+        return false;
+    return true;
+}
+
 void Card::setCard(int cardId, int newLink)
 {
     rank = cardId / 8;
@@ -129,6 +144,7 @@ void Card::clearMeldStatus()
     canMarry = false;
     canFlush = false;
     canBezique = false;
+    canDoubleBezique = false;
     canFourKind = false;
 }
 

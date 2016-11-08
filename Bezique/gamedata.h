@@ -27,7 +27,7 @@ public:
 
     Q_INVOKABLE void startNewGame();
     Q_INVOKABLE void cardPlayed(int index, bool melded = false);
-    Q_INVOKABLE void humanMeld(bool meldMade, int index = NO_MELD);
+    Q_INVOKABLE void humanMeld(bool meldMade, int index = NO_MELD, bool meldRow = false);
     Q_INVOKABLE void finishTrick();
 
     Player *getHumanPlayer() const;
@@ -96,6 +96,7 @@ private:
     BeziqueDeck deck;
     GameState game;
     bool trickOver = false;
+    bool isEndgame = false;
 };
 
 #endif // GAMEDATA_H

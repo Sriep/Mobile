@@ -31,6 +31,7 @@ public:
     Card(const Card& card, QQuickItem *parent = 0);
 
     bool beats(const Card& c, int trumps) const;
+    bool beatsEnd(const Card& c, int trumps) const;
 
     void setCard(int cardId, int newLink = EMPTY);
     void copyCard(const Card& card);
@@ -71,6 +72,7 @@ private:
     bool canMeld = false;
     bool hasMarried = false;
     bool hasBeziqued = false;
+    bool hasDoubleBeziqued = false;
     bool hasFlushed = false;
     bool hasFourKinded = false;
 

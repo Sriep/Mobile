@@ -15,13 +15,15 @@ public:
                , QList<Card*> opponentMelds
                , UnseenCards* unseen
                , GameData* gameData
-               , bool leadCard);
+               , bool leadCard
+               , int score = 1000);
 
     int operator()() const;
 
 public:
     static const int COST_LOOSING_TEN = 6;
     static const int COST_LOOSING_ACE = 10;
+    static const int VALUE_OF_A_TURMP = 1;
 
 private:
     float evaluate(Card* card) const;
@@ -58,6 +60,7 @@ private:
     BeziqueDeck* deck;
     float tricksLeft;
     bool leadCard;
+    int score;
 };
 
 #endif // AIEVALUATE_H

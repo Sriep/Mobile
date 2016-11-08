@@ -48,7 +48,7 @@ Page2Form {
             property bool waitingForCard: false
             property bool humanMelding: false
             property bool drawCard: false
-            property bool stockImage: root.backImage
+            property string stockImage: root.backImage
 
             onWaitingForCard: {
                 waitingForCard = true;

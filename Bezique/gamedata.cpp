@@ -52,7 +52,9 @@ void GameData::setAiPlayer(Player *value)
 
 void GameData::meldSeven()
 {
+    // id for seven of trumps is tumps
     int sevenTrumps = trumps;
+
     deck.swapBottom(sevenTrumps);
     faceCard->setCard(sevenTrumps);
     emit changedFaceCard();
@@ -90,8 +92,7 @@ void GameData::startNewGame()
 }
 
 void GameData::cutForDeal()
-{
-    //activePlayer = rand() % 2 ? aiPlayer : humanPlayer;    
+{ 
     aiPlayer->setOpponent(humanPlayer);
     humanPlayer->setOpponent(aiPlayer);
 
@@ -112,13 +113,14 @@ void GameData::dealCards()
     aiPlayer->getHand()->syncHands();
 
     emit changedFaceCard();
-    trumps = faceCard->getSuit();
+    setTrumps(faceCard->getSuit());
     emit handsDealt();
 
 }
 
 void GameData::leadToTrick()
 {
+    trickOver = false;
     if (activePlayer->isAi())
     {
         aisCard = activePlayer->playFirstCard(isEndgame);
@@ -180,12 +182,10 @@ void GameData::meld()
     if (Card::Ace == aisCard->getRank() || Card::Ten == aisCard->getRank())
         activePlayer->incScore(10);
 
-    //emit trickFinished();
     if (activePlayer->isAi())
     {
         activePlayer->meldAuto(trumps, meldedSeven);
         emit drawing();
-       // finishTrick();
     }
     else
     {
@@ -194,7 +194,6 @@ void GameData::meld()
             emit waitingForMeld();
         else
             emit drawing();
-           // finishTrick();
     }
 }
 
@@ -206,6 +205,7 @@ void GameData::endHand()
 void GameData::endGame()
 {
     isEndgame  = false;
+
 }
 
 // call from qml
@@ -264,6 +264,12 @@ void GameData::ResetBoardForEndgame()
     faceCard->clearCard();
 }
 
+void GameData::setTrumps(int value)
+{
+    trumps = value;
+    changedTrumps();
+}
+
 BeziqueDeck *GameData::getDeck()
 {
     return &deck;
@@ -284,17 +290,18 @@ void GameData::switchActivePlayer()
     activePlayer = activePlayer == aiPlayer ? humanPlayer : aiPlayer;
 }
 
-void GameData::ScoreEndTrick()
+void GameData::scoreEndTrick()
 {
-    trickOver = false;
-    Card* firstCard = activePlayer->playFirstCardEndgame();
-    switchActivePlayer();
-    Card* secondCard = activePlayer->playSecondCardEndgame(firstCard);
+    if (trickOver) return;
+    trickOver = true;
+    if (activePlayer == aiPlayer )
+        activePlayer = humansCard->beats(*aisCard, trumps) ? humanPlayer : aiPlayer;
+    else
+        activePlayer = aisCard->beats(*humansCard, trumps) ? aiPlayer : humanPlayer;
 
-    activePlayer = firstCard->beats(*secondCard, trumps) ? aiPlayer : humanPlayer;
-    if (Card::Ace == firstCard->getRank() || Card::Ten == firstCard->getRank())
+    if (Card::Ace == humansCard->getRank() || Card::Ten == humansCard->getRank())
         activePlayer->incScore(10);
-    if (Card::Ace == secondCard->getRank() || Card::Ten == secondCard->getRank())
+    if (Card::Ace == aisCard->getRank() || Card::Ten == aisCard->getRank())
         activePlayer->incScore(10);
 
     if (activePlayer->won())
@@ -307,8 +314,6 @@ void GameData::ScoreEndTrick()
         else
             emit handOver();
     }
-   // else
-      //  emit trickFinished();
 }
 
 

@@ -109,6 +109,7 @@ Card *Player::aiPlayCard(bool leadCard)
                            , &unseen
                            , gameData
                            , leadCard
+                           , score
                          );
     int index = aiEvaluate();
     int hiddenId = hand->findLinkHidden(index);

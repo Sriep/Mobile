@@ -16,6 +16,7 @@ class GameData : public QQuickItem
 
     Q_PROPERTY(Player* humanPlayer READ getHumanPlayer WRITE setHumanPlayer)
     Q_PROPERTY(Player* aiPlayer READ getAiPlayer WRITE setAiPlayer)
+    Q_PROPERTY(int trumps READ getTrumps WRITE setTrumps NOTIFY changedTrumps)
 public:
     friend class GameState;
     GameData(QQuickItem *parent = 0);
@@ -46,7 +47,10 @@ public:
     bool getMeldedSeven() const;
 
     BeziqueDeck* getDeck();
+    void setTrumps(int value);
 
+public slots:
+    Q_INVOKABLE void scoreEndTrick();
 signals:
     void deckCut();
     void handsDealt();
@@ -63,6 +67,7 @@ signals:
     void changedFaceCard();
     void changedHumansCard();
     void changedAisCard();
+    void changedTrumps();
     void playEndTrick();
     void drawing();
     //void cardsChanged();
@@ -71,7 +76,6 @@ private slots:
     void dealCards();
     void leadToTrick();
     void followToTrick();
-    void ScoreEndTrick();
     void meld();
     void endHand();
     void endGame();

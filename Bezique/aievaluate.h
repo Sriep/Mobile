@@ -16,7 +16,7 @@ public:
                , UnseenCards* unseen
                , GameData* gameData
                , bool leadCard
-               , int score = 1000);
+               , int score = 0);
 
     int operator()() const;
 
@@ -27,9 +27,9 @@ public:
 
 private:
     float evaluate(Card* card) const;
-    float evaluateSeven(Card *card) const;
-    float evaluateEight(Card *card) const;
-    float evaluateNine(Card *card) const;
+    float evaluateSeven() const;
+    float evaluateEight() const;
+    float evaluateNine() const;
     float evaluateTen(Card *card) const;
     float evaluateJack(Card *card) const;
     float evaluateQueen(Card *card) const;

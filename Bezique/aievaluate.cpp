@@ -55,13 +55,13 @@ float AiEvaluate::evaluate(Card *card) const
     float score = 0.0;
     switch (card->getRank()) {
         case Card::Rank::Seven:
-            score += evaluateSeven(card);
+            score += evaluateSeven();
             break;
         case Card::Rank::Eight:
-            score += evaluateEight(card);
+            score += evaluateEight();
             break;
         case Card::Rank::Nine:
-            score += evaluateNine(card);
+            score += evaluateNine();
             break;
         case Card::Rank::Ten:
             score += evaluateTen(card);
@@ -135,7 +135,7 @@ float AiEvaluate::probOfDoubleBezique() const
     }
     else  if (hand->count(Card::Rank::Jack, Card::Suit::Diamonds) == 0)
     {
-            prob += probDealtN(2
+            prob *= probDealtN(2
                    , unseen->numUnseen(Card::Rank::Jack, Card::Suit::Diamonds));
     }
 
@@ -210,7 +210,7 @@ float AiEvaluate::probDealtN(int n, float numLeft) const
     return prob;
 }
 
-float AiEvaluate::evaluateSeven(Card* card) const
+float AiEvaluate::evaluateSeven() const
 {
     float value = 0.0;
     if (1 == hand->count(Card::Seven, trumps))
@@ -221,12 +221,12 @@ float AiEvaluate::evaluateSeven(Card* card) const
     return value;
 }
 
-float AiEvaluate::evaluateEight(Card *card) const
+float AiEvaluate::evaluateEight() const
 {
     return 0.0;
 }
 
-float AiEvaluate::evaluateNine(Card *card) const
+float AiEvaluate::evaluateNine() const
 {
     return 0.0;
 }
@@ -286,9 +286,9 @@ float AiEvaluate::evaluateJack(Card *card) const
         {
             value += valueBezique(score) * probOfBezique()
                 * ( 1 -   probDealtCard(Card::Rank::Jack, Card::Suit::Diamonds));
-        }
-        if (hand->count(Card::Rank::Jack, Card::Suit::Diamonds) == 2)
-        {
+        //}
+        //if (hand->count(Card::Rank::Jack, Card::Suit::Diamonds) == 2)
+        //{
             value += valueDoubleBezique(score) * probOfDoubleBezique();
         }
     }
@@ -318,17 +318,17 @@ float AiEvaluate::evaluateQueen(Card *card) const
         {
             value += valueBezique(score) * probOfBezique()
                  * ( 1 -   probDealtCard(Card::Rank::Queen, Card::Suit::Spades));
-        }
-        if (hand->count(Card::Rank::Queen, Card::Suit::Spades) == 2)
-        {
+        //}
+        //if (hand->count(Card::Rank::Queen, Card::Suit::Spades) == 2)
+        //{
             value += valueDoubleBezique(score) * probOfDoubleBezique();
         }
     }
 
     if (hand->count(Card::Rank::Queen, (Card::Suit) card->getSuit()) == 1)
     {
-        int score = card->getSuit() == trumps ? valueRoyalMarrage(score)
-                                              : valueMarrage(score);
+        int score = (card->getSuit() == trumps) ? valueRoyalMarrage(score)
+                                                : valueMarrage(score);
         value += score * probOfMarrage((Card::Suit)card->getSuit())
         * ( 1 -  probDealtCard(Card::Rank::Queen, (Card::Suit)card->getSuit()));
     }
@@ -354,8 +354,8 @@ float AiEvaluate::evaluateKing(Card *card) const
 
     if (hand->count(Card::Rank::King, (Card::Suit) card->getSuit()) == 1)
     {
-        int score = card->getSuit() == trumps ? valueRoyalMarrage(score)
-                                              : valueMarrage(score);
+        int score = (card->getSuit() == trumps) ? valueRoyalMarrage(score)
+                                                : valueMarrage(score);
         value += score * probOfMarrage((Card::Suit)card->getSuit())
              * ( 1 -  probDealtCard(Card::Rank::King, (Card::Suit)card->getSuit()));
     }

@@ -25,7 +25,10 @@ Page2Form {
                 onClicked: {
                     if (gameData.drawCard) {
                         gameData.statusMessage = ""
-                        gameData.finishTrick();
+                        if (gameData.isEndgame)
+                            gameData.scoreEndTrick();
+                        else
+                            gameData.finishTrick();
                     }
                 }
             }
@@ -42,6 +45,7 @@ Page2Form {
             //gameData.humansCard.image
             aisCard: Card {}
             humansCard: Card {}
+            //trumps:
 
             property bool aiPlayedCard: aisCard.image !== root.emptyImage
             property string statusMessage: "Play"
@@ -49,18 +53,25 @@ Page2Form {
             property bool humanMelding: false
             property bool drawCard: false
             property string stockImage: root.backImage
+            property bool isEndgame: false;
 
             onWaitingForCard: {
                 waitingForCard = true;
                 statusMessage = "Play";
             }
 
+            onFollowedToTrick: {
+                if (isEndgame) statusMessage = "Next trick";
+            }
+
             onStartEndgame: {
                stockImage =  root.emptyImage;
+               isEndgame = true;
             }
 
             onHandsDealt: {
                 stockImage = root.backImage;
+                isEndgame = false;
             }
 
             onWaitingForMeld: {
@@ -195,9 +206,35 @@ Page2Form {
                 color: root.backColor;
                 width: 100; height: 10;
                 Text {
+                   color: (gameData.trumps === 0 || gameData.trumps === 2)
+                          ? "red" : "black";
+                   text : {
+                       switch (gameData.trumps) {
+                           case 0:
+                               return "\u2666";
+                           case 1:
+                               return "\u2663";
+                           case 2:
+                               return "\u2665";
+                           case 3:
+                               return "\u2660";
+                           default:
+                               return "";
+                       } // switch
+                   } // text
+                } // Text
+            } // Rectangle
+
+            Rectangle {
+                color: root.backColor;
+                width: 100; height: 10;
+                Text {
                    color: "white"
                    //horizontalAlignment: Text.AlignTop
-                   text : "computer: " + gameData.aiPlayer.score.toString()
+                   text : {
+                       //"computer: " + gameData.aiPlayer.score.toString()
+                       gameData.aiPlayer.score.toString()
+                   }
                 }
             }
             StockCards {
@@ -213,7 +250,8 @@ Page2Form {
                 Text {
                     color: "white"
                     //horizontalAlignment: Text.AlignBottom
-                    text : "human: " + gameData.humanPlayer.score.toString()
+                    text : gameData.humanPlayer.score.toString()
+                    //text : "human: " + gameData.humanPlayer.score.toString()
                 }
             }
 

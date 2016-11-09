@@ -82,6 +82,7 @@ private:
 
     int findFlush(QList<int>& meld) const;
     int findBezique(QList<int>& meld) const;
+    int findDoubleBezique(QList<int>& meld) const;
     int findFourKind(QList<int>& meld) const;
     int findMarrage(QList<int>& meld) const;
     void moveMelded(const QList<int>& meld, Player *player = 0);

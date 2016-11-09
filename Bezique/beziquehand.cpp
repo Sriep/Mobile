@@ -136,8 +136,11 @@ bool BeziqueHand::canMeldJack(int index, int trumps) const
     int countJacks =1;
     bool canMeld = false;
     bool flush[5] = {true, false, false, false, false};
-    int countBeziqueCards;
-    bool hasMeldedOneBezique;
+    int countBeziqueCards = 0;
+    bool hasMeldedOneBezique = false;
+    bool hasDoubleBeziqued = false;
+    bool hasRoyalQueenMarried = false;
+    bool hasRoyalKingMarried = false;
     for ( int i = 0 ; i < cards.size() ; i++ )
     {
         if (index != i && cards[i]->getLink() != Card::EMPTY)
@@ -146,23 +149,41 @@ bool BeziqueHand::canMeldJack(int index, int trumps) const
             case Card::Rank::Jack:
                 if (!cards[i]->hasFourKinded)
                     countJacks++;
+                if (Card::Suit::Diamonds == cards[i]->getSuit()
+                        && Card::Suit::Diamonds == cards[index]->getSuit() )
+                {
+                     countBeziqueCards++;
+                     hasMeldedOneBezique = cards[i]->hasBeziqued;
+                     if (cards[i]->hasDoubleBeziqued)
+                         hasDoubleBeziqued = true;
+                }
+
                 break;
             case Card::Rank::Queen:
                 if (Card::Suit::Spades == cards[i]->getSuit()
                         && Card::Suit::Diamonds == cards[index]->getSuit() )
                 {                    
+                    countBeziqueCards++;
+                    if (cards[index]->hasBeziqued)
+                        hasMeldedOneBezique = true;
                     if (!cards[i]->hasBeziqued && !cards[index]->hasBeziqued)
                     {
                         cards[index]->canBezique = true;
-                        countBeziqueCards++;
                         canMeld = true;
                     }
-
-
+                    if (cards[i]->hasDoubleBeziqued)
+                        hasDoubleBeziqued = true;
                 }
-                if (!cards[i]->hasFlushed)
-                    flush[1] = true;
+                if (cards[i]->getSuit() == trumps)
+                {
+                    if (!cards[i]->hasFlushed)
+                        flush[1] = true;
+                    else if (cards[i]->hasMarried)
+                        hasRoyalQueenMarried = true;
+                }
             case Card::Rank::King:
+                if (cards[i]->getSuit() == trumps && cards[i]->hasMarried)
+                        hasRoyalKingMarried = true;
             case Card::Rank::Ten:
             case Card::Rank::Ace:
                 if (cards[i]->getSuit() == trumps
@@ -173,6 +194,17 @@ bool BeziqueHand::canMeldJack(int index, int trumps) const
             }
         }
     }
+    if (4 == countBeziqueCards
+         && hasMeldedOneBezique
+         && hasDoubleBeziqued
+         && !cards[index]->hasBeziqued
+         && !cards[index]->hasDoubleBeziqued)
+    {
+        cards[index]->canDoubleBezique = true;
+        cards[index]->canBezique = false;
+        canMeld = true;
+    }
+
     if (countJacks >= 4 && !cards[index]->hasFourKinded)
     {
         cards[index]->canFourKind = true;
@@ -180,7 +212,8 @@ bool BeziqueHand::canMeldJack(int index, int trumps) const
     }
     if (flush[0] && flush[1] && flush[2] && flush[3] && flush[4]
             && !cards[index]->hasFlushed
-            && cards[index]->getSuit() == trumps)
+            && cards[index]->getSuit() == trumps
+            && hasRoyalQueenMarried && hasRoyalKingMarried)
     {
         cards[index]->canFlush = true;
         canMeld = true;
@@ -194,6 +227,12 @@ bool BeziqueHand::canMeldQueen(int index, int trumps) const
     int countQueens =1;
     bool canMeld = false;
     bool flush[5] = {false, true, false, false, false};
+    int countBeziqueCards = 0;
+    bool hasMeldedOneBezique = false;
+    bool hasDoubleBeziqued = false;
+    bool hasRoyalKingMarried = false;
+    bool hasRoyalQueenMarried = cards[index]->getSuit() == trumps
+                                && cards[index]->hasMarried;
     for ( int i = 0 ; i < cards.size() ; i++ )
     {
         if (index != i && cards[i]->getLink() != Card::EMPTY)
@@ -201,12 +240,18 @@ bool BeziqueHand::canMeldQueen(int index, int trumps) const
             switch (cards[i]->getRank()) {
             case Card::Rank::Jack:
                 if (Card::Suit::Diamonds == cards[i]->getSuit()
-                        && Card::Suit::Spades == cards[index]->getSuit()
-                        && !cards[i]->hasBeziqued
-                        && !cards[index]->hasBeziqued)
+                        && Card::Suit::Spades == cards[index]->getSuit())
                 {
-                    cards[index]->canBezique = true;
-                    canMeld = true;
+                    countBeziqueCards++;
+                    if (cards[index]->hasBeziqued)
+                        hasMeldedOneBezique = true;
+                    if (!cards[i]->hasBeziqued && !cards[index]->hasBeziqued)
+                    {
+                        cards[index]->canBezique = true;
+                        canMeld = true;
+                    }
+                    if (cards[i]->hasDoubleBeziqued)
+                        hasDoubleBeziqued = true;
                 }
                 if (!cards[i]->hasFlushed)
                     flush[1] = true;
@@ -214,6 +259,14 @@ bool BeziqueHand::canMeldQueen(int index, int trumps) const
             case Card::Rank::Queen:
                 if (false == cards[i]->hasFourKinded)
                     countQueens++;
+                if (Card::Suit::Spades == cards[i]->getSuit()
+                        && Card::Suit::Spades == cards[index]->getSuit() )
+                {
+                     countBeziqueCards++;
+                     hasMeldedOneBezique = cards[i]->hasBeziqued;
+                     if (cards[i]->hasDoubleBeziqued)
+                         hasDoubleBeziqued = true;
+                }
                 break;
             case Card::Rank::King:
                 if (cards[i]->getSuit() == cards[index]->getSuit()
@@ -223,6 +276,8 @@ bool BeziqueHand::canMeldQueen(int index, int trumps) const
                     cards[index]->canMarry = true;
                     canMeld = true;
                 }
+                if (cards[i]->getSuit() == trumps && cards[i]->hasMarried)
+                        hasRoyalKingMarried = true;
             case Card::Rank::Ten:
             case Card::Rank::Ace:
                 if (cards[i]->getSuit() == trumps
@@ -233,6 +288,18 @@ bool BeziqueHand::canMeldQueen(int index, int trumps) const
             }
         }
     }
+
+    if (4 == countBeziqueCards
+         && hasMeldedOneBezique
+         && hasDoubleBeziqued
+         && !cards[index]->hasBeziqued
+         && !cards[index]->hasDoubleBeziqued)
+    {
+        cards[index]->canDoubleBezique = true;
+        cards[index]->canBezique = false;
+        canMeld = true;
+    }
+
     if (countQueens >= 4 && !cards[index]->hasFourKinded)
     {
         cards[index]->canFourKind = true;
@@ -240,7 +307,8 @@ bool BeziqueHand::canMeldQueen(int index, int trumps) const
     }
     if (flush[0] && flush[1] && flush[2] && flush[3] && flush[4]
             && !cards[index]->hasFlushed
-            && cards[index]->getSuit() == trumps)
+            && cards[index]->getSuit() == trumps
+            && hasRoyalQueenMarried && hasRoyalKingMarried)
     {
         cards[index]->canFlush = true;
         canMeld = true;
@@ -253,6 +321,9 @@ bool BeziqueHand::canMeldKing(int index, int trumps) const
     int countKings =1;
     bool canMeld = false;
     bool flush[5] = {false, false, true, false, false};
+    bool hasRoyalQueenMarried = false;
+    bool hasRoyalKingMarried = cards[index]->getSuit() == trumps
+                                && cards[index]->hasMarried;
     for ( int i = 0 ; i < cards.size() ; i++ )
     {
         if (index != i && cards[i]->getLink() != Card::EMPTY)
@@ -265,12 +336,13 @@ bool BeziqueHand::canMeldKing(int index, int trumps) const
             case Card::Rank::Queen:
                 if (cards[i]->getSuit() == cards[index]->getSuit()
                         && !cards[i]->hasMarried
-                        && !cards[index]->hasMarried
                         && !cards[index]->hasMarried)
                 {
                     cards[index]->canMarry = true;
                     canMeld = true;
                 }
+                if (cards[i]->getSuit() == trumps && cards[i]->hasMarried)
+                        hasRoyalQueenMarried = true;
             case Card::Rank::Jack:
             case Card::Rank::Ten:
             case Card::Rank::Ace:
@@ -288,7 +360,9 @@ bool BeziqueHand::canMeldKing(int index, int trumps) const
         canMeld = true;
     }
     if (flush[0] && flush[1] && flush[2] && flush[3] && flush[4]
-            && !cards[index]->hasFlushed && cards[index]->getSuit() == trumps)
+            && !cards[index]->hasFlushed
+            && cards[index]->getSuit() == trumps
+            && hasRoyalQueenMarried && hasRoyalKingMarried)
     {
         cards[index]->canFlush = true;
         canMeld = true;
@@ -300,15 +374,26 @@ bool BeziqueHand::canMeldTen(int index, int trumps) const
 {
 
     if (cards[index]->hasFlushed) return false;
+    bool canMeld = false;
     bool flush[5] = {false, false, false, true, false};
+    bool hasRoyalQueenMarried = false;
+    bool hasRoyalKingMarried = false;
     for ( int i = 0 ; i < cards.size() ; i++ )
     {
         if (index != i && cards[i]->getLink() != Card::EMPTY)
         {
             switch (cards[i]->getRank()) {
-            case Card::Rank::Jack:
             case Card::Rank::Queen:
+                if (cards[i]->getSuit() == trumps && cards[i]->hasMarried)
+                        hasRoyalQueenMarried = true;
+                if (cards[i]->getSuit() == trumps
+                        && !cards[i]->hasFlushed)
+                    flush[cards[i]->getRank() - CONVERT_FLUSH_INDEX] = true;
+                break;
             case Card::Rank::King:
+                if (cards[i]->getSuit() == trumps && cards[i]->hasMarried)
+                        hasRoyalKingMarried = true;
+            case Card::Rank::Jack:
             case Card::Rank::Ten:
             case Card::Rank::Ace:
                 if (cards[i]->getSuit() == trumps
@@ -320,12 +405,14 @@ bool BeziqueHand::canMeldTen(int index, int trumps) const
         }
     }
     if (flush[0] && flush[1] && flush[2] && flush[3] && flush[4]
-            && !cards[index]->hasFlushed && cards[index]->getSuit() == trumps)
+            && !cards[index]->hasFlushed
+            && cards[index]->getSuit() == trumps
+            && hasRoyalQueenMarried && hasRoyalKingMarried)
     {
         cards[index]->canFlush = true;
-        return true;
+        canMeld = true;
     }
-    return false;
+    return canMeld;
 }
 
 bool BeziqueHand::canMeldAce(int index, int trumps) const
@@ -333,6 +420,8 @@ bool BeziqueHand::canMeldAce(int index, int trumps) const
     int countAces =1;
     bool canMeld = false;
     bool flush[5] = {false, false, false, false, true};
+    bool hasRoyalQueenMarried = false;
+    bool hasRoyalKingMarried = false;
     for ( int i = 0 ; i < cards.size() ; i++ )
     {
         if (index != i && cards[i]->getLink() != Card::EMPTY)
@@ -342,9 +431,17 @@ bool BeziqueHand::canMeldAce(int index, int trumps) const
                 if (!cards[i]->hasFourKinded)
                     countAces++;
                 break;
-            case Card::Rank::Jack:
             case Card::Rank::Queen:
+                if (cards[i]->getSuit() == trumps && cards[i]->hasMarried)
+                        hasRoyalQueenMarried = true;
+                if (cards[i]->getSuit() == trumps
+                        && !cards[i]->hasFlushed)
+                    flush[cards[i]->getRank() - CONVERT_FLUSH_INDEX] = true;
+                break;
             case Card::Rank::King:
+                if (cards[i]->getSuit() == trumps && cards[i]->hasMarried)
+                        hasRoyalKingMarried = true;
+            case Card::Rank::Jack:
             case Card::Rank::Ten:
                 if (cards[i]->getSuit() == trumps
                         && !cards[i]->hasFlushed)
@@ -361,7 +458,8 @@ bool BeziqueHand::canMeldAce(int index, int trumps) const
     }
     if (flush[0] && flush[1] && flush[2] && flush[3] && flush[4]
             && !cards[index]->hasFlushed
-            && cards[index]->getSuit() == trumps)
+            && cards[index]->getSuit() == trumps
+            && hasRoyalQueenMarried && hasRoyalKingMarried)
     {
         cards[index]->canFlush = true;
         canMeld = true;
@@ -379,6 +477,7 @@ int BeziqueHand::meld(int index, Player* opponent)
     if (cards[index]->canSeven) score = SCORE_SEVEN;
     else if (cards[index]->canFlush) score = findFlush(meld);
     else if (cards[index]->canBezique) score = findBezique(meld);
+    else if (cards[index]->canBezique) score = findDoubleBezique(meld);
     else if (cards[index]->canFourKind) score = findFourKind(meld);
     else if (cards[index]->canMarry) score = findMarrage(meld);
 
@@ -430,6 +529,20 @@ int BeziqueHand::findBezique(QList<int> &meld) const
     }
     qWarning() << "End of BeziqueHand::findBezique, no bezique found.";
     return 0;
+}
+
+int BeziqueHand::findDoubleBezique(QList<int> &meld) const
+{
+    cards[meld.first()]->hasDoubleBeziqued = true;
+    for ( int i=0 ; i<cards.length() ; i++ )
+    {
+        if (cards[i]->canDoubleBezique)
+        {
+            meld.append(i);
+            cards[i]->hasDoubleBeziqued = true;
+        }
+    }
+    return SCORE_DOUBLE_BEZIQUE;
 }
 
 int BeziqueHand::findFourKind(QList<int> &meld) const
@@ -529,6 +642,10 @@ void BeziqueHand::moveAllHidden()
     for ( int i = 0 ; i < cards.size() ; i++ )
     {
         hiddedCards[i]->copyCard(*cards[i]);
+    }
+    for ( int i = 0 ; i < meldedCards.size() ; i++ )
+    {
+        meldedCards[i]->clearCard();
     }
 }
 

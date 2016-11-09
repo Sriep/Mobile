@@ -16,11 +16,16 @@ AiEndPlay::AiEndPlay(QList<Card *> max
     init();
 }
 
-int AiEndPlay::operator()() const
+int AiEndPlay::operator()()
 {
     if (ai.size() == 1)
         return 0;
-    return 0;
+    Card* card;
+    if (NULL == lead)
+        card = leadCard(ai);
+    else
+        card = followCard();
+    return findIndex(card);
 }
 
 void AiEndPlay::init()
@@ -36,7 +41,46 @@ void AiEndPlay::init()
     }
 }
 
-QList<Card *> AiEndPlay::leagalFollow(QList<Card *> hand, Card *lead)
+Card *AiEndPlay::followCard()
+{
+    QList<Card*> legal = legalFollow(ai, lead);
+    if (legal.length() == 1) return legal[0];
+    int indexTen = NOT_FOUND;
+    int indexAce = NOT_FOUND;
+    int indexLowest = Card::Rank::NumRanks;
+    int lowestRank = NOT_FOUND;
+    for ( int i=0 ; i<legal.length() ; i++ )
+    {
+        if (legal[i]->getRank() == Card::Ten)
+            indexTen = i;
+        else if (legal[i]->getRank() == Card::Ace)
+            indexAce = i;
+        else if (lowestRank == NOT_FOUND || legal[i]->getRank() < lowestRank)
+        {
+            indexLowest = i;
+            lowestRank = legal[i]->getRank();
+        }
+    }
+    if (winTrick)
+    {
+        if (indexTen != NOT_FOUND)
+            return legal[indexTen];
+        if (indexAce != NOT_FOUND
+                && oppSuits[legal[0]->getSuit()].length() == 0)
+            return legal[indexAce];
+        return legal[indexLowest];
+    }
+    else
+    {
+        if (lowestRank != NOT_FOUND)
+            return legal[lowestRank];
+        if (indexTen != NOT_FOUND)
+            return legal[indexTen];
+        return legal[indexAce];
+    }
+}
+
+QList<Card *> AiEndPlay::legalFollow(QList<Card *> hand, Card *lead)
 {
     int rank = lead->getRank();
     int suit = lead->getSuit();
@@ -54,9 +98,15 @@ QList<Card *> AiEndPlay::leagalFollow(QList<Card *> hand, Card *lead)
         }
     }
     if (winningCards.length() > 0)
+    {
+        winTrick = true;
         return winningCards;
+    }
     else if (loosingCards.length() > 0)
+    {
+        winTrick = false;
         return loosingCards;
+    }
 
     if (suit != trumps)
     {
@@ -67,9 +117,12 @@ QList<Card *> AiEndPlay::leagalFollow(QList<Card *> hand, Card *lead)
                 trumpCards.append(hand[i]);
         }
         if (trumpCards.length() > 0)
+        {
+            winTrick = true;
             return trumpCards;
+        }
     }
-
+    winTrick = false;
     return hand;
 }
 
@@ -102,13 +155,13 @@ Card *AiEndPlay::candropSingeltonAceTen()
 {
     for ( int i=0 ; i < Card::Suit::NumSuits ; i++ )
     {
-        if (aiSuits[i].length() == 1
+        if (aiSuits[i].length() == 1 && oppSuits[i].length() > 0
             && oppSuits[i][0]->getRank() == aiSuits[i][0]->getRank())
         {
             return aiSuits[i][0];
         }
 
-        if (oppSuits[i].length() == 1
+        if (oppSuits[i].length() == 1 && aiSuits[i].length() > 0
             && aiSuits[i][0]->getRank() == oppSuits[i][0]->getRank())
         {
             return aiSuits[i][0];
@@ -126,7 +179,8 @@ Card *AiEndPlay::canDropTen()
 
         if (tenIndex != NOT_FOUND && aiSuits[i].length() >= oppLength)
         {
-            if (oppLength == 1 && aiSuits[i][0]->beatsEnd(*oppSuits[i][0], trumps))
+            if (oppLength == 1
+                    && aiSuits[i][0]->beatsEnd(*oppSuits[i][0], trumps))
                 return aiSuits[i][0];
 
             if (aiSuits[i][oppLength]->beatsEnd(*oppSuits[i][tenIndex], trumps)
@@ -210,6 +264,17 @@ Card *AiEndPlay::leadTrumps()
         return aiSuits[trumps][0];
     else
         return aiSuits[trumps][1];
+}
+
+int AiEndPlay::findIndex(Card *card)
+{
+    for ( int i=0 ; i < ai.length() ; i++ )
+    {
+        if (ai[i]->getRank() == card->getRank()
+                && ai[i]->getSuit() == card->getSuit())
+            return i;
+    }
+    return 0;
 }
 
 

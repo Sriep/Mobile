@@ -14,17 +14,19 @@ public:
               , QList<Card*> opp
               , Card::Suit trumps
               , Card* lead);
-    int operator()() const;
+    int operator()();
 
 private:
     void init();
+    Card* followCard();
     Card* leadCard(QList<Card*> hand);
-    QList<Card*> leagalFollow(QList<Card*> hand, Card* lead);
+    QList<Card*> legalFollow(QList<Card*> hand, Card* lead);
     Card* candropSingeltonAceTen();
     Card* canDropTen();
     Card* canleadIntoVoid();
     Card* leadSuitPositiveDelta();
     Card* leadTrumps();
+    int findIndex(Card* card);
 
     //bool finiessableTen(Card::Suit suit);
 
@@ -34,11 +36,12 @@ private:
     Card::Suit trumps;
     Card* lead;
 
+    bool winTrick = false;
     QList<Card*> aiSuits [Card::Suit::NumSuits];
     QList<Card*> oppSuits [Card::Suit::NumSuits];
 };
 
-static void rankSortAppend(QList<Card*> &list, Card *card)
+inline static void rankSortAppend(QList<Card*> &list, Card *card)
 {
     if (list.length() == 0)
     {
@@ -56,7 +59,7 @@ static void rankSortAppend(QList<Card*> &list, Card *card)
     list.append(card);
 }
 
-static int findRank(QList<Card *> &list, Card::Rank rank)
+inline static int findRank(QList<Card *> &list, Card::Rank rank)
 {
     for ( int i=0 ; i < list.length() ; i++ )
     {

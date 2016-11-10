@@ -27,6 +27,7 @@ Card* GameData::getHumansCard() const
 void GameData::setHumansCard(Card* value)
 {
     humansCard = value;
+    emit changedHumanPlayer();
 }
 
 Card* GameData::getAisCard() const
@@ -37,6 +38,7 @@ Card* GameData::getAisCard() const
 void GameData::setAisCard(Card* value)
 {
     aisCard = value;
+    emit changedAiPlayer();
 }
 
 Player *GameData::getAiPlayer() const
@@ -234,6 +236,9 @@ void GameData::finishTrick()
     humansCard = NULL;
     aisCard = NULL;
 
+    humanPlayer->dump();
+    aiPlayer->dump();
+
     int aiCardId = deck.dealTop();
     aiPlayer->giveCard(aiCardId);
     humanPlayer->getUnseen().haveSeen(aiCardId);
@@ -242,8 +247,12 @@ void GameData::finishTrick()
     humanPlayer->giveCard(humanCardId);
     aiPlayer->getUnseen().haveSeen(humanCardId);
     qDebug() << "Deck size: " << deck.size();
+
     humanPlayer->getHand()->syncHands();
     aiPlayer->getHand()->syncHands();
+
+    humanPlayer->dump();
+    aiPlayer->dump();
 
     if (activePlayer->won())
         emit gameOver();

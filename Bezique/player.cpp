@@ -86,6 +86,13 @@ void Player::setGameData(GameData *value)
     gameData = value;
 }
 
+void Player::dump()
+{
+    qDebug() << (ai ? "\nAi" : "\nHuman");
+    qDebug() << "score" << score << "\nHand";
+    hand->dump();
+}
+
 Card* Player::playFirstCard(bool isEndgame)
 {
     if (!isEndgame)

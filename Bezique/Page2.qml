@@ -4,8 +4,9 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import Bezique 1.0
 
-Page2Form {
+//Page2 {
     Item {
+
         id: root
         visible: true
         width: 640
@@ -16,6 +17,11 @@ Page2Form {
         property string backImage: "content/gfx/tinydeck/back111.gif"
         property string backColor: "green"
 
+        property string bottomName: "human"
+        property int bottomGamesWon: 0
+        property string topName: "computer"
+        property int topGamesWon: 0
+
         Rectangle {
             width: 640; height: 480;
             color: root.backColor;
@@ -24,6 +30,7 @@ Page2Form {
                 anchors.fill: parent;
                 onClicked: {
                     if (gameData.drawCard) {
+                        gameData.drawCard = false;
                         gameData.statusMessage = ""
                         if (gameData.isEndgame)
                             gameData.scoreEndTrick();
@@ -134,7 +141,7 @@ Page2Form {
 
            aiPlayer: Player {
                ai: true
-               score: 0
+               //score: 0
                hand: BeziqueHand {
                     id: aiHand
                     //property string aiPlayedCardImage: "content/gfx/up.png"
@@ -280,7 +287,8 @@ Page2Form {
 */
 
     } // Item
-}
+//}
+
 
 
 

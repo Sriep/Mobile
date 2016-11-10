@@ -19,8 +19,8 @@ public:
     static const int EMPTY = 8;
 
     const QString rankStr[8]  {"07", "08", "09", "11", "12", "13", "10", "01"};
-    const QString rankName[8]  {"7", "8", "9", "J", "Q", "K", "T", " A"};
-    const QString suitStr[4]  {"d", "c", "h", "s"};
+    const QString rankName[9]  {"7", "8", "9", "J", "Q", "K", "T", " A", "#"};
+    const QString suitStr[5]  {"d", "c", "h", "s", "#"};
     const QString emptyBitmap = "content/gfx/onePixelGreen.png";
     const QString backBitmap = "content/gfx/tinydeck/back111.gif";
     const int maxId = 63;
@@ -53,6 +53,20 @@ public:
     int getLink() const;
     void setLink(int value);
 
+    void setHasMarried(bool value);
+    void setHasBeziqued(bool value);
+    void setHasDoubleBeziqued(bool value);
+    void setHasFlushed(bool value);
+    void setHasFourKinded(bool value);
+    void dump();
+
+    void setCanSeven(bool value);
+    void setCanMarry(bool value);
+    void setCanFlush(bool value);
+    void setCanBezique(bool value);
+    void setCanDoubleBezique(bool value);
+    void setCanFourKind(bool value);
+
 signals:
     void cardChanged();
     void canMeldChanged();
@@ -60,10 +74,11 @@ public slots:
 private:
     QString getFilename(int rank, int suit);
     void clearMeldStatus();
+    void clearCanMeldStatus();
 
     // qml Properties
-    int rank;
-    int suit;
+    int rank = Rank::NumRanks;
+    int suit = Suit::NumSuits;
     QString imageFile = emptyBitmap;
 
     int link = EMPTY;

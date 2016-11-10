@@ -8,7 +8,7 @@ ApplicationWindow {
     visible: true
     width: 640
     height: 480
-    title: qsTr("Hello World")
+    title: qsTr("Bezique")
 
    // SwipeView {
      //   id: swipeView
@@ -19,6 +19,13 @@ ApplicationWindow {
     //    }
 
         Page2 {
+
+
+            property string bottomName: "human"
+            property int bottomGamesWon: 0
+            property string topName: "computer"
+            property int topGamesWon: 0
+
             //id: page2id
             //Label {
             //    text: qsTr("Second page")

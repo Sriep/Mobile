@@ -66,6 +66,9 @@ public:
     void syncIndex(int index);
     void syncHands();
 
+    void dump();
+    void dump(const QList<Card *> &h);
+
 signals:
     void enginPlayedCard(int index);
 public slots:

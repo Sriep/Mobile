@@ -14,8 +14,8 @@ class GameData : public QQuickItem
     Q_PROPERTY(Card* humansCard READ getHumansCard WRITE setHumansCard NOTIFY changedHumansCard)
     Q_PROPERTY(Card* aisCard READ getAisCard WRITE setAisCard NOTIFY changedAisCard)
 
-    Q_PROPERTY(Player* humanPlayer READ getHumanPlayer WRITE setHumanPlayer)
-    Q_PROPERTY(Player* aiPlayer READ getAiPlayer WRITE setAiPlayer)
+    Q_PROPERTY(Player* humanPlayer READ getHumanPlayer WRITE setHumanPlayer NOTIFY changedHumanPlayer)
+    Q_PROPERTY(Player* aiPlayer READ getAiPlayer WRITE setAiPlayer NOTIFY changedAiPlayer)
     Q_PROPERTY(int trumps READ getTrumps WRITE setTrumps NOTIFY changedTrumps)
 public:
     friend class GameState;
@@ -68,6 +68,8 @@ signals:
     void changedHumansCard();
     void changedAisCard();
     void changedTrumps();
+    void changedHumanPlayer();
+    void changedAiPlayer();
     void playEndTrick();
     void drawing();
     //void cardsChanged();

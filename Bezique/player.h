@@ -58,6 +58,8 @@ public:
     bool cardExists(int index, bool melded);
     void setGameData(GameData *value);
 
+    void dump();
+
 signals:
     void scoreChanged();
 protected:

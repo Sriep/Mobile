@@ -3,7 +3,6 @@
         <file>main.qml</file>
         <file>Page1.qml</file>
         <file>Page1Form.ui.qml</file>
-        <file>Page2Form.ui.qml</file>
         <file>content/gfx/b1fh.bmp</file>
         <file>content/gfx/b1fv.bmp</file>
         <file>content/gfx/b2fh.bmp</file>
@@ -45,7 +44,6 @@
         <file>AiCardRow.qml</file>
         <file>content/gfx/up.png</file>
         <file>content/gfx/down.png</file>
-        <file>Page2.qml</file>
         <file>HumanCardRow.qml</file>
         <file>content/gfx/tinydeck/01c.gif</file>
         <file>content/gfx/tinydeck/01d.gif</file>
@@ -111,5 +109,6 @@
         <file>HumanMeldRow.qml</file>
         <file>AiCardImage.qml</file>
         <file>content/gfx/onePixelGreen.png</file>
+        <file>Page2.qml</file>
     </qresource>
 </RCC>

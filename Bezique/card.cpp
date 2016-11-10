@@ -1,10 +1,5 @@
 #include <QtDebug>
 #include "card.h"
-/*
-void Card::cardPlayed(int index, int x, int y)
-{
-    qDebug("Mouse pressed");
-}*/
 
 Card::Card()
 {
@@ -15,7 +10,7 @@ Card::Card(int iCard, QQuickItem *parent)
     , rank(iCard / 8)
     , suit(iCard % 4)
     , imageFile(getFilename(rank, suit))
-    , link(0)
+    , link(EMPTY)
     , cardId(iCard)
 {
 }
@@ -28,7 +23,6 @@ Card::Card(const Card *card, QQuickItem *parent)
     , link(card->link)
     , cardId(card->cardId)
 {
-
 }
 
 Card::Card(const Card &card, QQuickItem *parent)
@@ -72,6 +66,7 @@ void Card::setCard(int cardId, int newLink)
     cardId = cardId;
     imageFile = getFilename(rank, suit);
     link = newLink;
+    clearMeldStatus();
     emit cardChanged();
 }
 
@@ -82,23 +77,39 @@ void Card::copyCard(const Card &card)
     cardId = card.cardId;
     imageFile = card.imageFile;
     link = card.link;
+
+    canMeld = card.canMeld;
+    canSeven = card.canSeven;
+    canMarry = card.canMarry;
+    canFlush = card.canFlush;
+    canBezique = card.canBezique;
+    canDoubleBezique = card.canDoubleBezique;
+    canFourKind = card.canFourKind;
+
+    hasMarried = card.hasMarried;
+    hasBeziqued = card.hasBeziqued;
+    hasDoubleBeziqued = card.hasDoubleBeziqued;
+    hasFlushed = card.hasFlushed;
+    hasFourKinded = card.hasFourKinded;
+
     emit cardChanged();
 }
 
 void Card::clearCard()
 {
-    rank = -1;
+    rank = Rank::NumRanks;
     suit  = Suit::NumSuits;
     cardId = -1;
     imageFile = emptyBitmap;
     link = EMPTY;
+    clearMeldStatus();
     emit cardChanged();
 }
 
 bool Card::isCleard()
 {
-    return emptyBitmap == imageFile;
-    //return EMPTY == link;
+    //return emptyBitmap == imageFile;
+    return EMPTY == link || emptyBitmap == imageFile;
 }
 
 int Card::getRank() const
@@ -135,6 +146,27 @@ QString Card::getFilename(int rank, int suit)
 
 void Card::clearMeldStatus()
 {
+    //if (canMeld)
+    //{
+        canMeld = false;
+        //emit canMeldChanged();
+    //}
+    canSeven = false;
+    canMarry = false;
+    canFlush = false;
+    canBezique = false;
+    canDoubleBezique = false;
+    canFourKind = false;
+
+    hasMarried = false;
+    hasBeziqued = false;
+    hasDoubleBeziqued = false;
+    hasFlushed = false;
+    hasFourKinded = false;
+}
+
+void Card::clearCanMeldStatus()
+{
     if (canMeld)
     {
         canMeld = false;
@@ -146,6 +178,107 @@ void Card::clearMeldStatus()
     canBezique = false;
     canDoubleBezique = false;
     canFourKind = false;
+}
+
+void Card::setCanFourKind(bool value)
+{
+    if ( (rank == Rank::Seven || rank == Rank::Eight)
+         || (rank == Rank::Nine && suit == Rank::Ten) )
+        qFatal("assign four of a kind to ivalid rank");
+    canFourKind = value;
+}
+
+void Card::setCanDoubleBezique(bool value)
+{
+    if ( !(  (rank == Rank::Jack && suit == Suit::Diamonds)
+         || (rank == Rank::Queen && suit == Suit::Spades) ) )
+        qFatal("assign double beziqe to non bezique card");
+    canDoubleBezique = value;
+}
+
+void Card::setCanBezique(bool value)
+{
+    if ( !(  (rank == Rank::Jack && suit == Suit::Diamonds)
+         || (rank == Rank::Queen && suit == Suit::Spades)
+       ) )
+        qFatal("assign double beziqe to non bezique card");
+    canBezique = value;
+}
+
+void Card::setCanFlush(bool value)
+{
+    canFlush = value;
+}
+
+void Card::setCanMarry(bool value)
+{
+    if ( rank != Rank::King && rank != Rank::Queen )
+        qFatal("assign marrage to non king or queen");
+    canMarry = value;
+}
+
+void Card::setCanSeven(bool value)
+{
+    if ( rank != Rank::Seven )
+        qFatal("assign senven to non seven");
+    canSeven = value;
+}
+
+void Card::setHasFourKinded(bool value)
+{
+    if ( (rank == Rank::Seven || rank == Rank::Eight)
+         || (rank == Rank::Nine && suit == Rank::Ten) )
+        qFatal("assign four of a kind to ivalid rank");
+    hasFourKinded = value;
+}
+
+void Card::dump()
+{
+    QString dump = rankName[rank] + suitStr[suit];
+    dump += " link " + QString::number(link);
+    dump += canMeld ? "canMeld, " : "";
+    dump += hasMarried ? "hasMarried, " : "";
+    dump += hasBeziqued ? "hasBeziqued, " : "";
+    dump += hasDoubleBeziqued ? "hasDoubleBeziqued, " : "";
+    dump += hasFlushed ? "hasFlushed, " : "";
+    dump += hasFourKinded ? "hasFourKinded, " : "";
+
+    dump += canSeven ? "canSeven, " : "";
+    dump += canMarry ? "canMarry, " : "";
+    dump += canFlush ? "canFlush, " : "";
+    dump += canBezique ? "canBezique, " : "";
+    dump += canDoubleBezique ? "canDoubleBezique, " : "";
+    dump += canFourKind ? "canFourKind, " : "";
+    qDebug() << dump;
+}
+
+void Card::setHasFlushed(bool value)
+{
+    hasFlushed = value;
+}
+
+void Card::setHasDoubleBeziqued(bool value)
+{
+    if ( !(  (rank == Rank::Jack && suit == Suit::Diamonds)
+         || (rank == Rank::Queen && suit == Suit::Spades) ) )
+        qFatal("assign double beziqe to non bezique card");
+    hasDoubleBeziqued = value;
+}
+
+void Card::setHasBeziqued(bool value)
+{
+    if ( !(  (rank == Rank::Jack && suit == Suit::Diamonds)
+         || (rank == Rank::Queen && suit == Suit::Spades)
+       ) )
+        qFatal("assign double beziqe to non bezique card");
+    hasBeziqued = value;
+}
+
+void Card::setHasMarried(bool value)
+{
+    if (  (rank != Rank::King && rank != Rank::Queen) )
+        qFatal("assign marrage to non king or queen");
+    hasMarried = value;
 }
 
 bool Card::getCanMeld() const

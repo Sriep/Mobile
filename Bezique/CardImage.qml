@@ -12,15 +12,17 @@ Rectangle {
         if (image === root.emptyImage)
             return 0;
         if (gameData.waitingForCard
-            || (gameData.humanMelding && canMeld) )
+            || (gameData.humanMelding && cardImage.canMeld) )
             return 2;
         return 0;
     }
     border.color: {
         if (cardImage.image !== root.emptyImage) {
             if (gameData.humanMelding)  {
-                if (canMeld)
+                if (cardImage.canMeld)
                     return "red";
+                else
+                    return "green";
             } else if (gameData.waitingForCard) {
                 return "yellow";
             }
@@ -36,10 +38,10 @@ Rectangle {
         onClicked: {
             if (gameData.waitingForCard) {
                 gameData.waitingForCard = false;
-                gameData.cardPlayed(rowPos, melded);
+                gameData.cardPlayed(rowPos, melded);                
             } else if (gameData.humanMelding) {
-                gameData.humanMelding = false;
                 gameData.humanMeld(canMeld, rowPos, melded);
+                gameData.humanMelding = false;
             }
         }
     }

@@ -9,7 +9,19 @@ class Card : public QQuickItem
     Q_PROPERTY(int rank READ getRank WRITE setRank NOTIFY cardChanged)
     Q_PROPERTY(int suit READ getSuit WRITE setSuit NOTIFY cardChanged)
 
-    Q_PROPERTY(bool canMeld READ getCanMeld WRITE setCanMeld NOTIFY canMeldChanged)
+    Q_PROPERTY(bool canMeld READ getCanMeld
+               WRITE setCanMeld NOTIFY canMeldChanged)
+    Q_PROPERTY(bool hasMarried READ getHasMarried
+               WRITE setHasMarried NOTIFY hasMarriedChanged)
+    Q_PROPERTY(bool hasBeziqued READ getHasBeziqued
+               WRITE setHasBeziqued NOTIFY hasBeziquedChanged)
+    Q_PROPERTY(bool hasDoubleBeziqued READ getHasDoubleBeziqued
+               WRITE setHasDoubleBeziqued NOTIFY hasDoubleBeziquedChanged)
+    Q_PROPERTY(bool hasFlushed READ getHasFlushed
+               WRITE setHasFlushed NOTIFY hasFlushedChanged)
+    Q_PROPERTY(bool hasFourKinded READ getHasFourKinded
+               WRITE setHasFourKinded NOTIFY hasFourKindedChanged)
+
 public:
     //Q_INVOKABLE void cardPlayed(int index, int x, int y);
     friend class BeziqueHand;
@@ -58,6 +70,13 @@ public:
     void setHasDoubleBeziqued(bool value);
     void setHasFlushed(bool value);
     void setHasFourKinded(bool value);
+
+    bool getHasMarried() const;
+    bool getHasBeziqued() const;
+    bool getHasDoubleBeziqued() const;
+    bool getHasFlushed() const;
+    bool getHasFourKinded() const;
+
     void dump();
 
     void setCanSeven(bool value);
@@ -67,9 +86,18 @@ public:
     void setCanDoubleBezique(bool value);
     void setCanFourKind(bool value);
 
+
+
 signals:
     void cardChanged();
     void canMeldChanged();
+
+    void hasMarriedChanged();
+    void hasBeziquedChanged();
+    void hasDoubleBeziquedChanged();
+    void hasFlushedChanged();
+    void hasFourKindedChanged();
+
 public slots:
 private:
     QString getFilename(int rank, int suit);

@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import Bezique 1.0
+import Qt.labs.settings 1.0
 
 ApplicationWindow {
     id: appwin
@@ -18,30 +19,21 @@ ApplicationWindow {
      //   Page1 {
     //    }
 
-        Page2 {
+   Page2 {
+        property string playerName: "human"
+        property int aiName: 0
+        property string playerScore: "computer"
+        property int topGamesWon: 0
+    }
 
+    Settings {
+        //property  string    playerName: match.playerName
+        //property  string    aiName: match.aiName
+        //property  int     playerGamesWon: match.playerGamesWon
+        //property  int     aiGamesWon: match.aiGamesWon
 
-            property string bottomName: "human"
-            property int bottomGamesWon: 0
-            property string topName: "computer"
-            property int topGamesWon: 0
-
-            //id: page2id
-            //Label {
-            //    text: qsTr("Second page")
-            //    anchors.centerIn: parent
-            //}
-   //     }
-
-        /*Image {
-            source: "content/gfx/button-play.png"
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 60
-            MouseArea {
-                anchors.fill: parent
-                onClicked: newGameScreen.startButtonClicked()
-            }
-        }*/
+        property alias width: appwin.width
+        property alias height: appwin.height
     }
 
 

@@ -93,6 +93,20 @@ void Player::dump()
     hand->dump();
 }
 
+void Player::read(const QJsonObject &json)
+{
+    score = json["sore"].toInt();
+    hand->read(json);
+    unseen.read(json);
+}
+
+void Player::write(QJsonObject &json) const
+{
+    json["score"] = score;
+    hand->write(json);
+    unseen.write(json);
+}
+
 Card* Player::playFirstCard(bool isEndgame)
 {
     if (!isEndgame)

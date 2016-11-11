@@ -1,5 +1,5 @@
 #include <cstdlib>
-
+#include <QJsonArray>
 
 #include "beziqueDeck.h"
 
@@ -59,6 +59,27 @@ bool BeziqueDeck::empty() const
 int BeziqueDeck::size() const
 {
     return deck.size();
+}
+
+void BeziqueDeck::read(const QJsonObject &json)
+{
+    deck.clear();
+    QJsonArray deckArray = json["deck"].toArray();
+    for ( int i=0 ; i<deckArray.size() ; i++ )
+    {
+        deck.append(deckArray[i].toInt());
+    }
+
+}
+
+void BeziqueDeck::write(QJsonObject &json) const
+{
+    QJsonArray deckArray;
+    for( int i=0 ; i<deck.size() ; i++ )
+    {
+        deckArray.append(deck[i]);
+    }
+    json["deck"] = deckArray;
 }
 
 void BeziqueDeck::stackDeck()

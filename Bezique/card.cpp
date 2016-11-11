@@ -1,5 +1,8 @@
 #include <QtDebug>
+#include <QJsonObject>
+
 #include "card.h"
+
 
 Card::Card()
 {
@@ -226,6 +229,32 @@ void Card::setCanFourKind(bool value)
     canFourKind = value;
 }
 
+void Card::read(const QJsonObject &json)
+{
+    rank = json["rank"].toInt();
+    suit = json["suit"].toInt();
+    imageFile = json["imageFile"].toString();
+    link = json["link"].toInt();
+    hasMarried = json["hasMarried"].toBool();
+    hasBeziqued = json["hasBeziqued"].toBool();
+    hasDoubleBeziqued = json["hasDoubleBeziqued"].toBool();
+    hasFlushed = json["hasFlushed"].toBool();
+    hasFourKinded = json["hasFourKinded"].toBool();
+}
+
+void Card::write(QJsonObject &json) const
+{
+    json["rank"] = rank;
+    json["suit"] = suit;
+    json["imageFile"] = imageFile;;
+    json["link"] = link;
+    json["hasMarried"] = hasMarried;
+    json["hasBeziqued"] = hasBeziqued;
+    json["hasDoubleBeziqued"] = hasDoubleBeziqued;
+    json["hasFlushed"] = hasFlushed;
+    json["hasFourKinded"] = hasFourKinded;
+}
+
 void Card::setCanDoubleBezique(bool value)
 {
     if ( !(  (rank == Rank::Jack && suit == Suit::Diamonds)
@@ -342,6 +371,7 @@ void Card::setCanMeld(bool value)
     if (canMeld != value)
     {
         emit canMeldChanged();
+        emit cardChanged();
     }
     canMeld = value;
 }

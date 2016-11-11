@@ -36,6 +36,8 @@ Rectangle {
         anchors.fill: parent;
         signal playedCardIndex(int rowPos);
         onClicked: {
+            console.log("gameData.waitingForCard",gameData.waitingForCard);
+            console.log("gameData.humanMelding",gameData.humanMelding);
             if (gameData.waitingForCard) {
                 gameData.waitingForCard = false;
                 gameData.cardPlayed(rowPos, melded);                

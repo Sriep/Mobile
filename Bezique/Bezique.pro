@@ -12,7 +12,8 @@ HEADERS += \
     unseencards.h \
     aievaluate.h \
     aiendplay.h \
-    scores.h
+    scores.h \
+    beziquematch.h
 SOURCES += main.cpp \
     beziqueDeck.cpp \
     player.cpp \
@@ -24,7 +25,8 @@ SOURCES += main.cpp \
     unseencards.cpp \
     aievaluate.cpp \
     aiendplay.cpp \
-    scores.cpp
+    scores.cpp \
+    beziquematch.cpp
 
 RESOURCES += qml.qrc
 

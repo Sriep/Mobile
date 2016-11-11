@@ -24,6 +24,14 @@ void BeziqueHand::resetCards(QList<int> newHand)
     }
 }
 
+void BeziqueHand::clearCards(QList<Card *> c)
+{
+    for ( int i=0 ; i < c.length() ; i++ )
+    {
+        c[i]->clearCard();
+    }
+}
+
 bool BeziqueHand::isEmpty() const
 {
     for (int i = 0; i < cards.size(); ++i) {
@@ -92,24 +100,33 @@ void BeziqueHand::refreshMelds(int trumps, bool seven)
 {
     for ( int i = 0 ; i < cards.size() ; i++ )
     {
-        cards[i]->clearCanMeldStatus();
+       cards[i]->clearCanMeldStatus();
     }
     for ( int i = 0 ; i < cards.size() ; i++ )
     {
-        bool can = canMeld(i, trumps, seven);
-        cards[i]->setCanMeld(can);
-        int hiddenLink = findLinkHidden(i);
-        if (hiddenLink != NOT_FOUND)
-            //hiddedCards[hiddenLink]->setCanMeld(can);
-            hiddedCards[hiddenLink]->copyCard(*cards[i]);
-        else
+        if (!cards[i]->isCleard())
         {
-            int meldedLink = findLinkMelded(i);
-            if (meldedLink != NOT_FOUND)
-                //meldedCards[meldedLink]->setCanMeld(can);
-                meldedCards[meldedLink]->copyCard(*cards[i]);
-        }
-    }
+            bool can = canMeld(i, trumps, seven);
+            cards[i]->setCanMeld(can);
+            int hiddenLink = findLinkHidden(i);
+            if (hiddenLink != NOT_FOUND)
+            {
+                //hiddedCards[hiddenLink]->setCanMeld(can);
+                hiddedCards[hiddenLink]->copyCard(*cards[i]);
+                emit hiddedCards[hiddenLink]->cardChanged();
+                emit hiddedCards[hiddenLink]->canMeldChanged();
+            }
+            else
+            {
+                int meldedLink = findLinkMelded(i);
+                if (meldedLink != NOT_FOUND)
+                    //meldedCards[meldedLink]->setCanMeld(can);
+                    meldedCards[meldedLink]->copyCard(*cards[i]);
+                    emit meldedCards[meldedLink]->cardChanged();
+                    emit meldedCards[meldedLink]->canMeldChanged();
+            } // else
+        } // if
+    } //for
 }
 
 bool BeziqueHand::canMeld(int index, int trumps, bool seven) const
@@ -848,6 +865,61 @@ void BeziqueHand::dump(const QList<Card*> &h)
     {
         h[i]->dump();
     }
+}
+
+void BeziqueHand::read(const QJsonObject &json)
+{
+    clearCards(cards);
+    QJsonArray cardsArray = json["cards"].toArray();
+    for (int i = 0; i < cardsArray.size(); ++i) {
+        QJsonObject cardObject = cardsArray[i].toObject();
+        cards[i]->read(cardObject);
+    }
+
+    clearCards(hiddedCards);
+    QJsonArray hiddedCardsArray = json["hiddedCards"].toArray();
+    for (int i = 0; i < hiddedCardsArray.size(); ++i) {
+        QJsonObject cardObject = hiddedCardsArray[i].toObject();
+        hiddedCards[i]->read(cardObject);
+    }
+
+    clearCards(meldedCards);
+    QJsonArray meldedCardsArray = json["meldedCards"].toArray();
+    for (int i = 0; i < meldedCardsArray.size(); ++i) {
+        QJsonObject cardObject = meldedCardsArray[i].toObject();
+        meldedCards[i]->read(cardObject);
+    }
+}
+
+void BeziqueHand::write(QJsonObject &json) const
+{
+    QJsonArray cardsArray;
+    foreach (const Card* card, cards)
+    {
+        QJsonObject cardObject;
+        card->write(cardObject);
+        cardsArray.append(cardObject);
+    }
+    json["cards"] = cardsArray;
+
+    QJsonArray hiddedCardsArray;
+    foreach (const Card* card, hiddedCards)
+    {
+        QJsonObject cardObject;
+        card->write(cardObject);
+        hiddedCardsArray.append(cardObject);
+    }
+    json["hiddedCards"] = hiddedCardsArray;
+
+    QJsonArray meldedCardsArray;
+    foreach (const Card* card, meldedCards)
+    {
+        QJsonObject cardObject;
+        card->write(cardObject);
+        meldedCardsArray.append(cardObject);
+    }
+    json["meldedCards"] = meldedCardsArray;
+
 }
 
 QQmlListProperty<Card> BeziqueHand::getCards()

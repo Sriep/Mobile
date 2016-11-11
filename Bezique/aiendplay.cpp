@@ -73,7 +73,7 @@ Card *AiEndPlay::followCard()
     else
     {
         if (lowestRank != NOT_FOUND)
-            return legal[lowestRank];
+            return legal[indexLowest];
         if (indexTen != NOT_FOUND)
             return legal[indexTen];
         return legal[indexAce];
@@ -193,7 +193,7 @@ Card *AiEndPlay::canDropTen()
 
 Card *AiEndPlay::canleadIntoVoid()
 {
-    Card* aceTenVrsVoid;
+    Card* aceTenVrsVoid = NULL;
     for ( int s=0 ; s < Card::Suit::NumSuits ; s++ )
     {
         if (s != trumps && oppSuits[s].length() == 0 && aiSuits[s].length()>0)
@@ -208,7 +208,7 @@ Card *AiEndPlay::canleadIntoVoid()
             }
         }
     }
-    if (aiSuits[trumps] < oppSuits[trumps])
+    if (NULL != aceTenVrsVoid && aiSuits[trumps] < oppSuits[trumps])
         return aceTenVrsVoid;
     else
         return NULL;

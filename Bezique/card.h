@@ -1,6 +1,7 @@
 #ifndef CARD_H
 #define CARD_H
 #include <QQuickItem>
+#include <QJsonObject>
 
 class Card : public QQuickItem
 {
@@ -86,7 +87,8 @@ public:
     void setCanDoubleBezique(bool value);
     void setCanFourKind(bool value);
 
-
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
 
 signals:
     void cardChanged();

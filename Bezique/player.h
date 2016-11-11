@@ -60,14 +60,16 @@ public:
 
     void dump();
 
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
 signals:
     void scoreChanged();
-protected:
-    BeziqueHand* hand;
+
 private:
     void init();
     int semiRandomCard() const;
 
+    BeziqueHand* hand;
     Player* opponent;
     UnseenCards unseen;
     GameData* gameData;

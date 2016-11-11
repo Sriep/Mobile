@@ -1,6 +1,8 @@
 #ifndef DECK_H
 #define DECK_H
 #include <QList>
+#include <QJsonObject>
+
 #include "card.h"
 
 using namespace std;
@@ -20,6 +22,9 @@ public:
     int dealTop();
     bool empty() const;
     int size() const;
+
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
 private:
     void stackDeck();
     QList<int> deck;

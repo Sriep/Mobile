@@ -2,10 +2,19 @@ import QtQuick 2.4
 import QtQml 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
+import Qt.labs.settings 1.0
 import Bezique 1.0
 
 //Page2 {
     Item {
+
+        BeziqueMatch {
+            id: match
+            playerName: "human"
+            aiName: "ai"
+            playerGamesWon: 0
+            aiGamesWon: 0
+        }
 
         id: root
         visible: true
@@ -17,10 +26,12 @@ import Bezique 1.0
         property string backImage: "content/gfx/tinydeck/back111.gif"
         property string backColor: "green"
 
-        property string bottomName: "human"
-        property int bottomGamesWon: 0
-        property string topName: "computer"
-        property int topGamesWon: 0
+        Settings {
+            property  string    playerName: match.playerName
+            property  string    aiName: match.aiName
+            property  int     playerGamesWon: match.playerGamesWon
+            property  int     aiGamesWon: match.aiGamesWon
+        }
 
         Rectangle {
             width: 640; height: 480;
@@ -29,13 +40,19 @@ import Bezique 1.0
                 id: gameArea
                 anchors.fill: parent;
                 onClicked: {
+                    console.log("gameData.drawCard",gameData.drawCard);
+                    console.log("gameData.isEndgame",gameData.isEndgame);
+                    console.log("gameData.statusMessage",gameData.statusMessage);
+                    console.log("gameData.waitNextTrick",gameData.waitNextTrick);
                     if (gameData.drawCard) {
                         gameData.drawCard = false;
                         gameData.statusMessage = ""
-                        if (gameData.isEndgame)
-                            gameData.scoreEndTrick();
-                        else
-                            gameData.finishTrick();
+                        gameData.finishTrick();
+                    } else if (gameData.waitNextTrick
+                               && gameData.isEndgame) {
+                        gameData.waitNextTrick = false;
+                        gameData.statusMessage = ""
+                        gameData.scoreEndTrick();
                     }
                 }
             }
@@ -61,6 +78,7 @@ import Bezique 1.0
             property bool drawCard: false
             property string stockImage: root.backImage
             property bool isEndgame: false;
+            property bool waitNextTrick: false
 
             onWaitingForCard: {
                 waitingForCard = true;
@@ -68,7 +86,10 @@ import Bezique 1.0
             }
 
             onFollowedToTrick: {
-                if (isEndgame) statusMessage = "Next trick";
+                if (isEndgame) {
+                    waitNextTrick = true;
+                    statusMessage = "Next trick";
+                }
             }
 
             onStartEndgame: {

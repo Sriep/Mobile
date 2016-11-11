@@ -104,6 +104,7 @@ void GameData::cutForDeal()
 
 void GameData::dealCards()
 {
+    isEndgame = true;
     deck.shuffle();
     aiPlayer->dealtHand(deck.dealHand());
     humanPlayer->dealtHand(deck.dealHand());
@@ -273,6 +274,93 @@ void GameData::ResetBoardForEndgame()
     faceCard->clearCard();
 }
 
+int GameData::getCardsInStock() const
+{
+    return cardsInStock;
+}
+
+void GameData::setCardsInStock(int value)
+{
+    if ( cardsInStock != value)
+    {
+        cardsInStock = value;
+        emit cardsInStockChanged();
+    }
+}
+
+void GameData::read(const QJsonObject &json)
+{
+    QJsonObject faceCardObject = json["faceCard"].toObject();
+    faceCard->read(faceCardObject);
+
+    QJsonObject playerObject = json["player"].toObject();
+    humanPlayer->read(playerObject);
+
+    QJsonObject computerObject = json["ai"].toObject();
+    aiPlayer->read(computerObject);
+
+    QJsonObject deckObject = json["deck"].toObject();
+    deck.read(deckObject);
+    cardsInStock = deck.size();
+
+    meldedSeven = json["meldedSeven"].toBool();
+    humanStarted = json["humanStarted"].toBool();
+    activePlayer = json["humanActivePlayer"].toBool() ? humanPlayer : aiPlayer;
+    trumps = json["trumps"].toInt();
+    isEndgame = json["isEndgame"].toBool();
+
+    isHandOver = false;
+    isGameOver = false;
+    reset = false;
+    isEndgame = false;
+    QString gameState = json["gameSteate"].toString();
+    if (gameState == GS_HAND_OVER)
+        isHandOver = true;
+    else if (gameState == GS_GAME_OVER)
+        isGameOver = true;
+    else if (gameState == GS_RESET)
+        reset = true;
+    else
+        isEndgame = (gameState == GS_ENDGAME);
+}
+
+void GameData::write(QJsonObject &json) const
+{
+    QJsonObject faceCardObject;
+    faceCard->write(faceCardObject);
+    json["faceCard"] = faceCardObject;
+
+    QJsonObject playerObject;
+    humanPlayer->write(playerObject);
+    json["player"] = playerObject;
+
+    QJsonObject computerObject;
+    aiPlayer->write(computerObject);
+    json["ai"] = computerObject;
+
+    QJsonObject deckObject;
+    deck.write(deckObject);
+    json["deck"] = deckObject;
+
+    json["meldedSeven"] = meldedSeven;
+    json["humanStarted"] = humanStarted;
+    json["humanActivePlayer"] = activePlayer == humanPlayer;
+    json["trumps"] = trumps;
+    json["isEndgame"] = isEndgame;
+
+    if (isHandOver)
+        json["gameState"] = GS_HAND_OVER;
+    else if (isGameOver)
+        json["gameState"] = GS_GAME_OVER;
+    else if (reset)
+        json["gameState"] = GS_RESET;
+    else if (isEndgame)
+        json["gameState"] = GS_ENDGAME;
+    else
+        json["gameState"] = GS_EARLY_GAME;
+
+}
+
 void GameData::setTrumps(int value)
 {
     trumps = value;
@@ -323,6 +411,8 @@ void GameData::scoreEndTrick()
         else
             emit handOver();
     }
+    //emit followedToTrick();
+    emit trickFinished();
 }
 
 

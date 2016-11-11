@@ -109,6 +109,39 @@ void UnseenCards::Dump() const
     qDebug() << "Finished Unseen cards\n";
 }
 
+void UnseenCards::read(const QJsonObject &json)
+{
+    unseenCards.clear();
+
+    QJsonArray unseenArray = json["unseenCards"].toArray();
+    for (int i = 0; i < unseenArray.size(); ++i) {
+        QJsonObject rankObject = unseenArray[i].toObject();
+        QList<int> unknownRank;
+        unknownRank.append(rankObject["diamonds"].toInt());
+        unknownRank.append(rankObject["clubs"].toInt());
+        unknownRank.append(rankObject["hearts"].toInt());
+        unknownRank.append(rankObject["spades"].toInt());
+        unseenCards.append(unknownRank);
+    }
+}
+
+void UnseenCards::write(QJsonObject &json) const
+{
+    QJsonArray unseenArray;
+    for ( int i=0 ; i < unseenCards.length() ; i++ )
+    {
+        QJsonObject rankObject;
+        rankObject["diamonds"] = unseenCards[i][0];
+        rankObject["clubs"] = unseenCards[i][0];
+        rankObject["hearts"] = unseenCards[i][0];
+        rankObject["spades"] = unseenCards[i][0];
+
+        unseenArray.append(rankObject);
+    }
+    json["unseenCards"] = unseenArray;
+
+}
+
 
 
 

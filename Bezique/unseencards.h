@@ -1,6 +1,9 @@
 #ifndef UNSEENCARDS_H
 #define UNSEENCARDS_H
 #include <QList>
+#include <QJsonArray>
+#include <QJsonObject>
+
 #include "card.h"
 
 class BeziqueHand;
@@ -19,6 +22,8 @@ public:
     int unseenThatBeat(Card* card, int trumps) const;
 
     void Dump() const;
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
 private:
     QList<QList<int> > unseenCards;
 };

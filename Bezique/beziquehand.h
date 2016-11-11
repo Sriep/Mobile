@@ -2,6 +2,8 @@
 #define BEZIQUEHAND_H
 #include <QList>
 #include <QQuickItem>
+#include <QJsonArray>
+#include <QJsonObject>
 
 #include "card.h"
 
@@ -9,21 +11,7 @@
 //using namespace std;
 class Player;
 class BeziqueHand;
-/*
-static const int SCORE_SEVEN = 10;
-static const int SCORE_MARRAGE = 20;
-static const int SCORE_ROYAL_MARRAGE = 40;
-static const int SCORE_FLUSH = 250;
-static const int SCORE_BEZIQUE = 40;
-static const int SCORE_DOUBLE_BEZIQUE = 500;
-static const int SCORE_ACE = 10;
-static const int SCORE_TEN = 10;
-static const int SCORE_LAST_TRICK = 10;
-static const int SCORE_FOUR_JACKS = 40;
-static const int SCORE_FOUR_QUEENS = 60;
-static const int SCORE_FOUR_KINGS = 80;
-static const int SCORE_FOUR_ACES = 100;
-*/
+
 class BeziqueHand : public QQuickItem
 {
     Q_OBJECT
@@ -41,6 +29,7 @@ public:
     virtual ~BeziqueHand();
 
     void resetCards(QList<int> newHand);
+    void clearCards(QList<Card*> c);
     bool isEmpty() const;
     void addCard(int cardId);
     const Card *peek(int index);
@@ -69,6 +58,8 @@ public:
     void dump();
     void dump(const QList<Card *> &h);
 
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
 signals:
     void enginPlayedCard(int index);
 public slots:
@@ -96,8 +87,8 @@ private:
     static void appendMeldedCard(QQmlListProperty<Card> *list, Card *card);
     static void appendHiddenCard(QQmlListProperty<Card> *list, Card *card);
     QList<Card*> cards;
-    QList<Card*> meldedCards;
     QList<Card*> hiddedCards;
+    QList<Card*> meldedCards;
 };
 
 #endif // BEZIQUEHAND_H

@@ -1,11 +1,17 @@
 #ifndef GAMEDATA_H
 #define GAMEDATA_H
-
+#include <QJsonObject>
 #include <QQuickItem>
 #include "card.h"
 #include "gamestate.h"
 #include "gamestate.h"
 #include "beziquehand.h"
+
+static const QString GS_HAND_OVER = "handOver";
+static const QString GS_GAME_OVER = "gameOver";
+static const QString GS_RESET = "reset";
+static const QString GS_ENDGAME = "endgame";
+static const QString GS_EARLY_GAME = "earlyGame";
 
 class GameData : public QQuickItem
 {
@@ -17,6 +23,7 @@ class GameData : public QQuickItem
     Q_PROPERTY(Player* humanPlayer READ getHumanPlayer WRITE setHumanPlayer NOTIFY changedHumanPlayer)
     Q_PROPERTY(Player* aiPlayer READ getAiPlayer WRITE setAiPlayer NOTIFY changedAiPlayer)
     Q_PROPERTY(int trumps READ getTrumps WRITE setTrumps NOTIFY changedTrumps)
+    Q_PROPERTY(int cardsInStock READ getCardsInStock WRITE setCardsInStock NOTIFY cardsInStockChanged)
 public:
     friend class GameState;
     GameData(QQuickItem *parent = 0);
@@ -41,13 +48,15 @@ public:
     void setAisCard(Card* value);
     Card* getHumansCard() const;
     void setHumansCard(Card* value);
-
     int getTrumps() const;
-
     bool getMeldedSeven() const;
-
     BeziqueDeck* getDeck();
     void setTrumps(int value);
+    int getCardsInStock() const;
+    void setCardsInStock(int value);
+
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
 
 public slots:
     Q_INVOKABLE void scoreEndTrick();
@@ -70,6 +79,7 @@ signals:
     void changedTrumps();
     void changedHumanPlayer();
     void changedAiPlayer();
+    void cardsInStockChanged();
     void playEndTrick();
     void drawing();
     //void cardsChanged();
@@ -95,7 +105,7 @@ private:
     Card* humansCard = NULL;
     bool meldedSeven = false;
 
-    int startPlayer;
+    bool humanStarted;
     Player* activePlayer = NULL;
     bool isPlayFirstCard = false;
     int trumps;
@@ -103,6 +113,10 @@ private:
     GameState game;
     bool trickOver = false;
     bool isEndgame = false;
+    int cardsInStock = 52;
+    bool isHandOver = false;
+    bool isGameOver = false;
+    bool reset = false;
 };
 
 #endif // GAMEDATA_H

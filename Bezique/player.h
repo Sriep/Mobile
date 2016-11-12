@@ -57,6 +57,7 @@ public:
     void setOpponent(Player *value);
     bool cardExists(int index, bool melded);
     void setGameData(GameData *value);
+    void setCanFollowCards(Card* oppCard, bool isEndgame, int trumps);
 
     void dump();
 

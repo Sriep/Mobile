@@ -6,6 +6,7 @@ Rectangle {
     width: root.cardWidth; height: root.cardHeight;
     property string image: "content/gfx/b1fv.bmp"
     property bool canMeld: false;
+    property bool canPlay: true;
     property int rowPos: 0
     property bool melded: false
     border.width: {
@@ -13,7 +14,7 @@ Rectangle {
             return 0;
         if (gameData.waitingForCard
             || (gameData.humanMelding && cardImage.canMeld) )
-            return 2;
+            return 1;
         return 0;
     }
     border.color: {
@@ -24,7 +25,10 @@ Rectangle {
                 else
                     return "green";
             } else if (gameData.waitingForCard) {
-                return "yellow";
+                if (cardImage.canPlay)
+                    return "blue";
+                else
+                    return "green";
             }
         }
         return "green"
@@ -47,8 +51,6 @@ Rectangle {
             }
         }
     }
-
-
 }
 
 /*

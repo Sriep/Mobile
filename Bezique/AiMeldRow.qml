@@ -4,8 +4,8 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import Bezique 1.0
 
-Row {
-  spacing: 5
+RowLayout {
+  spacing: root.vRowSpacing
   AiCardImage { image: aiMelded1.image; }
   AiCardImage { image: aiMelded2.image; }
   AiCardImage { image: aiMelded3.image; }

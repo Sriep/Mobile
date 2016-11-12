@@ -40,14 +40,19 @@ void AiEndPlay::init()
                 rankSortAppend(oppSuits[s], opp[j]);
     }
 }
-
+//legalFollow(const QList<Card *> hand
+//                              , Card *lead
+//                              , Card::Suit trumps
+//                              , QList<Card*>& legal)
 Card *AiEndPlay::followCard()
 {
-    QList<Card*> legal = legalFollow(ai, lead);
+    QList<Card*> legal;// = legalFollow(ai, lead);
+    winTrick = legalFollow(ai, lead, trumps, legal);
+
     if (legal.length() == 1) return legal[0];
     int indexTen = NOT_FOUND;
     int indexAce = NOT_FOUND;
-    int indexLowest = Card::Rank::NumRanks;
+    int indexLowest = NOT_FOUND;
     int lowestRank = NOT_FOUND;
     for ( int i=0 ; i<legal.length() ; i++ )
     {
@@ -55,7 +60,7 @@ Card *AiEndPlay::followCard()
             indexTen = i;
         else if (legal[i]->getRank() == Card::Ace)
             indexAce = i;
-        else if (lowestRank == NOT_FOUND || legal[i]->getRank() < lowestRank)
+        else if (indexLowest == NOT_FOUND || legal[i]->getRank() < lowestRank)
         {
             indexLowest = i;
             lowestRank = legal[i]->getRank();
@@ -65,9 +70,12 @@ Card *AiEndPlay::followCard()
     {
         if (indexTen != NOT_FOUND)
             return legal[indexTen];
-        if (indexAce != NOT_FOUND
-                && oppSuits[legal[0]->getSuit()].length() == 0)
-            return legal[indexAce];
+        if (indexAce != NOT_FOUND)
+        {
+            if (oppSuits[legal[0]->getSuit()].length() == 0
+                    || indexLowest == NOT_FOUND)
+              return legal[indexAce];
+        }
         return legal[indexLowest];
     }
     else
@@ -79,7 +87,7 @@ Card *AiEndPlay::followCard()
         return legal[indexAce];
     }
 }
-
+/*
 QList<Card *> AiEndPlay::legalFollow(QList<Card *> hand, Card *lead)
 {
     int rank = lead->getRank();
@@ -125,7 +133,7 @@ QList<Card *> AiEndPlay::legalFollow(QList<Card *> hand, Card *lead)
     winTrick = false;
     return hand;
 }
-
+*/
 Card* AiEndPlay::leadCard(QList<Card*> hand)
 {
     // Drop singleton aceTen
@@ -177,15 +185,20 @@ Card *AiEndPlay::canDropTen()
         int tenIndex = findRank(oppSuits[i], Card::Rank::Ten);
         int oppLength = oppSuits[i].length();
 
-        if (tenIndex != NOT_FOUND && aiSuits[i].length() >= oppLength)
+        if (tenIndex != NOT_FOUND
+                && oppLength > 0
+                && aiSuits[i].length() >= oppLength)
         {
-            if (oppLength == 1
-                    && aiSuits[i][0]->beatsEnd(*oppSuits[i][0], trumps))
+            if (oppLength == 1)
+            {
+                if (aiSuits[i][0]->beatsEnd(*oppSuits[i][0], trumps))
+                    return aiSuits[i][0];
+            }
+            else if (aiSuits[i][oppLength-1]->beatsEnd(*oppSuits[i][tenIndex], trumps)
+                && aiSuits[i][oppLength-2]->beatsEnd(*oppSuits[i][0], trumps))
+            {
                 return aiSuits[i][0];
-
-            if (aiSuits[i][oppLength]->beatsEnd(*oppSuits[i][tenIndex], trumps)
-                && aiSuits[i][oppLength-1]->beatsEnd(*oppSuits[i][0], trumps))
-               return aiSuits[i][0];
+            }
         }
     }
     return NULL;
@@ -218,10 +231,10 @@ Card *AiEndPlay::leadSuitPositiveDelta()
 {
     int maxDelta = -1;
     int maxDeltaSuit = NOT_FOUND;
-    bool tenInSuit = NOT_FOUND;
+    bool tenInSuit = false;
     for ( int s=0 ; s < Card::Suit::NumSuits ; s++ )
     {
-        if ( s != trumps || aiSuits[s].length() == 0)
+        if ( s != trumps && aiSuits[s].length() > 0)
         {
             int delta = aiSuits[s].length() - oppSuits[s].length();
             if (delta > maxDelta)
@@ -230,7 +243,8 @@ Card *AiEndPlay::leadSuitPositiveDelta()
                 tenInSuit = findRank(aiSuits[s], Card::Rank::Ten) != NOT_FOUND;
                 maxDelta = delta;
             }
-            else if (delta == maxDelta && tenInSuit)
+            else if (maxDeltaSuit != NOT_FOUND
+                     && delta == maxDelta && tenInSuit)
             {
                 if (findRank(aiSuits[s], Card::Rank::Ten) == NOT_FOUND)
                 {

@@ -4,8 +4,8 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import Bezique 1.0
 
-Row {
-    spacing: 5
+RowLayout {
+    spacing: root.vRowSpacing
     Rectangle {
         color: root.backColor;
         width: root.cardWidth; height: root.cardHeight;
@@ -16,14 +16,17 @@ Row {
         width: root.cardWidth; height: root.cardHeight;
         Image { source: gameData.faceCard.image }
     }
-    Rectangle {
-        color: root.backColor;
+
+    StatsColumn {
+        Layout.alignment: Qt.AlignTop
+        //color: root.backColor;
         width: root.cardWidth; height: root.cardHeight;
     }
+
     Rectangle {
         id: statusText
         color: root.backColor;
-        width: root.cardWidth*3; height: root.cardHeight;
+        width: root.cardWidth*2.8; height: root.cardHeight;
 
         Text {
             horizontalAlignment:  Text.AlignHCenter

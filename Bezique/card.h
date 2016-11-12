@@ -12,6 +12,8 @@ class Card : public QQuickItem
 
     Q_PROPERTY(bool canMeld READ getCanMeld
                WRITE setCanMeld NOTIFY canMeldChanged)
+    Q_PROPERTY(bool canPlay READ getCanPlay
+               WRITE setCanPlay NOTIFY canPlayChanged)
     Q_PROPERTY(bool hasMarried READ getHasMarried
                WRITE setHasMarried NOTIFY hasMarriedChanged)
     Q_PROPERTY(bool hasBeziqued READ getHasBeziqued
@@ -90,9 +92,13 @@ public:
     void read(const QJsonObject &json);
     void write(QJsonObject &json) const;
 
+    bool getCanPlay() const;
+    void setCanPlay(bool value);
+
 signals:
     void cardChanged();
     void canMeldChanged();
+    void canPlayChanged();
 
     void hasMarriedChanged();
     void hasBeziquedChanged();
@@ -115,6 +121,7 @@ private:
     int cardId;
 
     bool canMeld = false;
+    bool canPlay = true;
     bool hasMarried = false;
     bool hasBeziqued = false;
     bool hasDoubleBeziqued = false;

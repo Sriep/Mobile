@@ -3,13 +3,18 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import Bezique 1.0
 import Qt.labs.settings 1.0
+import QtQuick.Window 2.2
 
 ApplicationWindow {
     id: appwin
     visible: true
-    width: 640
-    height: 480
-    title: qsTr("Bezique")
+    //width: 640;   height: 480
+    //width: 1280;   height: 720
+    width: 660;   height: 360
+    //width: Screen.desktopAvailableWidth; height: Screen.desktopAvailableHeight
+    //title: qsTr("Bezique " + gameBoard.bottomName  + " " + gameBoard.bottomGamesWon
+     //           + " " + gameBoard.topName + " " + gameBoard.topGamesWon)
+    title: qsTr("Bezique " + Screen.desktopAvailableHeight  + " " + Screen.desktopAvailableWidth);
 
    // SwipeView {
      //   id: swipeView
@@ -20,10 +25,11 @@ ApplicationWindow {
     //    }
 
    Page2 {
-        property string playerName: "human"
-        property int aiName: 0
-        property string playerScore: "computer"
-        property int topGamesWon: 0
+       id: gameBoard
+        property string bottomName: bottomName
+        property int topName: bottomName
+        property string bottomGamesWon: bottomGamesWon
+        property int topGamesWon: topGamesWon
     }
 
     Settings {
@@ -36,16 +42,25 @@ ApplicationWindow {
         property alias height: appwin.height
     }
 
+   // header: ToolBar {
+        // ...
+   // }
+
+
+    StackView {
+        anchors.fill: parent
+    }
 
 /*
     footer: TabBar {
         id: tabBar
-        currentIndex: swipeView.currentIndex
+        //currentIndex: swipeView.currentIndex
         TabButton {
             text: qsTr("First")
         }
         TabButton {
             text: qsTr("Second")
         }
-    }*/
+    }
+    */
 }

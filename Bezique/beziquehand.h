@@ -54,6 +54,7 @@ public:
     int getLink(int index, bool meldRow) const;
     void syncIndex(int index);
     void syncHands();
+    void setCanFollowCards(Card* oppCard, bool isEndgame, int trumps);
 
     void dump();
     void dump(const QList<Card *> &h);
@@ -67,7 +68,7 @@ private:
     int findLinkHidden(int link) const;
     int findLinkMelded(int link) const;
 
-    bool canMeld(int index, int trumps, bool seven) const;
+    bool canMeld(int index, int trumps, bool hasSeven) const;
     bool canMeldJack(int index, int trumps) const;
     bool canMeldQueen(int index, int trumps) const;
     bool canMeldKing(int index, int trumps) const;

@@ -13,6 +13,7 @@ GameState::GameState(GameData* gameData, QStateMachine *parent)
 }
 
 GameState::GameState(QState *initalState, GameData *gameData, QStateMachine *parent)
+: QStateMachine(parent), gameData(gameData)
 {
     init(initalState);
 }
@@ -65,7 +66,7 @@ void GameState::init(QState *initalState)
     QObject::connect(followEndTrick, SIGNAL(entered()), this->gameData, SLOT(followToTrick()));
     QObject::connect(finishEndTrick, SIGNAL(entered()), this->gameData, SLOT(ScoreEndTrick()));
 
-    QObject::connect(cleanUp, SIGNAL(entered()), this->gameData, SLOT(endGame()));
+    QObject::connect(cleanUp, SIGNAL(entered()), this->gameData, SLOT(endGame()));       
 
     this->addState(cutForDeal);
     this->addState(dealCards);

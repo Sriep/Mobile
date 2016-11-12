@@ -110,5 +110,15 @@
         <file>AiCardImage.qml</file>
         <file>content/gfx/onePixelGreen.png</file>
         <file>Page2.qml</file>
+        <file>StatsColumn.qml</file>
+        <file>content/gfx/toolbar.png</file>
+        <file>content/gfx/textinput.png</file>
+        <file>content/gfx/tabs_standard.png</file>
+        <file>content/gfx/tab_selected.png</file>
+        <file>content/gfx/navigation_previous_item.png</file>
+        <file>content/gfx/navigation_next_item.png</file>
+        <file>content/gfx/button-play.png</file>
+        <file>content/gfx/button_pressed.png</file>
+        <file>content/gfx/button_default.png</file>
     </qresource>
 </RCC>

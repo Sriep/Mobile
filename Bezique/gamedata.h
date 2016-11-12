@@ -12,6 +12,7 @@ static const QString GS_GAME_OVER = "gameOver";
 static const QString GS_RESET = "reset";
 static const QString GS_ENDGAME = "endgame";
 static const QString GS_EARLY_GAME = "earlyGame";
+class BeziqueMatch;
 
 class GameData : public QQuickItem
 {
@@ -58,6 +59,8 @@ public:
     void read(const QJsonObject &json);
     void write(QJsonObject &json) const;
 
+    void setBeziqueMatch(BeziqueMatch *value);
+
 public slots:
     Q_INVOKABLE void scoreEndTrick();
 signals:
@@ -94,7 +97,7 @@ private slots:
 private:
     void switchActivePlayer();
     void init();
-
+    void checkSeven(Card* aisCard, Player* activePlayer);
     void ResetBoardForEndgame();
 
     // qml properties
@@ -117,6 +120,7 @@ private:
     bool isHandOver = false;
     bool isGameOver = false;
     bool reset = false;
+    BeziqueMatch* beziqueMatch;
 };
 
 #endif // GAMEDATA_H

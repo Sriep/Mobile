@@ -4,8 +4,8 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import Bezique 1.0
 
-Row {
-  spacing: 5
+RowLayout {
+  spacing: root.vRowSpacing
   Rectangle {
     color: root.backColor;
     width: root.cardWidth; height: root.cardHeight;

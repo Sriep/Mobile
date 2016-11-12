@@ -5,45 +5,51 @@
 
 #include "gamedata.h"
 
+enum SaveFormat {Json, Binary };
 class BeziqueMatch : public QQuickItem
 {
     Q_OBJECT
-    //Q_PROPERTY(GameData* gameData READ getGameData WRITE setGameData NOTIFY gameDataChanged)
-    Q_PROPERTY(QString playerName READ getPlayerName WRITE setPlayerName NOTIFY playerNameChanged)
-    Q_PROPERTY(QString aiName READ getAiName WRITE setAiName NOTIFY aiNameChanged)
-    Q_PROPERTY(int playerGamesWon READ getPlayerGamesWon WRITE setPlayerGamesWon NOTIFY playerGamesWonChanged)
-    Q_PROPERTY(int aiGamesWon READ getAiGamesWon WRITE setAiGamesWon NOTIFY aiGamesWonChanged)
+    Q_PROPERTY(GameData* gameData READ getGameData WRITE setGameData NOTIFY gameDataChanged)
+    Q_PROPERTY(QString bottomName READ getBottomName WRITE setBottomName NOTIFY bottomNameChanged)
+    Q_PROPERTY(QString topName READ getTopName WRITE setTopName NOTIFY topNameChanged)
+    Q_PROPERTY(int bottomGamesWon READ getBottomGamesWon WRITE setBottomGamesWon NOTIFY bottomGamesWonChanged)
+    Q_PROPERTY(int topGamesWon READ getTopGamesWon WRITE setTopGamesWon NOTIFY topGamesWonChanged)
 
 public:
     BeziqueMatch();
+    bool loadMatch(SaveFormat saveFormat = Json);
+    bool saveMatch(SaveFormat saveFormat = Json) const;
 
-    QString getPlayerName() const;
-    void setPlayerName(const QString &value);
-    QString getAiName() const;
-    void setAiName(const QString &value);
-    int getPlayerGamesWon() const;
-    void setPlayerGamesWon(int value);
-    int getAiGamesWon() const;
-    void setAiGamesWon(int value);
+    QString getBottomName() const;
+    void setBottomName(const QString &value);
+    QString getTopName() const;
+    void setTopName(const QString &value);
+    int getBottomGamesWon() const;
+    void setBottomGamesWon(int value);
+    int getTopGamesWon() const;
+    void setTopGamesWon(int value);
 
     GameData *getGameData() const;
     void setGameData(GameData *value);
 
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
 signals:
     void gameDataChanged();
-    void playerNameChanged();
-    void aiNameChanged();
-    void playerGamesWonChanged();
-    void aiGamesWonChanged();
+    void bottomNameChanged();
+    void topNameChanged();
+    void bottomGamesWonChanged();
+    void topGamesWonChanged();
 public slots:
-
+    void gameFinished(int topScore, int bottomScore);
+    void trickOver();
 private:
 
     GameData* gameData;
-    QString playerName = "human";
-    QString aiName = "ai";
-    int playerGamesWon = 0;
-    int aiGamesWon = 0;
+    QString bottomName = "human";
+    QString topName = "top";
+    int bottomGamesWon = 0;
+    int topGamesWon = 0;
 };
 
 #endif // BEZIQUEMATCH_H

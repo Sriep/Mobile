@@ -1,3 +1,9 @@
+#include <QFile>
+#include <QByteArray>
+#include <QJsonDocument>
+#include <QIODevice>
+#include <QJsonObject>
+
 #include "beziquematch.h"
 
 
@@ -5,59 +11,102 @@ BeziqueMatch::BeziqueMatch()
 {    
 }
 
-QString BeziqueMatch::getPlayerName() const
+bool BeziqueMatch::loadMatch(SaveFormat saveFormat)
 {
-    return playerName;
+    QFile loadFile(saveFormat == Json
+        ? QStringLiteral("save.json")
+        : QStringLiteral("save.dat"));
+
+    if (!loadFile.open(QIODevice::ReadOnly)) {
+        qWarning("Couldn't open save file.");
+        return false;
+    }
+
+    QByteArray saveData = loadFile.readAll();
+
+    QJsonDocument loadDoc(saveFormat == Json
+        ? QJsonDocument::fromJson(saveData)
+        : QJsonDocument::fromBinaryData(saveData));
+
+    read(loadDoc.object());
+
+    return true;
 }
 
-void BeziqueMatch::setPlayerName(const QString &value)
+bool BeziqueMatch::saveMatch(SaveFormat saveFormat) const
 {
-    if (playerName != value)
+    QFile saveFile(saveFormat == Json
+        ? QStringLiteral("save.json")
+        : QStringLiteral("save.dat"));
+
+    if (!saveFile.open(QIODevice::WriteOnly)) {
+        qWarning("Couldn't open save file.");
+        return false;
+    }
+
+    QJsonObject gameObject;
+    write(gameObject);
+    QJsonDocument saveDoc(gameObject);
+    saveFile.write(saveFormat == Json
+        ? saveDoc.toJson()
+        : saveDoc.toBinaryData());
+
+    return true;
+}
+
+QString BeziqueMatch::getBottomName() const
+{
+    return bottomName;
+}
+
+void BeziqueMatch::setBottomName(const QString &value)
+{
+    if (bottomName != value)
     {
-        playerName = value;
-        emit playerNameChanged();
+        bottomName = value;
+        emit bottomNameChanged();
     }
 }
 
-QString BeziqueMatch::getAiName() const
+QString BeziqueMatch::getTopName() const
 {
-    return aiName;
+    return topName;
 }
 
-void BeziqueMatch::setAiName(const QString &value)
+void BeziqueMatch::setTopName(const QString &value)
 {
-    if (aiName != value)
+    if (topName != value)
     {
-        aiName = value;
-        emit aiNameChanged();
+        topName = value;
+        emit topNameChanged();
     }
 }
 
-int BeziqueMatch::getPlayerGamesWon() const
+int BeziqueMatch::getBottomGamesWon() const
 {
-    return playerGamesWon;
+    return bottomGamesWon;
 }
 
-void BeziqueMatch::setPlayerGamesWon(int value)
+void BeziqueMatch::setBottomGamesWon(int value)
 {
-    if (playerGamesWon != value)
+    if (bottomGamesWon != value)
     {
-        playerGamesWon = value;
-        emit playerGamesWonChanged();
+        bottomGamesWon = value;
+        emit bottomGamesWonChanged();
     }
 }
 
-int BeziqueMatch::getAiGamesWon() const
+int BeziqueMatch::getTopGamesWon() const
 {
-    return aiGamesWon;
+    return topGamesWon;
 }
 
-void BeziqueMatch::setAiGamesWon(int value)
+void BeziqueMatch::setTopGamesWon(int value)
 {
-    if (aiGamesWon != value)
+    if (topGamesWon != value)
     {
-        aiGamesWon = value;
-        emit aiGamesWonChanged();
+        topGamesWon = value;
+        emit topGamesWonChanged();
     }
 }
 
@@ -71,8 +120,45 @@ void BeziqueMatch::setGameData(GameData *value)
     if(gameData != value)
     {
         gameData = value;
+        gameData->setBeziqueMatch(this);
         emit gameDataChanged();
     }
+}
+
+void BeziqueMatch::gameFinished(int topScore, int bottomScore)
+{
+    if (topScore > bottomScore)
+        setTopGamesWon(getTopGamesWon() + 1);
+    else
+        setBottomGamesWon(getBottomGamesWon() + 1);
+}
+
+void BeziqueMatch::trickOver()
+{
+    saveMatch(Json);
+}
+
+void BeziqueMatch::read(const QJsonObject &json)
+{
+    bottomName = json["bottomName"].toString();
+    topName = json["topName"].toString();
+    bottomGamesWon = json["bottomGamesWon"].toInt();
+    topGamesWon = json["topGamesWon"].toInt();
+
+    QJsonObject gameDataObject = json["gameData"].toObject();
+    gameData->read(gameDataObject);
+}
+
+void BeziqueMatch::write(QJsonObject &json) const
+{
+    json["bottomName"] = bottomName;
+    json["topName"] = topName;
+    json["bottomGamesWon"] = bottomGamesWon;
+    json["topGamesWon"] = topGamesWon;
+
+    QJsonObject gameDataObject;
+    gameData->write(gameDataObject);
+    json["gameData"] = gameDataObject;
 }
 
 

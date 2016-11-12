@@ -5,6 +5,8 @@
 #include "gamedata.h"
 #include "gamestate.h"
 #include "unseencards.h"
+#include "beziquematch.h"
+#include "scores.h"
 
 GameData::GameData(QQuickItem *parent)
     : QQuickItem(parent)
@@ -17,6 +19,17 @@ GameData::GameData(QQuickItem *parent)
 void GameData::init()
 {
     game.start();
+}
+
+void GameData::checkSeven(Card *aisCard, Player *activePlayer)
+{
+    if (aisCard->getSuit() == trumps
+            && aisCard->getRank() == Card::Rank::Seven
+            && !meldedSeven)
+    {
+        activePlayer->incScore(valueSeven(activePlayer->getScore()));
+        meldedSeven = true;
+    }
 }
 
 Card* GameData::getHumansCard() const
@@ -57,13 +70,13 @@ void GameData::meldSeven()
     // id for seven of trumps is tumps
     int sevenTrumps = trumps;
 
-    deck.swapBottom(sevenTrumps);
+    getDeck()->swapBottom(sevenTrumps);
     faceCard->setCard(sevenTrumps);
     emit changedFaceCard();
     if (activePlayer != aiPlayer)
-        aiPlayer->getUnseen().haveSeen(deck.peekBottom());
+        aiPlayer->getUnseen().haveSeen(getDeck()->peekBottom());
     if (activePlayer != humanPlayer)
-        humanPlayer->getUnseen().haveSeen(deck.peekBottom());
+        humanPlayer->getUnseen().haveSeen(getDeck()->peekBottom());
     meldedSeven = true;
 }
 
@@ -104,20 +117,22 @@ void GameData::cutForDeal()
 
 void GameData::dealCards()
 {
-    isEndgame = true;
-    deck.shuffle();
-    aiPlayer->dealtHand(deck.dealHand());
-    humanPlayer->dealtHand(deck.dealHand());
+    isEndgame = false;
+    getDeck()->shuffle();
+    aiPlayer->dealtHand(getDeck()->dealHand());
+    humanPlayer->dealtHand(getDeck()->dealHand());
 
-    faceCard->setCard(deck.peekBottom());
-    aiPlayer->getUnseen().haveSeen(deck.peekBottom());
-    humanPlayer->getUnseen().haveSeen(deck.peekBottom());
+    faceCard->setCard(getDeck()->peekBottom());
+    aiPlayer->getUnseen().haveSeen(getDeck()->peekBottom());
+    humanPlayer->getUnseen().haveSeen(getDeck()->peekBottom());
     humanPlayer->getHand()->syncHands();
     aiPlayer->getHand()->syncHands();
+    meldedSeven = false;
 
     emit changedFaceCard();
     setTrumps(faceCard->getSuit());
     emit handsDealt();
+    setCardsInStock(getDeck()->size());
 
 }
 
@@ -127,8 +142,11 @@ void GameData::leadToTrick()
     if (activePlayer->isAi())
     {
         aisCard = activePlayer->playFirstCard(isEndgame);
+        if  (!isEndgame)
+            checkSeven(aisCard, activePlayer);
         emit changedAisCard();
         switchActivePlayer();
+        humanPlayer->setCanFollowCards(aisCard, isEndgame, trumps);
         emit leadCardPlayed();
     }
     else
@@ -143,6 +161,8 @@ void GameData::followToTrick()
     if (activePlayer->isAi())
     {
         aisCard = activePlayer->playSecondCard(humansCard, isEndgame);
+        if  (!isEndgame)
+            checkSeven(aisCard, activePlayer);
         emit changedAisCard();
         emit followedToTrick();
     }
@@ -160,6 +180,8 @@ void GameData::cardPlayed(int index, bool melded)
     else if (isPlayFirstCard)
     {
         humansCard = activePlayer->playCard(index, melded);
+        if  (!isEndgame)
+            checkSeven(humansCard, activePlayer);
         emit changedHumansCard();
         switchActivePlayer();
         emit leadCardPlayed();
@@ -167,6 +189,8 @@ void GameData::cardPlayed(int index, bool melded)
     else
     {
         humansCard = activePlayer->playCard(index, melded);
+        if  (!isEndgame)
+            checkSeven(humansCard, activePlayer);
         emit changedHumansCard();
         emit followedToTrick();
     }
@@ -208,7 +232,6 @@ void GameData::endHand()
 void GameData::endGame()
 {
     isEndgame  = false;
-
 }
 
 // call from qml
@@ -240,28 +263,28 @@ void GameData::finishTrick()
     humanPlayer->dump();
     aiPlayer->dump();
 
-    int aiCardId = deck.dealTop();
+    int aiCardId = getDeck()->dealTop();
     aiPlayer->giveCard(aiCardId);
     humanPlayer->getUnseen().haveSeen(aiCardId);
 
-    int humanCardId = deck.dealTop();
+    int humanCardId = getDeck()->dealTop();
     humanPlayer->giveCard(humanCardId);
     aiPlayer->getUnseen().haveSeen(humanCardId);
-    qDebug() << "Deck size: " << deck.size();
+    qDebug() << "Deck size: " << getDeck()->size();
+    setCardsInStock(getDeck()->size());
 
     humanPlayer->getHand()->syncHands();
     aiPlayer->getHand()->syncHands();
 
     humanPlayer->dump();
     aiPlayer->dump();
+    beziqueMatch->trickOver();
 
     if (activePlayer->won())
         emit gameOver();
-    else if (deck.empty())
+    else if (getDeck()->empty())
     {
         ResetBoardForEndgame();
-        isEndgame = true;
-        emit startEndgame();
     }
     else
         emit melded();
@@ -272,6 +295,13 @@ void GameData::ResetBoardForEndgame()
     aiPlayer->getHand()->moveAllHidden();
     humanPlayer->getHand()->moveAllHidden();
     faceCard->clearCard();
+    isEndgame = true;
+    emit startEndgame();
+}
+
+void GameData::setBeziqueMatch(BeziqueMatch *value)
+{
+    beziqueMatch = value;
 }
 
 int GameData::getCardsInStock() const
@@ -288,6 +318,63 @@ void GameData::setCardsInStock(int value)
     }
 }
 
+void GameData::setTrumps(int value)
+{
+    trumps = value;
+    changedTrumps();
+}
+
+BeziqueDeck *GameData::getDeck()
+{
+    return &deck;
+}
+
+bool GameData::getMeldedSeven() const
+{
+    return meldedSeven;
+}
+
+int GameData::getTrumps() const
+{
+    return trumps;
+}
+
+void GameData::switchActivePlayer()
+{
+    activePlayer = activePlayer == aiPlayer ? humanPlayer : aiPlayer;
+}
+
+void GameData::scoreEndTrick()
+{
+    if (trickOver) return;
+    trickOver = true;
+    if (activePlayer == aiPlayer )
+        activePlayer = humansCard->beats(*aisCard, trumps) ? humanPlayer : aiPlayer;
+    else
+        activePlayer = aisCard->beats(*humansCard, trumps) ? aiPlayer : humanPlayer;
+
+    if (Card::Ace == humansCard->getRank() || Card::Ten == humansCard->getRank())
+        activePlayer->incScore(10);
+    if (Card::Ace == aisCard->getRank() || Card::Ten == aisCard->getRank())
+        activePlayer->incScore(10);
+
+    if (activePlayer->won())
+        emit gameOver();
+    if (activePlayer->handEmpty())
+    {
+        activePlayer->incScore(10);
+        if (activePlayer->won())
+            emit gameOver();
+        else
+            emit handOver();
+    }
+    beziqueMatch->trickOver();
+
+    humanPlayer->getHand()->syncHands();
+    aiPlayer->getHand()->syncHands();
+    emit trickFinished();
+}
+
 void GameData::read(const QJsonObject &json)
 {
     QJsonObject faceCardObject = json["faceCard"].toObject();
@@ -300,8 +387,8 @@ void GameData::read(const QJsonObject &json)
     aiPlayer->read(computerObject);
 
     QJsonObject deckObject = json["deck"].toObject();
-    deck.read(deckObject);
-    cardsInStock = deck.size();
+    getDeck()->read(deckObject);
+    setCardsInStock(getDeck()->size());
 
     meldedSeven = json["meldedSeven"].toBool();
     humanStarted = json["humanStarted"].toBool();
@@ -360,62 +447,6 @@ void GameData::write(QJsonObject &json) const
         json["gameState"] = GS_EARLY_GAME;
 
 }
-
-void GameData::setTrumps(int value)
-{
-    trumps = value;
-    changedTrumps();
-}
-
-BeziqueDeck *GameData::getDeck()
-{
-    return &deck;
-}
-
-bool GameData::getMeldedSeven() const
-{
-    return meldedSeven;
-}
-
-int GameData::getTrumps() const
-{
-    return trumps;
-}
-
-void GameData::switchActivePlayer()
-{
-    activePlayer = activePlayer == aiPlayer ? humanPlayer : aiPlayer;
-}
-
-void GameData::scoreEndTrick()
-{
-    if (trickOver) return;
-    trickOver = true;
-    if (activePlayer == aiPlayer )
-        activePlayer = humansCard->beats(*aisCard, trumps) ? humanPlayer : aiPlayer;
-    else
-        activePlayer = aisCard->beats(*humansCard, trumps) ? aiPlayer : humanPlayer;
-
-    if (Card::Ace == humansCard->getRank() || Card::Ten == humansCard->getRank())
-        activePlayer->incScore(10);
-    if (Card::Ace == aisCard->getRank() || Card::Ten == aisCard->getRank())
-        activePlayer->incScore(10);
-
-    if (activePlayer->won())
-        emit gameOver();
-    if (activePlayer->handEmpty())
-    {
-        activePlayer->incScore(10);
-        if (activePlayer->won())
-            emit gameOver();
-        else
-            emit handOver();
-    }
-    //emit followedToTrick();
-    emit trickFinished();
-}
-
-
 
 
 

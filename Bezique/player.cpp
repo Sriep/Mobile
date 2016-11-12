@@ -86,6 +86,11 @@ void Player::setGameData(GameData *value)
     gameData = value;
 }
 
+void Player::setCanFollowCards(Card *oppCard, bool isEndgame, int trumps)
+{
+    hand->setCanFollowCards(oppCard, isEndgame, trumps);
+}
+
 void Player::dump()
 {
     qDebug() << (ai ? "\nAi" : "\nHuman");

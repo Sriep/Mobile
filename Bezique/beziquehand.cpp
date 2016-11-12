@@ -129,12 +129,13 @@ void BeziqueHand::refreshMelds(int trumps, bool seven)
     } //for
 }
 
-bool BeziqueHand::canMeld(int index, int trumps, bool seven) const
+bool BeziqueHand::canMeld(int index, int trumps, bool hasSeven) const
 {
     switch (cards[index]->getRank()) {
     case Card::Rank::Seven:
-        if (cards[index]->getSuit() == trumps &&
-                cards[index]->getRank() == seven)
+        if (cards[index]->getSuit() == trumps
+            &&  cards[index]->getRank() == Card::Rank::Seven
+            && !hasSeven)
         {
             cards[index]->setCanSeven(true);
             return true;
@@ -522,10 +523,10 @@ int BeziqueHand::findFlush(QList<int> &meld) const
         if (cards[i]->getSuit() == trumps)
         {
             if (cards[i]->getRank() >= Card::Rank::Jack
-                   && !flush[cards[i]->getRank() == CONVERT_FLUSH_INDEX]
+                   && !flush[cards[i]->getRank() - CONVERT_FLUSH_INDEX]
                    && cards[i]->canFlush)
             {
-                flush[cards[i]->getRank() == CONVERT_FLUSH_INDEX] = true;
+                flush[cards[i]->getRank() - CONVERT_FLUSH_INDEX] = true;
                 meld.append(i);
                 cards[i]->setHasFlushed(true);
             }
@@ -847,6 +848,59 @@ void BeziqueHand::syncHands()
         hiddedCards[j]->clearCard();
     }
 
+}
+
+void BeziqueHand::setCanFollowCards(Card *oppCard, bool isEndgame, int trumps)
+{
+    for ( int i = 0 ; i < cards.size() ; i++ )
+    {
+        cards[i]->setCanPlay(true);
+    }
+    for ( int i = 0 ; i < meldedCards.size() ; i++ )
+    {
+        if (meldedCards[i]->isCleard())
+            meldedCards[i]->setCanPlay(false);
+        else
+            meldedCards[i]->setCanPlay(true);
+    }
+    for ( int i = 0 ; i < hiddedCards.size() ; i++ )
+    {
+        if (hiddedCards[i]->isCleard())
+            hiddedCards[i]->setCanPlay(false);
+        else
+            hiddedCards[i]->setCanPlay(true);
+    }
+
+
+    if (isEndgame)
+    {
+        QList<Card*> legal;
+        legalFollow(cards, oppCard, (Card::Suit) trumps, legal);
+
+        for ( int i = 0 ; i < cards.size() ; i++ )
+        {
+            if (legal.indexOf(cards[i]) == -1)
+            {
+                cards[i]->setCanPlay(false);
+                emit cards[i]->canPlayChanged();
+                int hiddenLink = findLinkHidden(i);
+                if (hiddenLink != NOT_FOUND)
+                {
+                    hiddedCards[hiddenLink]->setCanPlay(false);
+                    emit hiddedCards[hiddenLink]->canPlayChanged();
+                }
+                else
+                {
+                    int meldedLink = findLinkMelded(i);
+                    if (meldedLink != NOT_FOUND)
+                    {
+                        meldedCards[meldedLink]->setCanPlay(false);
+                        emit meldedCards[meldedLink]->canPlayChanged();
+                    }
+                }
+            }
+        }
+    }
 }
 
 void BeziqueHand::dump()

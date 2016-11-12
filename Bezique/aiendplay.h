@@ -20,7 +20,7 @@ private:
     void init();
     Card* followCard();
     Card* leadCard(QList<Card*> hand);
-    QList<Card*> legalFollow(QList<Card*> hand, Card* lead);
+    //QList<Card*> legalFollow(QList<Card*> hand, Card* lead);
     Card* candropSingeltonAceTen();
     Card* canDropTen();
     Card* canleadIntoVoid();
@@ -68,5 +68,88 @@ inline static int findRank(QList<Card *> &list, Card::Rank rank)
     }
     return NOT_FOUND;
 }
+
+inline static bool legalFollow(const QList<Card *>& hand
+                               , const Card *lead
+                               , Card::Suit trumps
+                               , QList<Card*>& legal)
+{
+    int rank = lead->getRank();
+    int suit = lead->getSuit();
+    QList<Card*> loosingCards;
+    QList<Card*> winningCards;
+
+    for ( int i=0 ; i < hand.length() ; i++ )
+    {
+        if (hand[i]->getSuit() == suit)
+        {
+            if (hand[i]->getRank() > rank)
+                winningCards.append(hand[i]);
+            else
+                loosingCards.append(hand[i]);
+        }
+    }
+
+    if (winningCards.length() > 0)
+    {
+        legal = winningCards;
+        return true;
+    }
+    else if (loosingCards.length() > 0)
+    {
+        legal = loosingCards;
+        return false;
+    }
+
+    if (suit != trumps)
+    {
+        QList<Card*> trumpCards;
+        for ( int i=0 ; i < hand.length() ; i++ )
+        {
+            if (hand[i]->getSuit() == trumps)
+                trumpCards.append(hand[i]);
+        }
+        if (trumpCards.length() > 0)
+        {
+            legal = trumpCards;
+            return true;
+        }
+    }
+    legal = hand;
+    return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #endif // AIENDPLAY_H

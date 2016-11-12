@@ -3,7 +3,6 @@
 
 #include "card.h"
 
-
 Card::Card()
 {
 }
@@ -53,9 +52,9 @@ bool Card::beatsEnd(const Card &c, int trumps) const
     {
         if (rank == Rank::Ten)
             return (c.rank < Rank::Jack || c.rank == Rank::Ten);
-        if (c.rank == Rank::Ten)
+        else if (c.rank == Rank::Ten)
             return (rank > Rank::Nine);
-        return rank >= c.rank;
+        else return rank >= c.rank;
     }
     if ( c.suit == trumps )
         return false;
@@ -82,9 +81,7 @@ void Card::copyCard(const Card &card)
     link = card.link;
 
     setCanMeld(card.canMeld);
-    //if (canMeld != card.canMeld)
-    //    emit canMeldChanged();
-    //canMeld = card.canMeld;
+    setCanPlay(card.canPlay);
 
     canSeven = card.canSeven;
     canMarry = card.canMarry;
@@ -93,12 +90,6 @@ void Card::copyCard(const Card &card)
     canDoubleBezique = card.canDoubleBezique;
     canFourKind = card.canFourKind;
 
-
-    //hasMarried = card.hasMarried;
-    //hasBeziqued = card.hasBeziqued;
-    //hasDoubleBeziqued = card.hasDoubleBeziqued;
-    //hasFlushed = card.hasFlushed;
-    //hasFourKinded = card.hasFourKinded;
     setHasMarried(card.hasMarried);
     setHasBeziqued(card.hasBeziqued);
     setHasDoubleBeziqued(card.hasDoubleBeziqued);
@@ -166,6 +157,7 @@ void Card::clearMeldStatus()
     //    canMeld = false;
     //}
     setCanMeld(false);
+    setCanPlay(true);
     canSeven = false;
     canMarry = false;
     canFlush = false;
@@ -182,18 +174,28 @@ void Card::clearMeldStatus()
 
 void Card::clearCanMeldStatus()
 {
-    //if (canMeld)
-    //{
-    //    canMeld = false;
-    //    emit canMeldChanged();
-    //}
     setCanMeld(false);
+    setCanPlay(true);
     canSeven = false;
     canMarry = false;
     canFlush = false;
     canBezique = false;
     canDoubleBezique = false;
     canFourKind = false;
+}
+
+bool Card::getCanPlay() const
+{
+    return canPlay;
+}
+
+void Card::setCanPlay(bool value)
+{
+    if (canPlay != value)
+    {
+        canPlay = value;
+        emit canPlayChanged();
+    }
 }
 
 bool Card::getHasFourKinded() const
@@ -416,7 +418,6 @@ void Card::setImage(QString image)
 
 
 }
-
 
 
 

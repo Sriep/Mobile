@@ -1,66 +1,115 @@
-import QtQuick 2.7
-import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.0
-import Bezique 1.0
+import QtQuick 2.2
+import QtQuick.Controls 1.2
+import "content"
 import Qt.labs.settings 1.0
 import QtQuick.Window 2.2
 
 ApplicationWindow {
     id: appwin
     visible: true
-    //width: 640;   height: 480
-    //width: 1280;   height: 720
-    width: 660;   height: 360
-    //width: Screen.desktopAvailableWidth; height: Screen.desktopAvailableHeight
-    //title: qsTr("Bezique " + gameBoard.bottomName  + " " + gameBoard.bottomGamesWon
-     //           + " " + gameBoard.topName + " " + gameBoard.topGamesWon)
-    title: qsTr("Bezique " + Screen.desktopAvailableHeight  + " " + Screen.desktopAvailableWidth);
+    width: 800
+    height: 1280
+    title: qsTr("Bezique " + stackView.depth);
+/*
+    menuBar: MenuBar {
+        Menu {
+            id: beziaueMenu
+            title: "Bezique"
+            MenuItem {
+                text: "Continue"
+                onTriggered: stackView.pop(null);
+            }
 
-   // SwipeView {
-     //   id: swipeView
-   //     anchors.fill: parent
-   //     currentIndex: 0
+            MenuItem {
+                text: "Restart Match"
+                onTriggered: {
+                    gameBoard.restartGame = ture;
+                    stackView.pop(null);
+                }
+            }
 
-     //   Page1 {
-    //    }
+            MenuItem {
+                text: "Options"
+                onTriggered: stackView.push(Options);
+            }
 
-   Page2 {
-       id: gameBoard
-        property string bottomName: bottomName
-        property int topName: bottomName
-        property string bottomGamesWon: bottomGamesWon
-        property int topGamesWon: topGamesWon
+            MenuItem {
+                text: "Exit"
+                onTriggered: Qt.quit();
+            }
+        }
+    }
+*/
+/*
+     toolBar: BorderImage {
+         border.bottom: 8
+         source: "images/toolbar.png"
+         width: parent.width
+         height: stackView.depth > 1 ? 100 : 0// 100
+
+         Rectangle {
+             id: backButton
+             width: opacity ? 60 : 0
+             anchors.left: parent.left
+             anchors.leftMargin: 20
+             opacity: stackView.depth > 1 ? 1 : 0
+             anchors.verticalCenter: parent.verticalCenter
+             antialiasing: true
+             height: stackView.depth > 1 ? 60 : 0
+             radius: 4
+             color: backmouse.pressed ? "#222" : "transparent"
+             Behavior on opacity { NumberAnimation{} }
+             Image {
+                 anchors.verticalCenter: parent.verticalCenter
+                 source: "images/navigation_previous_item.png"
+             }
+             MouseArea {
+                 id: backmouse
+                 anchors.fill: parent
+                 anchors.margins: -10
+                 onClicked: stackView.pop()
+             }
+         }
+
+         Text {
+             font.pixelSize: stackView.depth > 1 ? 42 : 0
+             Behavior on x { NumberAnimation{ easing.type: Easing.OutCubic} }
+             x: backButton.x + backButton.width + 20
+             anchors.verticalCenter: parent.verticalCenter
+             color: "white"
+             text: stackView.depth > 1 ? "Bezique Options" : "";
+         }
+     }
+
+*/
+
+    Page2 {
+        id: gameBoard
+         property string bottomName: bottomName
+         property int topName: bottomName
+         property string bottomGamesWon: bottomGamesWon
+         property int topGamesWon: topGamesWon
+         property bool restartGame: restartGame = false
+     }
+
+
+
+    StackView {
+        id: stackView
+        anchors.fill: parent
+        // Implements back key navigation
+        focus: true
+        Keys.onReleased: if (event.key === Qt.Key_Back && stackView.depth > 1) {
+                             stackView.pop();
+                             event.accepted = true;
+                         }
+
+        initialItem :  gameBoard
     }
 
     Settings {
-        //property  string    playerName: match.playerName
-        //property  string    aiName: match.aiName
-        //property  int     playerGamesWon: match.playerGamesWon
-        //property  int     aiGamesWon: match.aiGamesWon
-
         property alias width: appwin.width
         property alias height: appwin.height
     }
 
-   // header: ToolBar {
-        // ...
-   // }
-
-
-    StackView {
-        anchors.fill: parent
-    }
-
-/*
-    footer: TabBar {
-        id: tabBar
-        //currentIndex: swipeView.currentIndex
-        TabButton {
-            text: qsTr("First")
-        }
-        TabButton {
-            text: qsTr("Second")
-        }
-    }
-    */
 }

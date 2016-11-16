@@ -7,15 +7,36 @@
 #include "beziquematch.h"
 
 
-BeziqueMatch::BeziqueMatch()
+BeziqueMatch::BeziqueMatch(bool restart, QQuickItem *parent)
+    : QQuickItem(parent)
 {    
+    if (restart)
+    {
+        setSaveAvaliable(false);
+    }
+    else
+    {
+        QFile loadFile(QStringLiteral("save.json"));
+        setSaveAvaliable(loadFile.exists());
+        //if (saveAvaliable) loadMatch();
+    }
+}
+
+void BeziqueMatch::init()
+{
+/*    QFile loadFile(QStringLiteral("save.json"));
+    setSaveAvaliable(loadFile.exists());
+    if (saveAvaliable)
+        loadMatch();
+
+*/
 }
 
 bool BeziqueMatch::loadMatch(SaveFormat saveFormat)
 {
     QFile loadFile(saveFormat == Json
-        ? QStringLiteral("save.json")
-        : QStringLiteral("save.dat"));
+                   ? QStringLiteral("save.json")
+                   : QStringLiteral("save.dat"));
 
     if (!loadFile.open(QIODevice::ReadOnly)) {
         qWarning("Couldn't open save file.");
@@ -36,8 +57,8 @@ bool BeziqueMatch::loadMatch(SaveFormat saveFormat)
 bool BeziqueMatch::saveMatch(SaveFormat saveFormat) const
 {
     QFile saveFile(saveFormat == Json
-        ? QStringLiteral("save.json")
-        : QStringLiteral("save.dat"));
+                   ? QStringLiteral("save.json")
+                   : QStringLiteral("save.dat"));
 
     if (!saveFile.open(QIODevice::WriteOnly)) {
         qWarning("Couldn't open save file.");
@@ -138,6 +159,20 @@ void BeziqueMatch::trickOver()
     saveMatch(Json);
 }
 
+void BeziqueMatch::setSaveAvaliable(bool value)
+{
+    if (saveAvaliable == value)
+        return;
+
+    saveAvaliable = value;
+    emit saveAvaliableChanged(saveAvaliable);
+}
+
+bool BeziqueMatch::getSaveAvaliable() const
+{
+    return saveAvaliable;
+}
+
 void BeziqueMatch::read(const QJsonObject &json)
 {
     bottomName = json["bottomName"].toString();
@@ -160,6 +195,7 @@ void BeziqueMatch::write(QJsonObject &json) const
     gameData->write(gameDataObject);
     json["gameData"] = gameDataObject;
 }
+
 
 
 

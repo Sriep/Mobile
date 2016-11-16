@@ -26,6 +26,8 @@ import QtQuick.Window 2.2
         property string topName: match.bottomName
         property int bottomGamesWon: match.bottomGamesWon
         property int topGamesWon: match.topGamesWon
+        property bool saveAvaliable: match.saveAvaliable
+        property bool restartGame: restartGame = false
 
         Rectangle {
             width: parent.width; height: parent.height;
@@ -61,6 +63,7 @@ import QtQuick.Window 2.2
             topName: "ai"
             bottomGamesWon: 0
             topGamesWon: 0
+            saveAvaliable: false
 
             gameData: GameData {
                 id: gameData

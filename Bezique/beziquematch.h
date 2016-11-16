@@ -6,6 +6,8 @@
 #include "gamedata.h"
 
 enum SaveFormat {Json, Binary };
+static const QString saveFilename = "save";
+
 class BeziqueMatch : public QQuickItem
 {
     Q_OBJECT
@@ -14,9 +16,11 @@ class BeziqueMatch : public QQuickItem
     Q_PROPERTY(QString topName READ getTopName WRITE setTopName NOTIFY topNameChanged)
     Q_PROPERTY(int bottomGamesWon READ getBottomGamesWon WRITE setBottomGamesWon NOTIFY bottomGamesWonChanged)
     Q_PROPERTY(int topGamesWon READ getTopGamesWon WRITE setTopGamesWon NOTIFY topGamesWonChanged)
+    Q_PROPERTY(bool saveAvaliable READ getSaveAvaliable WRITE setSaveAvaliable NOTIFY saveAvaliableChanged)
 
 public:
-    BeziqueMatch();
+    //BeziqueMatch(QQuickItem *parent = 0);
+    BeziqueMatch(bool restart = false, QQuickItem *parent = 0);
     bool loadMatch(SaveFormat saveFormat = Json);
     bool saveMatch(SaveFormat saveFormat = Json) const;
 
@@ -34,22 +38,30 @@ public:
 
     void read(const QJsonObject &json);
     void write(QJsonObject &json) const;
+    bool getSaveAvaliable() const;
+
 signals:
     void gameDataChanged();
     void bottomNameChanged();
     void topNameChanged();
     void bottomGamesWonChanged();
     void topGamesWonChanged();
+    void saveAvaliableChanged(bool getSaveAvaliable);
+
 public slots:
     void gameFinished(int topScore, int bottomScore);
     void trickOver();
+    void setSaveAvaliable(bool value);
+
 private:
+    void init();
 
     GameData* gameData;
     QString bottomName = "human";
     QString topName = "top";
     int bottomGamesWon = 0;
     int topGamesWon = 0;
+    bool saveAvaliable = false;
 };
 
 #endif // BEZIQUEMATCH_H

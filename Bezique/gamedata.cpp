@@ -18,6 +18,8 @@ GameData::GameData(QQuickItem *parent)
 
 void GameData::init()
 {
+    if (beziqueMatch->getSaveAvaliable())
+        beziqueMatch->loadMatch();
     game.start();
 }
 

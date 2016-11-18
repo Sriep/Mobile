@@ -8,10 +8,9 @@ int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
-
     app.setOrganizationName("Pierses");
     app.setOrganizationDomain("eventapps.com");
-    app.setApplicationName("PiersesEventAppDesigner");
+    app.setApplicationName("PiersesEventApp");
 
     qmlRegisterType<EAContainer>("EventAppData", 1,0, "EAContainer");
     qmlRegisterType<EAConstruction>("EventAppData", 1,0, "EAConstruction");

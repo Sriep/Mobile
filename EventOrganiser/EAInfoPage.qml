@@ -5,26 +5,17 @@ import "content"
 import EventAppData 1.0
 
 Page {
-
-    EventInfo {
-        id: eventInfo
-        eventName: qsTr("Landlord Law Conference 2017")
-        eventDescription: qsTr("If you want solid legal training
-for you and your staff - look no further.
-We have 10 legal talks, all from specialist
- lawyers and trainers to make sure you are
-bang up to date with the law.")
-        organiserName: "Tessa Shepperson"
-        organiserDescription: "Tessa Shepperson"
-    }
+    //id: eaInfoPage
 
     SwipeView {
-        id: eventView
+        id: eaInfoView
         anchors.fill: parent
-        currentIndex: eventTabBar.currentIndex
+        currentIndex: eaInfoTabBar.currentIndex
 
-        EventName {}
-        EventTheme {}
+        EAInfoName {
+            //width: parent.width
+        }
+        EAInfoTheme {}
         Rectangle {
             color: 'yellow'
             implicitWidth: 200
@@ -35,38 +26,11 @@ bang up to date with the law.")
             implicitWidth: 200
             implicitHeight: 200
         }
-
-        /*Repeater {
-            model: 3
-
-            Pane {
-                width: swipeView.width
-                height: swipeView.height
-
-                Column {
-                    spacing: 40
-                    width: parent.width
-
-                    Label {
-                        width: parent.width
-                        wrapMode: Label.Wrap
-                        horizontalAlignment: Qt.AlignHCenter
-                        text: "TabBar is a bar with icons or text which allows the user"
-                              + "to switch between different subtasks, views, or modes."
-                    }
-
-                    Image {
-                        source: "qrc:/images/arrows.png"
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-                }
-            }
-        }*/
     }
 
     footer: TabBar {
-        id: eventTabBar
-        currentIndex: eventView.currentIndex
+        id: eaInfoTabBar
+        currentIndex: eaInfoView.currentIndex
        // anchors.fill: parent
         //anchors.bottom: parent.bottom
        // anchors.margins: 8
@@ -76,7 +40,6 @@ bang up to date with the law.")
         //Layout.minimumHeight: 360
         //Layout.preferredWidth: 480
         //Layout.preferredHeight: 640
-
         TabButton {
             text: qsTr("Name")
         }
@@ -84,6 +47,7 @@ bang up to date with the law.")
             text: qsTr("Theme")
         }
         TabButton {
+           // text: eventInfoPage.eventInfo.organiserName
             text: qsTr("Location")
         }
         TabButton {
@@ -140,4 +104,3 @@ bang up to date with the law.")
 //"schedule_published_on": "2016-05-04T09:00:00",
 //"searchable_location_name": null,
 //"state": "Comp
-

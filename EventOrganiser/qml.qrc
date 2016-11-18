@@ -1,8 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>TheEvent.qml</file>
-        <file>content/EventName.qml</file>
-        <file>content/EventTheme.qml</file>
+        <file>EAInfoPage.qml</file>
+        <file>EAConstructionPage.qml</file>
+        <file>content/EAInfoName.qml</file>
+        <file>content/EAInfoTheme.qml</file>
     </qresource>
 </RCC>

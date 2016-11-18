@@ -17,9 +17,18 @@ class BeziqueMatch : public QQuickItem
     Q_PROPERTY(int bottomGamesWon READ getBottomGamesWon WRITE setBottomGamesWon NOTIFY bottomGamesWonChanged)
     Q_PROPERTY(int topGamesWon READ getTopGamesWon WRITE setTopGamesWon NOTIFY topGamesWonChanged)
     Q_PROPERTY(bool saveAvaliable READ getSaveAvaliable WRITE setSaveAvaliable NOTIFY saveAvaliableChanged)
+    Q_INTERFACES(QQmlParserStatus)
 
 public:
     //BeziqueMatch(QQuickItem *parent = 0);
+
+   /* virtual void classBegin()
+    {
+    }
+    virtual void componentComplete()
+    {
+    }*/
+
     BeziqueMatch(bool restart = false, QQuickItem *parent = 0);
     bool loadMatch(SaveFormat saveFormat = Json);
     bool saveMatch(SaveFormat saveFormat = Json) const;

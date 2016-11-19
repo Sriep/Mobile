@@ -13,6 +13,17 @@ EAContainer::EAContainer()
 
 }
 
+void EAContainer::classBegin()
+{
+    // Perform some initialization here now that the object is fully created
+}
+
+void EAContainer::componentComplete()
+{
+    // Perform some initialization here now that the object is fully created
+    loadEventApp();
+}
+
 EAInfo *EAContainer::eaInfo() const
 {
     return m_eaInfo;

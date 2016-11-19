@@ -9,9 +9,11 @@ class EAInfo;
 class EAConstruction;
 enum SaveFormat {Json, Binary };
 
-class EVENTAPPSHAREDSHARED_EXPORT EAContainer : public QQuickItem
+//class EVENTAPPSHAREDSHARED_EXPORT EAContainer : public QQuickItem
+class EVENTAPPSHAREDSHARED_EXPORT EAContainer : public QObject, public QQmlParserStatus
 {
     Q_OBJECT
+    Q_INTERFACES(QQmlParserStatus)
     Q_PROPERTY(EAInfo* eaInfo READ eaInfo WRITE setEAInfo NOTIFY eaInfoChanged)
     Q_PROPERTY(EAConstruction* eaConstruction READ eaConstruction WRITE setEAConstruction NOTIFY eaConstructionChanged)
 
@@ -28,6 +30,9 @@ class EVENTAPPSHAREDSHARED_EXPORT EAContainer : public QQuickItem
 
 public:
     EAContainer();
+
+    virtual void classBegin();
+    virtual void componentComplete();
 
     Q_INVOKABLE  bool loadEventApp();
     Q_INVOKABLE  bool saveSaveEventApp() const;

@@ -10,6 +10,7 @@ import Qt.labs.settings 1.0
 import EventAppData 1.0
 
 ApplicationWindow {
+    id: appwin
     visible: true
     //width: 600; height: 400
     //width: 800; height: 600
@@ -41,6 +42,7 @@ ApplicationWindow {
 
     EAContainer {
         id: eaContainer
+        //dataFilename: dataFilename
         eaConstruction: EAConstruction {}
         eaInfo: EAInfo {}
     }
@@ -77,5 +79,18 @@ ApplicationWindow {
             implicitWidth: 200
             implicitHeight: 200
         }
+    }
+
+    Settings {
+        //category: geometry
+        property alias x: appwin.x
+        property alias y: appwin.y
+        property alias width: appwin.width
+        property alias height: appwin.height
+    //}
+
+    //Settings {
+        //category: data
+        property alias dataFilename: eaContainer.dataFilename
     }
 }

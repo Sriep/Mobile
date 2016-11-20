@@ -22,6 +22,7 @@ void EAContainer::componentComplete()
 {
     // Perform some initialization here now that the object is fully created
     loadEventApp();
+    emit eaComponentComplete();
 }
 
 EAInfo *EAContainer::eaInfo() const

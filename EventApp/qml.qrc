@@ -1,5 +1,27 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>qml/DownloadEvent.qml</file>
+        <file>qml/DownloadEventForm.ui.qml</file>
+        <file>qml/EaToolBarForm.ui.qml</file>
+        <file>qml/EaToolBar.qml</file>
+        <file>images/drawer.png</file>
+        <file>images/drawer@2x.png</file>
+        <file>images/drawer@3x.png</file>
+        <file>images/drawer@4x.png</file>
+        <file>images/drawerW.png</file>
+        <file>images/drawerW@2x.png</file>
+        <file>images/drawerW@3x.png</file>
+        <file>images/drawerW@4x.png</file>
+        <file>images/menu.png</file>
+        <file>images/menu@2x.png</file>
+        <file>images/menu@3x.png</file>
+        <file>images/menu@4x.png</file>
+        <file>images/menuW.png</file>
+        <file>images/menuW@2x.png</file>
+        <file>images/menuW@3x.png</file>
+        <file>images/menuW@4x.png</file>
+        <file>MainStackForm.ui.qml</file>
+        <file>MainStack.qml</file>
     </qresource>
 </RCC>

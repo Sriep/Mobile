@@ -7,7 +7,7 @@
 
 class EAInfo;
 class EAConstruction;
-enum SaveFormat {Json, Binary };
+//enum SaveFormat {Json, Binary };
 
 //class EVENTAPPSHAREDSHARED_EXPORT EAContainer : public QQuickItem
 class EVENTAPPSHAREDSHARED_EXPORT EAContainer : public QObject, public QQmlParserStatus
@@ -47,20 +47,19 @@ public:
     QString workingDirectory() const;
 
 signals:
-
     void eaInfoChanged(EAInfo* eaInfo);
     void dataFilenameChanged(QString dataFilename);
     void eaConstructionChanged(EAConstruction* eaConstruction);
     void isSaveJsonChanged(bool isSaveJson);
-
+    void eaComponentComplete();
     void workingDirectoryChanged(QString workingDirectory);
 
 public slots:
-void setEAInfo(EAInfo* eaInfo);
-void setDataFilename(QString dataFilename);
-void setEAConstruction(EAConstruction* eaConstruction);
-void setIsSaveJson(bool isSaveJson);
-void setWorkingDirectory(QString workingDirectory);
+    void setEAInfo(EAInfo* eaInfo);
+    void setDataFilename(QString dataFilename);
+    void setEAConstruction(EAConstruction* eaConstruction);
+    void setIsSaveJson(bool isSaveJson);
+    void setWorkingDirectory(QString workingDirectory);
 };
 
 #endif // EVENTCONTAINER_H

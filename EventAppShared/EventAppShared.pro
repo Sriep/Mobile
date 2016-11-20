@@ -15,13 +15,15 @@ DEFINES += EVENTAPPSHARED_LIBRARY
 SOURCES += eventappshared.cpp \
     eainfo.cpp \
     eacontainer.cpp \
-    eaconstruction.cpp
+    eaconstruction.cpp \
+    httpdownload.cpp
 
 HEADERS += eventappshared.h\
         eventappshared_global.h \
     eainfo.h \
     eacontainer.h \
-    eaconstruction.h
+    eaconstruction.h \
+    httpdownload.h
 
 unix {
     target.path = /usr/lib

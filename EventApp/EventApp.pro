@@ -1,8 +1,18 @@
-#QT += qml quick
+# += qml quick
 QT += quick quickcontrols2
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    ../EventAppShared/eacontainer.cpp \
+    ../EventAppShared/eaconstruction.cpp \
+    ../EventAppShared/eainfo.cpp \
+    ../EventAppShared/httpdownload.cpp
+
+HEADERS += \
+    ../EventAppShared/eainfo.h \
+    ../EventAppShared/eacontainer.h \
+    ../EventAppShared/eaconstruction.h \
+    ../EventAppShared/httpdownload.h
 
 RESOURCES += qml.qrc
 
@@ -14,7 +24,40 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-unix:!macx: LIBS += -L$$PWD/../build-EventAppShared-Desktop_Qt_5_7_0_GCC_64bit-Debug/ -lEventAppShared
+#unix:!macx: LIBS += -L$$PWD/../build-EventAppShared-Desktop_Qt_5_7_0_GCC_64bit-Debug/ -lEventAppShared
+
+#android  {
+#  unix:!macx: LIBS += -L$$PWD/../build-EventAppShared-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/ -lEventAppShared
+#}
 
 INCLUDEPATH += $$PWD/../EventAppShared
 DEPENDPATH += $$PWD/../EventAppShared
+
+
+
+
+DISTFILES += \
+    qml/DownloadEventForm.ui.qml \
+    qml/EaHeaderForm.ui.qml \
+    images/menuW@4x.png \
+    images/menuW@3x.png \
+    images/menuW@2x.png \
+    images/menuW.png \
+    images/menu@4x.png \
+    images/menu@3x.png \
+    images/menu@2x.png \
+    images/menu.png \
+    images/drawerW@4x.png \
+    images/drawerW@3x.png \
+    images/drawerW@2x.png \
+    images/drawerW.png \
+    images/drawer@4x.png \
+    images/drawer@3x.png \
+    images/drawer@2x.png \
+    images/drawer.png \
+    qml/EaHeader.qml \
+    MainStackForm.ui.qml
+
+FORMS +=
+
+

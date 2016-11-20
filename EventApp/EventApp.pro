@@ -56,7 +56,11 @@ DISTFILES += \
     images/drawer@2x.png \
     images/drawer.png \
     qml/EaHeader.qml \
-    MainStackForm.ui.qml
+    MainStackForm.ui.qml \
+    qml/ListDelegateForm.ui.qml \
+    qml/DrawerModel.qml \
+    DrawerListView.qml \
+    DrawerView.qml
 
 FORMS +=
 

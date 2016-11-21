@@ -5,44 +5,30 @@ import QtQuick.Extras 1.4
 import "qml"
 
 Item {
-    property alias listView1: listView1
+    property alias drawerView: drawerView
+    property alias downloadEvent: downloadEvent
+    property alias stackCtl: stackCtl
 
     StackLayout {
-        id: mainStack
+        id: stackCtl
         anchors.fill: parent
 
 
         ListView {
-            id: listView1
+            id: drawerView
             width: 110
             height: 160
-            delegate: Item {
-                x: 5
-                width: 80
-                height: 40
-                Row {
-                    id: row1
-                    Rectangle {
-                        width: 40
-                        height: 40
-                        color: colorCode
-                    }
-
-                    Text {
-                        text: name
-                        font.bold: true
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                    spacing: 10
-                }
+            delegate: ListDelegate {
+                id: drawerDelegate
+                text: title
             }
             model: DrawerModel {
+                id: drawerModel
             }
         }
         DownloadEvent {
-            id: downloadEvent1
+            id: downloadEvent
         }
     }
-
 
 }

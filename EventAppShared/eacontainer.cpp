@@ -21,8 +21,8 @@ void EAContainer::classBegin()
 void EAContainer::componentComplete()
 {
     // Perform some initialization here now that the object is fully created
-    loadEventApp();
-    emit eaComponentComplete();
+    //loadEventApp();
+    //emit eaComponentComplete();
 }
 
 EAInfo *EAContainer::eaInfo() const
@@ -37,7 +37,9 @@ QString EAContainer::dataFilename() const
 
 bool EAContainer::loadEventApp()
 {
-    //QFile loadFile(dataFilename());
+    QString pwd = QDir::currentPath();
+    qDebug() << "Current working directory" << pwd;
+
     QFile loadFile(isSaveJson()
                    ? QString(dataFilename() + ".json")
                    : QString(dataFilename() + ".dat"));
@@ -60,6 +62,7 @@ bool EAContainer::loadEventApp()
 
 bool EAContainer::saveSaveEventApp() const
 {
+
     QFile saveFile(isSaveJson()
                    ? QString(dataFilename() + ".json")
                    : QString(dataFilename() + ".dat"));
@@ -84,11 +87,13 @@ void EAContainer::read(const QJsonObject &json)
 {
     setDataFilename(json["dataFilename"].toString());
 
-    QJsonObject gameDataObject = json["event"].toObject();
-    m_eaInfo->read(gameDataObject);
+    QJsonObject eventInfoObject = json["event"].toObject();
+    m_eaInfo->read(eventInfoObject);
+    emit eaInfoChanged(m_eaInfo);
 
     QJsonObject constructionDataObject = json["construction"].toObject();
     m_eaConstruction->read(constructionDataObject);
+    emit eaConstructionChanged(m_eaConstruction);
 }
 
 void EAContainer::write(QJsonObject &json) const
@@ -140,7 +145,7 @@ void EAContainer::setDataFilename(QString dataFilename)
     QString path = info.path();
     QString extension = info.suffix();
     m_dataFilename = filename;
-    setIsSaveJson(extension == "json");
+    setIsSaveJson(extension == "json" || extension == "");
     QDir::setCurrent(path);
     emit dataFilenameChanged(dataFilename);
 }

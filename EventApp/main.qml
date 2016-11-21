@@ -10,7 +10,18 @@ ApplicationWindow {
     id: appwin
     visible: true
     width: 480; height: 640
-    title: qsTr("Hello World")
+    //title: qsTr("Hi world")
+    title: eaContainer.eaInfo.eventName
+
+    property color backColour: EAConstruction.backColour
+    property color foreColour: EAConstruction.foreColour
+    property color textColour: EAConstruction.textColour
+
+    Rectangle {
+        //color: "#212126"
+        color: appwin.backColour
+        anchors.fill: parent
+    }
 
     EAContainer {
         id: eaContainer       
@@ -19,17 +30,51 @@ ApplicationWindow {
 
         Component.onCompleted: {
             console.log("Componet completed: ", eaContainer.dataFile);
+            console.log("Settins filename: ", settingsData.dataFilename);
+            dataFilename = settingsData.dataFilename;
+            loadEventApp();
             console.log("Data file: ", eaContainer.dataFile);
+            console.log("back colour: ", eaConstruction.backColour);
+            console.log("fore colour: ", eaConstruction.foreColour);
+            console.log("font colour: ", eaConstruction.textColour);
+            console.log("event name: ", eaInfo.eventName);
         }
+
+        Component.onDestruction: {
+            console.log("Settins filename before: ", settingsData.dataFilename);
+            settingsData.dataFilename = dataFilename;
+            console.log("Settins filename after: ", settingsData.dataFilename);
+
+        }
+
     }
 
     HttpDownload {
         id: httpDownload
+        onFinishedDownload: {
+            console.log("Download finished");
+            eaContainer.loadEventApp();
+            console.log("onFinishedDownload");
+            console.log("Componet completed: ", eaContainer.dataFile);
+            console.log("Data file: ", eaContainer.dataFile);
+            console.log("back colour: ", eaContainer.backColour);
+            console.log("fore colour: ", eaContainer.foreColour);
+            console.log("font colour: ", eaContainer.textColour);
+            console.log("event name: ", eaContainer.eaInfo.eventName);
+        }
     }
 
-    header: EaToolBar {}
+    header: EaToolBar {
+        id: toolBar
+    }
 
-    MainStack {}
+    MainStack {
+        id: mainStack
+        property int topDrawerId: 0
+        property int loadEventId: 1
+    }
+
+
 
 
     Settings {
@@ -41,7 +86,8 @@ ApplicationWindow {
     }
 
     Settings {
+        id: settingsData
         category: "data"
-        property alias dataFilename: eaContainer.dataFilename
+        property string dataFilename: "defaultData"
     }
 }

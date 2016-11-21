@@ -2,8 +2,8 @@ import QtQuick 2.6
 import QtQuick.Controls 2.0
 
 EaToolBarForm {
-
-    titleLabel.text: "Whats up folks"
+    id: toolBar
+    titleLabel.text: eaContainer.eaInfo.eventName
 
     menuButton.onClicked: optionsMenu.open()
     Menu {
@@ -12,8 +12,9 @@ EaToolBarForm {
         transformOrigin: Menu.TopRight
 
         MenuItem {
+            id: menuItemLoadEvent
             text: qsTr("Load Event")
-            onTriggered: settingsPopup.open()
+            onTriggered: mainStack.stackCtl.currentIndex = mainStack.loadEventId;
         }
         MenuItem {
             text: qsTr("Settings")

@@ -5,6 +5,7 @@ import QtQuick.Extras 1.4
 
 
 ToolBar {
+    id: toolBar
     property alias drawerButton: drawerButton
     property alias menuButton: menuButton
     property alias titleLabel: titleLabel

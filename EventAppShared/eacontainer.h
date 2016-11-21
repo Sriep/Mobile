@@ -23,7 +23,7 @@ class EVENTAPPSHAREDSHARED_EXPORT EAContainer : public QObject, public QQmlParse
 
 
     EAInfo* m_eaInfo;
-    QString m_dataFilename = "data";
+    QString m_dataFilename;
     EAConstruction* m_eaConstruction;
     bool m_isSaveJson = true;
     QString m_workingDirectory = QCoreApplication::applicationDirPath();

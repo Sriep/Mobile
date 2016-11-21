@@ -15,21 +15,21 @@ HttpDownload::HttpDownload()
             this, &HttpDownload::slotAuthenticationRequired);
 }
 
-void HttpDownload::downloadFile(QUrl url)
+QString HttpDownload::downloadFile(QUrl url)
 {
     m_url = url;
     //const QString urlSpec = urlLineEdit->text().trimmed();
     if (m_url.isEmpty())
     {
         emit error(tr("Empty url"));
-        return;
+        return "";
     }
 
     preProcessUrl();
     if (!m_url.isValid())
     {
         emit error(tr("Invalid url"));
-        return;
+        return "";
     }
 
     QString fileName = m_url.fileName();
@@ -45,12 +45,13 @@ void HttpDownload::downloadFile(QUrl url)
     if (!file)
     {
         emit error(tr("Problem opening file"));
-        return;
+        return "";
     }
 
     //downloadButton->setEnabled(false);
     // schedule the request
     startRequest();
+    return fileName;
 }
 void HttpDownload::preProcessUrl()
 {
@@ -130,7 +131,7 @@ void HttpDownload::httpFinished()
         startRequest();
         return;
     }
-
+    emit finishedDownload();
     //statusLabel->setText(tr("Downloaded %1 bytes to %2\nin\n%3")
     //                     .arg(fi.size()).arg(fi.fileName(), QDir::toNativeSeparators(fi.absolutePath())));
 

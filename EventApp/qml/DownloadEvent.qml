@@ -4,8 +4,12 @@ DownloadEventForm {
     downloadButton.onClicked: {
         console.log("Button Pressed. Entered text: ", urlText.text);
         progressBar.visible = true;
-        //httpDownload.url = ulrText.text;
-        httpDownload.downloadFile(urlText.text);
+        var fileName = httpDownload.downloadFile(urlText.text);
         console.log("Exited download file");
+        eaContainer.dataFilename = fileName;
+    }
+
+    quitButton.onClicked: {
+        mainStack.stackCtl.currentIndex = mainStack.topDrawerId;
     }
 }

@@ -27,7 +27,6 @@
         <file>images/navigation_previous_item.png</file>
         <file>qml/ListDelegateForm.ui.qml</file>
         <file>qml/ListDelegate.qml</file>
-        <file>qml/DrawerModel.qml.autosave</file>
         <file>qml/DrawerModel.qml</file>
     </qresource>
 </RCC>

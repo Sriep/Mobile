@@ -12,13 +12,10 @@ class EVENTAPPSHAREDSHARED_EXPORT EAInfo : public QQuickItem
     Q_PROPERTY(QString organiserDescription READ organiserDescription WRITE setOrganiserDescription NOTIFY organiserDescriptionChanged)
 
 
-    QString m_eventName = QString(tr("Landlord Law Conference 2017"));
-    QString m_eventDescription = QString(tr("If you want solid legal training"
-            "for you and your staff - look no further. We have 10 legal"
-            " talks, all from specialist lawyers and trainers to make sure"
-            "you are bang up to date with the law."));
-    QString m_organiserName = "Tessa Shepperson";
-    QString m_organiserDescription = "Tessa Shepperson";
+    QString m_eventName;
+    QString m_eventDescription;
+    QString m_organiserName;
+    QString m_organiserDescription;
 
 public:
     EAInfo();

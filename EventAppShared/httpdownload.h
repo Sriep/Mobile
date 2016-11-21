@@ -24,7 +24,7 @@ class EVENTAPPSHAREDSHARED_EXPORT HttpDownload : public QQuickItem
 
 public:
     HttpDownload();
-    Q_INVOKABLE void downloadFile(QUrl url);
+    Q_INVOKABLE QString downloadFile(QUrl url);
 
     QUrl url() const;
     QString user() const;
@@ -34,6 +34,7 @@ signals:
     void urlChanged(QUrl url);
     void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
     void finished();
+    void finishedDownload();
     void error(QString message);
     void authenticationRequired();
     void userChanged(QString user);

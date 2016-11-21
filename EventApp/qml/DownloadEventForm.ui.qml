@@ -6,6 +6,7 @@ Item {
     property alias urlText: urlText
     property alias downloadButton: downloadButton
     property alias progressBar: progressBar
+    property alias quitButton: quitButton
 
     ColumnLayout {
         id: columnLayout1
@@ -13,6 +14,7 @@ Item {
         y: 20
         width: 445
         height: 139
+
 
         Label {
             id: label1
@@ -32,10 +34,25 @@ Item {
             placeholderText: qsTr("Text Field")
         }
 
-        Button {
-            id: downloadButton
-            text: qsTr("Download")
+
+        RowLayout {
+            id: rowLayout1
+            width: 100
+            height: 100
+            anchors.left: parent.left
+            anchors.leftMargin: -20
+
+
+            Button {
+                id: downloadButton
+                text: qsTr("Download")
+            }
+            Button {
+                id: quitButton
+                text: qsTr("Exit")
+            }
         }
+
 
         ProgressBar {
             id: progressBar
@@ -45,6 +62,5 @@ Item {
             clip: false
             value: 0
         }
-
     }
 }

@@ -2,7 +2,7 @@ import QtQuick 2.6
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import "content"
-import EventAppData 1.0
+//import EventAppData 1.0
 
 Page {
     //id: eaInfoPage
@@ -31,15 +31,6 @@ Page {
     footer: TabBar {
         id: eaInfoTabBar
         currentIndex: eaInfoView.currentIndex
-       // anchors.fill: parent
-        //anchors.bottom: parent.bottom
-       // anchors.margins: 8
-        //anchors.margins: UI.margin
-        //tabPosition: UI.tabPosition
-        //Layout.minimumWidth: 360
-        //Layout.minimumHeight: 360
-        //Layout.preferredWidth: 480
-        //Layout.preferredHeight: 640
         TabButton {
             text: qsTr("Name")
         }

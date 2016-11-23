@@ -5,5 +5,9 @@
         <file>EAConstructionPage.qml</file>
         <file>content/EAInfoName.qml</file>
         <file>content/EAInfoTheme.qml</file>
+        <file>content/HeaderTabBarForm.ui.qml</file>
+        <file>TabStack.qml</file>
+        <file>WelcomeTabForm.ui.qml</file>
+        <file>WelcomeTab.qml</file>
     </qresource>
 </RCC>

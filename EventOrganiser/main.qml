@@ -1,12 +1,9 @@
-//import QtQuick 2.7
-//import QtQuick.Controls 2.0
-//import QtQuick.Layouts 1.1
+
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
-//import QtQuick.Controls.Material 2.0
-//import QtQuick.Controls.Universal 2.0
 import Qt.labs.settings 1.0
+import "content"
 import EventAppData 1.0
 
 ApplicationWindow {
@@ -17,40 +14,42 @@ ApplicationWindow {
     width: 1280;    height: 1024
     title: qsTr("Event App designer:\t" + eaContainer.eaInfo.eventName)
 
-    header: TabBar {
+    header: HeaderTabBarForm {
         id: headerTabBar
-        Layout.minimumWidth: 360
-        Layout.minimumHeight: 360
-        Layout.preferredWidth: 480
-        Layout.preferredHeight: 640
-        TabButton {
-            text: qsTr("Construction")
-        }
-        TabButton {
-            text: qsTr("Event")
-        }
-        TabButton {
-            text: qsTr("Program")
-        }
-        TabButton {
-            text: qsTr("Speakers")
-        }
-        TabButton {
-            text: qsTr("Delegates")
-        }
     }
 
     EAContainer {
         id: eaContainer
-        //dataFilename: dataFilename
         eaConstruction: EAConstruction {}
         eaInfo: EAInfo {}
+
+        Component.onCompleted: {
+            console.log("Componet completed: ", eaContainer.dataFile);
+            console.log("Settins filename: ", settingsData.dataFilename);
+            dataFilename = settingsData.dataFilename;
+            loadEventApp();
+            console.log("Data file: ", dataFile);
+            console.log("back colour: ", eaConstruction.backColour);
+            console.log("fore colour: ", eaConstruction.foreColour);
+            console.log("font colour: ", eaConstruction.textColour);
+            console.log("event name: ", eaInfo.eventName);
+        }
+
+        Component.onDestruction: {
+            console.log("Settins filename before: ", settingsData.dataFilename);
+            settingsData.dataFilename = dataFilename;
+            console.log("Settins filename after: ", settingsData.dataFilename);
+        }
+
     }
 
     StackLayout {
-        id: view
+        id: tabStack
         currentIndex: headerTabBar.currentIndex
         anchors.fill: parent
+
+        WelcomeTab {
+        }
 
         EAConstructionPage {
             property alias eaContainer: eaContainer
@@ -59,10 +58,10 @@ ApplicationWindow {
         }
 
         EAInfoPage {
-           //id: eventInfoPage
-           property alias eventContainer: eaContainer
-           property alias eventInfo: eaContainer.eaInfo
-           property alias dataFilename: eaContainer.dataFilename
+            //id: eventInfoPage
+            property alias eventContainer: eaContainer
+            property alias eventInfo: eaContainer.eaInfo
+            property alias dataFilename: eaContainer.dataFilename
         }
         Rectangle {
             color: 'plum'
@@ -82,15 +81,16 @@ ApplicationWindow {
     }
 
     Settings {
-        //category: geometry
+        category: "geometry"
         property alias x: appwin.x
         property alias y: appwin.y
         property alias width: appwin.width
         property alias height: appwin.height
-    //}
+    }
 
-    //Settings {
-        //category: data
+    Settings {
+        id: settingsData
+        category: "data"
         property alias dataFilename: eaContainer.dataFilename
     }
 }

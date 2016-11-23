@@ -16,14 +16,20 @@ SOURCES += eventappshared.cpp \
     eainfo.cpp \
     eacontainer.cpp \
     eaconstruction.cpp \
-    httpdownload.cpp
+    httpdownload.cpp \
+    eapropertylist.cpp \
+    ealistmodel.cpp \
+    easpeakers.cpp
 
 HEADERS += eventappshared.h\
         eventappshared_global.h \
     eainfo.h \
     eacontainer.h \
     eaconstruction.h \
-    httpdownload.h
+    httpdownload.h \
+    eapropertylist.h \
+    ealistmodel.h \
+    easpeakers.h
 
 unix {
     target.path = /usr/lib

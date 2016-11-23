@@ -7,6 +7,7 @@
 
 class EAInfo;
 class EAConstruction;
+class EASpeakers;
 //enum SaveFormat {Json, Binary };
 
 //class EVENTAPPSHAREDSHARED_EXPORT EAContainer : public QQuickItem
@@ -16,6 +17,7 @@ class EVENTAPPSHAREDSHARED_EXPORT EAContainer : public QObject, public QQmlParse
     Q_INTERFACES(QQmlParserStatus)
     Q_PROPERTY(EAInfo* eaInfo READ eaInfo WRITE setEAInfo NOTIFY eaInfoChanged)
     Q_PROPERTY(EAConstruction* eaConstruction READ eaConstruction WRITE setEAConstruction NOTIFY eaConstructionChanged)
+    Q_PROPERTY(EASpeakers* eaSpeakers READ eaSpeakers WRITE setEaSpeakers NOTIFY eaSpeakersChanged)
 
     Q_PROPERTY(QString workingDirectory READ workingDirectory WRITE setWorkingDirectory NOTIFY workingDirectoryChanged)
     Q_PROPERTY(QString dataFilename READ dataFilename WRITE setDataFilename NOTIFY dataFilenameChanged)
@@ -26,7 +28,8 @@ class EVENTAPPSHAREDSHARED_EXPORT EAContainer : public QObject, public QQmlParse
     QString m_dataFilename;
     EAConstruction* m_eaConstruction;
     bool m_isSaveJson = true;
-    QString m_workingDirectory = QCoreApplication::applicationDirPath();
+    QString m_workingDirectory = QCoreApplication::applicationDirPath();    
+    EASpeakers* m_eaSpeakers;
 
 public:
     EAContainer();
@@ -38,13 +41,14 @@ public:
     Q_INVOKABLE  bool saveSaveEventApp() const;
     void read(const QJsonObject &json);
     void write(QJsonObject &json) const;
+    QString workingDirectory() const;
+
 
     EAInfo* eaInfo() const;
     QString dataFilename() const;
     EAConstruction* eaConstruction() const;
-    bool isSaveJson() const;
-
-    QString workingDirectory() const;
+    bool isSaveJson() const;    
+    EASpeakers* eaSpeakers() const;
 
 signals:
     void eaInfoChanged(EAInfo* eaInfo);
@@ -54,12 +58,15 @@ signals:
     void eaComponentComplete();
     void workingDirectoryChanged(QString workingDirectory);
 
+    void eaSpeakersChanged(EASpeakers* eaSpeakers);
+
 public slots:
     void setEAInfo(EAInfo* eaInfo);
     void setDataFilename(QString dataFilename);
     void setEAConstruction(EAConstruction* eaConstruction);
     void setIsSaveJson(bool isSaveJson);
     void setWorkingDirectory(QString workingDirectory);
+    void setEaSpeakers(EASpeakers* eaSpeakers);
 };
 
 #endif // EVENTCONTAINER_H

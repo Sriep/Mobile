@@ -7,10 +7,10 @@
 #include "eacontainer.h"
 #include "eainfo.h"
 #include "eaconstruction.h"
+#include "easpeakers.h"
 
 EAContainer::EAContainer()
 {
-
 }
 
 void EAContainer::classBegin()
@@ -73,9 +73,9 @@ bool EAContainer::saveSaveEventApp() const
         return false;
     }
 
-    QJsonObject gameObject;
-    write(gameObject);
-    QJsonDocument saveDoc(gameObject);
+    QJsonObject containerObject;
+    write(containerObject);
+    QJsonDocument saveDoc(containerObject);
     saveFile.write(isSaveJson()
         ? saveDoc.toJson()
         : saveDoc.toBinaryData());
@@ -87,13 +87,14 @@ void EAContainer::read(const QJsonObject &json)
 {
     setDataFilename(json["dataFilename"].toString());
 
-    QJsonObject eventInfoObject = json["event"].toObject();
-    m_eaInfo->read(eventInfoObject);
+    m_eaInfo->read(json["event"].toObject());
     emit eaInfoChanged(m_eaInfo);
 
-    QJsonObject constructionDataObject = json["construction"].toObject();
-    m_eaConstruction->read(constructionDataObject);
+    m_eaConstruction->read(json["construction"].toObject());
     emit eaConstructionChanged(m_eaConstruction);
+
+    eaSpeakers()->read(json["speakers"].toObject());
+    emit eaSpeakersChanged(eaSpeakers());
 }
 
 void EAContainer::write(QJsonObject &json) const
@@ -107,6 +108,10 @@ void EAContainer::write(QJsonObject &json) const
     QJsonObject constructionDataObject;
     m_eaConstruction->write(constructionDataObject);
     json["construction"] = constructionDataObject;
+
+    QJsonObject speakersDataObject;
+    eaSpeakers()->write(speakersDataObject);
+    json["speakers"] = speakersDataObject;
 }
 
 EAConstruction *EAContainer::eaConstruction() const
@@ -122,6 +127,11 @@ bool EAContainer::isSaveJson() const
 QString EAContainer::workingDirectory() const
 {
     return m_workingDirectory;
+}
+
+EASpeakers *EAContainer::eaSpeakers() const
+{
+    return m_eaSpeakers;
 }
 
 void EAContainer::setEAInfo(EAInfo *eventInfo)
@@ -175,4 +185,13 @@ void EAContainer::setWorkingDirectory(QString workingDirectory)
 
     m_workingDirectory = workingDirectory;
     emit workingDirectoryChanged(workingDirectory);
+}
+
+void EAContainer::setEaSpeakers(EASpeakers *eaSpeakers)
+{
+    if (m_eaSpeakers == eaSpeakers)
+        return;
+
+    m_eaSpeakers = eaSpeakers;
+    emit eaSpeakersChanged(eaSpeakers);
 }

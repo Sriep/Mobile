@@ -10,6 +10,10 @@ class EAConstruction;
 class EASpeakers;
 //enum SaveFormat {Json, Binary };
 
+static const QString EVENT ="event";
+static const QString CONSTRUCTION ="construction";
+static const QString SPEAKERS ="speakers";
+
 //class EVENTAPPSHAREDSHARED_EXPORT EAContainer : public QQuickItem
 class EVENTAPPSHAREDSHARED_EXPORT EAContainer : public QObject, public QQmlParserStatus
 {

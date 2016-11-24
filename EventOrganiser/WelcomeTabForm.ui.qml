@@ -37,6 +37,4 @@ Item {
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
         }
     }
-
-
 }

@@ -20,15 +20,19 @@ ApplicationWindow {
 
     EAContainer {
         id: eaContainer
-        eaConstruction: EAConstruction {}
-        eaInfo: EAInfo {}
+        eaConstruction: EAConstruction {
+        }
+        eaInfo: EAInfo {
+        }
+        eaSpeakers: EASpeakers {
+        }
 
         Component.onCompleted: {
             console.log("Componet completed: ", eaContainer.dataFile);
             console.log("Settins filename: ", settingsData.dataFilename);
             dataFilename = settingsData.dataFilename;
             loadEventApp();
-            console.log("Data file: ", dataFile);
+            console.log("Data file: ", dataFilename);
             console.log("back colour: ", eaConstruction.backColour);
             console.log("fore colour: ", eaConstruction.foreColour);
             console.log("font colour: ", eaConstruction.textColour);
@@ -43,6 +47,11 @@ ApplicationWindow {
 
     }
 
+   /* MainStack {
+        id: mainStack
+        property alias mainContainer: eaContainer
+    }
+*/
     StackLayout {
         id: tabStack
         currentIndex: headerTabBar.currentIndex
@@ -52,26 +61,23 @@ ApplicationWindow {
         }
 
         EAConstructionPage {
-            property alias eaContainer: eaContainer
             property alias eaConstruction: eaContainer.eaConstruction
             property alias dataFilename: eaContainer.dataFilename
         }
 
         EAInfoPage {
-            //id: eventInfoPage
-            property alias eventContainer: eaContainer
             property alias eventInfo: eaContainer.eaInfo
             property alias dataFilename: eaContainer.dataFilename
         }
+
         Rectangle {
             color: 'plum'
             implicitWidth: 300
             implicitHeight: 200
         }
-        Rectangle {
-            color: 'yellow'
-            implicitWidth: 200
-            implicitHeight: 200
+        EASpeakerPage {
+            property alias eventSpeakers: eaContainer.eaSpeakers
+            property alias dataFilename: eaContainer.dataFilename
         }
         Rectangle {
             color: 'brown'

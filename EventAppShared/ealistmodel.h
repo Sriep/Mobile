@@ -16,6 +16,7 @@ public:
 
     void read(const QJsonArray &jsonArray);
     void write(QJsonArray &jsonArray) const;
+    void append(const QJsonArray &jsonArray);
 
     QString listName() const;
 public slots:
@@ -25,6 +26,7 @@ signals:
 
 private:
     QStringList propertyList;
+
     QString m_listName;
 };
 

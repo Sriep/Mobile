@@ -90,11 +90,17 @@ void EAContainer::read(const QJsonObject &json)
     m_eaInfo->read(json["event"].toObject());
     emit eaInfoChanged(m_eaInfo);
 
-    m_eaConstruction->read(json["construction"].toObject());
-    emit eaConstructionChanged(m_eaConstruction);
+    if (json.contains("construction"))
+    {
+        m_eaConstruction->read(json["construction"].toObject());
+        emit eaConstructionChanged(m_eaConstruction);
+    }
 
-    eaSpeakers()->read(json["speakers"].toObject());
-    emit eaSpeakersChanged(eaSpeakers());
+    if (json.contains(SPEAKERS))
+    {
+        eaSpeakers()->read(json[SPEAKERS].toObject());
+        emit eaSpeakersChanged(eaSpeakers());
+    }
 }
 
 void EAContainer::write(QJsonObject &json) const
@@ -111,7 +117,7 @@ void EAContainer::write(QJsonObject &json) const
 
     QJsonObject speakersDataObject;
     eaSpeakers()->write(speakersDataObject);
-    json["speakers"] = speakersDataObject;
+    json[SPEAKERS] = speakersDataObject;
 }
 
 EAConstruction *EAContainer::eaConstruction() const

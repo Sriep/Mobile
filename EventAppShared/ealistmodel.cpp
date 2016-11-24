@@ -17,10 +17,8 @@ void EAListModel::constructModel()
 
 void EAListModel::read(const QJsonArray &jsonArray)
 {
-    for (int i = 0; i < jsonArray.size(); ++i) {
-        QString property = jsonArray[i].toString();
-        propertyList.append(property);
-    }
+    propertyList.clear();
+    append(jsonArray);
 }
 
 void EAListModel::write(QJsonArray &jsonArray) const
@@ -29,6 +27,15 @@ void EAListModel::write(QJsonArray &jsonArray) const
     {
         jsonArray.append(propertyList[i]);
     }
+}
+
+void EAListModel::append(const QJsonArray &jsonArray)
+{
+    for (int i = 0; i < jsonArray.size(); ++i) {
+        QString property = jsonArray[i].toString();
+        propertyList.append(property);
+    }
+    constructModel();
 }
 
 QString EAListModel::listName() const

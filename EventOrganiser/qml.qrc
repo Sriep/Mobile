@@ -9,5 +9,17 @@
         <file>TabStack.qml</file>
         <file>WelcomeTabForm.ui.qml</file>
         <file>WelcomeTab.qml</file>
+        <file>MainStack.qml</file>
+        <file>content/EAInfoThemeForm.ui.qml</file>
+        <file>content/EAInfoNameForm.ui.qml</file>
+        <file>EAInfoPageForm.ui.qml</file>
+        <file>qml.qrc</file>
+        <file>MainStackForm.ui.qml</file>
+        <file>main.cpp</file>
+        <file>EventOrganiser.pro.user</file>
+        <file>EventOrganiser.pro</file>
+        <file>EAConstructionPageForm.ui.qml</file>
+        <file>content/EASpeakerPage.qml</file>
+        <file>content/EASpeakerPageForm.ui.qml</file>
     </qresource>
 </RCC>

@@ -1,36 +1,19 @@
-import QtQuick 2.6
+import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import "content"
-//import EventAppData 1.0
+import EventAppData 1.0
 
-Page {
-    //id: eaInfoPage
-
-    SwipeView {
-        id: eaInfoView
-        anchors.fill: parent
-        currentIndex: eaInfoTabBar.currentIndex
-
-        EAInfoName {
-            //width: parent.width
-        }
-        EAInfoTheme {}
-        Rectangle {
-            color: 'yellow'
-            implicitWidth: 200
-            implicitHeight: 200
-        }
-        Rectangle {
-            color: 'brown'
-            implicitWidth: 200
-            implicitHeight: 200
-        }
+EAInfoPageForm {
+    //property alias eaContainer: mainStack.eaContainer
+    EAInfoName {
     }
+    EAInfoTheme {}
+    eaInfoSwipeView.currentIndex:  eaInfoTabBar.currentIndex
 
-    footer: TabBar {
+    eaInfoPage.footer: TabBar {
         id: eaInfoTabBar
-        currentIndex: eaInfoView.currentIndex
+        currentIndex: eaInfoSwipeView.currentIndex
         TabButton {
             text: qsTr("Name")
         }
@@ -38,7 +21,6 @@ Page {
             text: qsTr("Theme")
         }
         TabButton {
-           // text: eventInfoPage.eventInfo.organiserName
             text: qsTr("Location")
         }
         TabButton {

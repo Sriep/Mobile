@@ -15,7 +15,7 @@ static const QString CONSTRUCTION ="construction";
 static const QString SPEAKERS ="speakers";
 
 //class EVENTAPPSHAREDSHARED_EXPORT EAContainer : public QQuickItem
-class EVENTAPPSHAREDSHARED_EXPORT EAContainer : public QObject, public QQmlParserStatus
+class  EAContainer : public QObject, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)

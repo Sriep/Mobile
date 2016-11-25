@@ -4,6 +4,7 @@
 #include <QJsonArray>
 #include <QQuickItem>
 #include <QStringList>
+#include <QChar>
 #include <QSet>
 
 class EAListModel;
@@ -13,40 +14,50 @@ static const char textDelimiter = '"';
 class EASpeakers : public QQuickItem
 {
     Q_OBJECT
-    Q_PROPERTY(QString delegateList READ delegateList WRITE setDelegateList NOTIFY delegateListChanged)
+    Q_PROPERTY(QString titleFields READ titleFields WRITE setTitleFields NOTIFY titleFieldsChanged)
+    Q_PROPERTY(QString dataList READ dataList WRITE setDataList NOTIFY dataListChanged)
+
     Q_PROPERTY(EAListModel* listModal READ listModal WRITE setListModal NOTIFY listModalChanged)
 
 public:
     EASpeakers();
 
     void read(const QJsonObject &json);
-    Q_INVOKABLE void readCSV(const QString filename);
     void write(QJsonObject &json) const;
 
-    QString delegateList() const;
-    EAListModel* listModal() const;
+    Q_INVOKABLE void readCSV(const QString filename);
+    //Q_INVOKABLE void constructModel();
+
+    QString titleFields() const;
+    EAListModel* listModal() const;    
+    QString dataList() const;
 
 signals:
-
-    void delegateListChanged(QString delegateList);
-
-    void listModalChanged(EAListModel* listModal);
+    void titleFieldsChanged(QString titleFields);
+    void listModalChanged(EAListModel* listModal);    
+    void dataListChanged(QString dataList);
 
 public slots:
-    void setDelegateList(QString delegateList);
-    void setListModal(EAListModel* listModal);
-
+    void setTitleFields(QString titleFields);
+    void setTitleFields(const QJsonArray& titleFields);
+    void setListModal(EAListModel* listModal);    
+    void setDataList(QString dataList);
+    void setDataList(const QJsonArray& dataListArray);
 private:
-    void addHeaderFields(const QList<QByteArray>& fields);
-    QJsonObject newDataItem(const QList<QByteArray> &speakerData
-                            , const QList<QByteArray> &header);
+    void addHeaderFields(const QStringList &fields);
+    QJsonObject newDataItem(const QStringList &speakerData
+                            , const QStringList &header);
 
     QJsonArray jsonFields;
-    QJsonArray jsonListData;
+    QJsonArray jsonData;
+    //QJsonArray jsonListData;
     QSet<QString> fieldsSet;
+    //QStringList fieldList;
+    int nextIndex = 0;
 
-    QString m_delegateList;
+    QString m_titleFields;
     EAListModel* m_listModal;
+    QString m_dataList;
 };
 
 #endif // EASPEAKERS_H

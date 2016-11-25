@@ -3,7 +3,7 @@
 
 #include <QQuickItem>
 #include "eventappshared_global.h"
-class EVENTAPPSHAREDSHARED_EXPORT EAInfo : public QQuickItem
+class  EAInfo : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(QString eventName READ eventName WRITE setEventName NOTIFY eventNameChanged)
@@ -36,10 +36,10 @@ signals:
     void organiserDescriptionChanged(QString organiserDescription);
 
 public slots:
-void setEventName(QString eventName);
-void setEventDescription(QString eventDescription);
-void setOrganiserName(QString organiserName);
-void setOrganiserDescription(QString organiserDescription);
+    void setEventName(QString eventName);
+    void setEventDescription(QString eventDescription);
+    void setOrganiserName(QString organiserName);
+    void setOrganiserDescription(QString organiserDescription);
 };
 
 #endif // EVENTINFO_H

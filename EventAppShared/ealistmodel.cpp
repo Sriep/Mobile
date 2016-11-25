@@ -6,14 +6,14 @@
 EAListModel::EAListModel()
 {
 }
-
+/*
 void EAListModel::constructModel()
 {
     //QQuickView view;
     //QQmlContext *ctxt = view.rootContext();
     QQmlContext *ctxt = qmlContext(this);
     ctxt->setContextProperty(listName(), QVariant::fromValue(propertyList));
-}
+}*/
 
 void EAListModel::read(const QJsonArray &jsonArray)
 {
@@ -32,10 +32,11 @@ void EAListModel::write(QJsonArray &jsonArray) const
 void EAListModel::append(const QJsonArray &jsonArray)
 {
     for (int i = 0; i < jsonArray.size(); ++i) {
-        QString property = jsonArray[i].toString();
-        propertyList.append(property);
+        QJsonDocument jsonDoc(jsonArray[i].toObject());
+        QByteArray property = jsonDoc.toJson(QJsonDocument::Compact);
+        propertyList.append(QString(property));
     }
-    constructModel();
+    //constructModel();
 }
 
 QString EAListModel::listName() const

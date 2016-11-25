@@ -15,7 +15,7 @@ class QAuthenticator;
 class QNetworkReply;
 QT_END_NAMESPACE
 
-class EVENTAPPSHAREDSHARED_EXPORT HttpDownload : public QQuickItem
+class  HttpDownload : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY urlChanged)

@@ -12,7 +12,7 @@ class EAListModel : public QQuickItem
 
 public:
     EAListModel();
-    Q_INVOKABLE void constructModel();
+    //Q_INVOKABLE void constructModel();
 
     void read(const QJsonArray &jsonArray);
     void write(QJsonArray &jsonArray) const;

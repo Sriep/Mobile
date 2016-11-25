@@ -1,6 +1,10 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QByteArray>
+#include "QStringList"
+#include <QtQml>
+#include <csv.h>
+#include <QDebug>
 
 #include "ealistmodel.h"
 #include "easpeakers.h"
@@ -12,31 +16,28 @@ EASpeakers::EASpeakers()
 
 void EASpeakers::read(const QJsonObject &json)
 {
-    setDelegateList(json["fields"].toString());
-    jsonFields = json["fields"].toArray();
-    for ( int i = 0 ; i < jsonFields.size() ; i++ )
-    {
-        QJsonObject fieldDeligatePair = jsonFields[i].toObject();
-        fieldsSet.insert(fieldDeligatePair["field"].toString());
-    }
-
-    QJsonArray speakersArray = json["speakersList"].toArray();
-    listModal()->read(speakersArray);
+    jsonFields = json["headerFields"].toArray();
+    setTitleFields(jsonFields);
     emit listModalChanged(listModal());
+
+    jsonData = json["dataList"].toArray();
+    setDataList(jsonData);
+    emit dataListChanged(dataList());
+
+    nextIndex = json["nextIndex"].toInt();
 }
 
 void EASpeakers::write(QJsonObject &json) const
 {
-    json["fields"] = delegateList();
+    json["headerFields"] = jsonFields;
+    json["dataList"] = jsonData;
 
-    QJsonArray speakersArray;
-    listModal()->write(speakersArray);
-    json["speakersList"] = speakersArray;
+    json["nextIndex"] = nextIndex;
 }
 
-QString EASpeakers::delegateList() const
+QString EASpeakers::titleFields() const
 {
-    return m_delegateList;
+    return m_titleFields;
 }
 
 EAListModel *EASpeakers::listModal() const
@@ -44,13 +45,44 @@ EAListModel *EASpeakers::listModal() const
     return m_listModal;
 }
 
-void EASpeakers::setDelegateList(QString delegateList)
+QString EASpeakers::dataList() const
 {
-    if (m_delegateList == delegateList)
+    return m_dataList;
+}
+
+void EASpeakers::setTitleFields(QString delegateList)
+{
+    if (m_titleFields == delegateList)
         return;
 
-    m_delegateList = delegateList;
-    emit delegateListChanged(delegateList);
+    m_titleFields = delegateList;
+    emit titleFieldsChanged(delegateList);
+}
+
+void EASpeakers::setDataList(const QJsonArray &dataListArray)
+{
+    jsonData = dataListArray;
+    QJsonObject dataObject;
+    dataObject.insert("dataItems", QJsonValue(jsonData));
+    QJsonDocument jsonDoc(dataObject);
+    QByteArray jsonBA = jsonDoc.toJson(QJsonDocument::Compact);
+    setDataList(QString(jsonBA));
+}
+
+void EASpeakers::setTitleFields(const QJsonArray &titleFields)
+{
+    jsonFields = titleFields;
+    QJsonObject titleObject;
+    titleObject.insert("headerFields", QJsonValue(jsonFields));
+    QJsonDocument jsonDoc(titleObject);
+    QByteArray jsonBA = jsonDoc.toJson(QJsonDocument::Compact);
+    setTitleFields(QString(jsonBA));
+
+    for ( int i=0 ; i < jsonFields.size() ; i++ )
+    {
+        QJsonObject jsonField = jsonFields[i].toObject();
+        fieldsSet.insert(jsonField["field"].toString());
+    }
 }
 
 void EASpeakers::setListModal(EAListModel *listModal)
@@ -62,52 +94,60 @@ void EASpeakers::setListModal(EAListModel *listModal)
     emit listModalChanged(listModal);
 }
 
-void EASpeakers::readCSV(const QString filename)
+void EASpeakers::setDataList(QString dataList)
 {
-    QFile file(filename);
-    if (!file.open(QIODevice::ReadOnly)) {
-        qDebug() << file.errorString();
+    if (m_dataList == dataList)
         return;
-    }
 
-    QList<QByteArray> headerList;
-    if (!file.atEnd())
-    {
-        QByteArray header = file.readLine();
-        headerList = header.split(seperator);
-        addHeaderFields(headerList);
-    }
-    QJsonArray newListData;
-    while (!file.atEnd()) {
-        QByteArray line = file.readLine();
-        newListData.append(newDataItem(line.split(seperator), headerList));
-    }
-    listModal()->append(newListData);
-    return;
+    m_dataList = dataList;
+    emit dataListChanged(dataList);
 }
 
-void EASpeakers::addHeaderFields(const QList<QByteArray>& fields)
+void EASpeakers::readCSV(const QString filename)
 {
-    //bool fieldAdded = false;
-    for ( int i = 0 ; i < fields.length() ; i++ )
+    QList<QStringList> csvListLines = CSV::parseFromFile(filename);
+    if (csvListLines.length() > 0 )
     {
-        QString field(fields[i]);
-        if (!fieldsSet.contains(field))
+        QStringList headerList = csvListLines[0];
+        addHeaderFields(headerList);
+        if (csvListLines.length() > 1)
         {
-            QJsonObject newField
+            for ( int line=1 ; line < csvListLines.length() ; line++ )
             {
-                { "field", field },
-                { "delegate", "%1: %2" }
-            };
-            jsonFields.append(newField);
-            fieldsSet.insert(field);
-            //fieldAdded = true;
+                QJsonObject newItem = newDataItem(csvListLines[line], headerList);
+                newItem["id"] = nextIndex++;
+                jsonData.append(newItem);
+            }
+            setDataList(jsonData);
         }
     }
 }
 
-QJsonObject EASpeakers::newDataItem(const QList<QByteArray>& speakerData
-                                    , const QList<QByteArray>& header)
+void EASpeakers::addHeaderFields(const QStringList& fields)
+{
+
+    for ( int i = 0 ; i < fields.length() ; i++ )
+    {
+        if (!fieldsSet.contains(fields[i]))
+        {
+            QJsonObject newField
+            {
+                { "field", fields[i] },
+                { "delegate", "%1: %2" },
+                { "inListView", i==0 ? true : false }
+            };
+            jsonFields.append(newField);
+            fieldsSet.insert(fields[i]);
+        }
+    }
+
+
+    setTitleFields(jsonFields);
+
+}
+
+QJsonObject EASpeakers::newDataItem(const QStringList& speakerData
+                                    , const QStringList& header)
 {
     QJsonObject newItem;
     int headerIndex = 0;
@@ -115,25 +155,36 @@ QJsonObject EASpeakers::newDataItem(const QList<QByteArray>& speakerData
     {
         if (headerIndex >= header.size())
             break;
-        QString field(speakerData[i]);
-        if (field[0] == textDelimiter)
-        {
-            QString mergedFields;
-            field = field.right(field.size()-1);
-            while (field[field.size()-1] != textDelimiter
-                   && ++i < speakerData.length())
-            {
-                mergedFields += field;
-                field = speakerData[i];
-            }
-            mergedFields += field.left(field.size()-1);
-            newItem[QString(header[headerIndex++])] = mergedFields;
-        }
-        else
-        {
-            newItem[QString(header[headerIndex++])] = field;
-        }
-
+        newItem[header[headerIndex++]] = speakerData[i];
     }
     return newItem;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

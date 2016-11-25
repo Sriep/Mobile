@@ -15,11 +15,12 @@
         <file>EAInfoPageForm.ui.qml</file>
         <file>qml.qrc</file>
         <file>MainStackForm.ui.qml</file>
-        <file>main.cpp</file>
-        <file>EventOrganiser.pro.user</file>
-        <file>EventOrganiser.pro</file>
         <file>EAConstructionPageForm.ui.qml</file>
         <file>content/EASpeakerPage.qml</file>
         <file>content/EASpeakerPageForm.ui.qml</file>
+        <file>content/TitleFieldListDelegate.qml</file>
+        <file>content/DataListDelegate.qml</file>
+        <file>content/TitleFieldListDelegateForm.ui.qml</file>
+        <file>content/DataListDelegateForm.ui.qml</file>
     </qresource>
 </RCC>

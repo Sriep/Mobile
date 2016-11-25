@@ -20,11 +20,13 @@ ApplicationWindow {
 
     EAContainer {
         id: eaContainer
+        //property alias saSpeakersList: eaListModel;
         eaConstruction: EAConstruction {
         }
         eaInfo: EAInfo {
         }
         eaSpeakers: EASpeakers {
+            listModal: EAListModel {}
         }
 
         Component.onCompleted: {
@@ -77,6 +79,7 @@ ApplicationWindow {
         }
         EASpeakerPage {
             property alias eventSpeakers: eaContainer.eaSpeakers
+            //property alias speakersListModel: eaSpeakers.listModal;
             property alias dataFilename: eaContainer.dataFilename
         }
         Rectangle {

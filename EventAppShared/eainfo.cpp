@@ -9,10 +9,6 @@ EAInfo::EAInfo()
 
 void EAInfo::read(const QJsonObject &json)
 {
-       //m_eventName = json["name"].toString();
-       //m_eventDescription = json["description"].toString();
-       //m_organiserName = json["organizer_name"].toString();
-       //m_organiserDescription = json["organizer_description"].toString();
        setEventName(json["name"].toString());
        setEventDescription(json["description"].toString());
        setOrganiserName(json["organizer_name"].toString());

@@ -4,7 +4,7 @@
 #include <QFont>
 #include <QQuickItem>
 #include "eventappshared_global.h"
-class EVENTAPPSHAREDSHARED_EXPORT EAConstruction : public QQuickItem
+class  EAConstruction : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(QColor backColour READ backColour WRITE setBackColour NOTIFY backColourChanged)

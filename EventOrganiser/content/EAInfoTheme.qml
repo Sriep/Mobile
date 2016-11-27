@@ -6,5 +6,5 @@ import EventAppData 1.0
 EAInfoThemeForm {
     button1.onClicked: eventContainer.saveSaveEventApp();
     button2.onClicked: eventContainer.loadEventApp();
-    textField1.text: eventContainer.dataFilename;
+    //textField1.text: eventContainer.dataFilename;
 }

@@ -8,7 +8,6 @@ SOURCES += main.cpp \
     ../EventAppShared/eainfo.cpp \
     ../EventAppShared/httpdownload.cpp \
     ../EventAppShared/easpeakers.cpp \
-    ../EventAppShared/ealistmodel.cpp \
     ../EventAppShared/csv.cpp
 
 HEADERS += \
@@ -18,7 +17,6 @@ HEADERS += \
     ../EventAppShared/httpdownload.h \
     ../EventAppShared/eventappshared_global.h \
     ../EventAppShared/easpeakers.h \
-    ../EventAppShared/ealistmodel.h \
     ../EventAppShared/csv.h
 
 RESOURCES += qml.qrc

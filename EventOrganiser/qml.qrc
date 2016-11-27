@@ -18,9 +18,20 @@
         <file>EAConstructionPageForm.ui.qml</file>
         <file>content/EASpeakerPage.qml</file>
         <file>content/EASpeakerPageForm.ui.qml</file>
-        <file>content/TitleFieldListDelegate.qml</file>
         <file>content/DataListDelegate.qml</file>
-        <file>content/TitleFieldListDelegateForm.ui.qml</file>
         <file>content/DataListDelegateForm.ui.qml</file>
+        <file>content/stringformat.js</file>
+        <file>images/tab.png</file>
+        <file>images/slider_handle.png</file>
+        <file>images/plus-sign.png</file>
+        <file>images/next.png</file>
+        <file>images/moreUp.png</file>
+        <file>images/moreDown.png</file>
+        <file>images/minus-sign.png</file>
+        <file>images/list-delete.png</file>
+        <file>images/checkmark.png</file>
+        <file>images/back.png</file>
+        <file>images/arrow-up.png</file>
+        <file>images/arrow-down.png</file>
     </qresource>
 </RCC>

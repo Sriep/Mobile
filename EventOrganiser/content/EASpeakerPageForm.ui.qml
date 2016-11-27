@@ -46,7 +46,7 @@ Item {
                     model: titlesModel
                     delegate: TextField {
                         height: 30
-                        placeholderText: delegate
+                        placeholderText: format
                     }
                 }
 

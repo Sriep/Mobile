@@ -4,7 +4,6 @@
 #include "eacontainer.h"
 #include "eaconstruction.h"
 #include "easpeakers.h"
-#include "ealistmodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,7 +18,6 @@ int main(int argc, char *argv[])
     qmlRegisterType<EAConstruction>("EventAppData", 1,0, "EAConstruction");
     qmlRegisterType<EAInfo>("EventAppData", 1,0, "EAInfo");
     qmlRegisterType<EASpeakers>("EventAppData", 1,0, "EASpeakers");
-    qmlRegisterType<EAListModel>("EventAppData", 1,0, "EAListModel");
 
 
     QQmlApplicationEngine engine;

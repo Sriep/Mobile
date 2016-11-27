@@ -26,7 +26,6 @@ ApplicationWindow {
         eaInfo: EAInfo {
         }
         eaSpeakers: EASpeakers {
-            listModal: EAListModel {}
         }
 
         Component.onCompleted: {

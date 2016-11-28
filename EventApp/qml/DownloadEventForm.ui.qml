@@ -28,7 +28,8 @@ Item {
         TextField {
             id: urlText
             width: 400
-            text: "https://www.dropbox.com/s/okzw27c57d3qy55/data.json"
+            //text: "https://www.dropbox.com/s/okzw27c57d3qy55/data.json"
+            text: "https://www.dropbox.com/s/eydtij5yu12twq0/data1.json"
             horizontalAlignment: Text.AlignLeft
             Layout.fillWidth: true
             placeholderText: qsTr("Text Field")

@@ -6,14 +6,14 @@
 #include <csv.h>
 #include <QDebug>
 
-#include "easpeakers.h"
+#include "eaitemlist.h"
 
-EASpeakers::EASpeakers()
+EAItemList::EAItemList()
 {
 
 }
 
-void EASpeakers::read(const QJsonObject &json)
+void EAItemList::read(const QJsonObject &json)
 {
     jsonFields = json["headerFields"].toArray();
     setTitleFields(jsonFields);
@@ -24,27 +24,33 @@ void EASpeakers::read(const QJsonObject &json)
     emit dataListChanged(dataList());
 
     nextIndex = json["nextIndex"].toInt();
+    setListName(json["listName"].toString());
 }
 
-void EASpeakers::write(QJsonObject &json) const
+void EAItemList::write(QJsonObject &json) const
 {
     json["headerFields"] = jsonFields;
     json["dataList"] = jsonData;
-
+    json["listName"] = listName();
     json["nextIndex"] = nextIndex;
 }
 
-QString EASpeakers::titleFields() const
+QString EAItemList::titleFields() const
 {
     return m_titleFields;
 }
 
-QString EASpeakers::dataList() const
+QString EAItemList::dataList() const
 {
     return m_dataList;
 }
 
-void EASpeakers::setTitleFields(QString delegateList)
+QString EAItemList::listName() const
+{
+    return m_listName;
+}
+
+void EAItemList::setTitleFields(QString delegateList)
 {
     if (m_titleFields == delegateList)
         return;
@@ -53,7 +59,7 @@ void EASpeakers::setTitleFields(QString delegateList)
     emit titleFieldsChanged(delegateList);
 }
 
-void EASpeakers::setDataList(const QJsonArray &dataListArray)
+void EAItemList::setDataList(const QJsonArray &dataListArray)
 {
     jsonData = dataListArray;
     QJsonObject dataObject;
@@ -63,17 +69,17 @@ void EASpeakers::setDataList(const QJsonArray &dataListArray)
     setDataList(QString(jsonBA));
 }
 
-QString EASpeakers::listModelFromJson() const
+void EAItemList::setListName(QString listName)
 {
-    for ( int i=0 ; i < jsonFields.size() ; i++)
-    {
-        QJsonObject title = jsonFields[i].toObject();
+    if (m_listName == listName)
+        return;
 
-    }
-
+    m_listName = listName;
+    emit listNameChanged(listName);
 }
 
-void EASpeakers::setTitleFields(const QJsonArray &titleFields)
+
+void EAItemList::setTitleFields(const QJsonArray &titleFields)
 {
     jsonFields = titleFields;
     QJsonObject titleObject;
@@ -82,18 +88,14 @@ void EASpeakers::setTitleFields(const QJsonArray &titleFields)
     QByteArray jsonBA = jsonDoc.toJson(QJsonDocument::Compact);
     setTitleFields(QString(jsonBA));
 
-    QString newFileds = "{\"headerFields\":[";
     for ( int i=0 ; i < jsonFields.size() ; i++ )
     {
         QJsonObject jsonField = jsonFields[i].toObject();
         fieldsSet.insert(jsonField["field"].toString());
-
-
-
     }
 }
 
-void EASpeakers::setDataList(QString dataList)
+void EAItemList::setDataList(QString dataList)
 {
     if (m_dataList == dataList)
         return;
@@ -101,7 +103,7 @@ void EASpeakers::setDataList(QString dataList)
     emit dataListChanged(dataList);
 }
 
-bool EASpeakers::readCSV(const QString filename)
+bool EAItemList::readCSV(const QString filename)
 {
     QList<QStringList> csvListLines = CSV::parseFromFile(filename);
     if (csvListLines.length() > 0 )
@@ -125,7 +127,28 @@ bool EASpeakers::readCSV(const QString filename)
     return true;
 }
 
-QStringList EASpeakers::addHeaderFields(const QStringList& fields)
+void EAItemList::amendField(int index
+                            , const QString &field
+                            , const QString &modelName
+                            , const QString &format
+                            , bool inListView)
+{
+    QJsonObject newField
+    {
+        { "field", field },
+        { "modelName", modelName },
+        { "format", format },
+        { "inListView", inListView }
+    };
+    jsonFields[index] = QJsonValue(newField);
+}
+
+void EAItemList::saveTitleChanges()
+{
+    setTitleFields(jsonFields);
+}
+
+QStringList EAItemList::addHeaderFields(const QStringList& fields)
 {
     QStringList models;
     for ( int i = 0 ; i < fields.length() ; i++ )
@@ -142,7 +165,7 @@ QStringList EASpeakers::addHeaderFields(const QStringList& fields)
             {
                 { "field", fields[i] },
                 { "modelName", modelName },
-                { "format", "{0}: {1}" },
+                { "format", "<html>{0}: {1}</html>\n" },
                 { "inListView", i==0 ? true : false }
             };
             jsonFields.append(newField);
@@ -153,7 +176,7 @@ QStringList EASpeakers::addHeaderFields(const QStringList& fields)
     return models;
 }
 
-QString EASpeakers::getModelName(const QString &name) const
+QString EAItemList::getModelName(const QString &name) const
 {
     int i=0;
     while ( i<name.length() && !name[i].isLetter() )
@@ -169,8 +192,7 @@ QString EASpeakers::getModelName(const QString &name) const
 
 }
 
-
-QJsonObject EASpeakers::newDataItem(const QStringList& speakerData
+QJsonObject EAItemList::newDataItem(const QStringList& speakerData
                                     , const QStringList& header)
 {
     QJsonObject newItem;

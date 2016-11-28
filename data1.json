@@ -1,0 +1,118 @@
+{
+    "construction": {
+        "backColour": "#cccbd4",
+        "fontColour": "#ea6161",
+        "foreColour": "#579765"
+    },
+    "dataFilename": "data",
+    "event": {
+        "description": "If you want solid legal trainingfor you and your staff - look no further. We have 10 legal talks, all from specialist lawyers and trainers to make sureyou are bang up to date with the law.",
+        "name": "Landlord Law Conference 2017",
+        "organizer_description": "Tessa Shepperson",
+        "organizer_name": "Tessa Shepperson"
+    },
+    "itemLists": [
+        {
+            "dataList": [
+                {
+                    "biography": "Sam Madge-Wyld is a barrister practising from Arden Chambers. His areas of specialism include housing, local government and landlord and tenant and he acts for landlords and tenants in a variety of disputes throughout the country. Sam also lectures, teaches and writes extensively in housing law, having co-authored the 6th Edition of the Housing Law Casebook and the 7th edition of Quiet Enjoyment.  He will be giving a general update talk at the Conference on the legal developements during the past year.",
+                    "company": "Arden Chambers",
+                    "id": 0,
+                    "name": "Sam Madge Wyld",
+                    "qualifiation": "Barrister",
+                    "talk": "The Year in Review"
+                },
+                {
+                    "biography": "Tessa is the creator of the Landlord Law information service for which the Conference is named, and a director of Easy Law Training.  She qualified as a solicitor in 1990 and ran her own legal practice between 1994 and 2013.  At that stage she closed down her law firm to concentrate on her other services.  Tessa is an acknowleged expert and writing on residential landlord & tenant law and her blog, the Landlord Law Blog is widely respected.  She is also on the council of the Property Redress Scheme.  Tessa will be talking about tenancy agreements.",
+                    "company": "Landlord Law / Easy Law Training",
+                    "id": 1,
+                    "name": "Tessa Shepperson",
+                    "qualifiation": "Lawyer",
+                    "talk": "Tenancy Agreement Clauses"
+                },
+                {
+                    "biography": "David is a solicitor and partner in the Legal 500 firm Anthony Gold in London.  He is also the director of policy at the Residential Landlords Association.  David is an acknolwedged expert on HMOs in particular and an experienced trainer and speaker.\n\nHe will be taking two talks at the Conference, these are likely to be an update on HMO law and practice and a talk on the little known but increasingly important area of consumer law as it affects landlords and letting agents.",
+                    "company": "Anthony Gold Solicitors",
+                    "id": 2,
+                    "name": "David Smith",
+                    "qualifiation": "Solicitor",
+                    "talk": "(1) Consumer Law for Landlords & Agents (2) HMO Update"
+                },
+                {
+                    "biography": "David Cox is the Managing Director of ARLA.  David Cox joined the Association of Residential Letting Agents (ARLA) as Managing Director in June 2014. He has a strong policy and stakeholder engagement background, having held previous senior policy roles at the National Landlords Association (NLA) and the International Union of Property Owners (UIPI). A trained barrister, David has also acted as Parliamentary Advisor to a well-known backbench MP.  David will be talking about letting agent regulation.",
+                    "company": "ARLA",
+                    "id": 3,
+                    "name": "David Cox",
+                    "qualifiation": "Barrister",
+                    "talk": "Leltting Agent Regulation"
+                },
+                {
+                    "biography": "Peter is a specialist housing barrister from Zenith Chambers in Leeds. He advises and appears in court for both public and private landlords in a wide variety of housing related cases. Peter came to the Bar following a career in campaigning and public housing, having worked in Manchester’s Hulme Redevelopment, for Camden LBC and for the Joseph Rowntree Foundation. Peter will be speaking on defended possession proceedings and court procedures.",
+                    "company": "Zenith Chambers",
+                    "id": 4,
+                    "name": "Peter Marcus",
+                    "qualifiation": "Barrister",
+                    "talk": "(1) Defended Possession Proceedings (2) Court Procedures"
+                },
+                {
+                    "biography": "",
+                    "company": "TDS",
+                    "id": 5,
+                    "name": "John King",
+                    "qualifiation": "",
+                    "talk": ""
+                },
+                {
+                    "biography": "Sue Lukes is a well-known specialist in migration, equalities and service provision especially local services, advice and community development, utilising the knowledge and contacts gained through careers in refugee resettlement, housing aid and freelancing (since 1996). She is the author of many academic and more practical publications in these fields. In her talk at the 2017 conference she will be updating us on the law and the new Immigration Act .",
+                    "company": "",
+                    "id": 6,
+                    "name": "Sue Lukes",
+                    "qualifiation": "Trainer",
+                    "talk": "Right to Rent Update"
+                },
+                {
+                    "biography": "Robert is a barrister at Arden Chambers, a specialist housing law set. He advises and represents both landlords and tenants, in the county courts and in the First-tier Tribunal (Property Chamber) (formerly the Leasehold Valuation Tribunal). He has lectured and provided training on a wide range of landlord and tenant topics and is an editor of the Housing Law Reports.  Robert will be speaking at the Conference about 'leaseholder landlords' ie the law that applies to landlords who are themselves tenants under long leases.",
+                    "company": "Arden Chambers",
+                    "id": 7,
+                    "name": "Robert Brown",
+                    "qualifiation": "Barrister",
+                    "talk": "The Leaseholder Landlord"
+                }
+            ],
+            "headerFields": [
+                {
+                    "field": "Name",
+                    "format": "<html>{1}</html>\n",
+                    "inListView": true,
+                    "modelName": "name"
+                },
+                {
+                    "field": "Qualifiation",
+                    "format": "<html>{0}: {1}</html>\n",
+                    "inListView": false,
+                    "modelName": "qualifiation"
+                },
+                {
+                    "field": "Company",
+                    "format": "<html>{0}: {1}</html>\n",
+                    "inListView": false,
+                    "modelName": "company"
+                },
+                {
+                    "field": "Biography",
+                    "format": "<html>{0}: {1}</html>\n",
+                    "inListView": false,
+                    "modelName": "biography"
+                },
+                {
+                    "field": "Talk",
+                    "format": "<html>{0}: {1}</html>\n",
+                    "inListView": false,
+                    "modelName": "talk"
+                }
+            ],
+            "listName": "speakers",
+            "nextIndex": 8
+        }
+    ]
+}

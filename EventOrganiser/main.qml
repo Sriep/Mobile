@@ -25,7 +25,8 @@ ApplicationWindow {
         }
         eaInfo: EAInfo {
         }
-        eaSpeakers: EASpeakers {
+        eaSpeakers: EAItemList {
+            listName: "speakers"
         }
 
         Component.onCompleted: {
@@ -76,10 +77,9 @@ ApplicationWindow {
             implicitWidth: 300
             implicitHeight: 200
         }
-        EASpeakerPage {
+        EAListDisplayPage {
             property alias eventSpeakers: eaContainer.eaSpeakers
-            //property alias speakersListModel: eaSpeakers.listModal;
-            property alias dataFilename: eaContainer.dataFilename
+            property alias dataFilename: eaContainer.dataFilename          
         }
         Rectangle {
             color: 'brown'

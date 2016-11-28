@@ -9,8 +9,11 @@ Item {
     property alias titlesModel: titlesModel
     property alias dataList: dataList
     property alias dataModel: dataModel
-    width: 900
+    property alias checkList: checkList
+    property alias formatList: formatList
+    property alias saveTitlesBut: saveTitlesBut
 
+    width: 900
     Row {
         id: columnLayout1
         spacing: 10
@@ -25,7 +28,12 @@ Item {
             width: 500
             height: 400
             title: qsTr("Title fields")
+
             RowLayout {
+                x: 0
+                y: 0
+                width: parent.width
+                height: 350
                 ListView {
                     id: titlesList
                     width: 150
@@ -44,9 +52,8 @@ Item {
                     width: 200
                     height: 400
                     model: titlesModel
-                    delegate: TextField {
-                        height: 30
-                        placeholderText: format
+                    delegate: FormatTextDelegate {
+                        id: formatTextDelegate
                     }
                 }
 
@@ -55,12 +62,19 @@ Item {
                     width: 80
                     height: 400
                     model: titlesModel
-                    delegate: CheckBox {
-                        height: 30
-                        text: qsTr("In list")
-                        checked: inListView
+                    delegate: InListCheckDelegate {
+                        id: inListCheckDelegate
                     }
                 }
+            }
+
+            Button {
+                id: saveTitlesBut
+                x: 0
+                y: 360
+                text: qsTr("Save chanages")
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
             }
         }
 

@@ -16,10 +16,9 @@
         <file>qml.qrc</file>
         <file>MainStackForm.ui.qml</file>
         <file>EAConstructionPageForm.ui.qml</file>
-        <file>content/EASpeakerPage.qml</file>
-        <file>content/EASpeakerPageForm.ui.qml</file>
+        <file>content/EAListDisplayPage.qml</file>
+        <file>content/EAListDisplayPageForm.ui.qml</file>
         <file>content/DataListDelegate.qml</file>
-        <file>content/DataListDelegateForm.ui.qml</file>
         <file>content/stringformat.js</file>
         <file>images/tab.png</file>
         <file>images/slider_handle.png</file>
@@ -33,5 +32,8 @@
         <file>images/back.png</file>
         <file>images/arrow-up.png</file>
         <file>images/arrow-down.png</file>
+        <file>content/FormatListForm.ui.qml</file>
+        <file>content/FormatTextDelegate.qml</file>
+        <file>content/InListCheckDelegate.qml</file>
     </qresource>
 </RCC>

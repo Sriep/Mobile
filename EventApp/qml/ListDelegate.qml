@@ -10,5 +10,4 @@ ListDelegateForm {
    // mouseArea.onClicked: topDelegate.clicked()
     //drawerDelegate.onClicked: stackView.push(Qt.resolvedUrl(page))
     mouseArea.onClicked: mainStack.push(Qt.resolvedUrl(drawerModel.page))
-
 }

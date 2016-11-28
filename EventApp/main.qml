@@ -18,7 +18,6 @@ ApplicationWindow {
     property color textColour: EAConstruction.textColour
 
     Rectangle {
-        //color: "#212126"
         color: appwin.backColour
         anchors.fill: parent
     }
@@ -27,26 +26,14 @@ ApplicationWindow {
         id: eaContainer       
         eaConstruction: EAConstruction {}
         eaInfo: EAInfo {}
-
         Component.onCompleted: {
-            console.log("Componet completed: ", eaContainer.dataFile);
-            console.log("Settins filename: ", settingsData.dataFilename);
             dataFilename = settingsData.dataFilename;
             loadEventApp();
-            console.log("Data file: ", eaContainer.dataFile);
-            console.log("back colour: ", eaConstruction.backColour);
-            console.log("fore colour: ", eaConstruction.foreColour);
-            console.log("font colour: ", eaConstruction.textColour);
             console.log("event name: ", eaInfo.eventName);
         }
-
         Component.onDestruction: {
-            console.log("Settins filename before: ", settingsData.dataFilename);
             settingsData.dataFilename = dataFilename;
-            console.log("Settins filename after: ", settingsData.dataFilename);
-
         }
-
     }
 
     HttpDownload {
@@ -54,12 +41,6 @@ ApplicationWindow {
         onFinishedDownload: {
             console.log("Download finished");
             eaContainer.loadEventApp();
-            console.log("onFinishedDownload");
-            console.log("Componet completed: ", eaContainer.dataFile);
-            console.log("Data file: ", eaContainer.dataFile);
-            console.log("back colour: ", eaContainer.backColour);
-            console.log("fore colour: ", eaContainer.foreColour);
-            console.log("font colour: ", eaContainer.textColour);
             console.log("event name: ", eaContainer.eaInfo.eventName);
         }
     }
@@ -73,9 +54,6 @@ ApplicationWindow {
         property int topDrawerId: 0
         property int loadEventId: 1
     }
-
-
-
 
     Settings {
         category: "geometry"

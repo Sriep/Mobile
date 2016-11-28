@@ -7,7 +7,7 @@
 #include "eacontainer.h"
 #include "eainfo.h"
 #include "eaconstruction.h"
-#include "easpeakers.h"
+#include "eaitemlist.h"
 
 EAContainer::EAContainer()
 {
@@ -62,7 +62,6 @@ bool EAContainer::loadEventApp()
 
 bool EAContainer::saveSaveEventApp() const
 {
-
     QFile saveFile(isSaveJson()
                    ? QString(dataFilename() + ".json")
                    : QString(dataFilename() + ".dat"));
@@ -96,6 +95,14 @@ void EAContainer::read(const QJsonObject &json)
         emit eaConstructionChanged(m_eaConstruction);
     }
 
+    QJsonArray listsArray = json["itemLists"].toArray();
+    for (int i = 0; i < listsArray.size(); ++i) {
+        QJsonObject readJsonObject = listsArray[i].toObject();
+        EAItemList* newList = new EAItemList();
+        newList->read(readJsonObject);
+        m_eaItemLists.append(newList);
+    }
+
     if (json.contains(SPEAKERS))
     {
         eaSpeakers()->read(json[SPEAKERS].toObject());
@@ -115,9 +122,23 @@ void EAContainer::write(QJsonObject &json) const
     m_eaConstruction->write(constructionDataObject);
     json["construction"] = constructionDataObject;
 
+    QJsonArray listsArray;
+    foreach (const EAItemList* itemList, m_eaItemLists)
+    {
+        {
+            QJsonObject itemListObject;
+            itemList->write(itemListObject);
+            listsArray.append(itemListObject);
+        }
+
+    }
+
     QJsonObject speakersDataObject;
     eaSpeakers()->write(speakersDataObject);
-    json[SPEAKERS] = speakersDataObject;
+    listsArray.append(speakersDataObject);
+    //json[SPEAKERS] = speakersDataObject;
+
+    json["itemLists"] = listsArray;
 }
 
 EAConstruction *EAContainer::eaConstruction() const
@@ -135,7 +156,7 @@ QString EAContainer::workingDirectory() const
     return m_workingDirectory;
 }
 
-EASpeakers *EAContainer::eaSpeakers() const
+EAItemList *EAContainer::eaSpeakers() const
 {
     return m_eaSpeakers;
 }
@@ -193,7 +214,7 @@ void EAContainer::setWorkingDirectory(QString workingDirectory)
     emit workingDirectoryChanged(workingDirectory);
 }
 
-void EAContainer::setEaSpeakers(EASpeakers *eaSpeakers)
+void EAContainer::setEaSpeakers(EAItemList *eaSpeakers)
 {
     if (m_eaSpeakers == eaSpeakers)
         return;
@@ -201,3 +222,79 @@ void EAContainer::setEaSpeakers(EASpeakers *eaSpeakers)
     m_eaSpeakers = eaSpeakers;
     emit eaSpeakersChanged(eaSpeakers);
 }
+
+QQmlListProperty<EAItemList> EAContainer::eaItemLists()
+{
+    return QQmlListProperty<EAItemList>(this
+                                        , 0 // void *data
+                                        , &EAContainer::append_eaItemLists
+                                        , &EAContainer::count_eaItemLists
+                                        , &EAContainer::at_eaItemLists
+                                        , &EAContainer::clear_eaItemLists
+                                        );
+}
+
+//typedef QQmlListProperty::AppendFunction
+//Synonym for void (*)(QQmlListProperty<T> *property, T *value).
+//Append the value to the list property.
+void EAContainer::append_eaItemLists(QQmlListProperty<EAItemList> *list
+                                     , EAItemList *itemList)
+{
+    EAContainer *eaContainer = qobject_cast<EAContainer *>(list->object);
+    if (itemList) {
+        //itemList->setParentItem(eaContainer); //???
+        eaContainer->m_eaItemLists.append(itemList);
+    }
+}
+
+//typedef QQmlListProperty::CountFunction
+//Synonym for int (*)(QQmlListProperty<T> *property).
+//Return the number of elements in the list property.
+int EAContainer::count_eaItemLists(QQmlListProperty<EAItemList> *list)
+{
+    EAContainer *eaContainer = qobject_cast<EAContainer *>(list->object);
+    return eaContainer->m_eaItemLists.count();
+}
+
+//typedef QQmlListProperty::AtFunction
+//Synonym for T *(*)(QQmlListProperty<T> *property, int index).
+//Return the element at position index in the list property.
+EAItemList* EAContainer::at_eaItemLists(QQmlListProperty<EAItemList> *list
+                                        , int index)
+{
+    EAContainer *eaContainer = qobject_cast<EAContainer *>(list->object);
+    return eaContainer->m_eaItemLists[index];
+}
+
+//typedef QQmlListProperty::ClearFunction
+//Synonym for void (*)(QQmlListProperty<T> *property).
+//Clear the list property.
+void EAContainer::clear_eaItemLists(QQmlListProperty<EAItemList> *list)
+{
+    EAContainer *eaContainer = qobject_cast<EAContainer *>(list->object);
+    eaContainer->m_eaItemLists.clear();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

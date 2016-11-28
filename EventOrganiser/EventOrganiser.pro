@@ -7,8 +7,8 @@ SOURCES += main.cpp \
     ../EventAppShared/eaconstruction.cpp \
     ../EventAppShared/eainfo.cpp \
     ../EventAppShared/httpdownload.cpp \
-    ../EventAppShared/easpeakers.cpp \
-    ../EventAppShared/csv.cpp
+    ../EventAppShared/csv.cpp \
+    ../EventAppShared/eaitemlist.cpp
 
 HEADERS += \
     ../EventAppShared/eainfo.h \
@@ -16,8 +16,8 @@ HEADERS += \
     ../EventAppShared/eaconstruction.h \
     ../EventAppShared/httpdownload.h \
     ../EventAppShared/eventappshared_global.h \
-    ../EventAppShared/easpeakers.h \
-    ../EventAppShared/csv.h
+    ../EventAppShared/csv.h \
+    ../EventAppShared/eaitemlist.h
 
 RESOURCES += qml.qrc
 
@@ -42,7 +42,11 @@ DISTFILES += \
     EAInfoPageForm.ui.qml \
     MainStackForm.ui.qml \
     EAConstructionPageForm.ui.qml \
-    content/EASpeakerPageForm.ui.qml \
+    content/EAListDisplayPageForm.ui.qml \
     content/TitleFieldListDelegate.qml \
     content/TitleFieldListDelegateForm.ui.qml \
-    content/DataListDelegateForm.ui.qml
+    content/DataListDelegateForm.ui.qml \
+    content/FormatList.qml \
+    content/FormatListForm.ui.qml \
+    content/FormatTextDelegate.qml \
+    content/InListCheckDelegate.qml

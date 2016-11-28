@@ -13,12 +13,12 @@ Item {
      anchors.verticalCenter: parent.verticalCenter
   }*/
 
-    //Rectangle {
-    ///    id: page
-    //    width: 400; height: 240
-    //    color: "black"
+//Rectangle {
+//        id: page
+// //       width: 400; height: 240
+ //       color: "black"
     //}
-
+    //Component{
     id: dataDelegate
 
     // Create a property to contain the visibility of the details.
@@ -79,12 +79,14 @@ Item {
                             var formatStr = titleFields["headerFields"][i].format;
                             var title = titleFields["headerFields"][i].field;
                             var model = titleFields["headerFields"][i].modelName;
+                            var whatIndex = index;
                             var myData = dataModel.get(index);
                             var reqField = myData[model];
                             var item = formatStr.format([title, reqField]);
                             text += item;
                         }
                     }
+                    return text;
                 }
             }
         }
@@ -178,8 +180,8 @@ Item {
         PropertyChanges { target: dataDelegate; height: dataList.height } // Fill the entire list area with the detailed view
 
         // Move the list so that this item is at the top.
+        //PropertyChanges { target: dataDelegate.ListView.view; explicit: true; contentY: dataDelegate.y }
         PropertyChanges { target: dataDelegate.dataList.view; explicit: true; contentY: dataDelegate.y }
-
         // Disallow flicking while we're in detailed view
         PropertyChanges { target: dataDelegate.dataList.view; interactive: false }
     }

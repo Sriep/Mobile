@@ -12,8 +12,6 @@ Item {
     StackLayout {
         id: stackCtl
         anchors.fill: parent
-
-
         ListView {
             id: drawerView
             width: 110
@@ -22,9 +20,12 @@ Item {
                 id: drawerDelegate
                 text: title
             }
-            model: DrawerModel {
-                id: drawerModel
+            model: ListModel {
+                id: titlesModel
             }
+            //model: DrawerModel {
+            //    id: drawerModel
+            //}
         }
         DownloadEvent {
             id: downloadEvent

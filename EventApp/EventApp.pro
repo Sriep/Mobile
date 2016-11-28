@@ -6,13 +6,17 @@ SOURCES += main.cpp \
     ../EventAppShared/eacontainer.cpp \
     ../EventAppShared/eaconstruction.cpp \
     ../EventAppShared/eainfo.cpp \
-    ../EventAppShared/httpdownload.cpp
+    ../EventAppShared/httpdownload.cpp \
+    ../EventAppShared/eaitemlist.cpp \
+    ../EventAppShared/csv.cpp
 
 HEADERS += \
     ../EventAppShared/eainfo.h \
     ../EventAppShared/eacontainer.h \
     ../EventAppShared/eaconstruction.h \
-    ../EventAppShared/httpdownload.h
+    ../EventAppShared/httpdownload.h \
+    ../EventAppShared/eaitemlist.h \
+    ../EventAppShared/csv.h
 
 RESOURCES += qml.qrc
 

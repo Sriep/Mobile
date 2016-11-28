@@ -7,7 +7,7 @@
 
 class EAInfo;
 class EAConstruction;
-class EASpeakers;
+class EAItemList;
 //enum SaveFormat {Json, Binary };
 
 static const QString EVENT ="event";
@@ -21,7 +21,9 @@ class  EAContainer : public QObject, public QQmlParserStatus
     Q_INTERFACES(QQmlParserStatus)
     Q_PROPERTY(EAInfo* eaInfo READ eaInfo WRITE setEAInfo NOTIFY eaInfoChanged)
     Q_PROPERTY(EAConstruction* eaConstruction READ eaConstruction WRITE setEAConstruction NOTIFY eaConstructionChanged)
-    Q_PROPERTY(EASpeakers* eaSpeakers READ eaSpeakers WRITE setEaSpeakers NOTIFY eaSpeakersChanged)
+    Q_PROPERTY(EAItemList* eaSpeakers READ eaSpeakers WRITE setEaSpeakers NOTIFY eaSpeakersChanged)
+
+    Q_PROPERTY(QQmlListProperty<EAItemList> eaItemLists READ eaItemLists)
 
     Q_PROPERTY(QString workingDirectory READ workingDirectory WRITE setWorkingDirectory NOTIFY workingDirectoryChanged)
     Q_PROPERTY(QString dataFilename READ dataFilename WRITE setDataFilename NOTIFY dataFilenameChanged)
@@ -33,7 +35,8 @@ class  EAContainer : public QObject, public QQmlParserStatus
     EAConstruction* m_eaConstruction;
     bool m_isSaveJson = true;
     QString m_workingDirectory = QCoreApplication::applicationDirPath();    
-    EASpeakers* m_eaSpeakers;
+    EAItemList* m_eaSpeakers;
+    QList<EAItemList*> m_eaItemLists;
 
 public:
     EAContainer();
@@ -52,7 +55,8 @@ public:
     QString dataFilename() const;
     EAConstruction* eaConstruction() const;
     bool isSaveJson() const;    
-    EASpeakers* eaSpeakers() const;
+    EAItemList* eaSpeakers() const;
+    QQmlListProperty<EAItemList> eaItemLists();
 
 signals:
     void eaInfoChanged(EAInfo* eaInfo);
@@ -62,7 +66,7 @@ signals:
     void eaComponentComplete();
     void workingDirectoryChanged(QString workingDirectory);
 
-    void eaSpeakersChanged(EASpeakers* eaSpeakers);
+    void eaSpeakersChanged(EAItemList* eaSpeakers);
 
 public slots:
     void setEAInfo(EAInfo* eaInfo);
@@ -70,7 +74,38 @@ public slots:
     void setEAConstruction(EAConstruction* eaConstruction);
     void setIsSaveJson(bool isSaveJson);
     void setWorkingDirectory(QString workingDirectory);
-    void setEaSpeakers(EASpeakers* eaSpeakers);
+    void setEaSpeakers(EAItemList* eaSpeakers);
+private:
+    static void append_eaItemLists(QQmlListProperty<EAItemList> *list
+                                   , EAItemList *itemList);
+    static int count_eaItemLists(QQmlListProperty<EAItemList> *list);
+    static EAItemList* at_eaItemLists(QQmlListProperty<EAItemList> *list
+                                      , int index);
+    static void clear_eaItemLists(QQmlListProperty<EAItemList> *list);
 };
 
 #endif // EVENTCONTAINER_H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

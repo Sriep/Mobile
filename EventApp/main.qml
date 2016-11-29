@@ -22,26 +22,15 @@ ApplicationWindow {
         anchors.fill: parent
     }
 
-    EAContainer {
-        id: eaContainer       
-        eaConstruction: EAConstruction {}
-        eaInfo: EAInfo {}
-        Component.onCompleted: {
-            dataFilename = settingsData.dataFilename;
-            loadEventApp();
-            console.log("event name: ", eaInfo.eventName);
-        }
-        Component.onDestruction: {
-            settingsData.dataFilename = dataFilename;
-        }
+    EaContainer {
+        id: eaContainer
     }
 
     HttpDownload {
         id: httpDownload
         onFinishedDownload: {
             console.log("Download finished");
-            eaContainer.loadEventApp();
-            console.log("event name: ", eaContainer.eaInfo.eventName);
+            eaContainer.loadNewEventApp();
         }
     }
 

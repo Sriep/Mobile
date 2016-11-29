@@ -26,12 +26,12 @@ function addStringFormat() {
     String.prototype.format.regex = new RegExp("{-?[0-9]+}", "g");
 }
 
-function headerText() {
+function displayText(titleFields, dataModel, header) {
     addStringFormat();
     var text = "";
     var titleFields = JSON.parse(eventSpeakers.titleFields);
     for ( var i=0 ; i < titleFields["headerFields"].length ; i++ ) {
-        if (titleFields["headerFields"][i].inListView)
+        if (titleFields["headerFields"][i].inListView == header)
         {
             var formatStr = titleFields["headerFields"][i].format;
             var title = titleFields["headerFields"][i].field;
@@ -39,28 +39,19 @@ function headerText() {
             var myData = dataModel.get(index);
             var reqField = myData[model];
             var item = formatStr.format([title, reqField]);
-            //item = StrFormat.format(formatStr, [title, reqField]);
             text += item;
         }
     }
+    return text;
 }
 
-function popUpText() {
-    addStringFormat();
-    var text = "";
-    var titleFields = JSON.parse(eventSpeakers.titleFields);
-    for ( var i=0 ; i < titleFields["headerFields"].length ; i++ ) {
-        if (!titleFields["headerFields"][i].inListView)
-        {
-            var formatStr = titleFields["headerFields"][i].format;
-            var title = titleFields["headerFields"][i].field;
-            var model = titleFields["headerFields"][i].modelName;
-            var myData = dataModel.get(index);
-            var reqField = myData[model];
-            var item = formatStr.format([title, reqField]);
-            //item = StrFormat.format(formatStr, [title, reqField]);
-            text += item;
-        }
+function resetDataListModel(dataModel, dataList)
+{
+    dataModel.clear();
+    for ( var j=0 ; j < dataList["dataItems"].length ; j++ ) {
+        var whatis = dataList["dataItems"][j];
+        dataModel.append(dataList["dataItems"][j]);
+        var newData = dataModel.get(j);
     }
 }
 

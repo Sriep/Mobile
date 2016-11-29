@@ -29,7 +29,6 @@ class  EAContainer : public QObject, public QQmlParserStatus
     Q_PROPERTY(QString dataFilename READ dataFilename WRITE setDataFilename NOTIFY dataFilenameChanged)
     Q_PROPERTY(bool isSaveJson READ isSaveJson WRITE setIsSaveJson NOTIFY isSaveJsonChanged)
 
-
     EAInfo* m_eaInfo;
     QString m_dataFilename;
     EAConstruction* m_eaConstruction;

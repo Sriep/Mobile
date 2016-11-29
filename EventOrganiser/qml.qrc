@@ -19,7 +19,7 @@
         <file>content/EAListDisplayPage.qml</file>
         <file>content/EAListDisplayPageForm.ui.qml</file>
         <file>content/DataListDelegate.qml</file>
-        <file>content/stringformat.js</file>
+        <file>content/common.js</file>
         <file>images/tab.png</file>
         <file>images/slider_handle.png</file>
         <file>images/plus-sign.png</file>
@@ -35,5 +35,6 @@
         <file>content/FormatListForm.ui.qml</file>
         <file>content/FormatTextDelegate.qml</file>
         <file>content/InListCheckDelegate.qml</file>
+        <file>content/DataList.qml</file>
     </qresource>
 </RCC>

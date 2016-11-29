@@ -28,5 +28,6 @@
         <file>qml/ListDelegateForm.ui.qml</file>
         <file>qml/ListDelegate.qml</file>
         <file>qml/DrawerModel.qml</file>
+        <file>EaContainer.qml</file>
     </qresource>
 </RCC>

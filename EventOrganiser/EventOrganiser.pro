@@ -49,4 +49,5 @@ DISTFILES += \
     content/FormatList.qml \
     content/FormatListForm.ui.qml \
     content/FormatTextDelegate.qml \
-    content/InListCheckDelegate.qml
+    content/InListCheckDelegate.qml \
+    content/CommonDataList.qml

@@ -7,13 +7,13 @@ Item {
     property alias loadCsvBut: loadCsvBut
     property alias titlesList: titlesList
     property alias titlesModel: titlesModel
-    property alias dataList: dataList
-    property alias dataModel: dataModel
+    property alias thisDataList: thisDataList
     property alias checkList: checkList
     property alias formatList: formatList
     property alias saveTitlesBut: saveTitlesBut
 
     width: 900
+
     Row {
         id: columnLayout1
         spacing: 10
@@ -84,15 +84,8 @@ Item {
             height: 400
             title: qsTr("Data list")
 
-            ListView {
-                id: dataList
-                width: parent.width
-                height: parent.height
-                model: ListModel {
-                    id: dataModel
-                }
-                delegate: DataListDelegate {
-                }
+            DataList {
+                id: thisDataList
             }
         }
     }

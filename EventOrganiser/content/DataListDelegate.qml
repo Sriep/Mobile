@@ -2,7 +2,7 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QtQuick.Extras 1.4
-import "stringformat.js" as DataListFuncs
+import "common.js" as CommonJS
 
 Item {
   /*width: 80
@@ -70,7 +70,10 @@ Item {
             // str = str.format(["sea", "sells", "shells", "shore"]);
             Text {
                 text: {
-                    DataListFuncs.addStringFormat();
+                    CommonJS.displayText(JSON.parse(eventSpeakers.titleFields)
+                                         , dataModel
+                                         , true);
+                    /*CommonJS.addStringFormat();
                     var text = "";
                     var titleFields = JSON.parse(eventSpeakers.titleFields);
                     for ( var i=0 ; i < titleFields["headerFields"].length ; i++ ) {
@@ -86,7 +89,7 @@ Item {
                             text += item;
                         }
                     }
-                    return text;
+                    return text;*/
                 }
             }
         }
@@ -127,7 +130,10 @@ Item {
             Text {
                 id: methodText;
                 text: {
-                    DataListFuncs.addStringFormat();
+                    CommonJS.displayText(JSON.parse(eventSpeakers.titleFields)
+                                         , dataModel
+                                         , false);
+                    /*CommonJS.addStringFormat();
                     var text = "";
                     var titleFields = JSON.parse(eventSpeakers.titleFields);
                     for ( var i=0 ; i < titleFields["headerFields"].length ; i++ ) {
@@ -141,7 +147,7 @@ Item {
                             var item = formatStr.format([title, reqField]);
                             text += item;
                         }
-                    }
+                    }*/
                 }
                 wrapMode: Text.WordWrap;
                 width: details.width }

@@ -63,8 +63,9 @@ DISTFILES += \
     MainStackForm.ui.qml \
     qml/ListDelegateForm.ui.qml \
     qml/DrawerModel.qml \
-    DrawerListView.qml \
-    DrawerView.qml
+    sharedqml/common.js \
+    sharedqml/DataList.qml \
+    sharedqml/DataListDelegate.qml
 
 FORMS +=
 

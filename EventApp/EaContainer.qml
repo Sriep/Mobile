@@ -20,22 +20,28 @@ EAContainer {
     eaContainer.loadNewEventApp();
     console.log("event name: ", eaInfo.eventName);
   }
-  //id: stackCtl
-  //title: "Schedule"
-  //page: "Schedule.qml"
+
   function loadNewEventApp() {
       eaContainer.loadEventApp();
       var count = eaContainer.eaItemLists.length;
       console.log("count: ", count);
       for (var i = 0; i < count; i++) {
         console.log("name: ", eaContainer.eaItemLists[i].listName);
-        eaContainer.eaItemLists[i].parent = stackCtl;
-        titlesModel.append(
-            { "title" : eaContainer.eaItemLists[i].listName,
-              "page"
 
-                )
+        var newList = Qt.createComponent("sharedqml/DataList.qml", stackCtl);
+        newList.createObject(stackCtl
+                     , {"eaItemList": eaContainer.eaItemLists[i]});
+
+        //eaContainer.eaItemLists[i].parent = stackCtl;
+        stackCtl.drawerModel.append(
+            {
+              "title" : eaContainer.eaItemLists[i].listName
+              //, "page" : "sharedqml/DataList.qml"
+            });
+        console.log("stack countrol count: ", stackCtl.count);
+        console.log("stack control current index: ", stackCtl.currentIndex);
       }
+
       console.log("event name: ", eaInfo.eventName);
   }
   

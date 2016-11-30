@@ -102,3 +102,26 @@ ApplicationWindow {
         property alias dataFilename: eaContainer.dataFilename
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

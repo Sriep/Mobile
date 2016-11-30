@@ -9,5 +9,14 @@ ListDelegateForm {
 
    // mouseArea.onClicked: topDelegate.clicked()
     //drawerDelegate.onClicked: stackView.push(Qt.resolvedUrl(page))
-    mouseArea.onClicked: mainStack.push(Qt.resolvedUrl(drawerModel.page))
+    //mouseArea.onClicked: stackCtl.push(Qt.resolvedUrl(drawerModel.page))
+
+    mouseArea.onClicked: {
+        console.log("mouseArea.onClicked tack countrol count: ", stackCtl.count);
+        console.log("stack control current index: ", stackCtl.currentIndex);
+        console.log("drawerView.currentIdnex: ", drawerView.currentIndex);
+        stackCtl.currentIndex = drawerView.currentIndex + 2;
+        console.log("stack countrol count: ", stackCtl.count);
+        console.log("stack control current index: ", stackCtl.currentIndex);
+    }
 }

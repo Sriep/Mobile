@@ -2,7 +2,12 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QtQuick.Extras 1.4
-import "common.js" as CommonJS
+import "../sharedqml/common.js" as CommonJS
+//import "../../EventAppShared/content"
+//import "../../EventAppShared/content/common.js" as CommonJS
+//import "/media/piers/h/Mobile/Mobile/EventAppShared/content/common.js" as CommonJS
+
+
 
 EAListDisplayPageForm {
 

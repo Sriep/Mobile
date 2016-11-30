@@ -1,5 +1,3 @@
-
-
 // https://www.codeproject.com/tips/201899/string-format-in-javascript
 // Sample usage.
 // var str = "She {1} {0}{2} by the {0}{3}. {-1}^_^{-2}";

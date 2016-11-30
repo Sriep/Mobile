@@ -10,6 +10,7 @@ DownloadEventForm {
     }
 
     quitButton.onClicked: {
-        mainStack.stackCtl.currentIndex = mainStack.topDrawerId;
+        //mainStack.stackCtl.currentIndex = mainStack.topDrawerId;
+        stackCtl.currentIndex = stackCtl.topDrawerId;
     }
 }

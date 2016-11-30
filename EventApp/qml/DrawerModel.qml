@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Extras 1.4
 
 ListModel {
-    id: drawerModel
+    //////id: drawerModel
     ListElement {
         title: "Schedule"
         page: "Schedule.qml"

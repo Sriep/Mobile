@@ -14,7 +14,8 @@ EaToolBarForm {
         MenuItem {
             id: menuItemLoadEvent
             text: qsTr("Load Event")
-            onTriggered: mainStack.stackCtl.currentIndex = mainStack.loadEventId;
+            //onTriggered: mainStack.stackCtl.currentIndex = mainStack.loadEventId;
+            onTriggered: stackCtl.currentIndex = stackCtl.loadEventId;
         }
         MenuItem {
             text: qsTr("Settings")

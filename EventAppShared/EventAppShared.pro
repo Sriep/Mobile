@@ -19,7 +19,9 @@ SOURCES += eventappshared.cpp \
     httpdownload.cpp \
     eapropertylist.cpp \
     ealistmodel.cpp \
-    easpeakers.cpp
+    easpeakers.cpp \
+    eaitemlist.cpp \
+    csv.cpp
 
 HEADERS += eventappshared.h\
         eventappshared_global.h \
@@ -29,7 +31,9 @@ HEADERS += eventappshared.h\
     httpdownload.h \
     eapropertylist.h \
     ealistmodel.h \
-    easpeakers.h
+    easpeakers.h \
+    eaitemlist.h \
+    csv.h
 
 unix {
     target.path = /usr/lib
@@ -37,4 +41,13 @@ unix {
 }
 
 DISTFILES += \
-    EventAppShared.pro.user
+    EventAppShared.pro.user \
+    content/common.js \
+    content/qmldir \
+    content/DataList.qml \
+    common.js \
+    Untitled Document \
+    qmldir \
+    DataListDelegate.qml \
+    DataList.qml \
+    qml.qrs

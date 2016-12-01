@@ -6,7 +6,6 @@
         <file>content/EAInfoName.qml</file>
         <file>content/EAInfoTheme.qml</file>
         <file>content/HeaderTabBarForm.ui.qml</file>
-        <file>TabStack.qml</file>
         <file>WelcomeTabForm.ui.qml</file>
         <file>WelcomeTab.qml</file>
         <file>MainStack.qml</file>
@@ -17,23 +16,10 @@
         <file>EAConstructionPageForm.ui.qml</file>
         <file>content/EAListDisplayPage.qml</file>
         <file>content/EAListDisplayPageForm.ui.qml</file>
-        <file>images/tab.png</file>
-        <file>images/slider_handle.png</file>
-        <file>images/plus-sign.png</file>
-        <file>images/next.png</file>
-        <file>images/moreUp.png</file>
-        <file>images/moreDown.png</file>
-        <file>images/minus-sign.png</file>
-        <file>images/list-delete.png</file>
-        <file>images/checkmark.png</file>
-        <file>images/back.png</file>
-        <file>images/arrow-up.png</file>
-        <file>images/arrow-down.png</file>
         <file>content/FormatListForm.ui.qml</file>
         <file>content/FormatTextDelegate.qml</file>
         <file>content/InListCheckDelegate.qml</file>
-        <file>sharedqml/DataListDelegate.qml</file>
-        <file>sharedqml/DataList.qml</file>
-        <file>sharedqml/common.js</file>
+        <file>EASelectList.qml</file>
+        <file>EASelectListForm.ui.qml</file>
     </qresource>
 </RCC>

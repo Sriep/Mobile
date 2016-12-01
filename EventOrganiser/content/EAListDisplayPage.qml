@@ -2,12 +2,7 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QtQuick.Extras 1.4
-import "../sharedqml/common.js" as CommonJS
-//import "../../EventAppShared/content"
-//import "../../EventAppShared/content/common.js" as CommonJS
-//import "/media/piers/h/Mobile/Mobile/EventAppShared/content/common.js" as CommonJS
-
-
+import "qrc:/shared/dataList.js" as DataListJS
 
 EAListDisplayPageForm {
 
@@ -22,8 +17,9 @@ EAListDisplayPageForm {
             titlesModel.append(titleFields["headerFields"][i]);
             newHeader = titlesModel.get(i);
         }
-        CommonJS.resetDataListModel(thisDataList.dataModel
-                                    , JSON.parse(eventSpeakers.dataList));
+        DataListJS.resetDataListModel(thisDataList.dataModel
+             , JSON.parse(eventSpeakers.dataList));
+        thisDataList.eaItemList = eventSpeakers;
     }
 
     saveTitlesBut.onPressed: {

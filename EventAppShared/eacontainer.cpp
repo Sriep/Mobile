@@ -3,6 +3,7 @@
 #include <QJsonObject>
 #include <QFileInfo>
 #include <QDir>
+#include <QDebug>
 
 #include "eacontainer.h"
 #include "eainfo.h"
@@ -56,7 +57,7 @@ bool EAContainer::loadEventApp()
         : QJsonDocument::fromBinaryData(saveData));
 
     read(loadDoc.object());
-
+    qDebug() << "EAContainer::loadEventApp finished";
     return true;
 }
 
@@ -102,12 +103,12 @@ void EAContainer::read(const QJsonObject &json)
         newList->read(readJsonObject);
         m_eaItemLists.append(newList);
     }
-
+/*
     if (json.contains(SPEAKERS))
     {
         eaSpeakers()->read(json[SPEAKERS].toObject());
         emit eaSpeakersChanged(eaSpeakers());
-    }
+    }*/
 }
 
 void EAContainer::write(QJsonObject &json) const
@@ -132,12 +133,12 @@ void EAContainer::write(QJsonObject &json) const
         }
 
     }
-
+/*
     QJsonObject speakersDataObject;
     eaSpeakers()->write(speakersDataObject);
     listsArray.append(speakersDataObject);
     //json[SPEAKERS] = speakersDataObject;
-
+*/
     json["itemLists"] = listsArray;
 }
 

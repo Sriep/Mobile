@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import Qt.labs.settings 1.0
 import "content"
+import "qrc:/shared"
 import EventAppData 1.0
 
 ApplicationWindow {
@@ -18,49 +19,19 @@ ApplicationWindow {
         id: headerTabBar
     }
 
-    EAContainer {
+    EaContainerObj {
         id: eaContainer
-        //property alias saSpeakersList: eaListModel;
-        eaConstruction: EAConstruction {
-        }
-        eaInfo: EAInfo {
-        }
         eaSpeakers: EAItemList {
             listName: "speakers"
         }
-
-        Component.onCompleted: {
-            console.log("Componet completed: ", eaContainer.dataFile);
-            console.log("Settins filename: ", settingsData.dataFilename);
-            dataFilename = settingsData.dataFilename;
-            loadEventApp();
-            console.log("Data file: ", dataFilename);
-            console.log("back colour: ", eaConstruction.backColour);
-            console.log("fore colour: ", eaConstruction.foreColour);
-            console.log("font colour: ", eaConstruction.textColour);
-            console.log("event name: ", eaInfo.eventName);
-        }
-
-        Component.onDestruction: {
-            console.log("Settins filename before: ", settingsData.dataFilename);
-            settingsData.dataFilename = dataFilename;
-            console.log("Settins filename after: ", settingsData.dataFilename);
-        }
-
     }
 
-   /* MainStack {
-        id: mainStack
-        property alias mainContainer: eaContainer
-    }
-*/
     StackLayout {
         id: tabStack
         currentIndex: headerTabBar.currentIndex
         anchors.fill: parent
 
-        WelcomeTab {
-        }
+        WelcomeTab {}
 
         EAConstructionPage {
             property alias eaConstruction: eaContainer.eaConstruction
@@ -72,15 +43,13 @@ ApplicationWindow {
             property alias dataFilename: eaContainer.dataFilename
         }
 
-        Rectangle {
-            color: 'plum'
-            implicitWidth: 300
-            implicitHeight: 200
-        }
+        EASelectList {}
+
         EAListDisplayPage {
             property alias eventSpeakers: eaContainer.eaSpeakers
             property alias dataFilename: eaContainer.dataFilename          
         }
+
         Rectangle {
             color: 'brown'
             implicitWidth: 200

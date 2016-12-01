@@ -50,4 +50,11 @@ DISTFILES += \
     qmldir \
     DataListDelegate.qml \
     DataList.qml \
-    qml.qrs
+    qml.qrs \
+    common.js \
+    qmldir \
+    DataListDelegate.qml \
+    DataList.qml
+
+RESOURCES += \
+    qmlShared.qrc

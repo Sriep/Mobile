@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>DataListDelegate.qml</file>
-        <file>DataList.qml</file>        
-        <file>common.js</file>      
-    </qresource>
-</RCC>

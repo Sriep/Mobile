@@ -1,51 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>qml/DownloadEvent.qml</file>
-        <file>qml/DownloadEventForm.ui.qml</file>
-        <file>qml/EaToolBarForm.ui.qml</file>
-        <file>qml/EaToolBar.qml</file>
-        <file>images/drawer.png</file>
-        <file>images/drawer@2x.png</file>
-        <file>images/drawer@3x.png</file>
-        <file>images/drawer@4x.png</file>
-        <file>images/drawerW.png</file>
-        <file>images/drawerW@2x.png</file>
-        <file>images/drawerW@3x.png</file>
-        <file>images/drawerW@4x.png</file>
-        <file>images/menu.png</file>
-        <file>images/menu@2x.png</file>
-        <file>images/menu@3x.png</file>
-        <file>images/menu@4x.png</file>
-        <file>images/menuW.png</file>
-        <file>images/menuW@2x.png</file>
-        <file>images/menuW@3x.png</file>
-        <file>images/menuW@4x.png</file>
-        <file>images/navigation_next_item.png</file>
-        <file>images/navigation_previous_item.png</file>
-        <file>qml/ListDelegateForm.ui.qml</file>
-        <file>qml/ListDelegate.qml</file>
-        <file>qml/DrawerModel.qml</file>
-        <file>EaContainer.qml</file>
-        <file>sharedqml/common.js</file>
-        <file>sharedqml/DataList.qml</file>
-        <file>sharedqml/DataListDelegate.qml</file>
-        <file>images/tab.png</file>
-        <file>images/slider_handle.png</file>
-        <file>images/plus-sign.png</file>
-        <file>images/next.png</file>
-        <file>images/moreUp.png</file>
-        <file>images/moreDown.png</file>
-        <file>images/minus-sign.png</file>
-        <file>images/list-delete.png</file>
-        <file>images/checkmark.png</file>
-        <file>images/back.png</file>
-        <file>images/arrow-up.png</file>
-        <file>images/arrow-down.png</file>
-        <file>images/1479745592_edit.png</file>
-        <file>images/1479745550_settings.png</file>
-        <file>images/1479745544_settings.png</file>
-        <file>images/1479745467_left.png</file>
-        <file>images/1479700717_right.png</file>
+        <file>EaToolBarForm.ui.qml</file>
+        <file>EaToolBar.qml</file>
     </qresource>
 </RCC>

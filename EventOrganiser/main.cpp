@@ -17,7 +17,6 @@ int main(int argc, char *argv[])
     qmlRegisterType<EAContainer>("EventAppData", 1,0, "EAContainer");
     qmlRegisterType<EAConstruction>("EventAppData", 1,0, "EAConstruction");
     qmlRegisterType<EAInfo>("EventAppData", 1,0, "EAInfo");
-    //qmlRegisterType<EAItemList>("EventAppData", 1,0, "EASpeakers");
     qmlRegisterType<EAItemList>("EventAppData", 1,0, "EAItemList");
 
     QQmlApplicationEngine engine;

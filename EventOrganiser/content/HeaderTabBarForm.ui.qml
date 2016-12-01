@@ -20,7 +20,7 @@ TabBar {
     text: qsTr("Event")
   }
   TabButton {
-    text: qsTr("Program")
+    text: qsTr("Select List")
   }
   TabButton {
     text: qsTr("Speakers")

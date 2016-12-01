@@ -4,13 +4,12 @@ import QtQuick.Controls.Material 2.0
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
 import EventAppData 1.0
-import "qml"
+import "qrc:/shared"
 
 ApplicationWindow {
     id: appwin
     visible: true
     width: 480; height: 640
-    //title: qsTr("Hi world")
     title: eaContainer.eaInfo.eventName
 
     property color backColour: EAConstruction.backColour
@@ -22,7 +21,7 @@ ApplicationWindow {
         anchors.fill: parent
     }
 
-    EaContainer {
+    EaContainerObj {
         id: eaContainer
     }
 
@@ -37,28 +36,33 @@ ApplicationWindow {
     header: EaToolBar {
         id: toolBar
     }
+/*
+    StackCtl {
+        id: stackCtl
+    }
+*/
 
     StackLayout {
-        id: stackCtl
-        anchors.fill: parent
-        property int topDrawerId: 0
-        property int loadEventId: 1
-        property alias drawerModel: drawerModel
-        ListView {
-            id: drawerView
-            width: 110
-            height: 160
-            delegate: ListDelegate {
-                id: drawerDelegate
-                text: title
-            }
-            model: ListModel {
-                id: drawerModel
-            }
+      id: stackCtl
+      anchors.fill: parent
+      property int topDrawerId: 0
+      property int loadEventId: 1
+      property alias drawerModel: drawerModel
+      ListView {
+        id: drawerView
+        width: 110
+        height: 160
+        delegate: ListDelegate {
+          id: drawerDelegate
+          text: title
         }
-        DownloadEvent {
-            id: downloadEvent
+        model: ListModel {
+          id: drawerModel
         }
+      }
+      DownloadEvent {
+        id: downloadEvent
+      }
     }
 
     Settings {

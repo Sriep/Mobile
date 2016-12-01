@@ -19,7 +19,8 @@ HEADERS += \
     ../EventAppShared/csv.h \
     ../EventAppShared/eaitemlist.h
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+    ../EventAppShared/qmlShared.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -50,4 +51,7 @@ DISTFILES += \
     content/FormatListForm.ui.qml \
     content/FormatTextDelegate.qml \
     content/InListCheckDelegate.qml \
-    content/CommonDataList.qml
+    content/CommonDataList.qml \
+    SelectListForm.ui.qml
+
+FORMS +=

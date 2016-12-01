@@ -18,7 +18,8 @@ HEADERS += \
     ../EventAppShared/eaitemlist.h \
     ../EventAppShared/csv.h
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+  ../EventAppShared/qmlShared.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -37,35 +38,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 INCLUDEPATH += $$PWD/../EventAppShared
 DEPENDPATH += $$PWD/../EventAppShared
 
-
-
-
 DISTFILES += \
-    qml/DownloadEventForm.ui.qml \
     qml/EaHeaderForm.ui.qml \
-    images/menuW@4x.png \
-    images/menuW@3x.png \
-    images/menuW@2x.png \
-    images/menuW.png \
-    images/menu@4x.png \
-    images/menu@3x.png \
-    images/menu@2x.png \
-    images/menu.png \
-    images/drawerW@4x.png \
-    images/drawerW@3x.png \
-    images/drawerW@2x.png \
-    images/drawerW.png \
-    images/drawer@4x.png \
-    images/drawer@3x.png \
-    images/drawer@2x.png \
-    images/drawer.png \
     qml/EaHeader.qml \
-    MainStackForm.ui.qml \
-    qml/ListDelegateForm.ui.qml \
-    qml/DrawerModel.qml \
-    sharedqml/common.js \
-    sharedqml/DataList.qml \
-    sharedqml/DataListDelegate.qml
+    qml/main.qml
 
 FORMS +=
 

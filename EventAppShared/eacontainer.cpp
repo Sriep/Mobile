@@ -26,6 +26,20 @@ void EAContainer::componentComplete()
     //emit eaComponentComplete();
 }
 
+void EAContainer::insertEmptyItemList(int index, QString name)
+{
+    EAItemList* newItemList = new EAItemList(name);
+    m_eaItemLists.insert(index, newItemList);
+}
+
+void EAContainer::deleteItemList(int index)
+{
+    if (index < m_eaItemLists.count())
+    {
+        m_eaItemLists.removeAt(index);
+    }
+}
+
 EAInfo *EAContainer::eaInfo() const
 {
     return m_eaInfo;
@@ -58,6 +72,7 @@ bool EAContainer::loadEventApp()
 
     read(loadDoc.object());
     qDebug() << "EAContainer::loadEventApp finished";
+    emit loadedEventApp();
     return true;
 }
 
@@ -79,7 +94,7 @@ bool EAContainer::saveSaveEventApp() const
     saveFile.write(isSaveJson()
         ? saveDoc.toJson()
         : saveDoc.toBinaryData());
-
+    //emit savedEventApp();
     return true;
 }
 

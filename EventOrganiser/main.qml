@@ -43,7 +43,9 @@ ApplicationWindow {
             property alias dataFilename: eaContainer.dataFilename
         }
 
-        EASelectList {}
+        EASelectList {
+
+        }
 
         EAListDisplayPage {
             property alias eventSpeakers: eaContainer.eaSpeakers

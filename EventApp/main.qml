@@ -36,11 +36,17 @@ ApplicationWindow {
     header: EaToolBar {
         id: toolBar
     }
+
+    footer: EaFooterBar {
+        id: footerBar
+    }
+
 /*
     StackCtl {
         id: stackCtl
     }
 */
+
 
     StackLayout {
       id: stackCtl
@@ -50,8 +56,9 @@ ApplicationWindow {
       property alias drawerModel: drawerModel
       ListView {
         id: drawerView
-        width: 110
-        height: 160
+        //width: 110
+        //height: 160
+        anchors.fill: parent
         delegate: ListDelegate {
           id: drawerDelegate
           text: title
@@ -62,6 +69,21 @@ ApplicationWindow {
       }
       DownloadEvent {
         id: downloadEvent
+      }
+      Connections {
+          target: eaContainer
+          onLoadedEventApp: {
+              var countItemLists = eaContainer.eaItemLists.length;
+              for (var i = 0; i < countItemLists; i++) {
+                var newList = Qt.createComponent("qrc:/shared/DataList.qml", stackCtl);
+                var itemlist = eaContainer.eaItemLists[i];
+                newList.createObject(stackCtl
+                             , {"eaItemList": eaContainer.eaItemLists[i]});
+                drawerModel.append({
+                    "title" : eaContainer.eaItemLists[i].listName
+                });
+              }
+          }
       }
     }
 

@@ -43,6 +43,9 @@ public:
     virtual void classBegin();
     virtual void componentComplete();
 
+    Q_INVOKABLE void insertEmptyItemList( int index, QString name);
+    Q_INVOKABLE void deleteItemList(int index);
+
     Q_INVOKABLE  bool loadEventApp();
     Q_INVOKABLE  bool saveSaveEventApp() const;
     void read(const QJsonObject &json);
@@ -64,8 +67,9 @@ signals:
     void isSaveJsonChanged(bool isSaveJson);
     void eaComponentComplete();
     void workingDirectoryChanged(QString workingDirectory);
-
     void eaSpeakersChanged(EAItemList* eaSpeakers);
+    void loadedEventApp();
+    //void savedEventApp();
 
 public slots:
     void setEAInfo(EAInfo* eaInfo);

@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>EaToolBarForm.ui.qml</file>
-        <file>EaToolBar.qml</file>
     </qresource>
 </RCC>

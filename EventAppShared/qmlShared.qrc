@@ -40,9 +40,12 @@
         <file>images/tab.png</file>
         <file>DownloadEvent.qml</file>
         <file>DownloadEventForm.ui.qml</file>
-        <file>StackCtl.qml</file>
         <file>ListDelegateForm.ui.qml</file>
         <file>ListDelegate.qml</file>
         <file>EaContainerObj.qml</file>
+        <file>EaToolBar.qml</file>
+        <file>EaToolBarForm.ui.qml</file>
+        <file>EaFooterBar.qml</file>
+        <file>EaFooterBarForm.ui.qml</file>
     </qresource>
 </RCC>

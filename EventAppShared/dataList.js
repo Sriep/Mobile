@@ -39,7 +39,7 @@ function displayText(titleFields, dataModel, header) {
             text += item;
         }
     }
-    console.log("text entered in listview: ", text);
+    //console.log("text entered in listview: ", text);
     return text;
 }
 

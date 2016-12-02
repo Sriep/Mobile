@@ -3,7 +3,14 @@ DataList DataList.qml
 DataListDelegate DataListDelegate.qml
 DownloadEvent DownloadEvent.qml
 DownloadEvent DownloadEventForm.ui.qml
-StackCtl StackCtl.qml
 ListDelegate ListDelegateForm.ui.qml
 ListDelegate ListDelegate.qml
 EaContainer EaContainerObj.qml
+DownloadEvent DownloadEvent.qml
+DownloadEvent DownloadEventForm.ui.qml
+ListDelegate ListDelegateForm.ui.qml
+ListDelegate ListDelegate.qml
+EaToolBar EaToolBar.qml
+EaToolBar EaToolBarForm.ui.qml
+EaFooterBar EaFooterBar.qml
+EaFooterBar EaFooterBarForm.ui.qml

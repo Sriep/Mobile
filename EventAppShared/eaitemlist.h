@@ -19,6 +19,7 @@ class EAItemList : public QQuickItem
 
 public:
     EAItemList();
+    EAItemList(QString name);
 
     void read(const QJsonObject &json);
     void write(QJsonObject &json) const;

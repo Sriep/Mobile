@@ -42,19 +42,12 @@ unix {
 
 DISTFILES += \
     EventAppShared.pro.user \
-    content/common.js \
-    content/qmldir \
-    content/DataList.qml \
-    common.js \
-    Untitled Document \
+    dataList.js \
     qmldir \
     DataListDelegate.qml \
     DataList.qml \
-    qml.qrs \
-    common.js \
-    qmldir \
-    DataListDelegate.qml \
-    DataList.qml
+    qmlShared.qrs \
+
 
 RESOURCES += \
     qmlShared.qrc

@@ -13,6 +13,12 @@ EAItemList::EAItemList()
 
 }
 
+EAItemList::EAItemList(QString name)
+    : m_listName(name)
+{
+
+}
+
 void EAItemList::read(const QJsonObject &json)
 {
     jsonFields = json["headerFields"].toArray();

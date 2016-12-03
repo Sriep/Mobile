@@ -6,12 +6,13 @@ import "qrc:/shared/dataList.js" as DataListJS
 import EventAppData 1.0
 
 EAListDisplayPageForm {
-
+    id: eaListDisplayPage
     property EAItemList featuredList: eventSpeakers
 
     function popTitlesList (eventList) {
         var whatis1
         var newHeader
+        titlesModel.clear();
         var titleFields = JSON.parse(eventList.titleFields);
         for ( var i=0 ; i < titleFields["headerFields"].length ; i++ ) {
             whatis1 = titleFields["headerFields"][i];
@@ -38,8 +39,9 @@ EAListDisplayPageForm {
     }
 
     loadCsvBut.onPressed: {
-        featuredList.readCSV("Speakers.csv");
-        popTitlesList(featuredList);
+        console.log("EAListDisplayPageForm about to load", csvFilename.text);
+        if (featuredList.readCSV(csvFilename.text))
+            popTitlesList(featuredList);
     }
 
     saveTitlesBut.onPressed: {

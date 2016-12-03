@@ -6,7 +6,6 @@ import QtQuick.Extras 1.4
 import "qrc:/shared"
 
 Item {
-    property alias loadCsvBut: loadCsvBut
     property alias titlesList: titlesList
     property alias titlesModel: titlesModel
     property alias thisDataList: thisDataList
@@ -15,6 +14,8 @@ Item {
     property alias saveTitlesBut: saveTitlesBut
 
     width: 900
+    property alias csvFilename: csvFilename
+    property alias loadCsvBut: loadCsvBut
 
     Row {
         id: columnLayout1
@@ -22,9 +23,15 @@ Item {
 
         Button {
             id: loadCsvBut
-            text: qsTr("Load ")
+            text: qsTr("Load csv file")
+            enabled: csvFilename !== ""
         }
 
+        TextField {
+            id: csvFilename
+            placeholderText: qsTr("Enter csv filename")
+            text: qsTr("")
+        }
         GroupBox {
             id: fieldsBox
             width: 500
@@ -79,7 +86,6 @@ Item {
                 anchors.bottom: parent.bottom
             }
         }
-
         GroupBox {
             id: dataBox
             width: 300

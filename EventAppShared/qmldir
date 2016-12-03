@@ -14,3 +14,5 @@ EaToolBar EaToolBar.qml
 EaToolBar EaToolBarForm.ui.qml
 EaFooterBar EaFooterBar.qml
 EaFooterBar EaFooterBarForm.ui.qml
+EventAppPage EventAppPageForm.ui.qml
+EventAppPage EventAppPage.qml

@@ -30,6 +30,7 @@ void EAContainer::insertEmptyItemList(int index, QString name)
 {
     EAItemList* newItemList = new EAItemList(name);
     m_eaItemLists.insert(index, newItemList);
+    emit eaItemListsChanged();
 }
 
 void EAContainer::deleteItemList(int index)
@@ -37,6 +38,7 @@ void EAContainer::deleteItemList(int index)
     if (index < m_eaItemLists.count())
     {
         m_eaItemLists.removeAt(index);
+        emit eaItemListsChanged();
     }
 }
 
@@ -72,11 +74,11 @@ bool EAContainer::loadEventApp()
 
     read(loadDoc.object());
     qDebug() << "EAContainer::loadEventApp finished";
-    emit loadedEventApp();
+    emit eaItemListsChanged();
     return true;
 }
 
-bool EAContainer::saveSaveEventApp() const
+bool EAContainer::saveEventApp() const
 {
     QFile saveFile(isSaveJson()
                    ? QString(dataFilename() + ".json")
@@ -94,7 +96,6 @@ bool EAContainer::saveSaveEventApp() const
     saveFile.write(isSaveJson()
         ? saveDoc.toJson()
         : saveDoc.toBinaryData());
-    //emit savedEventApp();
     return true;
 }
 

@@ -47,5 +47,7 @@
         <file>EaToolBarForm.ui.qml</file>
         <file>EaFooterBar.qml</file>
         <file>EaFooterBarForm.ui.qml</file>
+        <file>EventAppPageForm.ui.qml</file>
+        <file>EventAppPage.qml</file>
     </qresource>
 </RCC>

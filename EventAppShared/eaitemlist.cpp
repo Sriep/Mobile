@@ -16,7 +16,14 @@ EAItemList::EAItemList()
 EAItemList::EAItemList(QString name)
     : m_listName(name)
 {
+    setDataList(jsonData);
 
+    //jsonFields = new QJsonArray();
+    QJsonObject dataObject;
+    dataObject.insert("headerFields", QJsonValue(jsonFields));
+    QJsonDocument jsonDoc(dataObject);
+    QByteArray jsonBA = jsonDoc.toJson(QJsonDocument::Compact);
+    setTitleFields(jsonBA);
 }
 
 void EAItemList::read(const QJsonObject &json)
@@ -59,7 +66,7 @@ QString EAItemList::listName() const
 void EAItemList::setTitleFields(QString delegateList)
 {
     if (m_titleFields == delegateList)
-        return;
+        return;    
 
     m_titleFields = delegateList;
     emit titleFieldsChanged(delegateList);
@@ -129,8 +136,13 @@ bool EAItemList::readCSV(const QString filename)
             }
             setDataList(jsonData);
         }
+        return true;
     }
-    return true;
+    else
+    {
+        return false;
+    }
+
 }
 
 void EAItemList::amendField(int index

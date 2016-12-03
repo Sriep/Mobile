@@ -67,6 +67,8 @@ QList<QStringList> parse(const QString &string)
 
 QString initString(const QString &string)
 {
+    if (string.size() == 0)
+        return string;
     QString result = string;
     result.replace("\r\n", "\n");
     if (result.at(result.size()-1) != '\n') {

@@ -9,6 +9,7 @@
 
 static const char seperator = ',';
 static const char textDelimiter = '"';
+static const QString emptyHeader = "{\"headerFields\":[]}";
 
 class EAItemList : public QQuickItem
 {

@@ -21,7 +21,7 @@ EAConstructionPageForm {
             console.log("Canceled")
         }
     }*/
-    textField1.text:  eaContainer.dataFilename
+    loadFilename.text: settingsData.dataFilename// eaContainer.dataFilename
     rectangle1.color: eaContainer.eaConstruction.backColour
     colourLabel1.text: qsTr("Background colour: ")
                        + eaContainer.eaConstruction.backColour;
@@ -49,8 +49,8 @@ EAConstructionPageForm {
         console.log("Canceled")
     }*/
     openFileDialog1.onClicked: fileDialog.open();
-    loadEventButton.onClicked: eaContainer.loadEventApp();
-    saveEventButton.onClicked: eaContainer.saveSaveEventApp();
+    loadEventButton.onClicked: eaContainer.loadEventApp(loadFilename.text);
+    saveEventButton.onClicked: eaContainer.saveEventApp(loadFilename.text);
     mouseArea1.onClicked:  {
         colorDialog.index = 0;
         colorDialog.title = qsTr("Select background colour for app");

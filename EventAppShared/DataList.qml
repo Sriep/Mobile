@@ -7,8 +7,8 @@ import "qrc:/shared/dataList.js" as DataListJS
 
 ListView {  
     id: dataList
-    width: parent.width
-    height: parent.height
+    width: parent ? parent.width : 400
+    height: parent ? parent.height : 600
     property EAItemList eaItemList: undefined
     onEaItemListChanged: {
         console.log("dataList eaItemList chnaged");

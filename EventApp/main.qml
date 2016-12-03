@@ -33,58 +33,9 @@ ApplicationWindow {
         }
     }
 
-    header: EaToolBar {
-        id: toolBar
-    }
-
-    footer: EaFooterBar {
-        id: footerBar
-    }
-
-/*
-    StackCtl {
-        id: stackCtl
-    }
-*/
-
-
-    StackLayout {
-      id: stackCtl
-      anchors.fill: parent
-      property int topDrawerId: 0
-      property int loadEventId: 1
-      property alias drawerModel: drawerModel
-      ListView {
-        id: drawerView
-        //width: 110
-        //height: 160
+    EventAppPage {
+        id: eventAppPage
         anchors.fill: parent
-        delegate: ListDelegate {
-          id: drawerDelegate
-          text: title
-        }
-        model: ListModel {
-          id: drawerModel
-        }
-      }
-      DownloadEvent {
-        id: downloadEvent
-      }
-      Connections {
-          target: eaContainer
-          onLoadedEventApp: {
-              var countItemLists = eaContainer.eaItemLists.length;
-              for (var i = 0; i < countItemLists; i++) {
-                var newList = Qt.createComponent("qrc:/shared/DataList.qml", stackCtl);
-                var itemlist = eaContainer.eaItemLists[i];
-                newList.createObject(stackCtl
-                             , {"eaItemList": eaContainer.eaItemLists[i]});
-                drawerModel.append({
-                    "title" : eaContainer.eaItemLists[i].listName
-                });
-              }
-          }
-      }
     }
 
     Settings {

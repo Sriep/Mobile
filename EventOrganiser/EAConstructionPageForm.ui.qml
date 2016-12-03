@@ -10,7 +10,7 @@ Item {
     property alias mouseArea1: mouseArea1
     property alias loadEventButton: loadEventButton
     property alias saveEventButton: saveEventButton
-    property alias textField1: textField1
+    property alias loadFilename: loadFilename
     property alias rectangle1: rectangle1
     property alias colourLabel1: colourLabel1
     property alias openFileDialog1: openFileDialog1
@@ -23,14 +23,14 @@ Item {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.right: parent.right
+
                 GroupBox {
                     width: parent.width
                     title: qsTr("Data file")
                     ColumnLayout {
                         RowLayout {
                             TextField {
-                                id: textField1
-                                placeholderText: qsTr("filename .json or .dat")
+                                id: loadFilename
                             }
                             Button {
                                 id: openFileDialog1
@@ -92,7 +92,6 @@ Item {
                            }
                        } // RowLayout
                        RowLayout {
-                           id: rowLayout1
                            spacing: parent.spacing
                            height: colourLabel2.implicitHeight * 2.0
                            Rectangle {
@@ -102,12 +101,30 @@ Item {
                                border.color: "black"
                                MouseArea {
                                    id: mouseArea4
-                                 //  id: MouseArea4
                                    anchors.fill: parent
                                }
                            }
                            Label {
                                id: colourLabel2
+                               text: qsTr("Font colour");
+                               anchors.verticalCenter: parent.verticalCenter
+                           }
+                       } // RowLayout
+                       RowLayout {
+                           spacing: parent.spacing
+                           height: colourLabel2.implicitHeight * 2.0
+                           Rectangle {
+                               color: "#FD871C"
+                               height: parent.height
+                               width: height * 2
+                               border.color: "black"
+                               MouseArea {
+                                   id: mouseArea5
+                                   anchors.fill: parent
+                               }
+                           }
+                           Label {
+                               id: colourLabel3
                                text: qsTr("Font colour");
                                anchors.verticalCenter: parent.verticalCenter
                            }

@@ -6,7 +6,7 @@ import EventAppData 1.0
 
 EAInfoPageForm {
     //property alias eaContainer: mainStack.eaContainer
-    EAInfoName {
+/*    EAInfoName {
     }
     EAInfoTheme {}
     eaInfoSwipeView.currentIndex:  eaInfoTabBar.currentIndex
@@ -26,7 +26,7 @@ EAInfoPageForm {
         TabButton {
             text: qsTr("Social Liinks")
         }
-    }
+    }*/
 }
 
 //"id": 1,

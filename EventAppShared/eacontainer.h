@@ -47,7 +47,7 @@ public:
     Q_INVOKABLE void deleteItemList(int index);
 
     Q_INVOKABLE  bool loadEventApp();
-    Q_INVOKABLE  bool saveSaveEventApp() const;
+    Q_INVOKABLE  bool saveEventApp() const;
     void read(const QJsonObject &json);
     void write(QJsonObject &json) const;
     QString workingDirectory() const;
@@ -69,6 +69,7 @@ signals:
     void workingDirectoryChanged(QString workingDirectory);
     void eaSpeakersChanged(EAItemList* eaSpeakers);
     void loadedEventApp();
+    void eaItemListsChanged();
     //void savedEventApp();
 
 public slots:

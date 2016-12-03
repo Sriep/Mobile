@@ -9,11 +9,11 @@ Item {
     property alias textEventName: textEventName
     property alias textOrgName: textOrgName
     property alias textField1: textField1
+    property alias saveInfo: saveInfo
     Flickable {
-        Pane {
             id: eventNamePane
             width: parent.width
-            GridLayout {
+            RowLayout {
                 width: parent.width;
                 anchors.top: parent.top
                 anchors.left: parent.left
@@ -62,10 +62,14 @@ Item {
                             wrapMode: TextArea.Wrap
                         }
                     } //ColumnLayout
-                } //GroupBox
-              } // ColumnLayout
+                }
 
-        } //Pane
+                Button {
+                    id: saveInfo
+                    text: qsTr("Save")
+                } //GroupBox
+
+              } // ColumnLayout
 
         ScrollBar.vertical: ScrollBar { }
 

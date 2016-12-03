@@ -1,7 +1,7 @@
 import QtQuick 2.2
 
 Item {
-    id: topDelegate
+    id: drawerDelegate
     width: 100//parent.width
     height: 88
     property alias mouseArea: mouseArea
@@ -32,6 +32,7 @@ Item {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
+        onClicked: stackCtl.currentIndex = position + 2;
     }
 
     Text {

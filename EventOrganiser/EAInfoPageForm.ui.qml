@@ -8,24 +8,13 @@ Item {
     property alias eaInfoPage: eaInfoPage
     Page {
         id: eaInfoPage
-        SwipeView {
+        RowLayout {
             id: eaInfoSwipeView
             anchors.fill: parent
 
             EAInfoNameForm {
             }
-            EAInfoThemeForm {}
-            Rectangle {
-                color: 'brown'
-                implicitWidth: 200
-                implicitHeight: 200
-            }
-
-            Rectangle {
-                color: 'yellow'
-                implicitWidth: 200
-                implicitHeight: 200
-            }
+           // EAInfoThemeForm {}
         }
     }
 }

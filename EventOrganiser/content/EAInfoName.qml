@@ -10,5 +10,12 @@ EAInfoNameForm {
     eventDescription.text: eventInfo.eventDescription;
     textOrgName.text: eventInfo.organiserName;
     parentDescription.text: eventInfo.organiserDescription;
+
+    saveInfo.onClicked: {
+        eventInfo.eventName = textEventName.text;
+        eventInfo.eventDescription = eventDescription.text;
+        eventInfo.organiserName = textOrgName.text;
+        eventInfo.organiserDescription = parentDescription.text;
+    }
 }
 

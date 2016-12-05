@@ -45,12 +45,14 @@ QString HttpDownload::downloadFile(QUrl url)
     if (!file)
     {
         emit error(tr("Problem opening file"));
+        setFileDownloaded("");
         return "";
     }
 
     //downloadButton->setEnabled(false);
     // schedule the request
     startRequest();
+    setFileDownloaded(fileName);
     return fileName;
 }
 void HttpDownload::preProcessUrl()
@@ -186,6 +188,11 @@ QString HttpDownload::password() const
     return m_password;
 }
 
+QString HttpDownload::fileDownloaded() const
+{
+    return m_fileDownloaded;
+}
+
 void HttpDownload::setUrl(QUrl url)
 {
     if (m_url == url)
@@ -213,6 +220,15 @@ void HttpDownload::setPassword(QString password)
 
     m_password = password;
     emit passwordChanged(password);
+}
+
+void HttpDownload::setFileDownloaded(QString fileDownloaded)
+{
+    if (m_fileDownloaded == fileDownloaded)
+        return;
+
+    m_fileDownloaded = fileDownloaded;
+    emit fileDownloadedChanged(fileDownloaded);
 }
 
 

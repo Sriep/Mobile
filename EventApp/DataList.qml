@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QtQuick.Extras 1.4
 import EventAppData 1.0
-import "qrc:/shared/dataList.js" as DataListJS
+import "qrc:///shared/dataList.js" as DataListJS
 
 ListView {  
     id: dataList

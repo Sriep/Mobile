@@ -46,7 +46,7 @@ Item {
         Image {
             id: recipeImage
             width: 50; height: 50
-            //source: picture
+            source: Qt.resolvedUrl(applicationPath + picture)
         }
 
         Column {
@@ -97,13 +97,13 @@ Item {
 
         Image {
             anchors { right: flick.right; top: flick.top }
-            source: "qrc:/shared/images/moreUp.png"
+            source: "qrc:///shared/images/moreUp.png"
             opacity: flick.atYBeginning ? 0 : 1
         }
 
         Image {
             anchors { right: flick.right; bottom: flick.bottom }
-            source: "qrc:/shared/images/moreDown.png"
+            source: "qrc:///shared/images/moreDown.png"
             opacity: flick.atYEnd ? 0 : 1
         }
     }

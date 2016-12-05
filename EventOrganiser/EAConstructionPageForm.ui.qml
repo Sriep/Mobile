@@ -14,6 +14,7 @@ Item {
     property alias rectangle1: rectangle1
     property alias colourLabel1: colourLabel1
     property alias openFileDialog1: openFileDialog1
+    property alias newEventBut: newEventBut
     Flickable {
         Pane {
             id: eventNamePane
@@ -46,6 +47,11 @@ Item {
                             Button {
                                 id: saveEventButton
                                 text: "Save"
+                            }
+
+                            Button {
+                                id: newEventBut
+                                text: qsTr("New event")
                             }
                         } //RowLayout
                     } //ColumnLayout

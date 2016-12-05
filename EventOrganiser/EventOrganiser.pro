@@ -20,7 +20,7 @@ HEADERS += \
     ../EventAppShared/eaitemlist.h
 
 RESOURCES += qml.qrc \
-    ../EventAppShared/qmlShared.qrc
+    ../EventApp/qmlShared.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

@@ -36,10 +36,10 @@ signals:
     void fontColourChanged(QColor fontColour);
 
 public slots:
-void setBackColour(QColor backColour);
-void setForeColour(QColor foreColour);
-void setFont(QFont font);
-void setFontColour(QColor fontColour);
+    void setBackColour(QColor backColour);
+    void setForeColour(QColor foreColour);
+    void setFont(QFont font);
+    void setFontColour(QColor fontColour);
 };
 
 #endif // EVENTAPPCONSTRUCTION_H

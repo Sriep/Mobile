@@ -1,5 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include "eainfo.h"
 #include "eacontainer.h"
 #include "eaconstruction.h"
@@ -21,6 +22,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<HttpDownload>("EventAppData", 1,0, "HttpDownload");
 
     QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("applicationPath", "file://"+qApp->applicationDirPath()+ "/");
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
 
     return app.exec();

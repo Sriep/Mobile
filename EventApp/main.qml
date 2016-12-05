@@ -1,10 +1,10 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
-import QtQuick.Controls.Material 2.0
+//import QtQuick.Controls.Material 2.0
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
 import EventAppData 1.0
-import "qrc:/shared"
+import "qrc:///shared"
 
 ApplicationWindow {
     id: appwin
@@ -29,7 +29,9 @@ ApplicationWindow {
         id: httpDownload
         onFinishedDownload: {
             console.log("Download finished");
-            eaContainer.loadNewEventApp();
+            var fileName = httpDownload.fileDownloaded;
+            console.log("About to call loadNewEventApp", fileName);
+            eaContainer.installNewEvent(fileName);
         }
     }
 

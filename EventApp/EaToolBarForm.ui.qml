@@ -19,7 +19,7 @@ ToolBar {
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter
-                source:  "qrc:/shared/images/drawer@4x.png"
+                source:  "qrc:///shared/images/drawer@4x.png"
             }
         }
 
@@ -39,7 +39,7 @@ ToolBar {
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter
-                source:  "qrc:/shared/images/menu@4x.png"
+                source:  "qrc:///shared/images/menu@4x.png"
             }
 
         }

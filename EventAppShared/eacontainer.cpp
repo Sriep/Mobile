@@ -42,6 +42,28 @@ void EAContainer::deleteItemList(int index)
     }
 }
 
+void EAContainer::clearEvent()
+{
+    m_eaInfo  = new EAInfo();
+    m_dataFilename = "NewEvent";
+    m_eaConstruction = new EAConstruction();
+    clearPhotos();
+    m_eaItemLists.clear();
+    m_eaSpeakers = new EAItemList();
+}
+
+void EAContainer::clearPhotos() const
+{
+    QString pwd = QDir::currentPath();
+    QDir dir(pwd);
+    dir.setNameFilters(QStringList() << "*.png");
+    dir.setFilter(QDir::Files);
+    foreach(QString dirFile, dir.entryList())
+    {
+        dir.remove(dirFile);
+    }
+}
+
 EAInfo *EAContainer::eaInfo() const
 {
     return m_eaInfo;
@@ -52,10 +74,19 @@ QString EAContainer::dataFilename() const
     return m_dataFilename;
 }
 
-bool EAContainer::loadEventApp()
+
+bool EAContainer::loadNewEventApp(const QString &filename, bool unpack)
+{
+    clearEvent();
+    setDataFilename(filename);
+    return loadEventApp(unpack);
+}
+
+bool EAContainer::loadEventApp(bool unpack)
 {
     QString pwd = QDir::currentPath();
     qDebug() << "Current working directory" << pwd;
+
 
     QFile loadFile(isSaveJson()
                    ? QString(dataFilename() + ".json")
@@ -72,14 +103,18 @@ bool EAContainer::loadEventApp()
         ? QJsonDocument::fromJson(saveData)
         : QJsonDocument::fromBinaryData(saveData));
 
-    read(loadDoc.object());
+    read(loadDoc.object(), unpack);
     qDebug() << "EAContainer::loadEventApp finished";
     emit eaItemListsChanged();
+    m_eaInfo->setEventName(pwd);
     return true;
 }
 
-bool EAContainer::saveEventApp() const
+bool EAContainer::saveEventApp(const QString& filename)
 {
+    if (filename != "")
+        setDataFilename(filename);
+
     QFile saveFile(isSaveJson()
                    ? QString(dataFilename() + ".json")
                    : QString(dataFilename() + ".dat"));
@@ -99,7 +134,7 @@ bool EAContainer::saveEventApp() const
     return true;
 }
 
-void EAContainer::read(const QJsonObject &json)
+void EAContainer::read(const QJsonObject &json, bool unpack)
 {
     setDataFilename(json["dataFilename"].toString());
 
@@ -116,7 +151,7 @@ void EAContainer::read(const QJsonObject &json)
     for (int i = 0; i < listsArray.size(); ++i) {
         QJsonObject readJsonObject = listsArray[i].toObject();
         EAItemList* newList = new EAItemList();
-        newList->read(readJsonObject);
+        newList->read(readJsonObject, unpack);
         m_eaItemLists.append(newList);
     }
 /*
@@ -187,7 +222,7 @@ void EAContainer::setEAInfo(EAInfo *eventInfo)
     emit eaInfoChanged(eventInfo);
 }
 
-void EAContainer::setDataFilename(QString dataFilename)
+void EAContainer::setDataFilename(const QString& dataFilename)
 {
     if (m_dataFilename == dataFilename)
         return;
@@ -201,7 +236,7 @@ void EAContainer::setDataFilename(QString dataFilename)
     m_dataFilename = filename;
     setIsSaveJson(extension == "json" || extension == "");
     QDir::setCurrent(path);
-    emit dataFilenameChanged(dataFilename);
+    emit dataFilenameChanged(m_dataFilename);
 }
 
 void EAContainer::setEAConstruction(EAConstruction *eventAppConstruction)
@@ -240,6 +275,15 @@ void EAContainer::setEaSpeakers(EAItemList *eaSpeakers)
     emit eaSpeakersChanged(eaSpeakers);
 }
 
+void EAContainer::setVersion(int Version)
+{
+    if (m_Version == Version)
+        return;
+
+    m_Version = Version;
+    emit versionChanged(Version);
+}
+
 QQmlListProperty<EAItemList> EAContainer::eaItemLists()
 {
     return QQmlListProperty<EAItemList>(this
@@ -249,6 +293,11 @@ QQmlListProperty<EAItemList> EAContainer::eaItemLists()
                                         , &EAContainer::at_eaItemLists
                                         , &EAContainer::clear_eaItemLists
                                         );
+}
+
+int EAContainer::version() const
+{
+    return m_Version;
 }
 
 //typedef QQmlListProperty::AppendFunction

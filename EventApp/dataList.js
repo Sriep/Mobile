@@ -49,6 +49,7 @@ function resetDataListModel(dataModel, dataList)
     for ( var j=0 ; j < dataList["dataItems"].length ; j++ ) {
         var whatis = dataList["dataItems"][j];
         dataModel.append(dataList["dataItems"][j]);
+        dataModel.setProperty(j, "picture",  j.toString() + ".png");
         var newData = dataModel.get(j);
     }
 }

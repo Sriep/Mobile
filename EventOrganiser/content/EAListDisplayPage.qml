@@ -2,7 +2,7 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QtQuick.Extras 1.4
-import "qrc:/shared/dataList.js" as DataListJS
+import "qrc:///shared/dataList.js" as DataListJS
 import EventAppData 1.0
 
 EAListDisplayPageForm {
@@ -47,7 +47,40 @@ EAListDisplayPageForm {
     saveTitlesBut.onPressed: {
         saveTitles(featuredList)
     }
+
+    loadPhotosBut.onClicked: {
+        console.log("In loadPotos");
+        console.log("format loadPotos", format);
+        var format = imageFilenameFormat.text;
+        featuredList.loadPhotos(format);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

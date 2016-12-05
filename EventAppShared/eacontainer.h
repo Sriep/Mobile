@@ -22,12 +22,12 @@ class  EAContainer : public QObject, public QQmlParserStatus
     Q_PROPERTY(EAInfo* eaInfo READ eaInfo WRITE setEAInfo NOTIFY eaInfoChanged)
     Q_PROPERTY(EAConstruction* eaConstruction READ eaConstruction WRITE setEAConstruction NOTIFY eaConstructionChanged)
     Q_PROPERTY(EAItemList* eaSpeakers READ eaSpeakers WRITE setEaSpeakers NOTIFY eaSpeakersChanged)
-
     Q_PROPERTY(QQmlListProperty<EAItemList> eaItemLists READ eaItemLists)
 
     Q_PROPERTY(QString workingDirectory READ workingDirectory WRITE setWorkingDirectory NOTIFY workingDirectoryChanged)
     Q_PROPERTY(QString dataFilename READ dataFilename WRITE setDataFilename NOTIFY dataFilenameChanged)
     Q_PROPERTY(bool isSaveJson READ isSaveJson WRITE setIsSaveJson NOTIFY isSaveJsonChanged)
+    Q_PROPERTY(int version READ version WRITE setVersion NOTIFY versionChanged)
 
     EAInfo* m_eaInfo;
     QString m_dataFilename;
@@ -45,10 +45,13 @@ public:
 
     Q_INVOKABLE void insertEmptyItemList( int index, QString name);
     Q_INVOKABLE void deleteItemList(int index);
+    Q_INVOKABLE void clearEvent();
 
-    Q_INVOKABLE  bool loadEventApp();
-    Q_INVOKABLE  bool saveEventApp() const;
-    void read(const QJsonObject &json);
+    Q_INVOKABLE  bool loadNewEventApp(const QString& filename = "NewEvent"
+                                    , bool unpack = true);
+    Q_INVOKABLE  bool loadEventApp(bool unpack = false);
+    Q_INVOKABLE  bool saveEventApp(const QString &filename = "");
+    void read(const QJsonObject &json, bool unpack);
     void write(QJsonObject &json) const;
     QString workingDirectory() const;
 
@@ -58,7 +61,8 @@ public:
     EAConstruction* eaConstruction() const;
     bool isSaveJson() const;    
     EAItemList* eaSpeakers() const;
-    QQmlListProperty<EAItemList> eaItemLists();
+    QQmlListProperty<EAItemList> eaItemLists();    
+    int version() const;
 
 signals:
     void eaInfoChanged(EAInfo* eaInfo);
@@ -72,13 +76,17 @@ signals:
     void eaItemListsChanged();
     //void savedEventApp();
 
+    void versionChanged(int version);
+
 public slots:
     void setEAInfo(EAInfo* eaInfo);
-    void setDataFilename(QString dataFilename);
+    void setDataFilename(const QString &dataFilename);
     void setEAConstruction(EAConstruction* eaConstruction);
     void setIsSaveJson(bool isSaveJson);
     void setWorkingDirectory(QString workingDirectory);
     void setEaSpeakers(EAItemList* eaSpeakers);
+    void setVersion(int version);
+
 private:
     static void append_eaItemLists(QQmlListProperty<EAItemList> *list
                                    , EAItemList *itemList);
@@ -86,6 +94,10 @@ private:
     static EAItemList* at_eaItemLists(QQmlListProperty<EAItemList> *list
                                       , int index);
     static void clear_eaItemLists(QQmlListProperty<EAItemList> *list);
+
+    void clearPhotos() const;
+
+    int m_Version = 0;
 };
 
 #endif // EVENTCONTAINER_H

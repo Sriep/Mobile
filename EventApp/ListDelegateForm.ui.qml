@@ -48,7 +48,7 @@ Item {
         id: nextImage
         anchors.right: parent.right
         anchors.rightMargin: 0
-        source: "qrc:/shared/images/navigation_next_item.png"
+        source: "qrc:///shared/images/navigation_next_item.png"
     }
 
 }

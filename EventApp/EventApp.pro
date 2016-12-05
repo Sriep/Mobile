@@ -19,7 +19,8 @@ HEADERS += \
     ../EventAppShared/csv.h
 
 RESOURCES += qml.qrc \
-  ../EventAppShared/qmlShared.qrc
+   qmlShared.qrc
+#  ../EventAppShared/qmlShared.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -41,7 +42,8 @@ DEPENDPATH += $$PWD/../EventAppShared
 DISTFILES += \
     qml/EaHeaderForm.ui.qml \
     qml/EaHeader.qml \
-    qml/main.qml
+    qml/main.qml \
+    qmldir
 
 FORMS +=
 

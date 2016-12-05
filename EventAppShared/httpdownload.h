@@ -21,6 +21,7 @@ class  HttpDownload : public QQuickItem
     Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY urlChanged)
     Q_PROPERTY(QString user READ user WRITE setUser NOTIFY userChanged)
     Q_PROPERTY(QString password READ password WRITE setPassword NOTIFY passwordChanged)
+    Q_PROPERTY(QString fileDownloaded READ fileDownloaded WRITE setFileDownloaded NOTIFY fileDownloadedChanged)
 
 public:
     HttpDownload();
@@ -29,6 +30,8 @@ public:
     QUrl url() const;
     QString user() const;
     QString password() const;
+
+    QString fileDownloaded() const;
 
 signals:
     void urlChanged(QUrl url);
@@ -40,10 +43,14 @@ signals:
     void userChanged(QString user);
     void passwordChanged(QString password);
 
+    void fileDownloadedChanged(QString fileDownloaded);
+
 public slots:
     void setUrl(QUrl url);
     void setUser(QString user);
     void setPassword(QString password);
+
+    void setFileDownloaded(QString fileDownloaded);
 
 private slots:
     void slotAuthenticationRequired(QNetworkReply*,QAuthenticator *authenticator);
@@ -65,6 +72,7 @@ private:
     QUrl m_url;
     QString m_user;
     QString m_password;
+    QString m_fileDownloaded;
 };
 
 

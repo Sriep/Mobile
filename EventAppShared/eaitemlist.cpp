@@ -5,8 +5,11 @@
 #include <QtQml>
 #include <csv.h>
 #include <QDebug>
-
+#include <QRegExp>
+#include <QBuffer>
 #include "eaitemlist.h"
+
+
 
 EAItemList::EAItemList()
 {
@@ -18,7 +21,6 @@ EAItemList::EAItemList(QString name)
 {
     setDataList(jsonData);
 
-    //jsonFields = new QJsonArray();
     QJsonObject dataObject;
     dataObject.insert("headerFields", QJsonValue(jsonFields));
     QJsonDocument jsonDoc(dataObject);
@@ -26,7 +28,7 @@ EAItemList::EAItemList(QString name)
     setTitleFields(jsonBA);
 }
 
-void EAItemList::read(const QJsonObject &json)
+void EAItemList::read(const QJsonObject &json, bool unpack)
 {
     jsonFields = json["headerFields"].toArray();
     setTitleFields(jsonFields);
@@ -38,6 +40,9 @@ void EAItemList::read(const QJsonObject &json)
 
     nextIndex = json["nextIndex"].toInt();
     setListName(json["listName"].toString());
+    setShowPhotos(json["showPhotos"].toBool());
+    jsonPictures = json["pictures"].toArray();
+    if (unpack) unpackPhotos();
 }
 
 void EAItemList::write(QJsonObject &json) const
@@ -46,6 +51,8 @@ void EAItemList::write(QJsonObject &json) const
     json["dataList"] = jsonData;
     json["listName"] = listName();
     json["nextIndex"] = nextIndex;
+    json["showPhotos"] = m_showPhotos;
+    json["pictures"] = jsonPictures;
 }
 
 QString EAItemList::titleFields() const
@@ -61,6 +68,11 @@ QString EAItemList::dataList() const
 QString EAItemList::listName() const
 {
     return m_listName;
+}
+
+bool EAItemList::showPhotos() const
+{
+    return m_showPhotos;
 }
 
 void EAItemList::setTitleFields(QString delegateList)
@@ -89,6 +101,15 @@ void EAItemList::setListName(QString listName)
 
     m_listName = listName;
     emit listNameChanged(listName);
+}
+
+void EAItemList::setShowPhotos(bool showPhotos)
+{
+    if (m_showPhotos == showPhotos)
+        return;
+
+    m_showPhotos = showPhotos;
+    emit showPhotosChanged(showPhotos);
 }
 
 
@@ -166,6 +187,32 @@ void EAItemList::saveTitleChanges()
     setTitleFields(jsonFields);
 }
 
+void EAItemList::loadPhotos(const QString &format)
+{
+    // http://stackoverflow.com/questions/14988455/count-qstring-arguments
+    int argCount = format.count(QRegExp("%\\d{1,2}(?!\\d)"));
+    qDebug() << "arg count " << argCount;
+    QJsonObject obj0 = jsonFields[0].toObject();
+    QString name0 = obj0["modelName"].toString();
+
+    for ( int i=0 ; i<jsonData.count() ; i++ )
+    {
+        QJsonObject ithObj = jsonData[i].toObject();
+        QString firstField = ithObj[name0].toString();
+        QString filename = QString(format).arg(firstField);
+
+        QImage  picImage(filename);
+        picImage.scaled(75,75);
+        QPixmap pix = QPixmap::fromImage(picImage);
+        QJsonValue jsonPic = jsonValFromPixmap(pix);
+        if (jsonPictures.size() > i)
+            jsonPictures[i] = jsonPic;
+        else
+            jsonPictures.append(jsonPic);
+    }
+    qDebug() << "photos read " << jsonPictures.count();
+}
+
 QStringList EAItemList::addHeaderFields(const QStringList& fields)
 {
     QStringList models;
@@ -183,7 +230,7 @@ QStringList EAItemList::addHeaderFields(const QStringList& fields)
             {
                 { "field", fields[i] },
                 { "modelName", modelName },
-                { "format", "<html>{0}: {1}</html>\n" },
+                { "format", "<html>{0}: {1}<br></html>\n" },
                 { "inListView", i==0 ? true : false }
             };
             jsonFields.append(newField);
@@ -229,11 +276,37 @@ QJsonObject EAItemList::newDataItem(const QStringList& speakerData
             newItem[header] = "";
     }
     return newItem;
-
 }
 
+void EAItemList::unpackPhotos() const
+{
+    for ( int i=0 ; i<jsonPictures.count() ; i++ )
+    {
+        QPixmap pix = pixmapFrom(jsonPictures[i]);
+        QImage image = pix.toImage();
+        QString filename = QString::number(i) + ".png";
+        image.save(filename, "PNG");
+    }
+}
 
+// http://stackoverflow.com/questions/32376119/how-to-store-a-qpixmap-in-json-via-qbytearray
+QJsonValue jsonValFromPixmap(const QPixmap & p)
+{
+  QByteArray data;
+  QBuffer buffer { &data };
+  buffer.open(QIODevice::WriteOnly);
+  p.save(&buffer, "PNG");
+  auto encoded = buffer.data().toBase64();
+  return QJsonValue(QString::fromLatin1(encoded));
+}
 
+QPixmap pixmapFrom(const QJsonValue & val)
+{
+  QByteArray encoded = val.toString().toLatin1();
+  QPixmap p;
+  p.loadFromData(QByteArray::fromBase64(encoded), "PNG");
+  return p;
+}
 
 
 

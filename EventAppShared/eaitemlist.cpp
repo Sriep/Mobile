@@ -7,8 +7,12 @@
 #include <QDebug>
 #include <QRegExp>
 #include <QBuffer>
-#include "eaitemlist.h"
 
+#include <QQmlEngine>
+#include <QtQml>
+
+#include "eaitemlist.h"
+#include "picturelistimageprovider.h"
 
 
 EAItemList::EAItemList()
@@ -28,7 +32,17 @@ EAItemList::EAItemList(QString name)
     setTitleFields(jsonBA);
 }
 
-void EAItemList::read(const QJsonObject &json, bool unpack)
+EAItemList::~EAItemList()
+{
+}
+
+void EAItemList::clear(QQmlEngine *engine)
+{
+    engine->removeImageProvider(listName());
+}
+
+
+void EAItemList::read(const QJsonObject &json, QQmlEngine *engine)
 {
     jsonFields = json["headerFields"].toArray();
     setTitleFields(jsonFields);
@@ -42,7 +56,13 @@ void EAItemList::read(const QJsonObject &json, bool unpack)
     setListName(json["listName"].toString());
     setShowPhotos(json["showPhotos"].toBool());
     jsonPictures = json["pictures"].toArray();
-    if (unpack) unpackPhotos();
+
+    PictureListImageProvider* provider = new PictureListImageProvider(jsonPictures);
+    //QQmlEngine*  engine = qmlEngine(this);
+    if (engine)
+        engine->addImageProvider(listName(), provider);
+
+    //if (unpack) unpackPhotos();
 }
 
 void EAItemList::write(QJsonObject &json) const
@@ -73,6 +93,16 @@ QString EAItemList::listName() const
 bool EAItemList::showPhotos() const
 {
     return m_showPhotos;
+}
+
+QString EAItemList::shortFormat() const
+{
+    return m_shortFormat;
+}
+
+QString EAItemList::longFormat() const
+{
+    return m_longFormat;
 }
 
 void EAItemList::setTitleFields(QString delegateList)
@@ -112,6 +142,24 @@ void EAItemList::setShowPhotos(bool showPhotos)
     emit showPhotosChanged(showPhotos);
 }
 
+void EAItemList::setShortFormat(QString shortFormat)
+{
+    if (m_shortFormat == shortFormat)
+        return;
+
+    m_shortFormat = shortFormat;
+    emit shortFormatChanged(shortFormat);
+}
+
+void EAItemList::setLongFormat(QString longFormat)
+{
+    if (m_longFormat == longFormat)
+        return;
+
+    m_longFormat = longFormat;
+    emit longFormatChanged(longFormat);
+}
+
 
 void EAItemList::setTitleFields(const QJsonArray &titleFields)
 {
@@ -125,7 +173,8 @@ void EAItemList::setTitleFields(const QJsonArray &titleFields)
     for ( int i=0 ; i < jsonFields.size() ; i++ )
     {
         QJsonObject jsonField = jsonFields[i].toObject();
-        fieldsSet.insert(jsonField["field"].toString());
+        QString modelName = getModelName(jsonField["field"].toString());
+        fieldsSet.insert(modelName);
     }
 }
 
@@ -202,7 +251,7 @@ void EAItemList::loadPhotos(const QString &format)
         QString filename = QString(format).arg(firstField);
 
         QImage  picImage(filename);
-        picImage.scaled(75,75);
+        picImage.scaled(100,100);
         QPixmap pix = QPixmap::fromImage(picImage);
         QJsonValue jsonPic = jsonValFromPixmap(pix);
         if (jsonPictures.size() > i)
@@ -235,6 +284,11 @@ QStringList EAItemList::addHeaderFields(const QStringList& fields)
             };
             jsonFields.append(newField);
             fieldsSet.insert(modelName);
+            QString nexDefaultText = "<html>{"
+                    + QString::number(jsonFields.size())
+                    + "}<br></html>\n";
+            m_longFormat = m_longFormat + QString(nexDefaultText);
+            emit longFormatChanged(m_longFormat);
         }
     }
     setTitleFields(jsonFields);
@@ -254,7 +308,6 @@ QString EAItemList::getModelName(const QString &name) const
     }
     else
         return QString("");
-
 }
 
 QJsonObject EAItemList::newDataItem(const QStringList& speakerData

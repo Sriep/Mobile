@@ -7,8 +7,4 @@ ListDelegateForm {
     itemBackground.color: "#424246"
     //nextImage.source: "qrc:///images/navigation_next_item.png"
     nextImage.source: "qrc:///shared/images/navigation_next_item.png"
-    //mouseArea.onClicked: {
-   //     stackCtl.currentIndex = position + 2;
-   // }
-
 }

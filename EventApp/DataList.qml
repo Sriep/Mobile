@@ -4,22 +4,35 @@ import QtQuick.Controls 2.0
 import QtQuick.Extras 1.4
 import EventAppData 1.0
 import "qrc:///shared/dataList.js" as DataListJS
-
-ListView {  
-    id: dataList
-    width: parent ? parent.width : 400
-    height: parent ? parent.height : 600
+/*
+DataListForm {
     property EAItemList eaItemList: undefined
-    onEaItemListChanged: {
+    function eaItemListChanged (eaItemList, dataModel) {
         console.log("dataList eaItemList chnaged");
-        DataListJS.resetDataListModel(dataModel
-                                   , JSON.parse(eaItemList.dataList))
-    }
-
-    property  alias dataModel: dataModel
-    model: ListModel {
-        id: dataModel
-    }
-    delegate: DataListDelegate {
+        DataListJS.resetDataListModel(dataModel,
+                                      eaItemList.listName
+                                   , JSON.parse(eaItemList.dataList));
     }
 }
+*/
+//Item {
+    ListView {
+        id: dataList
+       // width: parent ? parent.width : 400
+       // height: parent ? parent.height : 600
+        property EAItemList eaItemList: undefined
+        onEaItemListChanged: {
+            console.log("dataList eaItemList chnaged");
+            DataListJS.resetDataListModel(dataModel,
+                                          eaItemList.listName
+                                       , JSON.parse(eaItemList.dataList))
+        }
+
+        property  alias dataModel: dataModel
+        model: ListModel {
+            id: dataModel
+        }
+        delegate: DataListDelegate {
+        }
+    }
+//}

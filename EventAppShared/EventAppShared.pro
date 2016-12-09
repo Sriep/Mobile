@@ -18,10 +18,9 @@ SOURCES += eventappshared.cpp \
     eaconstruction.cpp \
     httpdownload.cpp \
     eapropertylist.cpp \
-    ealistmodel.cpp \
-    easpeakers.cpp \
     eaitemlist.cpp \
-    csv.cpp
+    csv.cpp \
+    picturelistimageprovider.cpp
 
 HEADERS += eventappshared.h\
         eventappshared_global.h \
@@ -30,24 +29,16 @@ HEADERS += eventappshared.h\
     eaconstruction.h \
     httpdownload.h \
     eapropertylist.h \
-    ealistmodel.h \
-    easpeakers.h \
     eaitemlist.h \
-    csv.h
+    csv.h \
+    picturelistimageprovider.h
 
 unix {
     target.path = /usr/lib
     INSTALLS += target
 }
 
-DISTFILES += \
-    EventAppShared.pro.user \
-    dataList.js \
-    qmldir \
-    DataListDelegate.qml \
-    DataList.qml \
-    qmlShared.qrs \
+DISTFILES +=
 
 
-RESOURCES += \
-    qmlShared.qrc
+RESOURCES +=

@@ -8,7 +8,8 @@ SOURCES += main.cpp \
     ../EventAppShared/eainfo.cpp \
     ../EventAppShared/httpdownload.cpp \
     ../EventAppShared/csv.cpp \
-    ../EventAppShared/eaitemlist.cpp
+    ../EventAppShared/eaitemlist.cpp \
+    ../EventAppShared/picturelistimageprovider.cpp
 
 HEADERS += \
     ../EventAppShared/eainfo.h \
@@ -17,7 +18,8 @@ HEADERS += \
     ../EventAppShared/httpdownload.h \
     ../EventAppShared/eventappshared_global.h \
     ../EventAppShared/csv.h \
-    ../EventAppShared/eaitemlist.h
+    ../EventAppShared/eaitemlist.h \
+    ../EventAppShared/picturelistimageprovider.h
 
 RESOURCES += qml.qrc \
     ../EventApp/qmlShared.qrc

@@ -49,5 +49,7 @@
         <file>EaFooterBarForm.ui.qml</file>
         <file>EventAppPageForm.ui.qml</file>
         <file>EventAppPage.qml</file>
+        <file>DataListDelegateForm.ui.qml</file>
+        <file>DataListForm.ui.qml</file>
     </qresource>
 </RCC>

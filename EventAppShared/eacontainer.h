@@ -3,6 +3,9 @@
 #include <QString>
 #include <QQuickItem>
 #include <QCoreApplication>
+#include <QQmlEngine>
+#include <QtQml>
+
 #include "eventappshared_global.h"
 
 class EAInfo;
@@ -43,16 +46,15 @@ public:
     virtual void classBegin();
     virtual void componentComplete();
 
-    Q_INVOKABLE void insertEmptyItemList( int index, QString name);
+    Q_INVOKABLE void insertEmptyItemList(int index, QString name);
     Q_INVOKABLE void deleteItemList(int index);
     Q_INVOKABLE void clearEvent();
 
-    Q_INVOKABLE  bool loadNewEventApp(const QString& filename = "NewEvent"
-                                    , bool unpack = true);
-    Q_INVOKABLE  bool loadEventApp(bool unpack = false);
+    Q_INVOKABLE  bool loadNewEventApp(const QString& filename = "NewEvent");
+    Q_INVOKABLE  bool loadEventApp();
     Q_INVOKABLE  bool saveEventApp(const QString &filename = "");
-    void read(const QJsonObject &json, bool unpack);
-    void write(QJsonObject &json) const;
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json);
     QString workingDirectory() const;
 
 

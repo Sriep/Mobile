@@ -52,7 +52,7 @@ ApplicationWindow {
             Connections {
               target: selectList.eventAppPage.stackCtl
               onCurrentIndexChanged: {
-                console.log("EAListDisplayPageForm stack index"
+               /* console.log("EAListDisplayPageForm stack index"
                             , selectList.eventAppPage.stackCtl.currentIndex);
                 console.log("current listName"
                             , eaListDisplayPage.featuredList.listName)
@@ -64,7 +64,7 @@ ApplicationWindow {
                     eaListDisplayPage.featuredList
                             = eaContainer.eaItemLists[newIndex];
                     eaListDisplayPage.popTitlesList(eaListDisplayPage.featuredList);
-                }
+                }*/
               }
             }
             property alias eventSpeakers: eaContainer.eaSpeakers

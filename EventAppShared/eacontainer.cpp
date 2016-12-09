@@ -5,6 +5,8 @@
 #include <QDir>
 #include <QDebug>
 
+
+
 #include "eacontainer.h"
 #include "eainfo.h"
 #include "eaconstruction.h"
@@ -47,7 +49,7 @@ void EAContainer::clearEvent()
     m_eaInfo  = new EAInfo();
     m_dataFilename = "NewEvent";
     m_eaConstruction = new EAConstruction();
-    clearPhotos();
+    //clearPhotos();
     m_eaItemLists.clear();
     m_eaSpeakers = new EAItemList();
 }
@@ -75,18 +77,17 @@ QString EAContainer::dataFilename() const
 }
 
 
-bool EAContainer::loadNewEventApp(const QString &filename, bool unpack)
+bool EAContainer::loadNewEventApp(const QString &filename)
 {
     clearEvent();
     setDataFilename(filename);
-    return loadEventApp(unpack);
+    return loadEventApp();
 }
 
-bool EAContainer::loadEventApp(bool unpack)
+bool EAContainer::loadEventApp()
 {
     QString pwd = QDir::currentPath();
     qDebug() << "Current working directory" << pwd;
-
 
     QFile loadFile(isSaveJson()
                    ? QString(dataFilename() + ".json")
@@ -103,10 +104,10 @@ bool EAContainer::loadEventApp(bool unpack)
         ? QJsonDocument::fromJson(saveData)
         : QJsonDocument::fromBinaryData(saveData));
 
-    read(loadDoc.object(), unpack);
+    read(loadDoc.object());
     qDebug() << "EAContainer::loadEventApp finished";
     emit eaItemListsChanged();
-    m_eaInfo->setEventName(pwd);
+   // m_eaInfo->setEventName(pwd);
     return true;
 }
 
@@ -134,7 +135,7 @@ bool EAContainer::saveEventApp(const QString& filename)
     return true;
 }
 
-void EAContainer::read(const QJsonObject &json, bool unpack)
+void EAContainer::read(const QJsonObject &json)
 {
     setDataFilename(json["dataFilename"].toString());
 
@@ -147,22 +148,18 @@ void EAContainer::read(const QJsonObject &json, bool unpack)
         emit eaConstructionChanged(m_eaConstruction);
     }
 
+    QQmlEngine*  engine = qmlEngine(this);
     QJsonArray listsArray = json["itemLists"].toArray();
     for (int i = 0; i < listsArray.size(); ++i) {
         QJsonObject readJsonObject = listsArray[i].toObject();
         EAItemList* newList = new EAItemList();
-        newList->read(readJsonObject, unpack);
+        newList->read(readJsonObject, engine);
         m_eaItemLists.append(newList);
     }
-/*
-    if (json.contains(SPEAKERS))
-    {
-        eaSpeakers()->read(json[SPEAKERS].toObject());
-        emit eaSpeakersChanged(eaSpeakers());
-    }*/
+    setVersion(json["version"].toInt());
 }
 
-void EAContainer::write(QJsonObject &json) const
+void EAContainer::write(QJsonObject &json)
 {
     json["dataFilename"] = m_dataFilename;
 
@@ -184,13 +181,9 @@ void EAContainer::write(QJsonObject &json) const
         }
 
     }
-/*
-    QJsonObject speakersDataObject;
-    eaSpeakers()->write(speakersDataObject);
-    listsArray.append(speakersDataObject);
-    //json[SPEAKERS] = speakersDataObject;
-*/
     json["itemLists"] = listsArray;
+    json["version"] = ++m_Version;
+
 }
 
 EAConstruction *EAContainer::eaConstruction() const

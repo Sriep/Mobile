@@ -5,9 +5,7 @@ import Qt.labs.settings 1.0
 import "qrc:///shared"
 
 Page{
-    id: eventAppPage
-    width: 500
-    height: 600
+    width: 500; height: 600
     property alias stackCtl: stackCtl
     property alias drawerView: drawerView
     property alias downloadEvent: downloadEvent

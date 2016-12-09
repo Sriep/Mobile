@@ -1,39 +1,11 @@
+import QtQuick 2.0
+
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QtQuick.Extras 1.4
 import "dataList.js" as DataListJS
 
-DataListDelegateForm {
-    topText.text: {
-        var one = JSON.parse(eaItemList.titleFields);
-        var two = dataModel;
-        return DataListJS.displayText(JSON.parse(eaItemList.titleFields)
-                                     , dataModel
-                                     , true
-                                     , eaItemList);
-    }
-
-    bottomText.text: {
-        var one = JSON.parse(eaItemList.titleFields);
-        var two = dataModel;
-        return DataListJS.displayText(JSON.parse(eaItemList.titleFields)
-                                     , dataModel
-                                     , false
-                                     , eaItemList);
-    }
-
-    transitions: Transition {
-        // Make the state changes smooth
-        ParallelAnimation {
-            ColorAnimation { property: "color"; duration: 500 }
-            NumberAnimation { duration: 300; properties: "detailsOpacity,x,contentY,height,width" }
-        }
-    }
-}
-
-
-/*
 Item {
     id: dataDelegate
 
@@ -45,6 +17,8 @@ Item {
 
     width: dataList.width
     height: 70
+    property alias bottomText: bottomText
+    property alias topText: topText
 
     // A simple rounded rectangle for the background
     Rectangle {
@@ -86,13 +60,7 @@ Item {
             // var str = "She {1} {0}{2} by the {0}{3}. {-1}^_^{-2}";
             // str = str.format(["sea", "sells", "shells", "shore"]);
             Text {
-                text: {
-                    var one = JSON.parse(eaItemList.titleFields);
-                    var two = dataModel;
-                    return DataListJS.displayText(JSON.parse(eaItemList.titleFields)
-                                         , dataModel
-                                         , true);
-                }
+                id: topText
             }
         }
     }
@@ -108,18 +76,11 @@ Item {
             id: flick
             width: parent.width
             anchors { top: parent.top; bottom: parent.bottom }
-            contentHeight: methodText.height
+            contentHeight: bottomText.height
             clip: true
 
             Text {
-                id: methodText;
-                text: {
-                    var one = JSON.parse(eaItemList.titleFields);
-                    var two = dataModel;
-                    return DataListJS.displayText(JSON.parse(eaItemList.titleFields)
-                                         , dataModel
-                                         , false);
-                }
+                id: bottomText;
                 wrapMode: Text.WordWrap;
                 width: details.width
             }
@@ -155,13 +116,7 @@ Item {
         //PropertyChanges { target: dataDelegate.dataList.view; interactive: false }
     }
 
-    transitions: Transition {
-        // Make the state changes smooth
-        ParallelAnimation {
-            ColorAnimation { property: "color"; duration: 500 }
-            NumberAnimation { duration: 300; properties: "detailsOpacity,x,contentY,height,width" }
-        }
-    }
+
 
 }
-*/
+

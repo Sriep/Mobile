@@ -19,10 +19,31 @@ EAListDisplayPageForm {
             titlesModel.append(titleFields["headerFields"][i]);
             newHeader = titlesModel.get(i);
         }
-        DataListJS.resetDataListModel(thisDataList.dataModel
-             , JSON.parse(eventList.dataList));
-        thisDataList.eaItemList = eventList;
+        topTextArea.text = eventList.shortFormat;
+        bottomTextArea.text = eventList.longFormat;
+        //DataListJS.resetDataListModel(thisDataList.dataModel
+        //     , JSON.parse(eventList.dataList));
+        //thisDataList.eaItemList = eventList;
     }
+    Connections {
+        target: ldpEventAppPage.stackCtl
+        onCurrentIndexChanged: {
+            console.log("EAListDisplayPageForm stack index"
+                        , ldpEventAppPage.stackCtl.currentIndex);
+            console.log("current listName"
+                        , eaListDisplayPage.featuredList.listName)
+            var newIndex = ldpEventAppPage.stackCtl.currentIndex-2;
+            if (newIndex>=0)
+            {
+                console.log("new listName"
+                            , eaContainer.eaItemLists[newIndex].listName)
+                eaListDisplayPage.featuredList = eaContainer.eaItemLists[newIndex];
+                eaListDisplayPage.popTitlesList(eaListDisplayPage.featuredList);
+            }
+
+        }
+    }
+
 
     function saveTitles(eventList) {
         var count = titlesModel.count;
@@ -36,6 +57,8 @@ EAListDisplayPageForm {
                                      , titleObj.inListView);
         }
         eventList.saveTitleChanges();
+        eventList.shortFormat = topTextArea.text;
+        eventList.longFormat = bottomTextArea.text;
     }
 
     loadCsvBut.onPressed: {
@@ -54,6 +77,27 @@ EAListDisplayPageForm {
         var format = imageFilenameFormat.text;
         featuredList.loadPhotos(format);
     }
+
+    topTextArea.text: {
+        //console.log("topTextArea.text:: ");
+        return featuredList.shortFormat;
+        //console.log("topTextArea: ", text );
+    }
+    bottomTextArea.text: {
+        return featuredList.longFormat;
+    }
+/*
+    topTextArea.onEditingFinished: {
+      var titleObj = titlesModel.get(textIndex);
+      titleObj.format = text;
+      titlesModel.set(textIndex, titleObj);
+    }
+
+    bottomTextArea.onEditingFinished: {
+      var titleObj = titlesModel.get(textIndex);
+      titleObj.format = text;
+      titlesModel.set(textIndex, titleObj);
+    }*/
 }
 
 

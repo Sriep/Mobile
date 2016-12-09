@@ -2,15 +2,14 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QtQuick.Extras 1.4
-//import "../../EventAppShared"
 import "qrc:///shared"
 
 Item {
     property alias titlesList: titlesList
     property alias titlesModel: titlesModel
-    property alias thisDataList: thisDataList
-    property alias checkList: checkList
-    property alias formatList: formatList
+    //property alias thisDataList: thisDataList
+    //property alias checkList: checkList
+    //property alias formatList: formatList
     property alias saveTitlesBut: saveTitlesBut
     property alias usePhotos: usePhotos
     property alias loadPhotosBut: loadPhotosBut
@@ -18,6 +17,9 @@ Item {
     property alias loadCsvBut: loadCsvBut
 
     width: 900
+    property alias ldpEventAppPage: ldpEventAppPage
+    property alias bottomTextArea: bottomTextArea
+    property alias topTextArea: topTextArea
     property alias imageFilenameFormat: imageFilenameFormat
     Column {
         id: layout1
@@ -43,79 +45,119 @@ Item {
 
             GroupBox {
                 id: fieldsBox
-                width: 500
-                height: 400
+                width: 500; height: 700
                 title: qsTr("Title fields")
-
-                RowLayout {
-                    x: 0
-                    y: 0
-                    width: parent.width
-                    height: 350
-                    ListView {
-                        id: titlesList
-                        width: 150
-                        height: 400
-                        model: ListModel {
-                            id: titlesModel
+                Column {
+                    id: column1
+                    anchors.fill: parent
+                    width: parent.width; height: parent.height
+                    RowLayout {
+                        //anchors.fill: parent
+                        width: parent.width; height: 200
+                        anchors.top: parent.top
+                        anchors.topMargin: 0
+                        /*
+                        ListView {
+                            id: formatList
+                            width: 200; height: parent.height
+                            model: titlesModel
+                            delegate: FormatTextDelegate {
+                                id: formatTextDelegate
+                            }
                         }
-                        delegate: Text {
-                            height: 30
-                            text: field
+
+                        ListView {
+                            id: checkList
+                            width: 80; height: parent.height
+                            model: titlesModel
+                            delegate: InListCheckDelegate {
+                                id: inListCheckDelegate
+                            }
+                        }
+                        */
+                        Rectangle {
+                            width: 200;  height: 200
+                            border.width : 0.5
+                            border.color : "black"
+                            ListView {
+                                id: titlesList
+                                width: 150;  height: 200
+                                model: ListModel {
+                                    id: titlesModel
+                                }
+                                delegate: Text {
+                                    height: 30
+                                    text: field
+                                }
+                            }
+                        }
+                        Rectangle {
+                            width: 200; height: parent.height
+                            border.width : 0.5
+                            border.color : "black"
+                            TextArea {
+                                width: parent.width - 150; height: parent.height
+                                id: topTextArea
+                                text: qsTr("Text Area")
+                                //anchors.left: parent.right
+                                anchors.rightMargin: 0
+                                //anchors.bottom: bottomTextArea.top
+
+                            }
+                        }
+
+
+
+
+                    }
+                    Rectangle {
+                        width: 300; height: 400
+                        border.width : 0.5
+                        border.color : "black"
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        anchors.bottom: saveTitlesBut.top
+                        TextArea {
+                            width: parent.width; height: 250
+                            id: bottomTextArea
+                            text: qsTr("Text Area")
                         }
                     }
-
-                    ListView {
-                        id: formatList
-                        width: 200
-                        height: 400
-                        model: titlesModel
-                        delegate: FormatTextDelegate {
-                            id: formatTextDelegate
-                        }
-                    }
-
-                    ListView {
-                        id: checkList
-                        width: 80
-                        height: 400
-                        model: titlesModel
-                        delegate: InListCheckDelegate {
-                            id: inListCheckDelegate
-                        }
+                    Button {
+                        height: 30
+                        id: saveTitlesBut
+                        text: qsTr("Save chanages")
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        anchors.bottom: parent.bottom
                     }
                 }
 
-                Button {
-                    id: saveTitlesBut
-                    x: 0
-                    y: 360
-                    text: qsTr("Save chanages")
-                    anchors.left: parent.left
-                    anchors.bottom: parent.bottom
-                }
             }
 
             GroupBox {
                 id: dataBox
-                width: 300
-                height: 400
+                width: 500; height: 700
+                //width: 300; height: 400
                 title: qsTr("Data list")
-
-                DataList {
-                    id: thisDataList
+                clip: true
+                EventAppPage {
+                    id: ldpEventAppPage
                 }
+                //DataList {
+                //    id: thisDataList
+                //}
             }
         }
 
         GroupBox {
             id: groupBox1
-            width: 600; height: 100
+            width: fieldsBox.width; height: 100
             title: qsTr("Format image file name")
             ColumnLayout {
-                width: 500; height: 200
+                anchors.fill: parent
                 RowLayout {
-                    width: 500; height: 100
+                    width: parent.width; height: parent.height
                     anchors.verticalCenter: parent.verticalCenter
                     CheckBox {
                         width: 20; height: 100
@@ -123,7 +165,7 @@ Item {
                         id: usePhotos
                     }
                     TextField {
-                        width:550; height: 100
+                        width:parent.width-20; height: 100
                         Layout.fillWidth: true
                         id: imageFilenameFormat
                         enabled: usePhotos.checked

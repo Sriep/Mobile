@@ -19,17 +19,21 @@ class EAItemList : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(QString listName READ listName WRITE setListName NOTIFY listNameChanged)
+    Q_PROPERTY(QString shortFormat READ shortFormat WRITE setShortFormat NOTIFY shortFormatChanged)
+    Q_PROPERTY(QString longFormat READ longFormat WRITE setLongFormat NOTIFY longFormatChanged)
+    Q_PROPERTY(bool showPhotos READ showPhotos WRITE setShowPhotos NOTIFY showPhotosChanged)
+
     Q_PROPERTY(QString titleFields READ titleFields WRITE setTitleFields NOTIFY titleFieldsChanged)
     Q_PROPERTY(QString dataList READ dataList WRITE setDataList NOTIFY dataListChanged)
-
-    Q_PROPERTY(bool showPhotos READ showPhotos WRITE setShowPhotos NOTIFY showPhotosChanged)
 
 public:
     EAItemList();
     EAItemList(QString name);
+    virtual ~EAItemList();
 
-    void read(const QJsonObject &json, bool unpack);
+    void read(const QJsonObject &json, QQmlEngine* engine);
     void write(QJsonObject &json) const;
+    void clear(QQmlEngine *engine);
 
     Q_INVOKABLE bool readCSV(const QString filename);
     Q_INVOKABLE void amendField(int index
@@ -45,11 +49,17 @@ public:
     QString listName() const;
     bool showPhotos() const;
 
+    QString shortFormat() const;
+
+    QString longFormat() const;
+
 signals:
     void titleFieldsChanged(QString titleFields);  
     void dataListChanged(QString dataList);
     void listNameChanged(QString listName);   
-    void showPhotosChanged(bool showPhotos);
+    void showPhotosChanged(bool showPhotos);    
+    void shortFormatChanged(QString shortFormat);
+    void longFormatChanged(QString longFormat);
 
 public slots:
     void setTitleFields(QString titleFields);
@@ -57,7 +67,9 @@ public slots:
     void setDataList(QString dataList);
     void setDataList(const QJsonArray& dataListArray);
     void setListName(QString listName);    
-    void setShowPhotos(bool showPhotos);
+    void setShowPhotos(bool showPhotos);    
+    void setShortFormat(QString shortFormat);
+    void setLongFormat(QString longFormat);
 
 private:
     QStringList addHeaderFields(const QStringList &fields);
@@ -77,6 +89,8 @@ private:
     QString m_dataList;
     QString m_listName;
     bool m_showPhotos;
+    QString m_shortFormat = "<html>{0}<br></html>\n";
+    QString m_longFormat;
 };
 
 #endif // EAITEMLIST_H

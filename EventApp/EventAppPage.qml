@@ -5,8 +5,6 @@ import Qt.labs.settings 1.0
 import "qrc:///shared"
 
 EventAppPageForm{
-  id: eventAppPage
-
   function clearStack(stack) {
     console.log("stack count: ", stack.count);
     var dummy = Qt.createQmlObject(

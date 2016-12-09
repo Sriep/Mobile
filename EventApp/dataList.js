@@ -24,7 +24,7 @@ function addStringFormat() {
     String.prototype.format.regex = new RegExp("{-?[0-9]+}", "g");
 }
 
-function displayText(titleFields, dataModel, header) {
+function displayText(titleFields, dataModel, header, eaItemList) {
     addStringFormat();
     var text = "";
     for ( var i=0 ; i < titleFields["headerFields"].length ; i++ ) {
@@ -35,21 +35,44 @@ function displayText(titleFields, dataModel, header) {
             var model = titleFields["headerFields"][i].modelName;
             var myData = dataModel.get(index);
             var reqField = myData[model];
-            var item = formatStr.format([title, reqField]);
+            var formatArr = [];//[title, reqField];
+            formatArr.push(title);
+            formatArr.push(reqField);
+            var item = formatStr.format(formatArr);
+            //var item = formatStr.format([title, reqField]);
             text += item;
         }
     }
-    //console.log("text entered in listview: ", text);
+    var myArr = fieldsObjToArr(titleFields["headerFields"], dataModel.get(index));
+    var topFormat = eaItemList.shortFormat;
+    var t1 = topFormat.format(myArr);
+    var bottomFormat = eaItemList.longFormat;
+    var t2 = bottomFormat.format(myArr);
+    text = header ? t1 : t2;
+    //console.log("text entered in listview: ", text);  
     return text;
 }
 
-function resetDataListModel(dataModel, dataList)
+function fieldsObjToArr(titles, dataObj) {
+    var formatArr = [];
+    for ( var i=0 ; i < titles.length ; i++ )
+    {
+        var model = titles[i].modelName;
+        var reqField = dataObj[model];
+        formatArr.push(reqField);
+    }
+    return formatArr;
+}
+
+
+function resetDataListModel(dataModel, name, dataList)
 {
     dataModel.clear();
     for ( var j=0 ; j < dataList["dataItems"].length ; j++ ) {
         var whatis = dataList["dataItems"][j];
         dataModel.append(dataList["dataItems"][j]);
-        dataModel.setProperty(j, "picture",  j.toString() + ".png");
+        var picturePath =  "image://" + name + "/" +j.toString();
+        dataModel.setProperty(j, "picture", picturePath);
         var newData = dataModel.get(j);
     }
 }

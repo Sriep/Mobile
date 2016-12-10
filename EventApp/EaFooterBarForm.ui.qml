@@ -20,7 +20,14 @@ ToolBar {
         verticalAlignment: Image.AlignVCenter
         source:  "qrc:///shared/images/back.png"
       }
-      onClicked: stackCtl.currentIndex = stackCtl.topDrawerId;
+      Connections {
+        onClicked: {
+            toolBar.titleLabel.text = eaContainer.eaInfo.eventName
+            stackCtl.currentIndex = stackCtl.topDrawerId;
+        }
+
+      }
+      //onClicked: stackCtl.currentIndex = stackCtl.topDrawerId;
     }
     
   }

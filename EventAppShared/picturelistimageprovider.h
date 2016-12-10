@@ -14,9 +14,9 @@ public:
     virtual ~PictureListImageProvider();
     virtual QImage requestImage(const QString &id
                                 , QSize *size
-                                , const QSize &requestedSize);
+                                , const QSize &requestedSize);    
 private:
-     const QJsonArray& pictures;
+    const QJsonArray& pictures;
 };
 
 #endif // PICTURELISTIMAGEPROVIDER_H

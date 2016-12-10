@@ -9,7 +9,10 @@ SOURCES += main.cpp \
     ../EventAppShared/httpdownload.cpp \
     ../EventAppShared/csv.cpp \
     ../EventAppShared/eaitemlist.cpp \
-    ../EventAppShared/picturelistimageprovider.cpp
+    ../EventAppShared/picturelistimageprovider.cpp \
+    ../EventAppShared/eaitemlistbase.cpp \
+    ../EventAppShared/eaitemcollection.cpp \
+    ../EventAppShared/eaitem.cpp
 
 HEADERS += \
     ../EventAppShared/eainfo.h \
@@ -19,7 +22,10 @@ HEADERS += \
     ../EventAppShared/eventappshared_global.h \
     ../EventAppShared/csv.h \
     ../EventAppShared/eaitemlist.h \
-    ../EventAppShared/picturelistimageprovider.h
+    ../EventAppShared/picturelistimageprovider.h \
+    ../EventAppShared/eaitemlistbase.h \
+    ../EventAppShared/eaitemcollection.h \
+    ../EventAppShared/eaitem.h
 
 RESOURCES += qml.qrc \
     ../EventApp/qmlShared.qrc
@@ -54,6 +60,8 @@ DISTFILES += \
     content/FormatTextDelegate.qml \
     content/InListCheckDelegate.qml \
     content/CommonDataList.qml \
-    SelectListForm.ui.qml
+    SelectListForm.ui.qml \
+    content/EaldFormatedList.qml \
+    content/EaldListForm.ui.qml
 
 FORMS +=

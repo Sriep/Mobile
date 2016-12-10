@@ -5,6 +5,10 @@ ListDelegateForm {
     itemPresseed.color: "#11ffffff"
     itemText.color: "green"
     itemBackground.color: "#424246"
-    //nextImage.source: "qrc:///images/navigation_next_item.png"
     nextImage.source: "qrc:///shared/images/navigation_next_item.png"
+
+    mouseArea.onClicked: {
+        stackCtl.currentIndex = position + 2;
+        toolBar.titleLabel.text = model.title;
+    }
 }

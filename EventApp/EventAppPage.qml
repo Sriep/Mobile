@@ -28,12 +28,16 @@ EventAppPageForm{
       for (var i = 0; i < countItemLists; i++) {
           var newList = Qt.createComponent("qrc:///shared/DataList.qml", stack);
           newList.createObject(stack
-              , {"eaItemList": eaContainer.eaItemLists[i]});
+              , {"eaLVItemList": eaContainer.eaItemLists[i]});
           model.append({
               "title" : eaContainer.eaItemLists[i].listName,
               "position" : i
           });
       } //for
+  }
+
+  function needToRefershLists() {
+      refreshLists(stackCtl, stackCtl.drawerModel);
   }
 }
 

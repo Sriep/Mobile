@@ -44,16 +44,7 @@ void EAContainer::deleteItemList(int index)
     }
 }
 
-void EAContainer::clearEvent()
-{
-    m_eaInfo  = new EAInfo();
-    m_dataFilename = "NewEvent";
-    m_eaConstruction = new EAConstruction();
-    //clearPhotos();
-    m_eaItemLists.clear();
-    m_eaSpeakers = new EAItemList();
-}
-
+/*
 void EAContainer::clearPhotos() const
 {
     QString pwd = QDir::currentPath();
@@ -65,7 +56,7 @@ void EAContainer::clearPhotos() const
         dir.remove(dirFile);
     }
 }
-
+*/
 EAInfo *EAContainer::eaInfo() const
 {
     return m_eaInfo;
@@ -81,7 +72,9 @@ bool EAContainer::loadNewEventApp(const QString &filename)
 {
     clearEvent();
     setDataFilename(filename);
-    return loadEventApp();
+    bool rtv = loadEventApp();
+    emit eaItemListsChanged();
+    return rtv;
 }
 
 bool EAContainer::loadEventApp()
@@ -107,7 +100,6 @@ bool EAContainer::loadEventApp()
     read(loadDoc.object());
     qDebug() << "EAContainer::loadEventApp finished";
     emit eaItemListsChanged();
-   // m_eaInfo->setEventName(pwd);
     return true;
 }
 
@@ -119,7 +111,6 @@ bool EAContainer::saveEventApp(const QString& filename)
     QFile saveFile(isSaveJson()
                    ? QString(dataFilename() + ".json")
                    : QString(dataFilename() + ".dat"));
-    //QFile saveFile(dataFilename());
 
     if (!saveFile.open(QIODevice::WriteOnly)) {
         qWarning("Couldn't open save file.");
@@ -154,9 +145,26 @@ void EAContainer::read(const QJsonObject &json)
         QJsonObject readJsonObject = listsArray[i].toObject();
         EAItemList* newList = new EAItemList();
         newList->read(readJsonObject, engine);
+        //newList->read(readJsonObject, this);
         m_eaItemLists.append(newList);
     }
     setVersion(json["version"].toInt());
+}
+
+void EAContainer::clearEvent()
+{
+    m_eaInfo  = new EAInfo();
+    m_dataFilename = "NewEvent";
+    m_eaConstruction = new EAConstruction();
+
+    //QQmlEngine*  engine = qmlEngine(this);
+    //foreach (const EAItemList* itemList, m_eaItemLists)
+    //{
+    //    itemList->clear(engine);
+    //}
+    m_eaItemLists.clear();
+
+    emit eaItemListsChanged();
 }
 
 void EAContainer::write(QJsonObject &json)
@@ -200,12 +208,12 @@ QString EAContainer::workingDirectory() const
 {
     return m_workingDirectory;
 }
-
+/*
 EAItemList *EAContainer::eaSpeakers() const
 {
     return m_eaSpeakers;
 }
-
+*/
 void EAContainer::setEAInfo(EAInfo *eventInfo)
 {
     if (m_eaInfo == eventInfo)
@@ -258,7 +266,7 @@ void EAContainer::setWorkingDirectory(QString workingDirectory)
     m_workingDirectory = workingDirectory;
     emit workingDirectoryChanged(workingDirectory);
 }
-
+/*
 void EAContainer::setEaSpeakers(EAItemList *eaSpeakers)
 {
     if (m_eaSpeakers == eaSpeakers)
@@ -267,7 +275,7 @@ void EAContainer::setEaSpeakers(EAItemList *eaSpeakers)
     m_eaSpeakers = eaSpeakers;
     emit eaSpeakersChanged(eaSpeakers);
 }
-
+*/
 void EAContainer::setVersion(int Version)
 {
     if (m_Version == Version)
@@ -302,6 +310,8 @@ void EAContainer::append_eaItemLists(QQmlListProperty<EAItemList> *list
     EAContainer *eaContainer = qobject_cast<EAContainer *>(list->object);
     if (itemList) {
         //itemList->setParentItem(eaContainer); //???
+        //QQmlEngine*  engine = qmlEngine(eaContainer);
+        itemList->setContainer(eaContainer);
         eaContainer->m_eaItemLists.append(itemList);
     }
 }

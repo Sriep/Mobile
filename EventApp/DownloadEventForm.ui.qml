@@ -31,7 +31,8 @@ Item {
             //text: "https://www.dropbox.com/s/okzw27c57d3qy55/data.json"
             //text: "https://www.dropbox.com/s/eydtij5yu12twq0/data1.json"
            // text: "https://www.dropbox.com/s/34bfzm8retlgs5v/data4.json"
-            text: "https://www.dropbox.com/s/i3ha04beydsge0m/data5.json"
+            text: "https://www.dropbox.com/s/oob06hm8txb7raf/test0.json"
+            //text: "https://www.dropbox.com/s/i3ha04beydsge0m/data5.json"
             horizontalAlignment: Text.AlignLeft
             Layout.fillWidth: true
             placeholderText: qsTr("Text Field")

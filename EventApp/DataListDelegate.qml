@@ -5,22 +5,22 @@ import QtQuick.Extras 1.4
 import "dataList.js" as DataListJS
 
 DataListDelegateForm {
-    topText.text: {
-        var one = JSON.parse(eaItemList.titleFields);
+    topText.text: { // eaLVItemList for eaItemList
+        var one = JSON.parse(eaLVItemList.titleFields);
         var two = dataModel;
-        return DataListJS.displayText(JSON.parse(eaItemList.titleFields)
+        return DataListJS.displayText(JSON.parse(eaLVItemList.titleFields)
                                      , dataModel
                                      , true
-                                     , eaItemList);
+                                     , eaLVItemList);
     }
 
     bottomText.text: {
-        var one = JSON.parse(eaItemList.titleFields);
+        var one = JSON.parse(eaLVItemList.titleFields);
         var two = dataModel;
-        return DataListJS.displayText(JSON.parse(eaItemList.titleFields)
+        return DataListJS.displayText(JSON.parse(eaLVItemList.titleFields)
                                      , dataModel
                                      , false
-                                     , eaItemList);
+                                     , eaLVItemList);
     }
 
     transitions: Transition {

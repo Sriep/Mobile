@@ -34,3 +34,4 @@ QImage PictureListImageProvider::requestImage(const QString &id
     }
 
 }
+

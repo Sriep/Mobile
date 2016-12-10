@@ -12,7 +12,7 @@ Item {
             id: eaInfoSwipeView
             anchors.fill: parent
 
-            EAInfoNameForm {
+            EAInfoName {
             }
            // EAInfoThemeForm {}
         }

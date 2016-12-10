@@ -21,5 +21,9 @@
         <file>content/InListCheckDelegate.qml</file>
         <file>EASelectList.qml</file>
         <file>EASelectListForm.ui.qml</file>
+        <file>content/EaldFormatedListForm.ui.qml</file>
+        <file>content/EaldFormatedList.qml</file>
+        <file>content/EaldListForm.ui.qml</file>
+        <file>content/EaldList.qml</file>
     </qresource>
 </RCC>

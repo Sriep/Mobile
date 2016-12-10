@@ -9,6 +9,7 @@ class EAPropertyList : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(QString properties READ properties WRITE setProperties NOTIFY propertiesChanged)
+
     QString m_properties;
 
 public:

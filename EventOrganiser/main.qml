@@ -21,9 +21,9 @@ ApplicationWindow {
 
     EaContainerObj {
         id: eaContainer
-        eaSpeakers: EAItemList {
-            listName: "speakers"
-        }
+        //eaSpeakers: EAItemList {
+        //    listName: "speakers"
+        //}
     }
 
     StackLayout {
@@ -52,22 +52,10 @@ ApplicationWindow {
             Connections {
               target: selectList.eventAppPage.stackCtl
               onCurrentIndexChanged: {
-               /* console.log("EAListDisplayPageForm stack index"
-                            , selectList.eventAppPage.stackCtl.currentIndex);
-                console.log("current listName"
-                            , eaListDisplayPage.featuredList.listName)
-                var newIndex = selectList.eventAppPage.stackCtl.currentIndex-2;
-                if (newIndex>=0)
-                {
-                    console.log("new listName"
-                                , eaContainer.eaItemLists[newIndex].listName)
-                    eaListDisplayPage.featuredList
-                            = eaContainer.eaItemLists[newIndex];
-                    eaListDisplayPage.popTitlesList(eaListDisplayPage.featuredList);
-                }*/
+
               }
             }
-            property alias eventSpeakers: eaContainer.eaSpeakers
+            //property alias eventSpeakers: eaContainer.eaSpeakers
             property alias dataFilename: eaContainer.dataFilename
             property alias featuredList: eaListDisplayPage.featuredList
         }

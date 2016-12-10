@@ -4,6 +4,7 @@
 #include <QQuickItem>
 #include <QCoreApplication>
 #include <QQmlEngine>
+#include <QQmlListProperty>
 #include <QtQml>
 
 #include "eventappshared_global.h"
@@ -24,7 +25,6 @@ class  EAContainer : public QObject, public QQmlParserStatus
     Q_INTERFACES(QQmlParserStatus)
     Q_PROPERTY(EAInfo* eaInfo READ eaInfo WRITE setEAInfo NOTIFY eaInfoChanged)
     Q_PROPERTY(EAConstruction* eaConstruction READ eaConstruction WRITE setEAConstruction NOTIFY eaConstructionChanged)
-    Q_PROPERTY(EAItemList* eaSpeakers READ eaSpeakers WRITE setEaSpeakers NOTIFY eaSpeakersChanged)
     Q_PROPERTY(QQmlListProperty<EAItemList> eaItemLists READ eaItemLists)
 
     Q_PROPERTY(QString workingDirectory READ workingDirectory WRITE setWorkingDirectory NOTIFY workingDirectoryChanged)
@@ -37,7 +37,6 @@ class  EAContainer : public QObject, public QQmlParserStatus
     EAConstruction* m_eaConstruction;
     bool m_isSaveJson = true;
     QString m_workingDirectory = QCoreApplication::applicationDirPath();    
-    EAItemList* m_eaSpeakers;
     QList<EAItemList*> m_eaItemLists;
 
 public:
@@ -57,13 +56,11 @@ public:
     void write(QJsonObject &json);
     QString workingDirectory() const;
 
-
     EAInfo* eaInfo() const;
     QString dataFilename() const;
     EAConstruction* eaConstruction() const;
     bool isSaveJson() const;    
-    EAItemList* eaSpeakers() const;
-    QQmlListProperty<EAItemList> eaItemLists();    
+    QQmlListProperty<EAItemList> eaItemLists();
     int version() const;
 
 signals:
@@ -73,10 +70,8 @@ signals:
     void isSaveJsonChanged(bool isSaveJson);
     void eaComponentComplete();
     void workingDirectoryChanged(QString workingDirectory);
-    void eaSpeakersChanged(EAItemList* eaSpeakers);
     void loadedEventApp();
     void eaItemListsChanged();
-    //void savedEventApp();
 
     void versionChanged(int version);
 
@@ -86,7 +81,6 @@ public slots:
     void setEAConstruction(EAConstruction* eaConstruction);
     void setIsSaveJson(bool isSaveJson);
     void setWorkingDirectory(QString workingDirectory);
-    void setEaSpeakers(EAItemList* eaSpeakers);
     void setVersion(int version);
 
 private:
@@ -97,7 +91,7 @@ private:
                                       , int index);
     static void clear_eaItemLists(QQmlListProperty<EAItemList> *list);
 
-    void clearPhotos() const;
+    //void clearPhotos();
 
     int m_Version = 0;
 };

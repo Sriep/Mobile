@@ -18,14 +18,12 @@ DataListForm {
 //Item {
     ListView {
         id: dataList
-       // width: parent ? parent.width : 400
-       // height: parent ? parent.height : 600
-        property EAItemList eaItemList: undefined
-        onEaItemListChanged: {
+        property EAItemList eaLVItemList: undefined
+        onEaLVItemListChanged: {
             console.log("dataList eaItemList chnaged");
-            DataListJS.resetDataListModel(dataModel,
-                                          eaItemList.listName
-                                       , JSON.parse(eaItemList.dataList))
+            DataListJS.resetDataListModel(dataModel
+                                       , eaLVItemList.listName
+                                       , JSON.parse(eaLVItemList.dataList))
         }
 
         property  alias dataModel: dataModel

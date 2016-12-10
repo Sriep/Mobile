@@ -16,6 +16,7 @@ EAConstructionPageForm {
     loadEventButton.onClicked: eaContainer.loadEventApp(loadFilename.text);
     saveEventButton.onClicked: eaContainer.saveEventApp(loadFilename.text);
     newEventBut.onClicked: eaContainer.clearEvent();
+
     mouseArea1.onClicked:  {
         colorDialog.index = 0;
         colorDialog.title = qsTr("Select background colour for app");

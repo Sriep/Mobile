@@ -20,7 +20,10 @@ SOURCES += eventappshared.cpp \
     eapropertylist.cpp \
     eaitemlist.cpp \
     csv.cpp \
-    picturelistimageprovider.cpp
+    picturelistimageprovider.cpp \
+    eaitemlistbase.cpp \
+    eaitemcollection.cpp \
+    eaitem.cpp
 
 HEADERS += eventappshared.h\
         eventappshared_global.h \
@@ -31,7 +34,10 @@ HEADERS += eventappshared.h\
     eapropertylist.h \
     eaitemlist.h \
     csv.h \
-    picturelistimageprovider.h
+    picturelistimageprovider.h \
+    eaitemlistbase.h \
+    eaitemcollection.h \
+    eaitem.h
 
 unix {
     target.path = /usr/lib

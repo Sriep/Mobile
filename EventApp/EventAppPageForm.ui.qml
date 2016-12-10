@@ -5,10 +5,12 @@ import Qt.labs.settings 1.0
 import "qrc:///shared"
 
 Page{
+    id: eventAppMainPage
     width: 500; height: 600
     property alias stackCtl: stackCtl
     property alias drawerView: drawerView
     property alias downloadEvent: downloadEvent
+    property alias drawerModel: drawerModel
     //property alias drawerDelegate: drawerDelegate
     clip: true
   Layout.alignment: Qt.AlignLeft | Qt.AlignTop
@@ -37,7 +39,6 @@ Page{
       model: ListModel {
         id: drawerModel
       }
-
     }
     DownloadEvent {
       id: downloadEvent

@@ -17,11 +17,10 @@
 
 EAItemList::EAItemList()
 {
-
 }
 
-EAItemList::EAItemList(QString name)
-    : m_listName(name)
+EAItemList::EAItemList(const QString &name)
+    : EAItemListBase(name)
 {
     setDataList(jsonData);
 
@@ -36,14 +35,36 @@ EAItemList::~EAItemList()
 {
 }
 
-void EAItemList::clear(QQmlEngine *engine)
+//void EAItemList::clear(QQmlEngine *engine)
+void EAItemList::clear(EAContainer* eacontainer)
 {
-    engine->removeImageProvider(listName());
+    EAItemList::clear(eacontainer);
+    //resetImageProvider();
 }
 
 
+void EAItemList::resetImageProvider(EAContainer* eacontainer)
+{
+    QQmlEngine* engine = qmlEngine(getContainer());
+    if (engine)
+    {
+        QQmlImageProviderBase* provider = engine->imageProvider(listName());
+        if (!provider)
+        {
+            PictureListImageProvider* provider
+                    = new PictureListImageProvider(jsonPictures);
+            engine->addImageProvider(listName(), provider);
+        }
+    }
+}
+
+
+//void EAItemList::read(const QJsonObject &json, EAContainer* eacontainer)//QQmlEngine *engine)
 void EAItemList::read(const QJsonObject &json, QQmlEngine *engine)
 {
+    //EAItemListBase::read(json, eacontainer);//engine);
+    EAItemListBase::read(json, engine);
+
     jsonFields = json["headerFields"].toArray();
     setTitleFields(jsonFields);
     emit titleFieldsChanged(titleFields());
@@ -52,27 +73,42 @@ void EAItemList::read(const QJsonObject &json, QQmlEngine *engine)
     setDataList(jsonData);
     emit dataListChanged(dataList());
 
+    setShortFormat(json["shortFormat"].toString());
+    setLongFormat(json["longFormat"].toString());
+    setFormatedList(json["formatedList"].toBool());
+
     nextIndex = json["nextIndex"].toInt();
-    setListName(json["listName"].toString());
+    //setListName(json["listName"].toString());
     setShowPhotos(json["showPhotos"].toBool());
     jsonPictures = json["pictures"].toArray();
 
-    PictureListImageProvider* provider = new PictureListImageProvider(jsonPictures);
+    //resetImageProvider(eacontainer);
     //QQmlEngine*  engine = qmlEngine(this);
     if (engine)
-        engine->addImageProvider(listName(), provider);
-
-    //if (unpack) unpackPhotos();
+    {
+        QQmlImageProviderBase* provider = engine->imageProvider(listName());
+        if (!provider)
+        {
+            PictureListImageProvider* provider
+                    = new PictureListImageProvider(jsonPictures);
+            engine->addImageProvider(listName(), provider);
+        }
+    }
 }
 
 void EAItemList::write(QJsonObject &json) const
 {
     json["headerFields"] = jsonFields;
     json["dataList"] = jsonData;
-    json["listName"] = listName();
+    //json["listName"] = listName();
     json["nextIndex"] = nextIndex;
     json["showPhotos"] = m_showPhotos;
     json["pictures"] = jsonPictures;
+    json["formatedList"] = formatedList();
+    json["shortFormat"] = shortFormat();
+    json["longFormat"] = longFormat();
+
+    EAItemListBase::write(json);
 }
 
 QString EAItemList::titleFields() const
@@ -84,12 +120,12 @@ QString EAItemList::dataList() const
 {
     return m_dataList;
 }
-
+/*
 QString EAItemList::listName() const
 {
     return m_listName;
 }
-
+*/
 bool EAItemList::showPhotos() const
 {
     return m_showPhotos;
@@ -123,7 +159,7 @@ void EAItemList::setDataList(const QJsonArray &dataListArray)
     QByteArray jsonBA = jsonDoc.toJson(QJsonDocument::Compact);
     setDataList(QString(jsonBA));
 }
-
+/*
 void EAItemList::setListName(QString listName)
 {
     if (m_listName == listName)
@@ -132,7 +168,7 @@ void EAItemList::setListName(QString listName)
     m_listName = listName;
     emit listNameChanged(listName);
 }
-
+*/
 void EAItemList::setShowPhotos(bool showPhotos)
 {
     if (m_showPhotos == showPhotos)
@@ -158,6 +194,15 @@ void EAItemList::setLongFormat(QString longFormat)
 
     m_longFormat = longFormat;
     emit longFormatChanged(longFormat);
+}
+
+void EAItemList::setFormatedList(bool formatedList)
+{
+    if (m_formatedList == formatedList)
+        return;
+
+    m_formatedList = formatedList;
+    emit formatedListChanged(formatedList);
 }
 
 
@@ -259,7 +304,18 @@ void EAItemList::loadPhotos(const QString &format)
         else
             jsonPictures.append(jsonPic);
     }
+    //resetImageProvider(getContainer());
     qDebug() << "photos read " << jsonPictures.count();
+}
+
+void EAItemList::insertListItem(int index
+                                , int itemType
+                                , const QString &title
+                                , const QString &data)
+{
+    EAItem* newItem = new EAItem(itemType, title, data);
+    m_eaItems.insert(index, newItem);
+    emit eaItemListChanged();
 }
 
 QStringList EAItemList::addHeaderFields(const QStringList& fields)
@@ -330,7 +386,7 @@ QJsonObject EAItemList::newDataItem(const QStringList& speakerData
     }
     return newItem;
 }
-
+/*
 void EAItemList::unpackPhotos() const
 {
     for ( int i=0 ; i<jsonPictures.count() ; i++ )
@@ -341,7 +397,7 @@ void EAItemList::unpackPhotos() const
         image.save(filename, "PNG");
     }
 }
-
+*/
 // http://stackoverflow.com/questions/32376119/how-to-store-a-qpixmap-in-json-via-qbytearray
 QJsonValue jsonValFromPixmap(const QPixmap & p)
 {
@@ -361,10 +417,56 @@ QPixmap pixmapFrom(const QJsonValue & val)
   return p;
 }
 
+QQmlListProperty<EAItem> EAItemList::itemList() const
+{
+    return m_items;
+}
 
+bool EAItemList::formatedList() const
+{
+    return m_formatedList;
+}
 
+//typedef QQmlListProperty::AppendFunction
+//Synonym for void (*)(QQmlListProperty<T> *property, T *value).
+//Append the value to the list property.
+void EAItemList::append_eaItems(QQmlListProperty<EAItem> *list
+                                     , EAItem *itemList)
+{
+    EAItemList *eaItemColl = qobject_cast<EAItemList *>(list->object);
+    if (itemList) {
+        //itemList->setParentItem(eaContainer); //???
+        eaItemColl->m_eaItems.append(itemList);
+    }
+}
 
+//typedef QQmlListProperty::CountFunction
+//Synonym for int (*)(QQmlListProperty<T> *property).
+//Return the number of elements in the list property.
+int EAItemList::count_eaItems(QQmlListProperty<EAItem> *list)
+{
+    EAItemList *eaItemColl = qobject_cast<EAItemList *>(list->object);
+    return eaItemColl->m_eaItems.count();
+}
 
+//typedef QQmlListProperty::AtFunction
+//Synonym for T *(*)(QQmlListProperty<T> *property, int index).
+//Return the element at position index in the list property.
+EAItem* EAItemList::at_eaItems(QQmlListProperty<EAItem> *list
+                                        , int index)
+{
+    EAItemList *eaItemColl = qobject_cast<EAItemList *>(list->object);
+    return eaItemColl->m_eaItems[index];
+}
+
+//typedef QQmlListProperty::ClearFunction
+//Synonym for void (*)(QQmlListProperty<T> *property).
+//Clear the list property.
+void EAItemList::clear_eaItems(QQmlListProperty<EAItem> *list)
+{
+    EAItemList *eaItemColl = qobject_cast<EAItemList *>(list->object);
+    eaItemColl->m_eaItems.clear();
+}
 
 
 

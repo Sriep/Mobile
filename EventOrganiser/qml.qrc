@@ -25,5 +25,7 @@
         <file>content/EaldFormatedList.qml</file>
         <file>content/EaldListForm.ui.qml</file>
         <file>content/EaldList.qml</file>
+        <file>content/AddNewList.qml</file>
+        <file>content/AddNewListForm.ui.qml</file>
     </qresource>
 </RCC>

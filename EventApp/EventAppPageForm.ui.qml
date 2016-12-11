@@ -48,5 +48,4 @@ Page{
       onEaItemListsChanged: refreshLists(stackCtl, drawerModel)
     }
   }
-
 }

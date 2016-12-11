@@ -15,8 +15,8 @@ EAListDisplayPageForm {
     Connections {
         target: ldpEventAppPage.stackCtl
         Component.onCompleted: {
-            console.log("ldpEventAppPagone onCompleted count", dpEventAppPage.stackCtl.count);
-            console.log("ldpEventAppPagone onCompleted index", dpEventAppPage.stackCtl.currentIndex);
+            console.log("ldpEventAppPagone onCompleted count", ldpEventAppPage.stackCtl.count);
+            console.log("ldpEventAppPagone onCompleted index", ldpEventAppPage.stackCtl.currentIndex);
             currentIndex: 2;
         }
     }
@@ -25,25 +25,37 @@ EAListDisplayPageForm {
         target: ldpEventAppPage.stackCtl
         onCurrentIndexChanged: {
             console.log("EAListDisplayPageForm stack index"
-                        , ldpEventAppPage.stackCtl.currentIndex);
-            var newIndex = ldpEventAppPage.stackCtl.currentIndex-2;
+                        , ldpEventAppPage.stackCtl.currentIndex);//var newIndex = ldpEventAppPage.stackCtl.currentIndex-2;
+            var newIndex = ldpEventAppPage.stackCtl.currentIndex-2;//if (newIndex>=0)
             if (newIndex>=0)
             {
                 console.log("new listName"
-                            , eaContainer.eaItemLists[newIndex].listName)
+                            , eaContainer.eaItemLists[newIndex].listName);
                 eaListDisplayPage.featuredList = eaContainer.eaItemLists[newIndex];
-                thisFormatedListPanel.popTitlesList(eaListDisplayPage.featuredList);
-                thisItemList.popItemList(eaListDisplayPage.featuredList);
+                if (eaListDisplayPage.featuredList.formatedList) {
+                    thisFormatedListPanel.popTitlesList(eaListDisplayPage.featuredList);
+                    listItemEntryStack.currentIndex = 1;
+                } else {
+                    thisItemList.popItemList(eaListDisplayPage.featuredList);
+                    listItemEntryStack.currentIndex = 2;
+                }
                 console.log("current listName"
-                            , eaListDisplayPage.featuredList.listName)
+                            , eaListDisplayPage.featuredList.listName);
+            }
+            else
+            {
+                listItemEntryStack.currentIndex = 0;
+                console.log("add new list");
             }
         }
     }
 
-    listTypeCombo.objectName: {
-        eaListDisplayPage.featuredList.formatedList
+    listTypeCombo.onActivated: {
+        featuredList.formatedList
                 = listTypeCombo.currentIndex === 0;
     }
+
+    listTypeCombo.currentIndex: featuredList.formatedList ? 0 : 1
 
     //listTypeCombo.onFocusChanged: {
     //    console.log("listTypeCombo focus changed")

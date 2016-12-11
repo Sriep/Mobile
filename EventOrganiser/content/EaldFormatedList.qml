@@ -6,6 +6,8 @@ import "qrc:///shared"
 
 EaldFormatedListForm {
     //id: ealdFormatedList
+    //property alias featuredList: eaListDisplayPage.featuredList
+
     function popTitlesList (eventList) {
         console.log("Start popTitlesList");
         var whatis1
@@ -52,22 +54,36 @@ EaldFormatedListForm {
         saveTitles(featuredList)
     }
 
+    deleteList.onPressed: {
+        var index = ldpEventAppPage.stackCtl.currentIndex-2
+        if (index >= 0) {
+            eaContainer.deleteItemList(index);
+            ldpEventAppPage.sstackCtl.currentIndex = stackCtl.topDrawerId;
+        }
+    }
+
+    switchManual.onPressed: {
+        eaListDisplayPage.featuredList.formatedList = false;
+        listItemEntryStack.currentIndex = 2;
+    }
+
     loadPhotosBut.onClicked: {
         console.log("In loadPotos");
-        console.log("format loadPotos", format);
-        featuredList.showPhotos = usePhotos.checked
+        eaListDisplayPage.featuredList.showPhotos = usePhotos.checked;
         var format = imageFilenameFormat.text;
-        featuredList.loadPhotos(format);
+        eaListDisplayPage.featuredList.loadPhotos(format);
     }
 
     topTextArea.text: {
         //console.log("topTextArea.text:: ");
-        return featuredList.shortFormat;
+        return eaListDisplayPage.featuredList.shortFormat;
         //console.log("topTextArea: ", text );
     }
     bottomTextArea.text: {
-        return featuredList.longFormat;
+        return eaListDisplayPage.featuredList.longFormat;
     }
+
+    usePhotos.checked: eaListDisplayPage.featuredList.showPhotos
 
     //usePhotos.checked: featuredList.showPhotos
     //usePhotos.onCheckedChanged: featuredList.showPhotos = usePhotos.checked

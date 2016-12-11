@@ -43,19 +43,8 @@ ApplicationWindow {
             property alias dataFilename: eaContainer.dataFilename
         }
 
-        EASelectList {
-            id: selectList
-        }
-
         EAListDisplayPage {
             id: eaListDisplayPage
-            Connections {
-              target: selectList.eventAppPage.stackCtl
-              onCurrentIndexChanged: {
-
-              }
-            }
-            //property alias eventSpeakers: eaContainer.eaSpeakers
             property alias dataFilename: eaContainer.dataFilename
             property alias featuredList: eaListDisplayPage.featuredList
         }

@@ -7,28 +7,31 @@ import EventAppData 1.0
 import "qrc:///shared"
 
 ToolBar {
-  id: footerBar
-  RowLayout {
-    spacing: 20
-    anchors.fill: parent
-    
-    ToolButton {
-      id: backBut
-      contentItem: Image {
-        fillMode: Image.Pad
-        horizontalAlignment: Image.AlignHCenter
-        verticalAlignment: Image.AlignVCenter
-        source:  "qrc:///shared/images/back.png"
-      }
-      Connections {
-        onClicked: {
-            toolBar.titleLabel.text = eaContainer.eaInfo.eventName
-            stackCtl.currentIndex = stackCtl.topDrawerId;
+    id: footerBar
+    RowLayout {
+        spacing: 20
+        anchors.fill: parent
+
+        ToolButton {
+            id: backBut
+            contentItem: Image {
+                fillMode: Image.Pad
+                horizontalAlignment: Image.AlignHCenter
+                verticalAlignment: Image.AlignVCenter
+                source:  "qrc:///shared/images/back.png"
+            }
+          //onClicked: stackCtl.currentIndex = stackCtl.topDrawerId;
+            Connections {
+                target: backBut
+                onClicked: {
+                    toolBar.titleLabel.text = eaContainer.eaInfo.eventName
+                    stackCtl.currentIndex = stackCtl.topDrawerId;
+                }
+            }
+
         }
 
-      }
-      //onClicked: stackCtl.currentIndex = stackCtl.topDrawerId;
     }
     
-  }
+
 }

@@ -8,4 +8,12 @@ import "qrc:///shared"
 
 EaFooterBarForm {
      id: footerBar
+/*
+     Connections {
+       target: backBut
+       onClicked: {
+           toolBar.titleLabel.text = eaContainer.eaInfo.eventName
+           stackCtl.currentIndex = stackCtl.topDrawerId;
+       }
+     }*/
 }

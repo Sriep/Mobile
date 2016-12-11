@@ -15,6 +15,9 @@ Item {
     property alias usePhotos: usePhotos
     property alias titlesModel: titlesModel
     property alias loadCsvBut: loadCsvBut
+    property alias switchManual: switchManual
+    property alias deleteList: deleteList
+    //property alias listTypeCombo: listTypeCombo
     ColumnLayout {
         id: layout1
         spacing: 5
@@ -36,30 +39,30 @@ Item {
         } // RowLayout
 
         RowLayout {
-              id: fieldsBox
-              width: 500; height: 700
-              ColumnLayout {
+            id: fieldsBox
+            width: 500; height: 700
+            ColumnLayout {
                 //anchors.fill: parent
                 RowLayout {
-                  width: 500; height: 150
-                  //anchors.top: parent.top
-                  Rectangle {
-                    width: 200;  height: 150
-                    border.width : 0.5; border.color : "black"
-                    ListView {
-                      id: titlesList
-                      width: 150;  height: 150
-                      model: ListModel {
-                        id: titlesModel
-                      }
-                      delegate: Text {
-                        height: 30
-                        text: field
-                      }
-                    } // ListView
-                  } //Rectangle
+                    width: 500; height: 150
+                    //anchors.top: parent.top
+                    Rectangle {
+                        width: 200;  height: 150
+                        border.width : 0.5; border.color : "black"
+                        ListView {
+                            id: titlesList
+                            width: 150;  height: 150
+                            model: ListModel {
+                                id: titlesModel
+                            }
+                            delegate: Text {
+                                height: 30
+                                text: field
+                            }
+                        } // ListView
+                    } //Rectangle
 
-                  Rectangle {
+                    Rectangle {
                         width: 250; height: 150
                         border.width : 0.5
                         border.color : "black"
@@ -73,73 +76,89 @@ Item {
                             }
                             ScrollBar.vertical: ScrollBar { }
                         } // Flickable
-                  } //Rectangle
+                    } //Rectangle
                 } //RowLayout
 
                 Rectangle {
-                  width: 450; height: 300
-                  border.width : 0.5
-                  border.color : "black"
-                  anchors.left: parent.left
-                  anchors.leftMargin: 0
-                  anchors.bottom: saveTitlesBut.top
-                  Flickable {
-                      anchors.fill: parent
-                      TextArea.flickable: TextArea {
-                          id: bottomTextArea
-                          text:  qsTr("Text Area")
-                          wrapMode: TextArea.Wrap
-                      }
-                      ScrollBar.vertical: ScrollBar { }
-                  }
+                    width: 450; height: 300
+                    border.width : 0.5
+                    border.color : "black"
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.bottom: saveTitlesBut.top
+                    Flickable {
+                        anchors.fill: parent
+                        TextArea.flickable: TextArea {
+                            id: bottomTextArea
+                            text:  qsTr("Text Area")
+                            wrapMode: TextArea.Wrap
+                        }
+                        ScrollBar.vertical: ScrollBar { }
+                    }
                 } //Rectangle
 
-                Button {
-                  height: 30
-                  id: saveTitlesBut
-                  text: qsTr("Save chanages")
-                  anchors.left: parent.left
-                  anchors.leftMargin: 0
-                //  anchors.bottom: parent.bottom
+                RowLayout {
+                    id: rowLayout1
+                    width: 100
+                    height: 100
+
+                    Button {
+                        height: 30
+                        id: saveTitlesBut
+                        text: qsTr("Save chanages")
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        //  anchors.bottom: parent.bottom
+                    }
+
+                    Button {
+                        id: switchManual
+                        text: qsTr("Manual")
+                    }
+
+                    Button {
+                        id: deleteList
+                        text: qsTr("Delete")
+                    }
                 }
-              } // ColumnLayout
+            } // ColumnLayout
         } // RowLayout
 
-      GroupBox {
-        id: groupBox1
-        width: fieldsBox.width; height: 200
-        title: qsTr("Format image file name")
-        ColumnLayout {
-         // width: fieldsBox.width; height: 200
-          anchors.fill: parent
-          RowLayout {
-            width: parent.width; height: parent.height
-            //Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            //anchors.verticalCenter: parent.verticalCenter
-            CheckBox {
-              width: 20; height: 100
-              text: qsTr("Use pictures")
-              id: usePhotos
-              checked: featuredList.showPhotos
-              //onCheckedChanged: featuredList.showPhotos = usePhotos.checked
-            }
-            TextField {
-              width:parent.width-20; height: 100
-              Layout.fillWidth: true
-              id: imageFilenameFormat
-              enabled: usePhotos.checked
-              text: "%1.png"
-            }
-          }
+        GroupBox {
+            id: groupBox1
+            width: fieldsBox.width; height: 200
+            title: qsTr("Format image file name")
+            ColumnLayout {
+                // width: fieldsBox.width; height: 200
+                anchors.fill: parent
+                RowLayout {
+                    width: parent.width; height: parent.height
+                    //Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                    //anchors.verticalCenter: parent.verticalCenter
+                    CheckBox {
+                        width: 20; height: 100
+                        text: qsTr("Use pictures")
+                        id: usePhotos
+                        //checked: eaListDisplayPage.featuredList.showPhotos
+                        //onCheckedChanged: featuredList.showPhotos = usePhotos.checked
+                    }
+                    TextField {
+                        width:parent.width-20; height: 100
+                        Layout.fillWidth: true
+                        id: imageFilenameFormat
+                        enabled: usePhotos.checked
+                        text: "%1.png"
+                    }
+                }
 
-          Button {
-            height: 100
-            id: loadPhotosBut
-            text: qsTr("Load photos")
-            //Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
-            enabled: imageFilenameFormat !== ""
-          }
-        } //ColumnLayout
-      } // GroupBox
+                Button {
+                    height: 50
+                    id: loadPhotosBut
+                    text: qsTr("Load photos")
+                    //Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
+                    enabled: imageFilenameFormat !== ""
+                }
+            } //ColumnLayout
+        } // GroupBox
     }
 }

@@ -30,6 +30,16 @@ EAConstructionPageForm {
         colorDialog.open()
         eaContainer.eaConstruction.foreColour = colorDialog.color;
     }
+
+    Connections {
+      target: eaContainer
+      onEaItemListsChanged: {
+          loadFilename.text = eaContainer.dataFilename;
+          //eventDescription.text = eaContainer.eventDescription;
+          //textOrgName.text = eaContainer.organiserName;
+          //parentDescription.text = eaContainer.organiserDescription;
+      }
+    }
 }
 
 

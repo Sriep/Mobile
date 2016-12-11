@@ -26,11 +26,12 @@ QImage PictureListImageProvider::requestImage(const QString &id
     }
     else
     {
-        QPixmap pix(requestedSize);
+        QSize s(requestedSize.width()>0 ? requestedSize.width() : 1
+              , requestedSize.height()>0 ? requestedSize.height() : 1);
+        QPixmap pix(s);
         pix.fill("Yellow");
         return pix.toImage();
         // return QQuickImageProvider::requestImage(id, size, requestedSize);
-
     }
 
 }

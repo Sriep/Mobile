@@ -62,6 +62,7 @@ DISTFILES += \
     content/CommonDataList.qml \
     SelectListForm.ui.qml \
     content/EaldFormatedList.qml \
-    content/EaldListForm.ui.qml
+    content/EaldListForm.ui.qml \
+    AddNewListForm.ui.qml
 
 FORMS +=

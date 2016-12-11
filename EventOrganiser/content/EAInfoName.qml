@@ -17,5 +17,15 @@ EAInfoNameForm {
         eventInfo.organiserName = textOrgName.text;
         eventInfo.organiserDescription = parentDescription.text;
     }
+
+    Connections {
+      target: eaContainer
+      onEaItemListsChanged: {
+          textEventName.text = eventInfo.eventName;
+          eventDescription.text = eventInfo.eventDescription;
+          textOrgName.text = eventInfo.organiserName;
+          parentDescription.text = eventInfo.organiserDescription;
+      }
+    }
 }
 

@@ -21,9 +21,6 @@ ApplicationWindow {
 
     EaContainerObj {
         id: eaContainer
-        //eaSpeakers: EAItemList {
-        //    listName: "speakers"
-        //}
     }
 
     StackLayout {
@@ -31,7 +28,7 @@ ApplicationWindow {
         currentIndex: headerTabBar.currentIndex
         anchors.fill: parent
 
-        WelcomeTab {}
+        //WelcomeTab {}
 
         EAConstructionPage {
             property alias eaConstruction: eaContainer.eaConstruction
@@ -47,12 +44,6 @@ ApplicationWindow {
             id: eaListDisplayPage
             property alias dataFilename: eaContainer.dataFilename
             property alias featuredList: eaListDisplayPage.featuredList
-        }
-
-        Rectangle {
-            color: 'brown'
-            implicitWidth: 200
-            implicitHeight: 200
         }
     }
 

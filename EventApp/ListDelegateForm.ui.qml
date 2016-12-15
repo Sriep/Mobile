@@ -32,7 +32,7 @@ Item {
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        onClicked: stackCtl.currentIndex = position + 2;
+        //onClicked: stackCtl.currentIndex = position + 2;
     }
 
     Text {

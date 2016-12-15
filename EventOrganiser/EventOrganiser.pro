@@ -1,5 +1,6 @@
 #QT += qml quick
 QT += quick quickcontrols2
+QT += webengine
 CONFIG += c++11
 
 SOURCES += main.cpp \

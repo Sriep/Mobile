@@ -46,7 +46,7 @@ EaldFormatedListForm {
         console.log("EAListDisplayPageForm about to load", csvFilename.text);
          if (featuredList.readCSV(csvFilename.text)) {
             popTitlesList(featuredList);
-            ldpEventAppPage.needToRefershLists();
+            ldpEventAppPage.needToRefershLists("qrc:///shared/DataList.qml");
         }
     }
 
@@ -79,6 +79,7 @@ EaldFormatedListForm {
         return eaListDisplayPage.featuredList.shortFormat;
         //console.log("topTextArea: ", text );
     }
+
     bottomTextArea.text: {
         return eaListDisplayPage.featuredList.longFormat;
     }

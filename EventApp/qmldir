@@ -1,6 +1,7 @@
 JSDataList dataList.js
 DataList DataList.qml
 DataListDelegate DataListDelegate.qml
+DataListDelegateForm DataListDelegateForm.ui.qml
 DownloadEvent DownloadEvent.qml
 DownloadEvent DownloadEventForm.ui.qml
 ListDelegate ListDelegateForm.ui.qml
@@ -16,3 +17,6 @@ EaFooterBar EaFooterBar.qml
 EaFooterBar EaFooterBarForm.ui.qml
 EventAppPage EventAppPageForm.ui.qml
 EventAppPage EventAppPage.qml
+DataListImage DataListImage.qml
+DLImageDelegate DLImageDelegate.qml
+DLImageDelegateForm DLImageDelegateForm.ui.qml

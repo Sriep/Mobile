@@ -13,39 +13,40 @@ Page{
     property alias drawerModel: drawerModel
     //property alias drawerDelegate: drawerDelegate
     clip: true
-  Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+    Layout.alignment: Qt.AlignLeft | Qt.AlignTop
 
-  header: EaToolBar {
-    id: toolBar
-  }
+    header: EaToolBar {
+        id: toolBar
+    }
 
-  footer: EaFooterBar {
-    id: footerBar
-  }
+    footer: EaFooterBar {
+        id: footerBar
+    }
 
-  StackLayout {
-    id: stackCtl
-    anchors.fill: parent
-    property int topDrawerId: 0
-    property int loadEventId: 1
-    property alias drawerModel: drawerModel
-    ListView {
-      id: drawerView
-      anchors.fill: parent
-      delegate: ListDelegate {
-        id: drawerDelegate
-        text: title
-      }
-      model: ListModel {
-        id: drawerModel
-      }
+    StackLayout {
+        id: stackCtl
+        anchors.fill: parent
+        property int topDrawerId: 0
+        property int loadEventId: 1
+        property alias drawerModel: drawerModel
+        ListView {
+            id: drawerView
+            anchors.fill: parent
+            delegate: ListDelegate {
+                id: drawerDelegate
+                text: title
+            }
+            model: ListModel {
+                id: drawerModel
+            }
+        }
+        DownloadEvent {
+            id: downloadEvent
+        }
+        Connections {
+            target: eaContainer
+            onEaItemListsChanged: refreshLists(stackCtl, drawerModel)
+        }
     }
-    DownloadEvent {
-      id: downloadEvent
-    }
-    Connections {
-      target: eaContainer
-      onEaItemListsChanged: refreshLists(stackCtl, drawerModel)
-    }
-  }
 }
+

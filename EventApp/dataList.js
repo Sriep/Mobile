@@ -23,7 +23,7 @@ function addStringFormat() {
     };
     String.prototype.format.regex = new RegExp("{-?[0-9]+}", "g");
 }
-
+/*
 function displayText(titleFields, dataModel, header, eaItemList) {
     addStringFormat();
     var text = "";
@@ -39,7 +39,6 @@ function displayText(titleFields, dataModel, header, eaItemList) {
             formatArr.push(title);
             formatArr.push(reqField);
             var item = formatStr.format(formatArr);
-            //var item = formatStr.format([title, reqField]);
             text += item;
         }
     }
@@ -49,10 +48,9 @@ function displayText(titleFields, dataModel, header, eaItemList) {
     var bottomFormat = eaItemList.longFormat;
     var t2 = bottomFormat.format(myArr);
     text = header ? t1 : t2;
-    //console.log("text entered in listview: ", text);  
     return text;
 }
-
+*/
 function fieldsObjToArr(titles, dataObj) {
     var formatArr = [];
     for ( var i=0 ; i < titles.length ; i++ )
@@ -64,7 +62,7 @@ function fieldsObjToArr(titles, dataObj) {
     return formatArr;
 }
 
-
+/*
 function resetDataListModel(dataModel, name, dataList)
 {
     dataModel.clear();
@@ -75,7 +73,7 @@ function resetDataListModel(dataModel, name, dataList)
         dataModel.setProperty(j, "picture", picturePath);
         var newData = dataModel.get(j);
     }
-}
+}*/
 
 
 

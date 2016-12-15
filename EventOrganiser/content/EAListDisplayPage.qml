@@ -50,13 +50,24 @@ EAListDisplayPageForm {
         }
     }
 
+    Connections {
+        target: listItemEntryStack
+        onCurrentIndexChanged: {
+            if (listItemEntryStack.currentIndex === 1) {
+                thisFormatedListPanel.popTitlesList(eaListDisplayPage.featuredList);
+            } else  if (listItemEntryStack.currentIndex === 2) {
+                thisItemList.popItemList(eaListDisplayPage.featuredList);
+            }
+        }
+    }
+/*
     listTypeCombo.onActivated: {
         featuredList.formatedList
                 = listTypeCombo.currentIndex === 0;
     }
 
     listTypeCombo.currentIndex: featuredList.formatedList ? 0 : 1
-
+*/
     //listTypeCombo.onFocusChanged: {
     //    console.log("listTypeCombo focus changed")
    // }

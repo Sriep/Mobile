@@ -3,10 +3,11 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QtQuick.Extras 1.4
+import QtWebEngine 1.0
 import "dataList.js" as DataListJS
 
 Item {
-    id: dataDelegate
+    id: imageDelegate
 
     // Create a property to contain the visibility of the details.
     // We can bind multiple element's opacity to this one property,
@@ -14,10 +15,12 @@ Item {
     // want to fade.
     property real detailsOpacity : 0
 
-    width: dataList.width
+    width: dataListImage.width
     height: 70
-    property alias photoImage: photoImage
+    property alias largePhotoImage: largePhotoImage
     property alias bottomText: bottomText
+    property alias photoImage: photoImage
+    //property alias bottomText: bottomText
     property alias topText: topText
 
     // A simple rounded rectangle for the background
@@ -34,7 +37,7 @@ Item {
     // in Details mode, then no change will happen.
     MouseArea {
         anchors.fill: parent
-        onClicked: dataDelegate.state = dataDelegate.state == 'Details' ? "" : "Details";
+        onClicked: imageDelegate.state = imageDelegate.state == 'Details' ? "" : "Details";
     }
 
     // Lay out the page: picture, title and ingredients at the top, and method at the
@@ -44,46 +47,62 @@ Item {
         id: topLayout
         x: 10; y: 10; height: photoImage.height; width: parent.width
         spacing: 10
-
+        opacity: !imageDelegate.detailsOpacity
         Image {
             id: photoImage
             width: 50;  height: 50
             source: picture
         }
 
-        Column {
-            width: background.width - photoImage.width - 20; height: photoImage.height
-            spacing: 5
+       // Column {
+        //    width: background.width - photoImage.width - 20; height: photoImage.height
+       //     spacing: 5
             Text { id: topText }
-        }
+       // }
     }
-/*
-    SlitItemView {
-        id: topLayout
-        height: photoImage.height; width: parent.width
-        spacing: 10
-        property alias photoImage: photoImage
-        property alias topText: topText
-    }
-*/
+
     Item {
       id: details
       width: parent.width - 20
       anchors { top: topLayout.bottom; topMargin: 10; bottom: parent.bottom; bottomMargin: 10 }
-      opacity: dataDelegate.detailsOpacity
+      opacity: imageDelegate.detailsOpacity
 
       Flickable {
         id: flick
         width: parent.width
-        anchors { top: parent.top; bottom: parent.bottom }
+        //anchors { top: parent.top; bottom: parent.bottom }
+        anchors.fill: parent
+
         contentHeight: bottomText.height
         clip: true
         x:5
         Text {
           id: bottomText;
+          visible: itemType === 1
           wrapMode: Text.WordWrap;
           width: details.width
         }
+        Image {
+            visible: itemType === 0
+            id: largePhotoImage
+            //width: 50;  height: 50
+            source: picture
+        }
+/*
+        Text {
+          visible: itemType === 2
+          text: showUrl + "---" + title
+          width: details.width
+        }
+*/
+        WebEngineView {
+            id: webView
+            visible: itemType === 2
+            y: 5; x:5
+            width: background.width-10; height: background.height-10
+            url: showUrl //http://lllconf.co.uk/
+        }
+
       }
 
       Image {
@@ -98,32 +117,27 @@ Item {
         opacity: flick.atYEnd ? 0 : 1
       }
     }
-/*
-    ExpandedItemView {
-        id: details
-        x: 10
-    }
-*/
+
     states: State {
         id: dldStates
         name: "Details"
 
         PropertyChanges { target: background; color: "white" }
-        PropertyChanges {
+ /*       PropertyChanges {
             id: picSicePropCh;
             target: photoImage;
-            width: eaLVItemList.showPhotos ? 130 : 0;
-            height: eaLVItemList.showPhotos ? 130 : 50;
-        } // Make picture bigger
-        PropertyChanges { target: dataDelegate; detailsOpacity: 1; x: 0 } // Make details visible
-        PropertyChanges { target: dataDelegate; height: dataList.height } // Fill the entire list area with the detailed view
+            width:  parent.width // eaLVItemList.showPhotos ? 130 : 0;
+            height: parent.height //eaLVItemList.showPhotos ? 130 : 50;
+        } */// Make picture bigger
+        PropertyChanges { target: imageDelegate; detailsOpacity: 1; x: 0 } // Make details visible
+        PropertyChanges { target: imageDelegate; height: dataListImage.height } // Fill the entire list area with the detailed view
 
         // Move the list so that this item is at the top.
-        PropertyChanges { target: dataDelegate.ListView.view; explicit: true; contentY: dataDelegate.y }
-        //PropertyChanges { target: dataDelegate.dataList.view; explicit: true; contentY: dataDelegate.y }
+        PropertyChanges { target: imageDelegate.ListView.view; explicit: true; contentY: imageDelegate.y }
+        //PropertyChanges { target: imageDelegate.dataListImage.view; explicit: true; contentY: imageDelegate.y }
         // Disallow flicking while we're in detailed view
-        PropertyChanges { target: dataDelegate.ListView.view; interactive: false }
-        //PropertyChanges { target: dataDelegate.dataList.view; interactive: false }
+        PropertyChanges { target: imageDelegate.ListView.view; interactive: false }
+        //PropertyChanges { target: imageDelegate.dataListImage.view; interactive: false }
     }
 
 }

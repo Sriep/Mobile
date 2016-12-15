@@ -85,7 +85,7 @@ Item {
                     border.color : "black"
                     anchors.left: parent.left
                     anchors.leftMargin: 0
-                    anchors.bottom: saveTitlesBut.top
+                    //anchors.bottom: saveTitlesBut.top rowLayout1.top??
                     Flickable {
                         anchors.fill: parent
                         TextArea.flickable: TextArea {

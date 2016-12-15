@@ -7,7 +7,7 @@ import "qrc:///shared"
 Item {
     id: formatedListPanel
     width: 1100; height: 800;
-    property alias listTypeCombo: listTypeCombo
+    //property alias listTypeCombo: listTypeCombo
     property alias thisItemList: thisItemList
     property alias listItemEntryStack: listItemEntryStack
     property alias thisFormatedListPanel: thisFormatedListPanel
@@ -17,11 +17,11 @@ Item {
         width: 1100; height: 700
         Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
         spacing: 10
-        x:10
+        x:10; y:10
         Column {
            // width: 1100; height: 700
             //anchors.top: myRect.anchors.bottom
-            Rectangle {
+/*           Rectangle {
                 x:10
                 id: myRect
                 width: 500; height: 50
@@ -39,8 +39,8 @@ Item {
                         qsTr("Formated list from csv"),
                         qsTr("Manual creation"),
                     ]
-                } //ComboBox
-            } //Rectangle
+                }//ComboBox
+            }  *///Rectangle
             clip: true
             Rectangle {
                 id: rectSL

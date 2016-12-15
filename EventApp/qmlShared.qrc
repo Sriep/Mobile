@@ -51,5 +51,8 @@
         <file>EventAppPage.qml</file>
         <file>DataListDelegateForm.ui.qml</file>
         <file>DataListForm.ui.qml</file>
+        <file>DataListImage.qml</file>
+        <file>DLImageDelegate.qml</file>
+        <file>DLImageDelegateForm.ui.qml</file>
     </qresource>
 </RCC>

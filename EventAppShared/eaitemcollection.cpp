@@ -26,7 +26,7 @@ void EAItemCollection::read(const QJsonObject &json, QQmlEngine *engine)
 void EAItemCollection::write(QJsonObject &json) const
 {
     QJsonArray itemsArray;
-    foreach (const EAItem* item, m_eaItems)
+    foreach (EAItem* item, m_eaItems)
     {
         {
             QJsonObject itemObject;

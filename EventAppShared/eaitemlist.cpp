@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QRegExp>
 #include <QBuffer>
+#include <QUrl>
 
 #include <QQmlEngine>
 #include <QtQml>
@@ -77,10 +78,21 @@ void EAItemList::read(const QJsonObject &json, QQmlEngine *engine)
     setLongFormat(json["longFormat"].toString());
     setFormatedList(json["formatedList"].toBool());
 
-    nextIndex = json["nextIndex"].toInt();
+    nextItemId = json["nextItemId"].toInt();
+    id = json["id"].toInt();
+    version = json["version"].toInt();
+
     //setListName(json["listName"].toString());
     setShowPhotos(json["showPhotos"].toBool());
     jsonPictures = json["pictures"].toArray();
+
+    QJsonArray itemsArray = json["itemsList"].toArray();
+    for (int i = 0; i < itemsArray.size(); ++i) {
+        QJsonObject readJsonObject = itemsArray[i].toObject();
+        EAItem* newitem = new EAItem();
+        newitem->read(readJsonObject);
+        m_eaItems.append(newitem);
+    }
 
     //resetImageProvider(eacontainer);
     //QQmlEngine*  engine = qmlEngine(this);
@@ -96,17 +108,31 @@ void EAItemList::read(const QJsonObject &json, QQmlEngine *engine)
     }
 }
 
-void EAItemList::write(QJsonObject &json) const
+void EAItemList::write(QJsonObject &json)
 {
     json["headerFields"] = jsonFields;
     json["dataList"] = jsonData;
     //json["listName"] = listName();
-    json["nextIndex"] = nextIndex;
+    json["nextItemId"] = nextItemId;
     json["showPhotos"] = m_showPhotos;
     json["pictures"] = jsonPictures;
     json["formatedList"] = formatedList();
     json["shortFormat"] = shortFormat();
     json["longFormat"] = longFormat();
+    json["id"] = id;
+    json["version"] = ++version;
+
+    QJsonArray itemsArray;
+    foreach (EAItem* item, m_eaItems)
+    {
+        {
+            QJsonObject itemObject;
+            item->write(itemObject);
+            itemsArray.append(itemObject);
+        }
+
+    }
+    json["itemsList"] = itemsArray;
 
     EAItemListBase::write(json);
 }
@@ -246,7 +272,7 @@ bool EAItemList::readCSV(const QString filename)
             for ( int line=1 ; line < csvListLines.length() ; line++ )
             {
                 QJsonObject newItem = newDataItem(csvListLines[line], headerModels);
-                newItem["id"] = nextIndex++;
+                newItem["id"] = useNextItemId();//nextItemId++;
                 jsonData.append(newItem);
             }
             setDataList(jsonData);
@@ -308,15 +334,78 @@ void EAItemList::loadPhotos(const QString &format)
     qDebug() << "photos read " << jsonPictures.count();
 }
 
-void EAItemList::insertListItem(int index
+bool EAItemList::insertListItem(int index
                                 , int itemType
                                 , const QString &title
-                                , const QString &data)
+                                , const QString &imageFile
+                                , const QString& textFilename
+                                , const QString& url)
 {
-    EAItem* newItem = new EAItem(itemType, title, data);
+    EAItem* newItem;// = new EAItem(itemType, title, data);
+    if (imageFile != "")
+    {
+        addPicture(index, imageFile);
+    }
+
+    switch (itemType) {
+    case EAItem::ItemType::Image:
+        addPicture(index, imageFile);
+        newItem = new EAItem(itemType, title);
+        break;
+    case EAItem::ItemType::Document:
+    {
+        QFile loadFile(textFilename);
+        if (!loadFile.open(QIODevice::ReadOnly)) {
+            qWarning("Couldn't open save file.");
+            return false;
+        }
+        QByteArray fileData = loadFile.readAll();
+        QString fileText(fileData);
+        newItem = new EAItem(itemType, title, fileText);
+        break;
+    }
+    case EAItem::ItemType::Url:
+        newItem = new EAItem(title, QUrl(url));
+        break;
+    default:
+        return false;
+    }
+
     m_eaItems.insert(index, newItem);
     emit eaItemListChanged();
+    return true;
 }
+
+void EAItemList::addPicture(int index, const QString& filename)
+{
+    QImage  picImage(filename);
+    picImage.scaled(100,100);
+    QPixmap pix = QPixmap::fromImage(picImage);
+    QJsonValue jsonPic = jsonValFromPixmap(pix);
+    if (jsonPictures.size() > index)
+        jsonPictures[index] = jsonPic;
+    else if (jsonPictures.size() == index)
+        jsonPictures.append(jsonPic);
+    else
+    {
+        QPixmap nullPix;
+        QJsonValue nullJson = jsonValFromPixmap(nullPix);
+        for ( int i=jsonPictures.size() ; i< jsonPictures.size() ; i++ )
+            jsonPictures.append(nullJson);
+        jsonPictures.append(jsonPic);
+    }
+}
+
+int EAItemList::useNextItemId()
+{
+    return nextItemId++;
+}
+
+/*
+int EAItemList::itemListLength()
+{
+    return m_eaItems.length();
+}*/
 
 QStringList EAItemList::addHeaderFields(const QStringList& fields)
 {
@@ -329,7 +418,7 @@ QStringList EAItemList::addHeaderFields(const QStringList& fields)
         else
             models.append(modelName);
 
-        if (!fieldsSet.contains(modelName))
+        if (!fieldsSet. contains(modelName))
         {
             QJsonObject newField
             {
@@ -417,9 +506,15 @@ QPixmap pixmapFrom(const QJsonValue & val)
   return p;
 }
 
-QQmlListProperty<EAItem> EAItemList::itemList() const
+QQmlListProperty<EAItem> EAItemList::items()
 {
-    return m_items;
+    return QQmlListProperty<EAItem>(this
+                                        , 0 // void *data
+                                        , &EAItemList::append_eaItems
+                                        , &EAItemList::count_eaItems
+                                        , &EAItemList::at_eaItems
+                                        , &EAItemList::clear_eaItems
+                                        );
 }
 
 bool EAItemList::formatedList() const

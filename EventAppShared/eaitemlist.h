@@ -30,7 +30,7 @@ class EAItemList : public EAItemListBase
     Q_PROPERTY(QString dataList READ dataList WRITE setDataList NOTIFY dataListChanged)
 
     Q_PROPERTY(bool formatedList READ formatedList WRITE setFormatedList NOTIFY formatedListChanged)
-    Q_PROPERTY(QQmlListProperty<EAItem> items READ itemList)
+    Q_PROPERTY(QQmlListProperty<EAItem> items READ items)
     QList<EAItem*> m_eaItems;
 public:
     EAItemList();
@@ -39,7 +39,7 @@ public:
 
     virtual void read(const QJsonObject &json, QQmlEngine* engine);
     //virtual void read(const QJsonObject &json, EAContainer* eacontainer);
-    virtual void write(QJsonObject &json) const;
+    virtual void write(QJsonObject &json);
     //virtual void clear(QQmlEngine *engine);
     virtual void clear(EAContainer* eacontainer);
 
@@ -51,10 +51,13 @@ public:
                                 , bool inListView);
     Q_INVOKABLE void saveTitleChanges();
     Q_INVOKABLE void loadPhotos(const QString& format);
-    Q_INVOKABLE void insertListItem(int index
+    Q_INVOKABLE bool insertListItem(int index
                                     , int itemType
                                     , const QString& title
-                                    , const QString& data);
+                                    , const QString& imageFile =""
+                                    , const QString& textFilename = ""
+                                    , const QString &url = "");
+    //Q_INVOKABLE int itemListLength();
 
 
     QString titleFields() const;
@@ -63,7 +66,7 @@ public:
     bool showPhotos() const;
     QString shortFormat() const;
     QString longFormat() const;
-    QQmlListProperty<EAItem> itemList() const;
+    QQmlListProperty<EAItem> items();
 
     bool formatedList() const;
 
@@ -95,13 +98,17 @@ private:
     QString getModelName(const QString& name) const;
     //void unpackPhotos() const;
     void resetImageProvider(EAContainer* eacontainer = NULL);
+    void addPicture(int index, const QString& filename);
+    int useNextItemId();
 
     QJsonArray jsonFields;
     QJsonArray jsonData;
     QJsonArray jsonPictures;
 
     QSet<QString> fieldsSet;
-    int nextIndex = 0;
+    int nextItemId = 0;
+    int id = 0;
+    int version = 0;
 
     QString m_titleFields;
     QString m_dataList;
@@ -117,6 +124,7 @@ private:
     static EAItem* at_eaItems(QQmlListProperty<EAItem> *list
                                       , int index);
     static void clear_eaItems(QQmlListProperty<EAItem> *list);
+
     QQmlListProperty<EAItem> m_items;
     bool m_formatedList = true;
 };

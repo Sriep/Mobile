@@ -44,7 +44,6 @@ public:
 
     virtual void classBegin();
     virtual void componentComplete();
-
     Q_INVOKABLE void insertEmptyItemList(int index, QString name);
     Q_INVOKABLE void deleteItemList(int index);
     Q_INVOKABLE void clearEvent();
@@ -62,6 +61,8 @@ public:
     bool isSaveJson() const;    
     QQmlListProperty<EAItemList> eaItemLists();
     int version() const;
+
+
 
 signals:
     void eaInfoChanged(EAInfo* eaInfo);
@@ -91,9 +92,10 @@ private:
                                       , int index);
     static void clear_eaItemLists(QQmlListProperty<EAItemList> *list);
 
-    //void clearPhotos();
-
     int m_Version = 0;
+    int nextItemListId = 0;
+    int useNextItemListId();
+
 };
 
 #endif // EVENTCONTAINER_H

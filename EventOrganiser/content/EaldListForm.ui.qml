@@ -10,8 +10,10 @@ Item {
     property alias itemTitle: itemTitle
     property alias itemData: itemData
     property alias addItem: addItem
-    //property alias updateItem: updateItem
+    property alias switchFormat: switchFormat
     property alias itemsModel: itemsModel
+    property alias textFilename: textFilename
+    property alias urlItem: urlItem
 
     ColumnLayout {
         id: columnLayout1
@@ -21,8 +23,14 @@ Item {
         ListView {
             id: itmesEntered
             width: 110; height: 160
+
+            highlightFollowsCurrentItem: true
+            highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+            focus: true
+
             model: ListModel {
                 id: itemsModel
+                // Same model as dataListImage.dataImageModel
             }
             delegate: Text {
                 height: 30
@@ -39,25 +47,78 @@ Item {
                 qsTr("External url")
             ]
         }
-        TextField {
-            id: itemTitle
-            text: qsTr("Title")
+
+        RowLayout {
+            id: rowLayout1
+            width: 100
+            height: 100
+
+            TextField {
+                id: itemTitle
+                text: qsTr("")
+            }
+            Text {
+                id: text1
+                text: qsTr("Title")
+                font.pixelSize: 12
+            }
         }
-        TextField {
-            id: itemData
-            text: qsTr("Data Link")
+
+        RowLayout {
+            id: rowLayout2
+            width: 100
+            height: 100
+            visible: itemDataType.currentIndex === 0
+            TextField {
+                id: itemData
+                text: qsTr("")
+            }
+            Text {
+                id: text2
+                text: qsTr("Image filename")
+                font.pixelSize: 12
+            }
+        }
+
+        RowLayout {
+            id: rowLayout3
+            width: 100
+            height: 100
+            visible: itemDataType.currentIndex === 1
+            TextField {
+                id: textFilename
+                text: qsTr("")
+            }
+            Text {
+                id: text3
+                text: qsTr("Text/Html filenmae")
+                font.pixelSize: 12
+            }
+        }
+
+        RowLayout {
+            id: rowLayout4
+            width: 100
+            height: 100
+            visible: itemDataType.currentIndex === 2
+            TextField {
+                id: urlItem
+                text: qsTr("")
+            }
+            Text {
+                id: text4
+                text: qsTr("Url")
+                font.pixelSize: 12
+            }
+        }
+        Button {
+            id: switchFormat
+            //visible: false
+            text: qsTr("Switch from csv")
         }
         Button {
             id: addItem
             text: qsTr("Add new")
         }
-
-        //Button {
-        //    id: updateItem
-        //   visible: false
-        //    text: qsTr("Update")
-        //}
     }
-
-
 }

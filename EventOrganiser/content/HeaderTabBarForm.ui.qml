@@ -11,9 +11,6 @@ TabBar {
   Layout.preferredHeight: 640
 
   TabButton {
-      text: qsTr("Welcome")
-  }
-  TabButton {
     text: qsTr("Construction")
   }
   TabButton {
@@ -21,11 +18,5 @@ TabBar {
   }
   TabButton {
     text: qsTr("Select List")
-  }
-  TabButton {
-    text: qsTr("Speakers")
-  }
-  TabButton {
-    text: qsTr("Delegates")
   }
 }

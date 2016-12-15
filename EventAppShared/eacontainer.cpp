@@ -148,7 +148,10 @@ void EAContainer::read(const QJsonObject &json)
         //newList->read(readJsonObject, this);
         m_eaItemLists.append(newList);
     }
+
+    nextItemListId = json["version"].toInt();
     setVersion(json["version"].toInt());
+
 }
 
 void EAContainer::clearEvent()
@@ -180,7 +183,7 @@ void EAContainer::write(QJsonObject &json)
     json["construction"] = constructionDataObject;
 
     QJsonArray listsArray;
-    foreach (const EAItemList* itemList, m_eaItemLists)
+    foreach (EAItemList* itemList, m_eaItemLists)
     {
         {
             QJsonObject itemListObject;
@@ -190,8 +193,8 @@ void EAContainer::write(QJsonObject &json)
 
     }
     json["itemLists"] = listsArray;
+    json["nextItemListId"] = nextItemListId;
     json["version"] = ++m_Version;
-
 }
 
 EAConstruction *EAContainer::eaConstruction() const
@@ -342,6 +345,11 @@ void EAContainer::clear_eaItemLists(QQmlListProperty<EAItemList> *list)
 {
     EAContainer *eaContainer = qobject_cast<EAContainer *>(list->object);
     eaContainer->m_eaItemLists.clear();
+}
+
+int EAContainer::useNextItemListId()
+{
+    return nextItemListId++;
 }
 
 

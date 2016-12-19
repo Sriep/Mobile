@@ -14,7 +14,8 @@ SOURCES += main.cpp \
     ../EventAppShared/eaitemcollection.cpp \
     ../EventAppShared/eaitemlistbase.cpp \
     ../EventAppShared/eapropertylist.cpp \
-    ../EventAppShared/eventappshared.cpp
+    ../EventAppShared/eventappshared.cpp \
+    ../EventAppShared/firebase.cpp
 
 HEADERS += \
     ../EventAppShared/eainfo.h \
@@ -29,7 +30,8 @@ HEADERS += \
     ../EventAppShared/eaitemlistbase.h \
     ../EventAppShared/eapropertylist.h \
     ../EventAppShared/eventappshared_global.h \
-    ../EventAppShared/eventappshared.h
+    ../EventAppShared/eventappshared.h \
+    ../EventAppShared/firebase.h
 
 RESOURCES += qml.qrc \
    qmlShared.qrc
@@ -53,8 +55,6 @@ INCLUDEPATH += $$PWD/../EventAppShared
 DEPENDPATH += $$PWD/../EventAppShared
 
 DISTFILES += \
-    qml/EaHeaderForm.ui.qml \
-    qml/EaHeader.qml \
     qml/main.qml \
     qmldir
 

@@ -1,6 +1,7 @@
 #QT += qml quick
 QT += quick quickcontrols2
 QT += webengine
+QT += qml quick webview
 CONFIG += c++11
 
 SOURCES += main.cpp \
@@ -13,7 +14,8 @@ SOURCES += main.cpp \
     ../EventAppShared/picturelistimageprovider.cpp \
     ../EventAppShared/eaitemlistbase.cpp \
     ../EventAppShared/eaitemcollection.cpp \
-    ../EventAppShared/eaitem.cpp
+    ../EventAppShared/eaitem.cpp \
+    ../EventAppShared/firebase.cpp
 
 HEADERS += \
     ../EventAppShared/eainfo.h \
@@ -26,7 +28,8 @@ HEADERS += \
     ../EventAppShared/picturelistimageprovider.h \
     ../EventAppShared/eaitemlistbase.h \
     ../EventAppShared/eaitemcollection.h \
-    ../EventAppShared/eaitem.h
+    ../EventAppShared/eaitem.h \
+    ../EventAppShared/firebase.h
 
 RESOURCES += qml.qrc \
     ../EventApp/qmlShared.qrc
@@ -64,6 +67,15 @@ DISTFILES += \
     SelectListForm.ui.qml \
     content/EaldFormatedList.qml \
     content/EaldListForm.ui.qml \
-    AddNewListForm.ui.qml
+    AddNewListForm.ui.qml \
+    ../build-EventOrganiser-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/android-build/AndroidManifest.xml \
+    ../build-EventOrganiser-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/android-build/gradle/wrapper/gradle-wrapper.jar \
+    ../build-EventOrganiser-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/android-build/gradlew \
+    ../build-EventOrganiser-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/android-build/res/values/libs.xml \
+    ../build-EventOrganiser-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/android-build/build.gradle \
+    ../build-EventOrganiser-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/android-build/gradle/wrapper/gradle-wrapper.properties \
+    ../build-EventOrganiser-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/android-build/gradlew.bat
 
 FORMS +=
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/../build-EventOrganiser-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/android-build

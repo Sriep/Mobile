@@ -15,6 +15,7 @@ EaldListForm {
                 , "title" : eaItem.title
                 , "displayText" : eaItem.displayText
                 , "showUrl" : eaItem.url
+                , "urlString" : eaItem.urlString
                 , "picture" : picturePath
             };
             itemsModel.append(dic);
@@ -43,9 +44,32 @@ EaldListForm {
         popItemList(eaListDisplayPage.featuredList);
     }
 
+    updateItem.onPressed: {
+        eaItem = eventList.items[i]
+    }
+
+    deleteBut.onPressed: {
+        itemsModel.remove(itmesEntered.currentIndex);
+    }
+
+
     switchFormat.onPressed: {
         eaListDisplayPage.featuredList.formatedList = true;
         listItemEntryStack.currentIndex = 1;
     }
 
+    mouseAreaLV.onClicked: {
 
+
+        var index = itmesEntered.indexAt(mouse.x, mouse.y);
+        itmesEntered.currentIndex = index;
+        itemDataType.currentIndex = itemsModel.get(index).itemType;
+        itemTitle.text = itemsModel.get(index).title;
+        itemData.text = itemsModel.get(index).picture;
+        textFilename.text = itemsModel.get(index).displayText;
+        urlItem.text = itemsModel.get(index).urlString;
+    }
+
+
+
+}

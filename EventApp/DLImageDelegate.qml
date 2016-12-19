@@ -13,7 +13,7 @@ DLImageDelegateForm {
   bottomText.text: {
       return displayText;
   }
-
+  property url showUrlUrl: "http://lllconf.co.uk/"
   transitions: Transition {
         // Make the state changes smooth
         ParallelAnimation {

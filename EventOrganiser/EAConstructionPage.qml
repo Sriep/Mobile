@@ -17,6 +17,9 @@ EAConstructionPageForm {
     saveEventButton.onClicked: eaContainer.saveEventApp(loadFilename.text);
     newEventBut.onClicked: eaContainer.clearEvent();
 
+    uploadBut.onClicked: eaContainer.uploadApp(downloadKey.text);
+    downloadBut.onClicked: eaContainer.downloadApp(downloadKey.text);
+
     mouseArea1.onClicked:  {
         colorDialog.index = 0;
         colorDialog.title = qsTr("Select background colour for app");

@@ -14,6 +14,9 @@ Item {
     property alias itemsModel: itemsModel
     property alias textFilename: textFilename
     property alias urlItem: urlItem
+    property alias mouseAreaLV: mouseAreaLV
+    property alias deleteBut: deleteBut
+    property alias updateItem: updateItem
 
     ColumnLayout {
         id: columnLayout1
@@ -36,6 +39,11 @@ Item {
                 height: 30
                 text: title
             }
+            MouseArea {
+                id: mouseAreaLV
+                anchors.fill: parent
+            }
+
         }
 
         ComboBox {
@@ -116,9 +124,26 @@ Item {
             //visible: false
             text: qsTr("Switch from csv")
         }
-        Button {
-            id: addItem
-            text: qsTr("Add new")
+
+        RowLayout {
+            id: rowLayout5
+            width: 100
+            height: 100
+
+            Button {
+                id: updateItem
+                text: qsTr("Update")
+            }
+
+            Button {
+                id: addItem
+                text: qsTr("Add new")
+            }
+
+            Button {
+                id: deleteBut
+                text: qsTr("Delete")
+            }
         }
     }
 }

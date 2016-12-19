@@ -2,6 +2,8 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <qtwebengineglobal.h>
+//#include <QtWebEngine>
+#include <QtWebView>
 #include "eainfo.h"
 #include "eacontainer.h"
 #include "eaconstruction.h"
@@ -13,6 +15,7 @@ int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
+    QtWebView::initialize();
     QtWebEngine::initialize();
 
     app.setOrganizationName("Pierses");

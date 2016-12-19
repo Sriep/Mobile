@@ -1,12 +1,13 @@
 #include <QJsonDocument>
 #include <QIODevice>
 #include <QJsonObject>
+#include <QJsonValue>
 #include <QFileInfo>
 #include <QDir>
 #include <QDebug>
 
 
-
+#include "firebase.h"
 #include "eacontainer.h"
 #include "eainfo.h"
 #include "eaconstruction.h"
@@ -44,19 +45,6 @@ void EAContainer::deleteItemList(int index)
     }
 }
 
-/*
-void EAContainer::clearPhotos() const
-{
-    QString pwd = QDir::currentPath();
-    QDir dir(pwd);
-    dir.setNameFilters(QStringList() << "*.png");
-    dir.setFilter(QDir::Files);
-    foreach(QString dirFile, dir.entryList())
-    {
-        dir.remove(dirFile);
-    }
-}
-*/
 EAInfo *EAContainer::eaInfo() const
 {
     return m_eaInfo;
@@ -124,6 +112,51 @@ bool EAContainer::saveEventApp(const QString& filename)
         ? saveDoc.toJson()
         : saveDoc.toBinaryData());
     return true;
+}
+
+void EAContainer::uploadApp(const QString &eventKey)
+{
+    QJsonObject dataObject;
+    write(dataObject);
+    QJsonValue dataValue(dataObject);
+    QJsonObject containerObj {{eventKey,  dataValue} };
+    QJsonDocument uploadDoc(containerObj);
+
+    Firebase *firebase=new Firebase(FIREBASE_URL);
+    firebase->setValue(uploadDoc, "PATCH");
+}
+
+void EAContainer::downloadApp(const QString &eventKey)
+{
+    clearEvent();
+
+    Firebase *firebase=new Firebase(FIREBASE_URL);
+    firebase->child(eventKey);
+    firebase->getValue();
+    connect(firebase,SIGNAL(eventResponseReady(QByteArray)),
+            this,SLOT(onResponseReady(QByteArray)));
+    connect(firebase,SIGNAL(eventDataChanged(QString*)),
+            this,SLOT(onDataChanged(QString*)));
+
+}
+
+void EAContainer::onResponseReady(QByteArray data)
+{
+    qDebug()<<"answer";
+    //qDebug()<<data;
+
+    QJsonDocument loadDoc = QJsonDocument::fromJson(data);
+    QJsonObject topObj = loadDoc.object();
+    QJsonObject mainData = topObj.begin().value().toObject();
+
+    read(mainData);
+    qDebug() << "EAContainer::downloadEventApp finished";
+    emit eaItemListsChanged();
+}
+
+void EAContainer::onDataChanged(QString data)
+{
+    qDebug()<<data;
 }
 
 void EAContainer::read(const QJsonObject &json)

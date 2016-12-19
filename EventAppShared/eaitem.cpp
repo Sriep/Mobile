@@ -71,7 +71,8 @@ QUrl EAItem::url() const
 
 QString EAItem::urlString() const
 {
-    return m_urlString;
+    return m_url.url();
+    //return m_urlString;
 }
 
 void EAItem::setItemType(int itemType)

@@ -35,9 +35,6 @@ QString HttpDownload::downloadFile(QUrl url)
     QString fileName = m_url.fileName();
     if (fileName.isEmpty())
         fileName = defaultFileName;
-    //QString downloadDirectory = QDir::cleanPath(downloadDirectoryLineEdit->text().trimmed());
-    //if (!downloadDirectory.isEmpty() && QFileInfo(downloadDirectory).isDir())
-    //    fileName.prepend(downloadDirectory + '/');
     if (QFile::exists(fileName))
         QFile::remove(fileName);
 
@@ -49,15 +46,12 @@ QString HttpDownload::downloadFile(QUrl url)
         return "";
     }
 
-    //downloadButton->setEnabled(false);
-    // schedule the request
     startRequest();
     setFileDownloaded(fileName);
     return fileName;
 }
 void HttpDownload::preProcessUrl()
 {
-    //https://www.dropbox.com/s/okzw27c57d3qy55/data.json?dl=0
     if (m_url.host() == "www.dropbox.com")
     {
         QUrlQuery myQuery;
@@ -74,16 +68,8 @@ void HttpDownload::startRequest()
     connect(reply, &QNetworkReply::finished, this, &HttpDownload::httpFinished);
     connect(reply, &QIODevice::readyRead, this, &HttpDownload::httpReadyRead);
 
-    //ProgressDialog *progressDialog = new ProgressDialog(m_url, this);
-    //progressDialog->setAttribute(Qt::WA_DeleteOnClose);
-    //connect(progressDialog, &QProgressDialog::canceled, this, &HttpWindow::cancelDownload);
-    //connect(reply, &QNetworkReply::downloadProgress, progressDialog, &ProgressDialog::networkReplyProgress);
     QObject::connect(reply, &QNetworkReply::downloadProgress, this, &HttpDownload::downloadProgress);
     QObject::connect(reply, &QNetworkReply::finished, this, &HttpDownload::finished);
-
-    //connect(reply, &QNetworkReply::finished, progressDialog, &ProgressDialog::hide);
-    //progressDialog->show();
-    //statusLabel->setText(tr("Downloading %1...").arg(m_url.toString()));
 }
 
 void HttpDownload::httpFinished()
@@ -104,9 +90,7 @@ void HttpDownload::httpFinished()
 
     if (reply->error()) {
         QFile::remove(fi.absoluteFilePath());
-        //statusLabel->setText(tr("Download failed:\n%1.").arg(reply->errorString()));
         emit error(tr("Download failed:\n%1.").arg(reply->errorString()));
-        //downloadButton->setEnabled(true);
         reply->deleteLater();
         reply = Q_NULLPTR;
         return;
@@ -117,29 +101,15 @@ void HttpDownload::httpFinished()
     reply = Q_NULLPTR;
 
     if (!redirectionTarget.isNull()) {
-        //const QUrl redirectedUrl = url.resolved(redirectionTarget.toUrl());
-        //if (QMessageBox::question(this, tr("Redirect"),
-       //                           tr("Redirect to %1 ?").arg(redirectedUrl.toString()),
-       //                           QMessageBox::Yes | QMessageBox::No) == QMessageBox::No) {
-        //    downloadButton->setEnabled(true);
-       //     return;
-       // }
         setUrl(m_url.resolved(redirectionTarget.toUrl()));
         file = openFileForWrite(fi.absoluteFilePath());
         if (!file) {
-            //downloadButton->setEnabled(true);
             return;
         }
         startRequest();
         return;
     }
     emit finishedDownload();
-    //statusLabel->setText(tr("Downloaded %1 bytes to %2\nin\n%3")
-    //                     .arg(fi.size()).arg(fi.fileName(), QDir::toNativeSeparators(fi.absolutePath())));
-
-    //if (launchCheckBox->isChecked())
-    //    QDesktopServices::openUrl(QUrl::fromLocalFile(fi.absoluteFilePath()));
-    //downloadButton->setEnabled(true);
 }
 
 QFile *HttpDownload::openFileForWrite(const QString &fileName)

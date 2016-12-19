@@ -17,6 +17,7 @@ class EAItemList;
 static const QString EVENT ="event";
 static const QString CONSTRUCTION ="construction";
 static const QString SPEAKERS ="speakers";
+static const QString FIREBASE_URL = "https://eventapp-2d821.firebaseio.com/";
 
 //class EVENTAPPSHAREDSHARED_EXPORT EAContainer : public QQuickItem
 class  EAContainer : public QObject, public QQmlParserStatus
@@ -51,6 +52,10 @@ public:
     Q_INVOKABLE  bool loadNewEventApp(const QString& filename = "NewEvent");
     Q_INVOKABLE  bool loadEventApp();
     Q_INVOKABLE  bool saveEventApp(const QString &filename = "");
+    Q_INVOKABLE void uploadApp(const QString& eventKey);
+    Q_INVOKABLE void downloadApp(const QString& eventKey);
+
+
     void read(const QJsonObject &json);
     void write(QJsonObject &json);
     QString workingDirectory() const;
@@ -83,6 +88,8 @@ public slots:
     void setIsSaveJson(bool isSaveJson);
     void setWorkingDirectory(QString workingDirectory);
     void setVersion(int version);
+    void onResponseReady(QByteArray);
+    void onDataChanged(QString);
 
 private:
     static void append_eaItemLists(QQmlListProperty<EAItemList> *list

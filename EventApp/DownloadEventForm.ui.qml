@@ -7,65 +7,111 @@ Item {
     property alias downloadButton: downloadButton
     property alias progressBar: progressBar
     property alias quitButton: quitButton
+    property alias progressKeyDL: progressKeyDL
+    property alias downloadKeyBut: downloadKeyBut
+    property alias downloadFromKey: downloadFromKey
 
     ColumnLayout {
-        id: columnLayout1
-        x: 25
-        y: 20
-        width: 445
-        height: 139
+        id: columnLayout2
+        width: 100
+        height: 100
+
+        ColumnLayout {
+            id: columnLayout1
+            width: 445
+            height: 139
 
 
-        Label {
-            id: label1
-            width: 105
-            height: 40
-            text: qsTr("Dwonload url")
-            verticalAlignment: Text.AlignVCenter
-            font.pixelSize: 12
+            Label {
+                id: label1
+                width: 105
+                height: 40
+                text: qsTr("Dwonload from url")
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: 12
+            }
+
+            TextField {
+                id: urlText
+                width: 400
+                text: "https://www.dropbox.com/s/qvcmm683cq237ig/test2.json"
+                horizontalAlignment: Text.AlignLeft
+                Layout.fillWidth: true
+                placeholderText: qsTr("Text Field")
+            }
+
+
+            RowLayout {
+                id: rowLayout1
+                width: 100
+                height: 100
+                anchors.left: parent.left
+                anchors.leftMargin: -20
+
+
+                Button {
+                    id: downloadButton
+                    text: qsTr("Download from url")
+                }
+            }
+
+
+            ProgressBar {
+                id: progressBar
+                width: 400
+                antialiasing: true
+                visible: false
+                clip: false
+                value: 0
+            }
         }
 
-        TextField {
-            id: urlText
-            width: 400
-            //text: "https://www.dropbox.com/s/okzw27c57d3qy55/data.json"
-            //text: "https://www.dropbox.com/s/eydtij5yu12twq0/data1.json"
-            //text: "https://www.dropbox.com/s/34bfzm8retlgs5v/data4.json"
-            //text: "https://www.dropbox.com/s/oob06hm8txb7raf/test0.json"
-            //text: "https://www.dropbox.com/s/i3ha04beydsge0m/data5.json"
-            text: "https://www.dropbox.com/s/qvcmm683cq237ig/test2.json"
-            horizontalAlignment: Text.AlignLeft
-            Layout.fillWidth: true
-            placeholderText: qsTr("Text Field")
-        }
-
-
-        RowLayout {
-            id: rowLayout1
+        ColumnLayout {
+            id: columnLayout3
             width: 100
             height: 100
-            anchors.left: parent.left
-            anchors.leftMargin: -20
 
+            RowLayout {
+                id: rowLayout2
+                width: 100
+                height: 100
 
-            Button {
-                id: downloadButton
-                text: qsTr("Download")
+                Text {
+                    id: keyText
+                    text: qsTr("Download from key")
+                    font.pixelSize: 12
+                }
+
+                TextField {
+                    id: downloadFromKey
+                    text: qsTr("4455")
+                }
             }
-            Button {
-                id: quitButton
-                text: qsTr("Exit")
+
+            RowLayout {
+                id: rowLayout3
+                width: 100
+                height: 100
+
+                Button {
+                    id: downloadKeyBut
+                    text: qsTr("Download from key")
+                }
+            }
+
+            ProgressBar {
+                id: progressKeyDL
+                width: 400
+                antialiasing: true
+                visible: false
+                clip: false
+                value: 0
             }
         }
 
-
-        ProgressBar {
-            id: progressBar
-            width: 400
-            antialiasing: true
-            visible: false
-            clip: false
-            value: 0
+        Button {
+            id: quitButton
+            text: qsTr("Exit")
         }
     }
 }

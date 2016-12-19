@@ -54,11 +54,13 @@ ListView {
                 ,"title" : items[i].title
                 ,"displayText" : items[i].displayText
                 //,"showUrl" : "http://lllconf.co.uk/"//items[i].url
-                ,"showUrl" : items[i].urlString
+                ,"showUrl" : items[i].url
                 ,"picture" : picturePath
             }
+
             console.log("resetDataImageListModel i ", i);
             console.log("resetDataImageListModel dic", dic);
+            console.log("Url", dic.showUrl);
             dataModel.append(dic);
         }
     }

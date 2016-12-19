@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QtQuick.Extras 1.4
 import QtWebEngine 1.0
+import QtWebView 1.1
 import "dataList.js" as DataListJS
 
 Item {
@@ -92,15 +93,28 @@ Item {
         Text {
           visible: itemType === 2
           text: showUrl + "---" + title
-          width: details.width
+          anchors.fill: parent
+          //width: details.width
         }
-*/
+
         WebEngineView {
-            id: webView
+            id: webView1
             visible: itemType === 2
             y: 5; x:5
             width: background.width-10; height: background.height-10
-            url: showUrl //http://lllconf.co.uk/
+            //url: showUrl //http://lllconf.co.uk/
+            url: "http://lllconf.co.uk/"
+        }
+*/
+        WebView {
+            id: webView
+            //anchors.fill: parent
+            //width: 400; height: 600
+            width: background.width-10; height: background.height-10
+            visible: itemType === 2
+            y: 5; x:5
+            //url: showUrl
+            url: showUrlUrl
         }
 
       }

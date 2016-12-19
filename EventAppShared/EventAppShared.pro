@@ -23,7 +23,8 @@ SOURCES += eventappshared.cpp \
     picturelistimageprovider.cpp \
     eaitemlistbase.cpp \
     eaitemcollection.cpp \
-    eaitem.cpp
+    eaitem.cpp \
+    firebase.cpp
 
 HEADERS += eventappshared.h\
         eventappshared_global.h \
@@ -37,7 +38,8 @@ HEADERS += eventappshared.h\
     picturelistimageprovider.h \
     eaitemlistbase.h \
     eaitemcollection.h \
-    eaitem.h
+    eaitem.h \
+    firebase.h
 
 unix {
     target.path = /usr/lib

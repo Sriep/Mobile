@@ -19,6 +19,8 @@ static const QString emptyHeader = "{\"headerFields\":[]}";
 QJsonValue jsonValFromPixmap(const QPixmap & p);
 QPixmap pixmapFrom(const QJsonValue & val);
 
+
+
 class EAItemList : public EAItemListBase
 {
     Q_OBJECT
@@ -30,9 +32,13 @@ class EAItemList : public EAItemListBase
     Q_PROPERTY(QString dataList READ dataList WRITE setDataList NOTIFY dataListChanged)
 
     Q_PROPERTY(bool formatedList READ formatedList WRITE setFormatedList NOTIFY formatedListChanged)
+    Q_PROPERTY(int listType READ listType WRITE setListType NOTIFY listTypeChanged)
     Q_PROPERTY(QQmlListProperty<EAItem> items READ items)
     QList<EAItem*> m_eaItems;
 public:
+    enum ListType { High, Low, VeryHigh, VeryLow };
+    Q_ENUM(ListType)
+
     EAItemList();
     EAItemList(const QString& name);
     virtual ~EAItemList();
@@ -67,8 +73,8 @@ public:
     QString shortFormat() const;
     QString longFormat() const;
     QQmlListProperty<EAItem> items();
-
-    bool formatedList() const;
+    bool formatedList() const;    
+    int listType() const;
 
 signals:
     void titleFieldsChanged(QString titleFields);  
@@ -78,7 +84,8 @@ signals:
     void shortFormatChanged(QString shortFormat);
     void longFormatChanged(QString longFormat);
     void eaItemListChanged();
-    void formatedListChanged(bool formatedList);
+    void formatedListChanged(bool formatedList);    
+    void listTypeChanged(int listType);
 
 public slots:
     void setTitleFields(QString titleFields);
@@ -89,7 +96,8 @@ public slots:
     void setShowPhotos(bool showPhotos);    
     void setShortFormat(QString shortFormat);
     void setLongFormat(QString longFormat);
-    void setFormatedList(bool formatedList);
+    void setFormatedList(bool formatedList);    
+    void setListType(int listType);
 
 private:
     QStringList addHeaderFields(const QStringList &fields);
@@ -127,6 +135,7 @@ private:
 
     QQmlListProperty<EAItem> m_items;
     bool m_formatedList = true;
+    int m_listType;
 };
 
 #endif // EAITEMLIST_H

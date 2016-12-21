@@ -122,7 +122,7 @@ void EAContainer::uploadApp(const QString &eventKey)
     QJsonObject containerObj {{eventKey,  dataValue} };
     QJsonDocument uploadDoc(containerObj);
 
-    Firebase *firebase=new Firebase(FIREBASE_URL);
+    Firebase *firebase=new Firebase(firbaseUrl());
     firebase->setValue(uploadDoc, "PATCH");
 }
 
@@ -130,7 +130,7 @@ void EAContainer::downloadApp(const QString &eventKey)
 {
     clearEvent();
 
-    Firebase *firebase=new Firebase(FIREBASE_URL);
+    Firebase *firebase=new Firebase(firbaseUrl());
     firebase->child(eventKey);
     firebase->getValue();
     connect(firebase,SIGNAL(eventResponseReady(QByteArray)),
@@ -157,6 +157,15 @@ void EAContainer::onResponseReady(QByteArray data)
 void EAContainer::onDataChanged(QString data)
 {
     qDebug()<<data;
+}
+
+void EAContainer::setFirbaseUrl(QString firbaseUrl)
+{
+    if (m_firbaseUrl == firbaseUrl)
+        return;
+
+    m_firbaseUrl = firbaseUrl;
+    emit firbaseUrlChanged(firbaseUrl);
 }
 
 void EAContainer::read(const QJsonObject &json)
@@ -335,6 +344,11 @@ QQmlListProperty<EAItemList> EAContainer::eaItemLists()
 int EAContainer::version() const
 {
     return m_Version;
+}
+
+QString EAContainer::firbaseUrl() const
+{
+    return m_firbaseUrl;
 }
 
 //typedef QQmlListProperty::AppendFunction

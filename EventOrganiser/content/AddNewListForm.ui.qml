@@ -7,28 +7,99 @@ import "qrc:///shared"
 Item {
     property alias addListBut: addListBut
     property alias newListName: newListName
-    GroupBox {
-      id: groupBox1
-      width: 250; height: 250
-      Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-      title: qsTr("Add new list")
+    property alias listsCreated: listsCreated
+    property alias listType: listType
+    property alias mouseAreaLC: mouseAreaLC
+    property alias listsModel: listsModel
+    property alias newListBut: newListBut
+    property alias updateListBut: updateListBut
+    property alias deleteListBut: deleteListBut
 
-      ColumnLayout {
-        id: columnLayout1
-        width: 100
-        height: 100
+    ColumnLayout {
+        id: columnLayout2
+        width: 200; height: 200
 
+        ListView {
+            id: listsCreated
+            width: 110; height: 160
 
-        TextField {
-          id: newListName
-          text: ""
-          placeholderText: qsTr("New list title")
+            highlightFollowsCurrentItem: true
+            highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+            focus: true
+
+            model: ListModel {
+                id: listsModel
+                // Same model as eventAppMainPage.stackCtl.drawerView.drawerModel
+            }
+            delegate: Text {
+                height: 30
+                text: listName
+            }
+            MouseArea {
+                id: mouseAreaLC
+                anchors.fill: parent
+            }
         }
-        Button {
-          id: addListBut
-          enabled: newListName.text != ""
-          text: qsTr("+ Add")
+
+        GroupBox {
+            id: groupBox1
+            width: 250; height: 250
+            //Layout.alignment: Qt.AlignLeft| Qt.AlignTop
+            title: qsTr("Add new list")
+
+            ColumnLayout {
+                id: columnLayout1
+                width: 100
+                height: 100
+
+                ComboBox {
+                    id: listType
+                    currentIndex: 0
+                    model: [
+                        qsTr("Load csv"),
+                        qsTr("Manual entry"),
+                        qsTr("Feedback form")
+                    ]
+                }
+                TextField {
+                    id: newListName
+                    text: ""
+                    placeholderText: qsTr("New list title")
+                }
+
+                RowLayout {
+                    id: rowLayout1
+                    width: 100
+                    height: 100
+
+                    Button {
+                        id: newListBut
+                        text: qsTr("Clear")
+                        visible: false
+                    }
+
+                    Button {
+                        id: addListBut
+                        visible: false
+                        enabled: newListName.text !== "" && listType.currentIndex >= 0
+                        text: qsTr("+ Add")
+                    }
+
+                    Button {
+                        id: updateListBut
+                        text: qsTr("Update")
+                        visible: false
+                    }
+
+                    Button {
+                        id: deleteListBut
+                        text: qsTr("Delete")
+                        visible: false
+                    }
+
+                }
+            }
         }
-      }
     }
+
 }

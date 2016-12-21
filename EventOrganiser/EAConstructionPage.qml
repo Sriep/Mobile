@@ -1,4 +1,4 @@
-import QtQuick 2.6
+import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import Qt.labs.settings 1.0
@@ -19,6 +19,11 @@ EAConstructionPageForm {
 
     uploadBut.onClicked: eaContainer.uploadApp(downloadKey.text);
     downloadBut.onClicked: eaContainer.downloadApp(downloadKey.text);
+
+    //firebaseUrlTB.text: eaContainer.firebaseUrl
+    //firebaseUrlTB.onEditingFinished: {
+    //    eaContainer.firebaseUrl = firebaseUrlTB.text;
+    //}
 
     mouseArea1.onClicked:  {
         colorDialog.index = 0;

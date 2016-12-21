@@ -89,23 +89,7 @@ Item {
             //width: 50;  height: 50
             source: picture
         }
-/*
-        Text {
-          visible: itemType === 2
-          text: showUrl + "---" + title
-          anchors.fill: parent
-          //width: details.width
-        }
 
-        WebEngineView {
-            id: webView1
-            visible: itemType === 2
-            y: 5; x:5
-            width: background.width-10; height: background.height-10
-            //url: showUrl //http://lllconf.co.uk/
-            url: "http://lllconf.co.uk/"
-        }
-*/
         WebView {
             id: webView
             //anchors.fill: parent

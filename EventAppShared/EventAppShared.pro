@@ -24,7 +24,8 @@ SOURCES += eventappshared.cpp \
     eaitemlistbase.cpp \
     eaitemcollection.cpp \
     eaitem.cpp \
-    firebase.cpp
+    firebase.cpp \
+    eausers.cpp
 
 HEADERS += eventappshared.h\
         eventappshared_global.h \
@@ -39,7 +40,8 @@ HEADERS += eventappshared.h\
     eaitemlistbase.h \
     eaitemcollection.h \
     eaitem.h \
-    firebase.h
+    firebase.h \
+    eausers.h
 
 unix {
     target.path = /usr/lib

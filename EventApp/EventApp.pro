@@ -15,7 +15,8 @@ SOURCES += main.cpp \
     ../EventAppShared/eaitemlistbase.cpp \
     ../EventAppShared/eapropertylist.cpp \
     ../EventAppShared/eventappshared.cpp \
-    ../EventAppShared/firebase.cpp
+    ../EventAppShared/firebase.cpp \
+
 
 HEADERS += \
     ../EventAppShared/eainfo.h \
@@ -31,7 +32,8 @@ HEADERS += \
     ../EventAppShared/eapropertylist.h \
     ../EventAppShared/eventappshared_global.h \
     ../EventAppShared/eventappshared.h \
-    ../EventAppShared/firebase.h
+    ../EventAppShared/firebase.h \
+
 
 RESOURCES += qml.qrc \
    qmlShared.qrc

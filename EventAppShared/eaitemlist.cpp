@@ -231,6 +231,15 @@ void EAItemList::setFormatedList(bool formatedList)
     emit formatedListChanged(formatedList);
 }
 
+void EAItemList::setListType(int listType)
+{
+    if (m_listType == listType)
+        return;
+
+    m_listType = listType;
+    emit listTypeChanged(listType);
+}
+
 
 void EAItemList::setTitleFields(const QJsonArray &titleFields)
 {
@@ -520,6 +529,11 @@ QQmlListProperty<EAItem> EAItemList::items()
 bool EAItemList::formatedList() const
 {
     return m_formatedList;
+}
+
+int EAItemList::listType() const
+{
+    return m_listType;
 }
 
 //typedef QQmlListProperty::AppendFunction

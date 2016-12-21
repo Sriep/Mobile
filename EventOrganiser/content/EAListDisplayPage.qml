@@ -7,9 +7,6 @@ import EventAppData 1.0
 
 EAListDisplayPageForm {
     id: eaListDisplayPage
-   // property EAItemList featuredList: eventSpeakers
-    //featuredList: eaListDisplayPage.featuredList
-    //property EAItemList featuredList: eaContainer.eaItemLists[0];
     property var featuredList: eaContainer.eaItemLists[0];
 
     Connections {
@@ -60,17 +57,7 @@ EAListDisplayPageForm {
             }
         }
     }
-/*
-    listTypeCombo.onActivated: {
-        featuredList.formatedList
-                = listTypeCombo.currentIndex === 0;
-    }
 
-    listTypeCombo.currentIndex: featuredList.formatedList ? 0 : 1
-*/
-    //listTypeCombo.onFocusChanged: {
-    //    console.log("listTypeCombo focus changed")
-   // }
 }
 
 

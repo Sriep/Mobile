@@ -33,6 +33,7 @@ ApplicationWindow {
         EAConstructionPage {
             property alias eaConstruction: eaContainer.eaConstruction
             property alias dataFilename: eaContainer.dataFilename
+            property alias firbaseUrl: eaContainer.firbaseUrl
         }
 
         EAInfoPage {
@@ -45,6 +46,7 @@ ApplicationWindow {
             property alias dataFilename: eaContainer.dataFilename
             property alias featuredList: eaListDisplayPage.featuredList
         }
+
     }
 
     Settings {
@@ -59,6 +61,7 @@ ApplicationWindow {
         id: settingsData
         category: "data"
         property alias dataFilename: eaContainer.dataFilename
+        property alias firebaseUrl: eaContainer.firbaseUrl
     }
 }
 

@@ -59,8 +59,6 @@ EaldListForm {
     }
 
     mouseAreaLV.onClicked: {
-
-
         var index = itmesEntered.indexAt(mouse.x, mouse.y);
         itmesEntered.currentIndex = index;
         itemDataType.currentIndex = itemsModel.get(index).itemType;

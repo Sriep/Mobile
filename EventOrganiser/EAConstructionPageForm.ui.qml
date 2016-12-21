@@ -1,4 +1,4 @@
-import QtQuick 2.6
+import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import Qt.labs.settings 1.0
@@ -18,6 +18,7 @@ Item {
     property alias downloadBut: downloadBut
     property alias uploadBut: uploadBut
     property alias downloadKey: downloadKey
+    property alias firebaseUrlTB: firebaseUrlTB
     Flickable {
         Pane {
             id: eventNamePane
@@ -88,6 +89,25 @@ Item {
                             Button {
                                 id: downloadBut
                                 text: qsTr("Download")
+                            }
+                        }
+
+                        RowLayout {
+                            id: rowLayout3
+                            width: 100
+                            height: 100
+
+                            TextField {
+                                id: firebaseUrlTB
+                                //placeholderText: qsTr("Enter firebase url")
+                                text: settingsData.firebaseUrl//  qsTr("")
+                                onEditingFinished: eaContainer.firebaseUrl = text;// settingsData.firebaseUrl = text;
+                            }
+
+                            Text {
+                                id: text2
+                                text: qsTr("Firebase url")
+                                font.pixelSize: 12
                             }
                         } //RowLayout
                     } //ColumnLayout

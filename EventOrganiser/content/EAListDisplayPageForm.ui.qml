@@ -19,28 +19,7 @@ Item {
         spacing: 10
         x:10; y:10
         Column {
-           // width: 1100; height: 700
-            //anchors.top: myRect.anchors.bottom
-/*           Rectangle {
-                x:10
-                id: myRect
-                width: 500; height: 50
-                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                border.width : 2; border.color : "blue"
-                visible: listItemEntryStack.currentIndex >1
-                ComboBox {
-                    id: listTypeCombo
-                    width: 500; height: 50
-                    //height: listItemEntryStack.currentIndex >1 ? 50 : 0
-                    visible: listItemEntryStack.currentIndex >1
-                    //currentIndex: 0
-                    //currentIndex: eaListDisplayPage.featuredList.formatedList ? 0 : 1
-                    model: [
-                        qsTr("Formated list from csv"),
-                        qsTr("Manual creation"),
-                    ]
-                }//ComboBox
-            }  *///Rectangle
+
             clip: true
             Rectangle {
                 id: rectSL
@@ -66,6 +45,10 @@ Item {
                     EaldList {
                         id: thisItemList
                     }
+                    EaldItem {
+                        id: thisItem
+                    }
+
                     Rectangle {
                         color: 'blue'
                         implicitWidth: 200

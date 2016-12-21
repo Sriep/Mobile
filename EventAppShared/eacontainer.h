@@ -33,6 +33,8 @@ class  EAContainer : public QObject, public QQmlParserStatus
     Q_PROPERTY(bool isSaveJson READ isSaveJson WRITE setIsSaveJson NOTIFY isSaveJsonChanged)
     Q_PROPERTY(int version READ version WRITE setVersion NOTIFY versionChanged)
 
+    Q_PROPERTY(QString firbaseUrl READ firbaseUrl WRITE setFirbaseUrl NOTIFY firbaseUrlChanged)
+
     EAInfo* m_eaInfo;
     QString m_dataFilename;
     EAConstruction* m_eaConstruction;
@@ -66,8 +68,7 @@ public:
     bool isSaveJson() const;    
     QQmlListProperty<EAItemList> eaItemLists();
     int version() const;
-
-
+    QString firbaseUrl() const;
 
 signals:
     void eaInfoChanged(EAInfo* eaInfo);
@@ -78,8 +79,8 @@ signals:
     void workingDirectoryChanged(QString workingDirectory);
     void loadedEventApp();
     void eaItemListsChanged();
-
     void versionChanged(int version);
+    void firbaseUrlChanged(QString firbaseUrl);
 
 public slots:
     void setEAInfo(EAInfo* eaInfo);
@@ -90,6 +91,7 @@ public slots:
     void setVersion(int version);
     void onResponseReady(QByteArray);
     void onDataChanged(QString);
+    void setFirbaseUrl(QString firbaseUrl);
 
 private:
     static void append_eaItemLists(QQmlListProperty<EAItemList> *list
@@ -103,6 +105,7 @@ private:
     int nextItemListId = 0;
     int useNextItemListId();
 
+    QString m_firbaseUrl;
 };
 
 #endif // EVENTCONTAINER_H

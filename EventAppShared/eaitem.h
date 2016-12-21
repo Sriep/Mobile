@@ -18,6 +18,8 @@ class EAItem : public QQuickItem
 public:
     enum ItemType { Image=0, Document, Url };
     Q_ENUM(ItemType)
+    enum ListType { FromCsv=0, Manual, FeedBackForm, Users };
+    Q_ENUM(ListType)
 
     EAItem();
     explicit EAItem(int itemType, const QString& title, const QString& displayText = "");

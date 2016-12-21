@@ -19,13 +19,13 @@
         <file>content/FormatListForm.ui.qml</file>
         <file>content/FormatTextDelegate.qml</file>
         <file>content/InListCheckDelegate.qml</file>
-        <file>EASelectList.qml</file>
-        <file>EASelectListForm.ui.qml</file>
         <file>content/EaldFormatedListForm.ui.qml</file>
         <file>content/EaldFormatedList.qml</file>
         <file>content/EaldListForm.ui.qml</file>
         <file>content/EaldList.qml</file>
         <file>content/AddNewList.qml</file>
         <file>content/AddNewListForm.ui.qml</file>
+        <file>content/EaldItem.qml</file>
+        <file>content/EaldItemForm.ui.qml</file>
     </qresource>
 </RCC>

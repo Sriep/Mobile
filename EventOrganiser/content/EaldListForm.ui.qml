@@ -43,7 +43,6 @@ Item {
                 id: mouseAreaLV
                 anchors.fill: parent
             }
-
         }
 
         ComboBox {

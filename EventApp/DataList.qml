@@ -9,6 +9,7 @@ ListView {
     id: dataList
 
     property EAItemList eaLVItemList: undefined
+    property bool isExpanded: false
     property int temp: 54
 
     onEaLVItemListChanged: {
@@ -20,7 +21,17 @@ ListView {
 
     //property  alias dataModel: dataModel
     model: ListModel { id: dataModel }
-    delegate: DataListDelegate { }
+    delegate: DataListDelegate { id: thisDataDelgate
+        onStateChanged: {
+            //console.log("DataListDelegateForm state changed", state);
+            //var ise = state === "Details"
+            //console.log("before dataList.isExspanded", dataList.isExspanded);
+            dataList.isExpanded = state === "Details";
+            //console.log("after dataList.isExspanded", dataList.isExspanded);
+        }
+    }
+
+
 
     function resetDataListModel(dataModel, name, dataList) {
         dataModel.clear();

@@ -5,7 +5,9 @@ import QtQuick.Extras 1.4
 import "dataList.js" as DataListJS
 
 DLImageDelegateForm {
-//DataListDelegateForm {
+//DataListDelegateForm {    
+  id: imageDelegate
+
   topText.text: {
       return title;
   }
@@ -20,6 +22,13 @@ DLImageDelegateForm {
             ColorAnimation { property: "color"; duration: 500 }
             NumberAnimation { duration: 300; properties: "detailsOpacity,x,contentY,height,width" }
         }
+  }
+
+  maDataDelegate.onClicked: {
+      dataListImage.currentIndex = index;
+      imageDelegate.state = imageDelegate.state == 'Details' ? "" : "Details";
+      console.log("maDataDelegate index",index);
+      console.log("maDataDelegate listView.currentIndex",dataList.currentIndex);
   }
 
   photoImage.width: eaLVItemList.showPhotos ? 50 : 0

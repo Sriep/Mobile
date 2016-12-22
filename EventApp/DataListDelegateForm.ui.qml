@@ -6,16 +6,16 @@ import QtQuick.Extras 1.4
 import "dataList.js" as DataListJS
 
 Item {
-    id: dataDelegate
+
 
     // Create a property to contain the visibility of the details.
     // We can bind multiple element's opacity to this one property,
     // rather than having a "PropertyChanges" line for each element we
     // want to fade.
     property real detailsOpacity : 0
-
     width: dataList.width
     height: 70
+    property alias maDataDelegate: maDataDelegate
     property alias photoImage: photoImage
     property alias bottomText: bottomText
     property alias topText: topText
@@ -33,8 +33,9 @@ Item {
     // When clicked it changes mode to 'Details'.  If we are already
     // in Details mode, then no change will happen.
     MouseArea {
+        id: maDataDelegate
         anchors.fill: parent
-        onClicked: dataDelegate.state = dataDelegate.state == 'Details' ? "" : "Details";
+        //onClicked: dataDelegate.state = dataDelegate.state == 'Details' ? "" : "Details";
     }
 
     // Lay out the page: picture, title and ingredients at the top, and method at the

@@ -6,6 +6,7 @@ import EventAppData 1.0
 
 Item {
     property alias dataList: dataList
+    property alias dataDelegate: dataDelegate
     ListView {
         id: dataList
         width: parent ? parent.width : 400
@@ -16,6 +17,6 @@ Item {
         }
         property  alias dataModel: dataModel
         model: ListModel { id: dataModel   }
-        delegate: DataListDelegate { }
+        delegate: DataListDelegate { id: dataDelegate }
     }
 }

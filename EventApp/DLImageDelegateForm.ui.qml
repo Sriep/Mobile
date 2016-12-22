@@ -8,7 +8,6 @@ import QtWebView 1.1
 import "dataList.js" as DataListJS
 
 Item {
-    id: imageDelegate
 
     // Create a property to contain the visibility of the details.
     // We can bind multiple element's opacity to this one property,
@@ -18,6 +17,7 @@ Item {
 
     width: dataListImage.width
     height: 70
+    property alias maDataDelegate: maDataDelegate
     property alias largePhotoImage: largePhotoImage
     property alias bottomText: bottomText
     property alias photoImage: photoImage
@@ -37,8 +37,9 @@ Item {
     // When clicked it changes mode to 'Details'.  If we are already
     // in Details mode, then no change will happen.
     MouseArea {
+        id: maDataDelegate
         anchors.fill: parent
-        onClicked: imageDelegate.state = imageDelegate.state == 'Details' ? "" : "Details";
+        //onClicked: imageDelegate.state = imageDelegate.state == 'Details' ? "" : "Details";
     }
 
     // Lay out the page: picture, title and ingredients at the top, and method at the

@@ -12,6 +12,7 @@ ListDelegateForm {
         stackCtl.currentIndex = position + 2;
         console.log("mouseArea.onClicked position", position);
         //console.log("mouseArea onClicked count", count);
+        var sc = stackCtl;
         console.log("mouseArea onClicked title", title);
         toolBar.titleLabel.text = model.title;
     }

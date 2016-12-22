@@ -12,30 +12,29 @@ ListView {
     property int temp: 32
 
     property EAItemList eaLVItemList: undefined
-    property alias dataImageModel: dataImageModel
+    property bool isExpanded: false
+    property alias dataModel: dataModel
     onEaLVItemListChanged: {
         console.log("dataListImage eaItemList chnaged");
-        resetDataImageListModel(dataImageModel
+        resetDataImageListModel(dataModel
                            , eaLVItemList.listName
                            , eaLVItemList.items)
     }
 
-/*
-    eventAppMainPage.stackCtl[currentIndex]
-    eaLVItemList.onEaItemListChanged: {
-        console.log("dataListImage onEaItemListChanged");
-        resetDataImageListModel(dataImageModel
-                               , eaLVItemList.listName
-                               , eaLVItemList.items)
-    }
-*/
 
-    model: ListModel { id: dataImageModel }
-    //delegate: DataListDelegate { }
-    delegate: DLImageDelegate { }
+    model: ListModel { id: dataModel }
+    delegate: DLImageDelegate { id: thisDataDelgate
+        onStateChanged: {
+          //  console.log("DataListDelegateForm state changed", state);
+           // var ise = state === "Details"
+           // console.log("before dataList.isExspanded", dataList.isExspanded);
+            dataListImage.isExpanded = state === "Details";
+            //console.log("after dataList.isExspanded", dataList.isExspanded);
+        }
+    }
 
     function resetDataImageLM() {
-        resetDataImageListModel(dataImageModel
+        resetDataImageListModel(dataModel
                            , eaLVItemList.listName
                            , eaLVItemList.items);
     }

@@ -45,6 +45,7 @@ Item {
             }
         }
 
+        //Item{
         ComboBox {
             id: itemDataType
             currentIndex: 0
@@ -54,7 +55,6 @@ Item {
                 qsTr("External url")
             ]
         }
-
         RowLayout {
             id: rowLayout1
             width: 100
@@ -70,7 +70,6 @@ Item {
                 font.pixelSize: 12
             }
         }
-
         RowLayout {
             id: rowLayout2
             width: 100
@@ -86,7 +85,6 @@ Item {
                 font.pixelSize: 12
             }
         }
-
         RowLayout {
             id: rowLayout3
             width: 100
@@ -102,7 +100,6 @@ Item {
                 font.pixelSize: 12
             }
         }
-
         RowLayout {
             id: rowLayout4
             width: 100
@@ -123,7 +120,6 @@ Item {
             //visible: false
             text: qsTr("Switch from csv")
         }
-
         RowLayout {
             id: rowLayout5
             width: 100
@@ -144,5 +140,6 @@ Item {
                 text: qsTr("Delete")
             }
         }
+       // }
     }
 }

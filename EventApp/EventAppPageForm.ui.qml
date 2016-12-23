@@ -28,6 +28,8 @@ Page{
         anchors.fill: parent
         property int topDrawerId: 0
         property int loadEventId: 1
+        property int userLoginId: 2
+        property int startDrawerId: 3
         property alias drawerModel: drawerModel
         ListView {
             id: drawerView
@@ -43,6 +45,10 @@ Page{
         DownloadEvent {
             id: downloadEvent
         }
+        UserLogin {
+            id: userLogin
+        }
+
         Connections {
             target: eaContainer
             onEaItemListsChanged: refreshLists(stackCtl, drawerModel)

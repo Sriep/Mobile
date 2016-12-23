@@ -16,7 +16,8 @@ EventAppPageForm {
        , "dummy"
     );
 
-    for ( var index = stack.count-1 ; index > 1 ; index-- ) {
+    for ( var index = stack.count-1 ; index >= stack.startDrawerId ; index-- ) {
+    //for ( var index = stack.count-1 ; index > 1 ; index-- ) {
       var child = stack.children[index];
       child.parent = dummy;
       console.log("stack count: ", stack.count);

@@ -54,5 +54,13 @@
         <file>DataListImage.qml</file>
         <file>DLImageDelegate.qml</file>
         <file>DLImageDelegateForm.ui.qml</file>
+        <file>UserLogin.qml</file>
+        <file>UserLoginForm.ui.qml</file>
+        <file>images/user-shape_128.png</file>
+        <file>images/user-shape_64.png</file>
+        <file>images/user-shape_32.png</file>
+        <file>images/user-shape_32White.png</file>
+        <file>images/user-shape_16.png</file>
+        <file>images/user-shape_24.png</file>
     </qresource>
 </RCC>

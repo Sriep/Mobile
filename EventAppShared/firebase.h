@@ -21,8 +21,12 @@ public:
     Firebase(QString hostName);
     void init();
     void setValue(QString str);
-    void setValue(QJsonDocument jsonDoc, const QString& verb = "PATCH");
+    void setValue(QJsonDocument jsonDoc
+                  , const QString& verb = "PATCH"
+                  , const QString &endPath = "");
     void getValue();
+    void getValue(QUrl url);
+    QUrl getPath();
     void deleteValue();
     void setToken(QString);
     void listenEvents();
@@ -42,7 +46,7 @@ private:
     QNetworkAccessManager *manager;
     QString currentNode;
     QString latestNode;
-    QString buildPath(int);
+    QString buildPath(int, const QString endPath = "");
     QString createJson(QString);
     void open(const QUrl &url);
     QByteArray trimValue(const QByteArray &line) const;

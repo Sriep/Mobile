@@ -12,6 +12,7 @@
 #include "eainfo.h"
 #include "eaconstruction.h"
 #include "eaitemlist.h"
+#include "eauser.h"
 
 EAContainer::EAContainer()
 {
@@ -116,6 +117,7 @@ bool EAContainer::saveEventApp(const QString& filename)
 
 void EAContainer::uploadApp(const QString &eventKey)
 {
+    setEventKey(eventKey);
     QJsonObject dataObject;
     write(dataObject);
     QJsonValue dataValue(dataObject);
@@ -129,9 +131,9 @@ void EAContainer::uploadApp(const QString &eventKey)
 void EAContainer::downloadApp(const QString &eventKey)
 {
     clearEvent();
+    setEventKey(eventKey);
+    Firebase *firebase=new Firebase(firbaseUrl(), eventKey);
 
-    Firebase *firebase=new Firebase(firbaseUrl());
-    firebase->child(eventKey);
     firebase->getValue();
     connect(firebase,SIGNAL(eventResponseReady(QByteArray)),
             this,SLOT(onResponseReady(QByteArray)));
@@ -147,9 +149,10 @@ void EAContainer::onResponseReady(QByteArray data)
 
     QJsonDocument loadDoc = QJsonDocument::fromJson(data);
     QJsonObject topObj = loadDoc.object();
-    QJsonObject mainData = topObj.begin().value().toObject();
+    //QJsonObject mainData = topObj.begin().value().toObject();
+    //read(mainData);
 
-    read(mainData);
+    read(topObj);
     qDebug() << "EAContainer::downloadEventApp finished";
     emit eaItemListsChanged();
 }
@@ -166,6 +169,25 @@ void EAContainer::setFirbaseUrl(QString firbaseUrl)
 
     m_firbaseUrl = firbaseUrl;
     emit firbaseUrlChanged(firbaseUrl);
+}
+
+void EAContainer::setUser(EAUser* user)
+{
+    if (m_user == user)
+        return;
+
+    m_user = user;
+    m_user->setEaContainer(this);
+    emit userChanged(user);
+}
+
+void EAContainer::setEventKey(QString eventKey)
+{
+    if (m_eventKey == eventKey)
+        return;
+
+    m_eventKey = eventKey;
+    emit eventKeyChanged(eventKey);
 }
 
 void EAContainer::read(const QJsonObject &json)
@@ -349,6 +371,19 @@ int EAContainer::version() const
 QString EAContainer::firbaseUrl() const
 {
     return m_firbaseUrl;
+}
+
+EAUser* EAContainer::user()
+{
+    if (!m_user)
+        m_user = new EAUser(this);
+
+    return m_user;
+}
+
+QString EAContainer::eventKey() const
+{
+    return m_eventKey;
 }
 
 //typedef QQmlListProperty::AppendFunction

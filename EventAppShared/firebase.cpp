@@ -119,10 +119,12 @@ void Firebase::setValue(QString strVal)
     buffer->close();
 }
 
-void Firebase::setValue(QJsonDocument jsonDoc, const QString &verb)
+void Firebase::setValue(QJsonDocument jsonDoc
+                        , const QString &verb
+                        , const QString& endPath)
 {
     //Json data creation
-    QNetworkRequest request(buildPath(1));
+    QNetworkRequest request(buildPath(1, endPath));
     request.setHeader(QNetworkRequest::ContentTypeHeader,
                       "application/x-www-form-urlencoded");
     QByteArray jsonBA = jsonDoc.toJson(QJsonDocument::Compact);
@@ -150,6 +152,12 @@ void Firebase::getValue()
     QNetworkRequest request(buildPath(0));
     manager->get(request);
 }
+void Firebase::getValue(QUrl url)
+{
+    QNetworkRequest request(url);
+    manager->get(request);
+}
+
 void Firebase::listenEvents()
 {
     open(buildPath(0));
@@ -164,7 +172,12 @@ QString Firebase::createJson(QString str)
     QString data=QString(QString("{").append("\"").append(latestNode).append("\"").append(":").append("\"").append(str).append("\"").append(QString("}")));
     return data;
 }
-QString Firebase::buildPath(int mode)
+
+QUrl Firebase::getPath()
+{
+    return QUrl(buildPath(0));
+}
+QString Firebase::buildPath(int mode, const QString endPath)
 {
     QString destination="";
     if(mode)
@@ -173,7 +186,7 @@ QString Firebase::buildPath(int mode)
         //destination
         //        .append(host)
         //        .append("/.json");
-        destination .append(host).append(".json");
+        destination .append(host).append(endPath).append(".json");
     }
     else
     {

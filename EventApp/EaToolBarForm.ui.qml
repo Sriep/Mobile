@@ -9,6 +9,9 @@ ToolBar {
     property alias drawerButton: drawerButton
     property alias menuButton: menuButton
     property alias titleLabel: titleLabel
+    property alias userBut: userBut
+
+
     RowLayout {
         spacing: 20
         anchors.fill: parent
@@ -34,6 +37,16 @@ ToolBar {
         }
 
         ToolButton {
+            id: userBut
+            contentItem: Image {
+                fillMode: Image.Pad
+                horizontalAlignment: Image.AlignHCenter
+                verticalAlignment: Image.AlignVCenter
+                source:  "qrc:///shared/images/user-shape_16.png"
+            }
+        }
+
+        ToolButton {
             id: menuButton
             contentItem: Image {
                 fillMode: Image.Pad
@@ -44,5 +57,6 @@ ToolBar {
 
         }
     }
+
 }
 

@@ -8,6 +8,10 @@ EaToolBarForm {
         drawer.open()
     }
 
+    userBut.onClicked: {
+
+    }
+
     menuButton.onClicked: optionsMenu.open()
     Menu {
         id: optionsMenu
@@ -20,8 +24,9 @@ EaToolBarForm {
             onTriggered: stackCtl.currentIndex = stackCtl.loadEventId;
         }
         MenuItem {
-            text: qsTr("Settings")
-            onTriggered: settingsPopup.open()
+            text: qsTr("Login")
+            //onTriggered: settingsPopup.open()
+            onTriggered: stackCtl.currentIndex = stackCtl.userLoginId;
         }
         MenuItem {
             text: qsTr("About")
@@ -50,9 +55,8 @@ EaToolBarForm {
                 onClicked: {
                     if (menuListView.currentIndex != index) {
                         menuListView.currentIndex = index;
-                        stackCtl.currentIndex = position + 2;
+                        stackCtl.currentIndex = position + stackCtl.startDrawerId
                         titleLabel.text = model.title
-                        //stackView.replace(model.source)
                     }
                     drawer.close();
                 }

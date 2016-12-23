@@ -9,9 +9,8 @@ ListDelegateForm {
     nextImage.source: "qrc:///shared/images/navigation_next_item.png"
 
     mouseArea.onClicked: {
-        stackCtl.currentIndex = position + 2;
+        stackCtl.currentIndex = position + stackCtl.startDrawerId
         console.log("mouseArea.onClicked position", position);
-        //console.log("mouseArea onClicked count", count);
         var sc = stackCtl;
         console.log("mouseArea onClicked title", title);
         toolBar.titleLabel.text = model.title;

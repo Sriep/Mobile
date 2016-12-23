@@ -1,5 +1,6 @@
 # += qml quick
 QT += quick quickcontrols2
+QT += qml quick webview
 CONFIG += c++11
 
 SOURCES += main.cpp \
@@ -11,11 +12,11 @@ SOURCES += main.cpp \
     ../EventAppShared/csv.cpp \
     ../EventAppShared/picturelistimageprovider.cpp \
     ../EventAppShared/eaitem.cpp \
-    ../EventAppShared/eaitemcollection.cpp \
     ../EventAppShared/eaitemlistbase.cpp \
     ../EventAppShared/eapropertylist.cpp \
     ../EventAppShared/eventappshared.cpp \
     ../EventAppShared/firebase.cpp \
+    ../EventAppShared/eauser.cpp
 
 
 HEADERS += \
@@ -27,12 +28,12 @@ HEADERS += \
     ../EventAppShared/csv.h \
     ../EventAppShared/picturelistimageprovider.h \
     ../EventAppShared/eaitem.h \
-    ../EventAppShared/eaitemcollection.h \
     ../EventAppShared/eaitemlistbase.h \
     ../EventAppShared/eapropertylist.h \
     ../EventAppShared/eventappshared_global.h \
     ../EventAppShared/eventappshared.h \
     ../EventAppShared/firebase.h \
+    ../EventAppShared/eauser.h
 
 
 RESOURCES += qml.qrc \

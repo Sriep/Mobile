@@ -12,6 +12,7 @@
 class EAInfo;
 class EAConstruction;
 class EAItemList;
+class EAUser;
 //enum SaveFormat {Json, Binary };
 
 static const QString EVENT ="event";
@@ -32,6 +33,8 @@ class  EAContainer : public QObject, public QQmlParserStatus
     Q_PROPERTY(QString dataFilename READ dataFilename WRITE setDataFilename NOTIFY dataFilenameChanged)
     Q_PROPERTY(bool isSaveJson READ isSaveJson WRITE setIsSaveJson NOTIFY isSaveJsonChanged)
     Q_PROPERTY(int version READ version WRITE setVersion NOTIFY versionChanged)
+    Q_PROPERTY(EAUser* user READ user WRITE setUser NOTIFY userChanged)
+    Q_PROPERTY(QString eventKey READ eventKey WRITE setEventKey NOTIFY eventKeyChanged)
 
     Q_PROPERTY(QString firbaseUrl READ firbaseUrl WRITE setFirbaseUrl NOTIFY firbaseUrlChanged)
 
@@ -41,6 +44,7 @@ class  EAContainer : public QObject, public QQmlParserStatus
     bool m_isSaveJson = true;
     QString m_workingDirectory = QCoreApplication::applicationDirPath();    
     QList<EAItemList*> m_eaItemLists;
+    EAUser* m_user = NULL;
 
 public:
     EAContainer();
@@ -57,7 +61,6 @@ public:
     Q_INVOKABLE void uploadApp(const QString& eventKey);
     Q_INVOKABLE void downloadApp(const QString& eventKey);
 
-
     void read(const QJsonObject &json);
     void write(QJsonObject &json);
     QString workingDirectory() const;
@@ -68,7 +71,10 @@ public:
     bool isSaveJson() const;    
     QQmlListProperty<EAItemList> eaItemLists();
     int version() const;
-    QString firbaseUrl() const;
+    QString firbaseUrl() const;    
+    EAUser *user();
+    QString eventKey() const;
+
 
 signals:
     void eaInfoChanged(EAInfo* eaInfo);
@@ -81,6 +87,8 @@ signals:
     void eaItemListsChanged();
     void versionChanged(int version);
     void firbaseUrlChanged(QString firbaseUrl);
+    void userChanged(EAUser* user);
+    void eventKeyChanged(QString eventKey);
 
 public slots:
     void setEAInfo(EAInfo* eaInfo);
@@ -89,9 +97,12 @@ public slots:
     void setIsSaveJson(bool isSaveJson);
     void setWorkingDirectory(QString workingDirectory);
     void setVersion(int version);
+    void setFirbaseUrl(QString firbaseUrl);
+    void setUser(EAUser *user);
+    void setEventKey(QString eventKey);
+
     void onResponseReady(QByteArray);
     void onDataChanged(QString);
-    void setFirbaseUrl(QString firbaseUrl);
 
 private:
     static void append_eaItemLists(QQmlListProperty<EAItemList> *list
@@ -105,7 +116,8 @@ private:
     int nextItemListId = 0;
     int useNextItemListId();
 
-    QString m_firbaseUrl;
+    QString m_firbaseUrl = "https://eventapp-2d821.firebaseio.com/";
+    QString m_eventKey;
 };
 
 #endif // EVENTCONTAINER_H

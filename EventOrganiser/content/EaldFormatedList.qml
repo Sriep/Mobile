@@ -55,7 +55,8 @@ EaldFormatedListForm {
     }
 
     deleteList.onPressed: {
-        var index = ldpEventAppPage.stackCtl.currentIndex-2
+        var offset = ldpEventAppPage.stackCtl.startDrawerId;
+        var index = ldpEventAppPage.stackCtl.currentIndex-offset
         if (index >= 0) {
             eaContainer.deleteItemList(index);
             ldpEventAppPage.sstackCtl.currentIndex = stackCtl.topDrawerId;
@@ -63,28 +64,40 @@ EaldFormatedListForm {
     }
 
     switchManual.onPressed: {
-        eaListDisplayPage.featuredList.formatedList = false;
+        if (eaListDisplayPage.featuredList !== undefined)
+            eaListDisplayPage.featuredList.formatedList = false;
         listItemEntryStack.currentIndex = 2;
     }
 
     loadPhotosBut.onClicked: {
         console.log("In loadPotos");
-        eaListDisplayPage.featuredList.showPhotos = usePhotos.checked;
-        var format = imageFilenameFormat.text;
-        eaListDisplayPage.featuredList.loadPhotos(format);
+        if (eaListDisplayPage.featuredList !== undefined)   {
+            eaListDisplayPage.featuredList.showPhotos = usePhotos.checked;
+            var format = imageFilenameFormat.text;
+            eaListDisplayPage.featuredList.loadPhotos(format);
+        }
     }
 
     topTextArea.text: {
-        //console.log("topTextArea.text:: ");
-        return eaListDisplayPage.featuredList.shortFormat;
-        //console.log("topTextArea: ", text );
+        if (eaListDisplayPage.featuredList !== undefined)
+            return eaListDisplayPage.featuredList.shortFormat;
+        else
+            return "";
     }
 
     bottomTextArea.text: {
-        return eaListDisplayPage.featuredList.longFormat;
+        if (eaListDisplayPage.featuredList !== undefined)
+            return eaListDisplayPage.featuredList.longFormat;
+        else
+            return "";
     }
 
-    usePhotos.checked: eaListDisplayPage.featuredList.showPhotos
+    usePhotos.checked: {
+        if (eaListDisplayPage.featuredList !== undefined)
+           return eaListDisplayPage.featuredList.showPhotos;
+        else
+            return false;
+    }
 
     //usePhotos.checked: featuredList.showPhotos
     //usePhotos.onCheckedChanged: featuredList.showPhotos = usePhotos.checked

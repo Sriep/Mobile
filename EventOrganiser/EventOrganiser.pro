@@ -1,6 +1,5 @@
 #QT += qml quick
 QT += quick quickcontrols2
-QT += webengine
 QT += qml quick webview
 CONFIG += c++11
 
@@ -15,7 +14,8 @@ SOURCES += main.cpp \
     ../EventAppShared/eaitemlistbase.cpp \
     ../EventAppShared/eaitem.cpp \
     ../EventAppShared/firebase.cpp \
-    ../EventAppShared/eauser.cpp
+    ../EventAppShared/eauser.cpp \
+    ../EventAppShared/eaquestion.cpp
 
 HEADERS += \
     ../EventAppShared/eainfo.h \
@@ -29,7 +29,8 @@ HEADERS += \
     ../EventAppShared/eaitemlistbase.h \
     ../EventAppShared/eaitem.h \
     ../EventAppShared/firebase.h \
-    ../EventAppShared/eauser.h
+    ../EventAppShared/eauser.h \
+    ../EventAppShared/eaquestion.h
 
 RESOURCES += qml.qrc \
     ../EventApp/qmlShared.qrc

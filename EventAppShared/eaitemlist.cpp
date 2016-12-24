@@ -376,6 +376,9 @@ bool EAItemList::insertListItem(int index
     case EAItem::ItemType::Url:
         newItem = new EAItem(title, QUrl(url));
         break;
+    case EAItem::ItemType::Questions:
+        newItem = new EAItem(itemType, title);
+        break;
     default:
         return false;
     }

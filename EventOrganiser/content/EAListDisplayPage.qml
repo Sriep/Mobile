@@ -48,20 +48,22 @@ EAListDisplayPageForm {
     Connections {
         target: ldpEventAppPage.stackCtl
         onCurrentIndexChanged: {           
-            var newIndex = ldpEventAppPage.stackCtl.currentIndex-2;//if (newIndex>=0)
+            //var newIndex = ldpEventAppPage.stackCtl.currentIndex-2;//if (newIndex>=0)
+            var offset = ldpEventAppPage.stackCtl.startDrawerId;
+            var newIndex = ldpEventAppPage.stackCtl.currentIndex-offset;
             setDisplayPage(newIndex);
         }
     }
 
     Connections {
         target: ldpEventAppPage.stackCtl.children[ldpEventAppPage.stackCtl.currentIndex]
-        onIsExpandedChanged: {
+        onIsExpandedChanged: {            
             console.log("In EAListDisplayPageForm onIsExspandedChanged");
             var eventAppIndex = ldpEventAppPage.stackCtl.currentIndex;
             var listCtl = ldpEventAppPage.stackCtl.children[eventAppIndex];
             var isExpanded = listCtl.isExpanded;
-            var temp = listCtl.temp;
-            var drawerIndex = ldpEventAppPage.stackCtl.currentIndex-2;
+            var offset = ldpEventAppPage.stackCtl.startDrawerId;
+            var drawerIndex = ldpEventAppPage.stackCtl.currentIndex-offset;
             if (isExpanded && drawerIndex>=0) {
                 listItemEntryStack.currentIndex = 3;
                 var itemIndex = listCtl.currentIndex;

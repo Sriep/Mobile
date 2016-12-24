@@ -23,13 +23,19 @@ ListView {
 
 
     model: ListModel { id: dataModel }
-    delegate: DLImageDelegate { id: thisDataDelgate
+    delegate:    DLImageDelegate { id: thisDataDelgate
         onStateChanged: {
-          //  console.log("DataListDelegateForm state changed", state);
-           // var ise = state === "Details"
-           // console.log("before dataList.isExspanded", dataList.isExspanded);
             dataListImage.isExpanded = state === "Details";
-            //console.log("after dataList.isExspanded", dataList.isExspanded);
+            console.log("DLImageDelegate", index);
+            popQuestionList(eaLVItemList.items[index]);
+        }
+
+        Connections {
+            target: eaLVItemList.items[index]
+            onEaQuestionsChanged: {
+                console.log("DLImageDelegate", index);
+                popQuestionList(eaLVItemList.items[index]);
+            }
         }
     }
 
@@ -56,7 +62,6 @@ ListView {
                 ,"showUrl" : items[i].url
                 ,"picture" : picturePath
             }
-
             console.log("resetDataImageListModel i ", i);
             console.log("resetDataImageListModel dic", dic);
             console.log("Url", dic.showUrl);

@@ -33,6 +33,7 @@ Page{
         property alias drawerModel: drawerModel
         ListView {
             id: drawerView
+            property bool isExpanded: false
             anchors.fill: parent
             delegate: ListDelegate {
                 id: drawerDelegate

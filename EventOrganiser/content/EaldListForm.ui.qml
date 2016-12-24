@@ -17,6 +17,7 @@ Item {
     property alias mouseAreaLV: mouseAreaLV
     property alias deleteBut: deleteBut
     property alias updateItem: updateItem
+    property alias clearBut: clearBut
 
     ColumnLayout {
         id: columnLayout1
@@ -52,7 +53,8 @@ Item {
             model: [
                 qsTr("Image"),
                 qsTr("Document"),
-                qsTr("External url")
+                qsTr("External url"),
+                qsTr("Questions")
             ]
         }
         RowLayout {
@@ -138,6 +140,11 @@ Item {
             Button {
                 id: deleteBut
                 text: qsTr("Delete")
+            }
+
+            Button {
+                id: clearBut
+                text: qsTr("Clear")
             }
         }
        // }

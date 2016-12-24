@@ -45,13 +45,23 @@ EaldListForm {
     }
 
     updateItem.onPressed: {
-        eaItem = eventList.items[i]
+        eaItem = eventList.items[i];
+        popItemList(eaListDisplayPage.featuredList);
     }
 
     deleteBut.onPressed: {
         itemsModel.remove(itmesEntered.currentIndex);
+        popItemList(eaListDisplayPage.featuredList);
     }
 
+    clearBut.onPressed: {
+        itmesEntered.currentIndex = -1;
+        itemDataType.currentIndex = -1;
+        itemTitle.text = "";
+        itemData.text = ""
+        textFilename.text = "";
+        urlItem.text = "";
+    }
 
     switchFormat.onPressed: {
         eaListDisplayPage.featuredList.formatedList = true;

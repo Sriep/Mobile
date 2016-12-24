@@ -17,10 +17,14 @@ Item {
 
     width: dataListImage.width
     height: 70
+    property alias mouseAreaQLV: mouseAreaQLV
+    property alias questionsList: questionsList
     property alias maDataDelegate: maDataDelegate
     property alias largePhotoImage: largePhotoImage
     property alias bottomText: bottomText
     property alias photoImage: photoImage
+    property alias questionsModel: questionsModel
+
     //property alias bottomText: bottomText
     property alias topText: topText
 
@@ -78,28 +82,56 @@ Item {
         contentHeight: bottomText.height
         clip: true
         x:5
-        Text {
-          id: bottomText;
-          visible: itemType === 1
-          wrapMode: Text.WordWrap;
-          width: details.width
-        }
-        Image {
-            visible: itemType === 0
-            id: largePhotoImage
-            //width: 50;  height: 50
-            source: picture
-        }
+        StackLayout {
+            id: itemStackCtl
+            currentIndex: itemType
+            Image {
+                id: largePhotoImage
+                source: picture
+            }
+            Text {
+              id: bottomText;
+              wrapMode: Text.WordWrap;
+              width: details.width
+            }
 
-        WebView {
-            id: webView
-            //anchors.fill: parent
-            //width: 400; height: 600
-            width: background.width-10; height: background.height-10
-            visible: itemType === 2
-            y: 5; x:5
-            //url: showUrl
-            url: showUrlUrl
+            WebView {
+                id: webView
+                width: background.width-10; height: background.height-10
+                y: 5; x:5
+                url: showUrlUrl
+            }
+
+            ListView {
+                id: questionsList
+                model: ListModel {
+                    id: questionsModel
+                }
+                delegate: Item {
+                    // A simple rounded rectangle for the background
+                    Rectangle {
+                        //id: background
+                        id: itemBackground
+                        x: 2; y: 2; width: parent.width - x*2; height: parent.height - y*2
+                        color: "ivory"
+                        border.color: "orange"
+                        radius: 5
+                    }
+                    ColumnLayout {
+                        Text {
+                            height: 30
+                            text: question
+                        }
+                        TextField {
+                            id: answer
+                        }
+                    }
+                }
+                MouseArea {
+                    id: mouseAreaQLV
+                    anchors.fill: parent
+                }
+            }
         }
 
       }

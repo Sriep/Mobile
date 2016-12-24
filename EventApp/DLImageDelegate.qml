@@ -5,8 +5,9 @@ import QtQuick.Extras 1.4
 import "dataList.js" as DataListJS
 
 DLImageDelegateForm {
-//DataListDelegateForm {    
+//DataListDelegateForm {
   id: imageDelegate
+  property int test: 76
 
   topText.text: {
       return title;
@@ -28,9 +29,23 @@ DLImageDelegateForm {
       dataListImage.currentIndex = index;
       imageDelegate.state = imageDelegate.state == 'Details' ? "" : "Details";
       console.log("maDataDelegate index",index);
-      console.log("maDataDelegate listView.currentIndex",dataList.currentIndex);
   }
 
   photoImage.width: eaLVItemList.showPhotos ? 50 : 0
+
+  function popQuestionList (item) { // model=questionsModel
+      console.log("Start popItemList");
+      questionsModel.clear();
+      var questionCount = item.questions.length;
+      for ( var i=0 ; i<questionCount ; i++ )
+      {
+          var eaQuestion = item.questions[i];
+          var dic = {
+              "questionType" : eaQuestion.itemType
+              , "question" : eaQuestion.question
+          };
+          questionsModel.append(dic);
+      }
+  }
 
 }

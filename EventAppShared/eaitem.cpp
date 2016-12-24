@@ -1,4 +1,8 @@
+#include <QJsonObject>
+#include <QJsonArray>
+
 #include "eaitem.h"
+#include "eaquestion.h"
 
 EAItem::EAItem()
 {
@@ -27,6 +31,13 @@ void EAItem::read(const QJsonObject &json)
     setDisplayText(json["displayText"].toString());
     setUrl(json["url"].toString());
 
+    QJsonArray questionsArray = json["questions"].toArray();
+    for (int i = 0; i < questionsArray.size(); ++i) {
+        QJsonObject readJsonObject = questionsArray[i].toObject();
+        EaQuestion* newQuestion = new EaQuestion();
+        newQuestion->read(readJsonObject);
+        m_eaQuestions.append(newQuestion);
+    }
 
     id = json["id"].toInt();
     version = json["version"].toInt();
@@ -39,6 +50,18 @@ void EAItem::write(QJsonObject &json)
     json["title"] = title();
     json["displayText"] = displayText();
     json["url"] = url().url();
+
+    QJsonArray questionsArray;
+    foreach (EaQuestion* question, m_eaQuestions)
+    {
+        {
+            QJsonObject questionObject;
+            question->write(questionObject);
+            questionsArray.append(questionObject);
+        }
+
+    }
+    json["questions"] = questionsArray;
 
     json["id"] = id;
     json["version"] = ++version;
@@ -73,6 +96,30 @@ QString EAItem::urlString() const
 {
     return m_url.url();
     //return m_urlString;
+}
+
+QQmlListProperty<EaQuestion> EAItem::questions()
+{
+    return QQmlListProperty<EaQuestion>(this
+                                        , 0
+                                        , &EAItem::append_eaQuestion
+                                        , &EAItem::count_eaQuestion
+                                        , &EAItem::at_eaQuestion
+                                        , &EAItem::clear_eaQuestion
+                                        );
+}
+
+void EAItem::addTextQuestion(const QString &questionText, int index)
+{
+    EaQuestion* newQuestion = new EaQuestion();
+    newQuestion->setQuestionType(EaQuestion::QuestionType::Text);
+    newQuestion->setQuestion(questionText);
+
+    if ( index <0 || index > m_eaQuestions.count())
+         m_eaQuestions.append(newQuestion);
+    else
+        m_eaQuestions.insert(index, newQuestion);
+    emit eaQuestionsChanged();
 }
 
 void EAItem::setItemType(int itemType)
@@ -128,3 +175,74 @@ void EAItem::setUrlString(QString urlString)
     m_urlString = urlString;
     emit urlStringChanged(urlString);
 }
+
+
+//typedef QQmlListProperty::AppendFunction
+//Synonym for void (*)(QQmlListProperty<T> *property, T *value).
+//Append the value to the list property.
+void EAItem::append_eaQuestion(QQmlListProperty<EaQuestion> *list
+                                     , EaQuestion *itemList)
+{
+    EAItem *eaItemColl = qobject_cast<EAItem *>(list->object);
+    if (itemList) {
+        //itemList->setParentItem(eaContainer); //???
+        eaItemColl->m_eaQuestions.append(itemList);
+    }
+}
+
+//typedef QQmlListProperty::CountFunction
+//Synonym for int (*)(QQmlListProperty<T> *property).
+//Return the number of elements in the list property.
+int EAItem::count_eaQuestion(QQmlListProperty<EaQuestion> *list)
+{
+    EAItem *eaItemColl = qobject_cast<EAItem *>(list->object);
+    return eaItemColl->m_eaQuestions.count();
+}
+
+//typedef QQmlListProperty::AtFunction
+//Synonym for T *(*)(QQmlListProperty<T> *property, int index).
+//Return the element at position index in the list property.
+EaQuestion* EAItem::at_eaQuestion(QQmlListProperty<EaQuestion> *list
+                                        , int index)
+{
+    EAItem *eaItemColl = qobject_cast<EAItem *>(list->object);
+    return eaItemColl->m_eaQuestions[index];
+}
+
+//typedef QQmlListProperty::ClearFunction
+//Synonym for void (*)(QQmlListProperty<T> *property).
+//Clear the list property.
+void EAItem::clear_eaQuestion(QQmlListProperty<EaQuestion> *list)
+{
+    EAItem *eaItemColl = qobject_cast<EAItem *>(list->object);
+    eaItemColl->m_eaQuestions.clear();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

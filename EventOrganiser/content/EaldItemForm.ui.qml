@@ -21,13 +21,37 @@ Item {
         //Item{
         ComboBox {
             id: itemDataType
-            currentIndex: featuredItem.itemType
+            currentIndex: featuredItem !== undefined ? featuredItem.itemType : 0;
             model: [
                 qsTr("Image"),
                 qsTr("Document"),
-                qsTr("External url")
+                qsTr("External url"),
+                qsTr("Questions")
             ]
-        }
+        }/*
+        ListView {
+            id: questionsEntered
+            //width: 110; height: 3 === itemDataType.currentIndex ? 160 : 0
+            width: 110; height:1603
+
+            highlightFollowsCurrentItem: true
+            highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+            focus: true
+
+            model: ListModel {
+                id: questionsModel
+            }
+            delegate: Text {
+                //height: 3 === itemDataType.currentIndex ? 30 : 0
+                height: 30
+                text: title
+            }
+            MouseArea {
+                id: mouseAreaQLV
+                anchors.fill: parent
+            }
+        }*/
+
         RowLayout {
             id: rowLayout1
             width: 100
@@ -35,7 +59,7 @@ Item {
 
             TextField {
                 id: itemTitle
-                text: featuredItem.title
+                text: featuredItem !== undefined ? featuredItem.title : "";
             }
             Text {
                 id: text1
@@ -65,7 +89,7 @@ Item {
             visible: itemDataType.currentIndex === 1
             TextField {
                 id: textFilename
-                text: featuredItem.displayText
+                text: featuredItem !== undefined ? featuredItem.displayText : "";
             }
             Text {
                 id: text3
@@ -80,7 +104,7 @@ Item {
             visible: itemDataType.currentIndex === 2
             TextField {
                 id: urlItem
-                text: featuredItem.urlString
+                text: featuredItem !== undefined ? featuredItem.urlString : "";
             }
             Text {
                 id: text4

@@ -3,6 +3,7 @@
 #include <QJsonObject>
 #include <QQuickItem>
 #include <QUrl>
+#include "eaquestion.h"
 
 class EAItem : public QQuickItem
 {
@@ -10,16 +11,18 @@ class EAItem : public QQuickItem
 
     Q_PROPERTY(int itemType READ itemType WRITE setItemType NOTIFY itemTypeChanged)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
+
     //Q_PROPERTY(QString filename READ filename WRITE setFilename NOTIFY filenameChanged)
     Q_PROPERTY(QString displayText READ displayText WRITE setDisplayText NOTIFY displayTextChanged)
     Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY urlChanged)
     Q_PROPERTY(QString urlString READ urlString WRITE setUrlString NOTIFY urlStringChanged)
+    Q_PROPERTY(QQmlListProperty<EaQuestion> questions READ questions)
 
 public:
-    enum ItemType { Image=0, Document, Url };
+    enum ItemType { Image=0, Document, Url, Questions };
     Q_ENUM(ItemType)
-    enum ListType { FromCsv=0, Manual, FeedBackForm, Users };
-    Q_ENUM(ListType)
+   // enum ListType { FromCsv=0, Manual, Questions, Users };
+    //Q_ENUM(ListType)
 
     EAItem();
     explicit EAItem(int itemType, const QString& title, const QString& displayText = "");
@@ -31,12 +34,12 @@ public:
     int itemType() const;
     QString title() const;
     QString data() const;
-
     QString displayText() const;
-
     QUrl url() const;
-
     QString urlString() const;
+
+    QQmlListProperty<EaQuestion> questions();
+    Q_INVOKABLE void addTextQuestion(const QString& questionText, int index = -1);
 
 signals:
     void itemTypeChanged(int itemType);
@@ -45,7 +48,7 @@ signals:
     void displayTextChanged(QString displayText);
 
     void urlChanged(QUrl url);
-
+    void eaQuestionsChanged();
     void urlStringChanged(QString urlString);
 
 public slots:
@@ -60,6 +63,12 @@ public slots:
 
 private:
     void loadTextFile();
+    static void append_eaQuestion(QQmlListProperty<EaQuestion> *list
+                                   , EaQuestion *itemList);
+    static int count_eaQuestion(QQmlListProperty<EaQuestion> *list);
+    static EaQuestion* at_eaQuestion(QQmlListProperty<EaQuestion> *list
+                                      , int index);
+    static void clear_eaQuestion(QQmlListProperty<EaQuestion> *list);
 
     int m_itemType;
     QString m_title;
@@ -70,6 +79,8 @@ private:
     int version = 0;
     QUrl m_url;
     QString m_urlString;
+    QQmlListProperty<EaQuestion> m_questions;
+    QList<EaQuestion*> m_eaQuestions;
 };
 
 #endif // EAITEM_H

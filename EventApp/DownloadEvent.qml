@@ -1,6 +1,7 @@
 import QtQuick 2.7
 
 DownloadEventForm {
+    property bool isExpanded: false
     downloadButton.onClicked: {
         console.log("Button Pressed. Entered text: ", urlText.text);
         progressBar.visible = true;

@@ -23,11 +23,7 @@ ListView {
     model: ListModel { id: dataModel }
     delegate: DataListDelegate { id: thisDataDelgate
         onStateChanged: {
-            //console.log("DataListDelegateForm state changed", state);
-            //var ise = state === "Details"
-            //console.log("before dataList.isExspanded", dataList.isExspanded);
             dataList.isExpanded = state === "Details";
-            //console.log("after dataList.isExspanded", dataList.isExspanded);
         }
     }
 

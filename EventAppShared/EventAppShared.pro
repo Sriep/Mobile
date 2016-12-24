@@ -22,14 +22,13 @@ SOURCES += eventappshared.cpp \
     csv.cpp \
     picturelistimageprovider.cpp \
     eaitemlistbase.cpp \
-    eaitemcollection.cpp \
     eaitem.cpp \
     firebase.cpp \
-    eausers.cpp \
-    eauser.cpp
+    eauser.cpp \
+    eaquestion.cpp
 
 HEADERS += eventappshared.h\
-        eventappshared_global.h \
+    eventappshared_global.h \
     eainfo.h \
     eacontainer.h \
     eaconstruction.h \
@@ -39,11 +38,10 @@ HEADERS += eventappshared.h\
     csv.h \
     picturelistimageprovider.h \
     eaitemlistbase.h \
-    eaitemcollection.h \
     eaitem.h \
     firebase.h \
-    eausers.h \
-    eauser.h
+    eauser.h \
+    eaquestion.h
 
 unix {
     target.path = /usr/lib

@@ -3,11 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 UserLoginForm {
-    ///property alias registerBut: registerBut
-    //property alias logoffBut: logoffBut
-    //property alias logonBut: logonBut
-    //property alias passwordTB: passwordTB
-    //property alias emailTB: emailTB userIdTF
+    property bool isExpanded: false
 
     registerBut.onPressed: {
         var userObj = eaContainer.user;

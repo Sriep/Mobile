@@ -34,7 +34,7 @@ class EAItemList : public EAItemListBase
     Q_PROPERTY(bool formatedList READ formatedList WRITE setFormatedList NOTIFY formatedListChanged)
     Q_PROPERTY(int listType READ listType WRITE setListType NOTIFY listTypeChanged)
     Q_PROPERTY(QQmlListProperty<EAItem> items READ items)
-    QList<EAItem*> m_eaItems;
+
 public:
     enum ListType { High, Low, VeryHigh, VeryLow };
     Q_ENUM(ListType)
@@ -134,6 +134,7 @@ private:
     static void clear_eaItems(QQmlListProperty<EAItem> *list);
 
     QQmlListProperty<EAItem> m_items;
+    QList<EAItem*> m_eaItems;
     bool m_formatedList = true;
     int m_listType;
 };

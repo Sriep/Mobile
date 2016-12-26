@@ -4,10 +4,11 @@ import QtQuick.Controls 2.1
 import QtQuick.Extras 1.4
 import QtWebEngine 1.0
 import QtWebView 1.1
-import Qt.labs.platform 1.0
+//import Qt.labs.platform 1.0
 import "dataList.js" as DataListJS
 
 Item {
+    Text{ text: "Whats up folks!"}
 
     // Create a property to contain the visibility of the details.
     // We can bind multiple element's opacity to this one property,
@@ -81,6 +82,7 @@ Item {
         contentHeight: bottomText.height
         clip: true
         x:5
+
         StackLayout {
             id: itemStackCtl
             currentIndex: itemType
@@ -88,15 +90,12 @@ Item {
                 id: largePhotoImage
                 source: picture
             }
+
             Text {
               id: bottomText;
               wrapMode: Text.WordWrap;
               width: details.width
             }
-            //TextArea {
-            //    id: bottomText;
-            //    placeholderText: "Test Hi"
-            //}
 
             WebView {
                 id: webView
@@ -118,14 +117,14 @@ Item {
                     x:10; y:10
                     width: 250; height: 90
                     // A simple rounded rectangle for the background
-                   /* Rectangle {
-                        //id: background
-                        id: itemBackground
-                        x: 2; y: 2; width: parent.width - x*2; height: parent.height - y*2
-                        color: "ivory"
-                        border.color: "orange"
-                        radius: 5
-                    }*/
+                    //Rectangle {
+                    //    //id: background
+                    //    id: itemBackground
+                    //    x: 2; y: 2; width: parent.width - x*2; height: parent.height - y*2
+                    //    color: "ivory"
+                    //    border.color: "orange"
+                    //    radius: 5
+                    //}
                     ColumnLayout {
                         Text {
                             y: 15; x:15
@@ -159,7 +158,7 @@ Item {
                     } //ColumnLayout
                 } //delegate: Item
             } //ListView
-        }
+        } //StackLayout
       }
 
       Image {
@@ -180,12 +179,7 @@ Item {
         name: "Details"
 
         PropertyChanges { target: background; color: "white" }
- /*       PropertyChanges {
-            id: picSicePropCh;
-            target: photoImage;
-            width:  parent.width // eaLVItemList.showPhotos ? 130 : 0;
-            height: parent.height //eaLVItemList.showPhotos ? 130 : 50;
-        } */// Make picture bigger
+
         PropertyChanges { target: imageDelegate; detailsOpacity: 1; x: 0 } // Make details visible
         PropertyChanges { target: imageDelegate; height: dataListImage.height } // Fill the entire list area with the detailed view
 

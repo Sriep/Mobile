@@ -19,6 +19,7 @@ Item {
         spacing: 10
         x:10; y:10
         Column {
+            DataListImage {}
 
             clip: true
             Rectangle {

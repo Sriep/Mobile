@@ -23,34 +23,7 @@ function addStringFormat() {
     };
     String.prototype.format.regex = new RegExp("{-?[0-9]+}", "g");
 }
-/*
-function displayText(titleFields, dataModel, header, eaItemList) {
-    addStringFormat();
-    var text = "";
-    for ( var i=0 ; i < titleFields["headerFields"].length ; i++ ) {
-        if (titleFields["headerFields"][i].inListView === header)
-        {
-            var formatStr = titleFields["headerFields"][i].format;
-            var title = titleFields["headerFields"][i].field;
-            var model = titleFields["headerFields"][i].modelName;
-            var myData = dataModel.get(index);
-            var reqField = myData[model];
-            var formatArr = [];//[title, reqField];
-            formatArr.push(title);
-            formatArr.push(reqField);
-            var item = formatStr.format(formatArr);
-            text += item;
-        }
-    }
-    var myArr = fieldsObjToArr(titleFields["headerFields"], dataModel.get(index));
-    var topFormat = eaItemList.shortFormat;
-    var t1 = topFormat.format(myArr);
-    var bottomFormat = eaItemList.longFormat;
-    var t2 = bottomFormat.format(myArr);
-    text = header ? t1 : t2;
-    return text;
-}
-*/
+
 function fieldsObjToArr(titles, dataObj) {
     var formatArr = [];
     for ( var i=0 ; i < titles.length ; i++ )
@@ -62,18 +35,7 @@ function fieldsObjToArr(titles, dataObj) {
     return formatArr;
 }
 
-/*
-function resetDataListModel(dataModel, name, dataList)
-{
-    dataModel.clear();
-    for ( var j=0 ; j < dataList["dataItems"].length ; j++ ) {
-        var whatis = dataList["dataItems"][j];
-        dataModel.append(dataList["dataItems"][j]);
-        var picturePath =  "image://" + name + "/" +j.toString();
-        dataModel.setProperty(j, "picture", picturePath);
-        var newData = dataModel.get(j);
-    }
-}*/
+
 
 
 

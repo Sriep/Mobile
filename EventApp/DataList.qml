@@ -14,9 +14,10 @@ ListView {
 
     onEaLVItemListChanged: {
         console.log("DataList eaItemList chnaged");
-        resetDataListModel(dataModel
-                           , eaLVItemList.listName
-                           , JSON.parse(eaLVItemList.dataList))
+        //resetDataListModel(dataModel
+        //                   , eaLVItemList.listName
+        //                   , JSON.parse(eaLVItemList.dataList))
+        resetDataListModel();
     }
 
     //property  alias dataModel: dataModel
@@ -27,9 +28,9 @@ ListView {
         }
     }
 
-
-
-    function resetDataListModel(dataModel, name, dataList) {
+    function resetDataListModel() {
+        var name = eaLVItemList.listName;
+        var dataList = JSON.parse(eaLVItemList.dataList);
         dataModel.clear();
         for ( var j=0 ; j < dataList["dataItems"].length ; j++ ) {
             var whatis = dataList["dataItems"][j];
@@ -39,5 +40,16 @@ ListView {
             var newData = dataModel.get(j);
         }
     }
+/*
+    function resetDataListModel(dataModel, name, dataList) {
+        dataModel.clear();
+        for ( var j=0 ; j < dataList["dataItems"].length ; j++ ) {
+            var whatis = dataList["dataItems"][j];
+            dataModel.append(dataList["dataItems"][j]);
+            var picturePath =  "image://" + name + "/" +j.toString();
+            dataModel.setProperty(j, "picture", picturePath);
+            var newData = dataModel.get(j);
+        }
+    }*/
 }
 

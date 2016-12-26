@@ -16,13 +16,26 @@ DLImageDelegateForm {
   bottomText.text: {
       return displayText;
   }
+
   property url showUrlUrl: "http://lllconf.co.uk/"
+
   transitions: Transition {
         // Make the state changes smooth
         ParallelAnimation {
             ColorAnimation { property: "color"; duration: 500 }
             NumberAnimation { duration: 300; properties: "detailsOpacity,x,contentY,height,width" }
         }
+  }
+
+  function saveAnswer(text, quIndex) {
+      console.log("In saveAnswers text", text);
+      console.log("In saveAnswers quIndex", quIndex);
+      console.log("In saveAnswers index", index);
+      var ea = eaLVItemList;
+      var eaIsa = eaLVItemList.items;
+      var item = eaLVItemList.items[index];
+      var questions = eaLVItemList.items[index].questions;
+      questions[quIndex].answer = text;
   }
 
   maDataDelegate.onClicked: {
@@ -43,6 +56,7 @@ DLImageDelegateForm {
           var dic = {
               "questionType" : eaQuestion.itemType
               , "question" : eaQuestion.question
+              , "answer" : eaQuestion.answer
           };
           questionsModel.append(dic);
       }

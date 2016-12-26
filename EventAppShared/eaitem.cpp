@@ -2,7 +2,10 @@
 #include <QJsonArray>
 
 #include "eaitem.h"
+#include "eauser.h"
 #include "eaquestion.h"
+#include "eacontainer.h"
+#include "eaitemlist.h"
 
 EAItem::EAItem()
 {
@@ -24,8 +27,10 @@ EAItem::EAItem(const QString &title, const QUrl url)
     setUrlString(url.toString());
 }
 
-void EAItem::read(const QJsonObject &json)
+void EAItem::read(const QJsonObject &json, EAItemList *eaitemList)
 {
+    eaItemList = eaitemList;
+
     setItemType(json["itemType"].toInt());
     setTitle(json["title"].toString());
     setDisplayText(json["displayText"].toString());
@@ -41,7 +46,6 @@ void EAItem::read(const QJsonObject &json)
 
     id = json["id"].toInt();
     version = json["version"].toInt();
-
 }
 
 void EAItem::write(QJsonObject &json)
@@ -65,6 +69,19 @@ void EAItem::write(QJsonObject &json)
 
     json["id"] = id;
     json["version"] = ++version;
+}
+
+void EAItem::writeAnswers(EAUser* user, QJsonObject &json)
+{
+    QJsonArray answersArray;
+    foreach (EaQuestion* answer, m_eaQuestions)
+    {
+        QJsonObject answerObj;
+        answer->writeAnswer(answerObj);
+        //QJsonObject userAnswerObj {{ user()->user(), QJsonValue(answerObj)}};
+        answersArray.append(answerObj);
+    }
+    json[user->user()] = answersArray;
 }
 
 int EAItem::itemType() const
@@ -120,6 +137,16 @@ void EAItem::addTextQuestion(const QString &questionText, int index)
     else
         m_eaQuestions.insert(index, newQuestion);
     emit eaQuestionsChanged();
+}
+
+void EAItem::saveAnswers()
+{
+    if (eaItemList
+            && eaItemList->getEaContainer()
+            && m_eaQuestions.length()>0)
+    {
+        eaItemList->getEaContainer()->saveAnswers(eaItemList, this, m_eaQuestions);
+    }
 }
 
 void EAItem::setItemType(int itemType)
@@ -216,6 +243,16 @@ void EAItem::clear_eaQuestion(QQmlListProperty<EaQuestion> *list)
 {
     EAItem *eaItemColl = qobject_cast<EAItem *>(list->object);
     eaItemColl->m_eaQuestions.clear();
+}
+
+EAItemList *EAItem::getEaItemList() const
+{
+    return eaItemList;
+}
+
+void EAItem::setEaItemList(EAItemList *value)
+{
+    eaItemList = value;
 }
 
 

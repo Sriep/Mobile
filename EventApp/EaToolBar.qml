@@ -4,6 +4,7 @@ import QtQuick.Controls 2.0
 EaToolBarForm {
     id: toolBar
     titleLabel.text: eaContainer.eaInfo.eventName
+    userLable.text: eaContainer.user.loggodOn ? eaContainer.user.user : "logged off"
     drawerButton.onClicked: {
         drawer.open()
     }

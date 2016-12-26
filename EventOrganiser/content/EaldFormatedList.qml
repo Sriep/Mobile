@@ -5,9 +5,6 @@ import QtQuick.Extras 1.4
 import "qrc:///shared"
 
 EaldFormatedListForm {
-    //id: ealdFormatedList
-    //property alias featuredList: eaListDisplayPage.featuredList
-
     function popTitlesList (eventList) {
         console.log("Start popTitlesList");
         var whatis1
@@ -21,9 +18,6 @@ EaldFormatedListForm {
         }
         topTextArea.text = eventList.shortFormat;
         bottomTextArea.text = eventList.longFormat;
-        //DataListJS.resetDataListModel(thisDataList.dataModel
-        //     , JSON.parse(eventList.dataList));
-        //thisDataList.eaItemList = eventList;
     }
 
     function saveTitles(eventList) {

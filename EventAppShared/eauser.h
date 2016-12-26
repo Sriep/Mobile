@@ -16,7 +16,7 @@ class EAUser : public QQuickItem
     QString m_user;
     int m_index;
     QString m_email;
-    bool m_loggodOn;
+    bool m_loggodOn = false;
 public:
     EAUser();
     EAUser(EAContainer *eaContainer);
@@ -33,14 +33,17 @@ public:
     void setEaContainer(EAContainer *value);
 
     bool loggodOn() const;
+    QString tempPassword;
 
 signals:
 
     void userChanged(QString user);
     void indexChanged(int index);
     void emailChanged(QString email);
-    void userPasswordAccepted(bool);
+
     void loggodOnChanged(bool loggodOn);
+    void userPasswordAccepted(bool);
+
 
 public slots:
     void setUser(QString user);

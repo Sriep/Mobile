@@ -1,4 +1,5 @@
 #include <QJsonDocument>
+#include <QJsonArray>
 #include <QIODevice>
 #include <QJsonObject>
 #include <QJsonValue>
@@ -13,6 +14,8 @@
 #include "eaconstruction.h"
 #include "eaitemlist.h"
 #include "eauser.h"
+#include "eaitem.h"
+#include "eaquestion.h"
 
 EAContainer::EAContainer()
 {
@@ -30,9 +33,11 @@ void EAContainer::componentComplete()
     //emit eaComponentComplete();
 }
 
-void EAContainer::insertEmptyItemList(int index, QString name)
+void EAContainer::insertEmptyItemList(int index, QString name, bool formated)
 {
     EAItemList* newItemList = new EAItemList(name);
+    newItemList->setFormatedList(formated);
+    newItemList->setEaContainer(this);
     m_eaItemLists.insert(index, newItemList);
     emit eaItemListsChanged();
 }
@@ -137,7 +142,7 @@ void EAContainer::downloadApp(const QString &eventKey)
     firebase->getValue();
     connect(firebase,SIGNAL(eventResponseReady(QByteArray)),
             this,SLOT(onResponseReady(QByteArray)));
-    connect(firebase,SIGNAL(eventDataChanged(QString*)),
+    connect(firebase,SIGNAL(eventDataChanged(QString)),
             this,SLOT(onDataChanged(QString*)));
 
 }
@@ -208,7 +213,7 @@ void EAContainer::read(const QJsonObject &json)
     for (int i = 0; i < listsArray.size(); ++i) {
         QJsonObject readJsonObject = listsArray[i].toObject();
         EAItemList* newList = new EAItemList();
-        newList->read(readJsonObject, engine);
+        newList->read(readJsonObject, engine, this);
         //newList->read(readJsonObject, this);
         m_eaItemLists.append(newList);
     }
@@ -386,6 +391,48 @@ QString EAContainer::eventKey() const
     return m_eventKey;
 }
 
+void EAContainer::saveAnswers(EAItemList* eaItemList
+                              , EAItem *item
+                              , QList<EaQuestion*> questionList)
+{
+    if (eventKey() != "" && questionList.length() > 0)
+    {
+        QString path = eventKey();
+        path += "/answers";
+        path += "/" + eaItemList->listName();
+        path += "/" + item->title();
+
+        QJsonObject answersObj;
+        item->writeAnswers(user(), answersObj);
+        //QJsonValue answerValue(answerObject);
+        //QJsonObject containerObj { {eventKey(),  answerValue} };
+        QJsonDocument uploadDoc(answersObj);
+
+        Firebase *firebase=new Firebase(firbaseUrl(), path);
+        firebase->setValue(uploadDoc, "PATCH");
+    }
+}
+
+QJsonObject EAContainer::jsonAnswers(EAItemList *eaItemList
+                                     , EAItem *item
+                                     , QList<EaQuestion *> questionList)
+{
+    QJsonArray answersArray;
+    foreach (EaQuestion* answer, questionList)
+    {
+        {
+            QJsonObject answerObj;
+            answer->writeAnswer(answerObj);
+            QJsonObject userAnswerObj {{ user()->user(), QJsonValue(answerObj)}};
+            answersArray.append(userAnswerObj);
+        }
+    }
+    QJsonObject itemAnswers{{item->title(), answersArray }};
+    QJsonObject itemListAnswers{{ eaItemList->listName(), itemAnswers}};
+    return itemAnswers;
+}
+
+
 //typedef QQmlListProperty::AppendFunction
 //Synonym for void (*)(QQmlListProperty<T> *property, T *value).
 //Append the value to the list property.
@@ -396,7 +443,7 @@ void EAContainer::append_eaItemLists(QQmlListProperty<EAItemList> *list
     if (itemList) {
         //itemList->setParentItem(eaContainer); //???
         //QQmlEngine*  engine = qmlEngine(eaContainer);
-        itemList->setContainer(eaContainer);
+        itemList->setEaContainer(eaContainer);
         eaContainer->m_eaItemLists.append(itemList);
     }
 }

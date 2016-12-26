@@ -18,13 +18,14 @@ static const char textDelimiter = '"';
 static const QString emptyHeader = "{\"headerFields\":[]}";
 QJsonValue jsonValFromPixmap(const QPixmap & p);
 QPixmap pixmapFrom(const QJsonValue & val);
+class EAContainer;
 
 
 
-class EAItemList : public EAItemListBase
+class EAItemList :  public QQuickItem //public EAItemListBase
 {
     Q_OBJECT
-    //Q_PROPERTY(QString listName READ listName WRITE setListName NOTIFY listNameChanged)
+    Q_PROPERTY(QString listName READ listName WRITE setListName NOTIFY listNameChanged)
     Q_PROPERTY(QString shortFormat READ shortFormat WRITE setShortFormat NOTIFY shortFormatChanged)
     Q_PROPERTY(QString longFormat READ longFormat WRITE setLongFormat NOTIFY longFormatChanged)
     Q_PROPERTY(bool showPhotos READ showPhotos WRITE setShowPhotos NOTIFY showPhotosChanged)
@@ -43,7 +44,9 @@ public:
     EAItemList(const QString& name);
     virtual ~EAItemList();
 
-    virtual void read(const QJsonObject &json, QQmlEngine* engine);
+    virtual void read(const QJsonObject &json
+                      , QQmlEngine* engine
+                      , EAContainer* eacontainer = NULL);
     //virtual void read(const QJsonObject &json, EAContainer* eacontainer);
     virtual void write(QJsonObject &json);
     //virtual void clear(QQmlEngine *engine);
@@ -68,7 +71,7 @@ public:
 
     QString titleFields() const;
     QString dataList() const;
-    //QString listName() const;
+    QString listName() const;
     bool showPhotos() const;
     QString shortFormat() const;
     QString longFormat() const;
@@ -76,10 +79,13 @@ public:
     bool formatedList() const;    
     int listType() const;
 
+    EAContainer *getEaContainer() const;
+    void setEaContainer(EAContainer *value);
+
 signals:
-    void titleFieldsChanged(QString titleFields);  
+    void titleFieldsChanged(QString titleFields);
     void dataListChanged(QString dataList);
-    //void listNameChanged(QString listName);
+    void listNameChanged(QString listName);
     void showPhotosChanged(bool showPhotos);    
     void shortFormatChanged(QString shortFormat);
     void longFormatChanged(QString longFormat);
@@ -92,7 +98,7 @@ public slots:
     void setTitleFields(const QJsonArray& titleFields); 
     void setDataList(QString dataList);
     void setDataList(const QJsonArray& dataListArray);
-   // void setListName(QString listName);
+    void setListName(QString listName);
     void setShowPhotos(bool showPhotos);    
     void setShortFormat(QString shortFormat);
     void setLongFormat(QString longFormat);
@@ -100,6 +106,7 @@ public slots:
     void setListType(int listType);
 
 private:
+    void init();
     QStringList addHeaderFields(const QStringList &fields);
     QJsonObject newDataItem(const QStringList &speakerData
                             , const QStringList &header);
@@ -120,10 +127,11 @@ private:
 
     QString m_titleFields;
     QString m_dataList;
-    //QString m_listName;
+    QString m_listName;
     bool m_showPhotos = false;
     QString m_shortFormat = "<html>{0}<br></html>\n";
     QString m_longFormat;
+    EAContainer* eaContainer;
 
 
     static void append_eaItems(QQmlListProperty<EAItem> *list

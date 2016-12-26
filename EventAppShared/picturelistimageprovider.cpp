@@ -36,3 +36,18 @@ QImage PictureListImageProvider::requestImage(const QString &id
 
 }
 
+QPixmap PictureListImageProvider::requestPixmap(const QString &id
+                                                , QSize *size
+                                                , const QSize &requestedSize)
+{
+    return QQuickImageProvider::requestPixmap(id, size, requestedSize);
+}
+
+QQuickTextureFactory *PictureListImageProvider::requestTexture(
+                                                    const QString &id
+                                                   , QSize *size
+                                                   , const QSize &requestedSize)
+{
+   return QQuickImageProvider::requestTexture(id, size, requestedSize);
+}
+

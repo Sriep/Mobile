@@ -21,7 +21,12 @@ EAItemList::EAItemList()
 }
 
 EAItemList::EAItemList(const QString &name)
-    : EAItemListBase(name)
+    : m_listName(name) //EAItemListBase(name)
+{
+    init();
+}
+
+void EAItemList::init()
 {
     setDataList(jsonData);
 
@@ -46,7 +51,11 @@ void EAItemList::clear(EAContainer* eacontainer)
 
 void EAItemList::resetImageProvider(EAContainer* eacontainer)
 {
-    QQmlEngine* engine = qmlEngine(getContainer());
+    QString df = eacontainer->dataFilename();
+    QQmlContext *  qqc = QQmlEngine::contextForObject(eacontainer);
+    QQmlEngine* en = qqc->engine();
+
+    QQmlEngine* engine = qmlEngine(eacontainer);
     if (engine)
     {
         QQmlImageProviderBase* provider = engine->imageProvider(listName());
@@ -61,10 +70,14 @@ void EAItemList::resetImageProvider(EAContainer* eacontainer)
 
 
 //void EAItemList::read(const QJsonObject &json, EAContainer* eacontainer)//QQmlEngine *engine)
-void EAItemList::read(const QJsonObject &json, QQmlEngine *engine)
+void EAItemList::read(const QJsonObject &json
+                      , QQmlEngine *engine
+                      , EAContainer *eacontainer)
 {
+    //eaContainer =  eacontainer;
+    setEaContainer(eacontainer);
     //EAItemListBase::read(json, eacontainer);//engine);
-    EAItemListBase::read(json, engine);
+    //EAItemListBase::read(json, engine);
 
     jsonFields = json["headerFields"].toArray();
     setTitleFields(jsonFields);
@@ -82,7 +95,7 @@ void EAItemList::read(const QJsonObject &json, QQmlEngine *engine)
     id = json["id"].toInt();
     version = json["version"].toInt();
 
-    //setListName(json["listName"].toString());
+    setListName(json["listName"].toString());
     setShowPhotos(json["showPhotos"].toBool());
     jsonPictures = json["pictures"].toArray();
 
@@ -90,11 +103,11 @@ void EAItemList::read(const QJsonObject &json, QQmlEngine *engine)
     for (int i = 0; i < itemsArray.size(); ++i) {
         QJsonObject readJsonObject = itemsArray[i].toObject();
         EAItem* newitem = new EAItem();
-        newitem->read(readJsonObject);
+        newitem->read(readJsonObject, this);
         m_eaItems.append(newitem);
     }
 
-    //resetImageProvider(eacontainer);
+    resetImageProvider(getEaContainer());
     //QQmlEngine*  engine = qmlEngine(this);
     if (engine)
     {
@@ -112,7 +125,7 @@ void EAItemList::write(QJsonObject &json)
 {
     json["headerFields"] = jsonFields;
     json["dataList"] = jsonData;
-    //json["listName"] = listName();
+    json["listName"] = listName();
     json["nextItemId"] = nextItemId;
     json["showPhotos"] = m_showPhotos;
     json["pictures"] = jsonPictures;
@@ -134,7 +147,7 @@ void EAItemList::write(QJsonObject &json)
     }
     json["itemsList"] = itemsArray;
 
-    EAItemListBase::write(json);
+    //EAItemListBase::write(json);
 }
 
 QString EAItemList::titleFields() const
@@ -146,12 +159,12 @@ QString EAItemList::dataList() const
 {
     return m_dataList;
 }
-/*
+
 QString EAItemList::listName() const
 {
     return m_listName;
 }
-*/
+
 bool EAItemList::showPhotos() const
 {
     return m_showPhotos;
@@ -185,7 +198,7 @@ void EAItemList::setDataList(const QJsonArray &dataListArray)
     QByteArray jsonBA = jsonDoc.toJson(QJsonDocument::Compact);
     setDataList(QString(jsonBA));
 }
-/*
+
 void EAItemList::setListName(QString listName)
 {
     if (m_listName == listName)
@@ -194,7 +207,7 @@ void EAItemList::setListName(QString listName)
     m_listName = listName;
     emit listNameChanged(listName);
 }
-*/
+
 void EAItemList::setShowPhotos(bool showPhotos)
 {
     if (m_showPhotos == showPhotos)
@@ -339,7 +352,7 @@ void EAItemList::loadPhotos(const QString &format)
         else
             jsonPictures.append(jsonPic);
     }
-    //resetImageProvider(getContainer());
+    resetImageProvider(getEaContainer());
     qDebug() << "photos read " << jsonPictures.count();
 }
 
@@ -382,7 +395,7 @@ bool EAItemList::insertListItem(int index
     default:
         return false;
     }
-
+    newItem->setEaItemList(this);
     m_eaItems.insert(index, newItem);
     emit eaItemListChanged();
     return true;
@@ -406,11 +419,22 @@ void EAItemList::addPicture(int index, const QString& filename)
             jsonPictures.append(nullJson);
         jsonPictures.append(jsonPic);
     }
+    resetImageProvider(getEaContainer());
 }
 
 int EAItemList::useNextItemId()
 {
     return nextItemId++;
+}
+
+EAContainer *EAItemList::getEaContainer() const
+{
+    return eaContainer;
+}
+
+void EAItemList::setEaContainer(EAContainer *value)
+{
+    eaContainer = value;
 }
 
 /*

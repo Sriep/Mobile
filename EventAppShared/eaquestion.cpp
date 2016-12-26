@@ -29,6 +29,17 @@ void EaQuestion::write(QJsonObject &json)
     json["question"] = question();
 }
 
+void EaQuestion::writeAnswer(QJsonObject &json)
+{
+    write(json);
+    json["answer"] = answer();
+}
+
+QString EaQuestion::answer() const
+{
+    return m_answer;
+}
+
 void EaQuestion::setQuestionType(int questionType)
 {
     if (m_questionType == questionType)
@@ -45,4 +56,13 @@ void EaQuestion::setQuestion(QString question)
 
     m_question = question;
     emit questionChanged(question);
+}
+
+void EaQuestion::setAnswer(QString answer)
+{
+    if (m_answer == answer)
+        return;
+
+    m_answer = answer;
+    emit answerChanged(answer);
 }

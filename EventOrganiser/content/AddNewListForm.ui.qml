@@ -57,8 +57,7 @@ Item {
                     currentIndex: 0
                     model: [
                         qsTr("Load csv"),
-                        qsTr("Manual entry"),
-                        qsTr("Feedback form")
+                        qsTr("Manual entry")
                     ]
                 }
                 TextField {
@@ -75,12 +74,12 @@ Item {
                     Button {
                         id: newListBut
                         text: qsTr("Clear")
-                        visible: false
+                        visible: true
                     }
 
                     Button {
                         id: addListBut
-                        visible: false
+                        visible: true
                         enabled: newListName.text !== "" && listType.currentIndex >= 0
                         text: qsTr("+ Add")
                     }

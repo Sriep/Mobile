@@ -26,8 +26,9 @@ int main(int argc, char *argv[])
     qmlRegisterType<EAItemList>("EventAppData", 1,0, "EAItemList");
     qmlRegisterType<HttpDownload>("EventAppData", 1,0, "HttpDownload");
     qmlRegisterType<EAUser>("EventAppData", 1,0, "EAUser");
-   // qmlRegisterType<EAItem>("EventAppData", 1,0, "EAItem");
-
+    qmlRegisterType<EAItem>("EventAppData", 1,0, "EAItem");
+    qmlRegisterType<EaQuestion>("EventAppData", 1,0, "EaQuestion");
+    
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("applicationPath", "file://"+qApp->applicationDirPath()+ "/");
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));

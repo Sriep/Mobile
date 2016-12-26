@@ -1,10 +1,10 @@
-import QtQuick 2.0
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.1
 import QtQuick.Extras 1.4
 import QtWebEngine 1.0
 import QtWebView 1.1
+import Qt.labs.platform 1.0
 import "dataList.js" as DataListJS
 
 Item {
@@ -17,7 +17,6 @@ Item {
 
     width: dataListImage.width
     height: 70
-    property alias mouseAreaQLV: mouseAreaQLV
     property alias questionsList: questionsList
     property alias maDataDelegate: maDataDelegate
     property alias largePhotoImage: largePhotoImage
@@ -94,6 +93,10 @@ Item {
               wrapMode: Text.WordWrap;
               width: details.width
             }
+            //TextArea {
+            //    id: bottomText;
+            //    placeholderText: "Test Hi"
+            //}
 
             WebView {
                 id: webView
@@ -104,36 +107,59 @@ Item {
 
             ListView {
                 id: questionsList
+                //width: background.width-10; height: background.height-10
+                //width: flick.width-10; height: flick.height-10
+                width: 250; height: 600
+                //x:10; y:10
                 model: ListModel {
                     id: questionsModel
                 }
                 delegate: Item {
+                    x:10; y:10
+                    width: 250; height: 90
                     // A simple rounded rectangle for the background
-                    Rectangle {
+                   /* Rectangle {
                         //id: background
                         id: itemBackground
                         x: 2; y: 2; width: parent.width - x*2; height: parent.height - y*2
                         color: "ivory"
                         border.color: "orange"
                         radius: 5
-                    }
+                    }*/
                     ColumnLayout {
                         Text {
+                            y: 15; x:15
                             height: 30
                             text: question
                         }
-                        TextField {
-                            id: answer
-                        }
-                    }
-                }
-                MouseArea {
-                    id: mouseAreaQLV
-                    anchors.fill: parent
-                }
-            }
+                        Rectangle {
+                            y: 5; x:5
+                            width: 250; height: 60
+                            //x: 2; y: 2; width: parent.width - x*2; height: parent.height - y*2
+                            border.width : 0.5
+                            border.color : "black"
+                            anchors.rightMargin: 0
+                            Flickable {
+                                anchors.fill: parent
+                                y: 5; x:5
+                                TextArea.flickable: TextArea {
+                                    id: answerTA
+                                    y: 5; x:5
+                                    placeholderText: question
+                                    text: answer
+                                    wrapMode: TextArea.Wrap
+                                }
+                                ScrollBar.vertical: ScrollBar { }
+                                Connections {
+                                    target: answerTA
+                                    onEditingFinished: saveAnswer(answerTA.text, index)
+                                }
+                            } // Flickable
+                        } //Rectangle
+                    } //ColumnLayout
+                } //delegate: Item
+            } //ListView
         }
-
       }
 
       Image {

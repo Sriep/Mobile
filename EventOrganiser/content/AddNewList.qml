@@ -6,7 +6,7 @@ import "qrc:///shared"
 
 AddNewListForm {
     addListBut.onClicked: {
-        eaContainer.insertEmptyItemList(0, newListName.text);
+        eaContainer.insertEmptyItemList(0, newListName.text, listType.currentIndex === 0);
         popListsList(eaContainer.eaItemLists);
     }
 

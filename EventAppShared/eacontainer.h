@@ -13,6 +13,8 @@ class EAInfo;
 class EAConstruction;
 class EAItemList;
 class EAUser;
+class EaQuestion;
+class EAItem;
 //enum SaveFormat {Json, Binary };
 
 static const QString EVENT ="event";
@@ -39,7 +41,7 @@ class  EAContainer : public QObject, public QQmlParserStatus
     Q_PROPERTY(QString firbaseUrl READ firbaseUrl WRITE setFirbaseUrl NOTIFY firbaseUrlChanged)
 
     EAInfo* m_eaInfo;
-    QString m_dataFilename;
+    QString m_dataFilename = "temp";
     EAConstruction* m_eaConstruction;
     bool m_isSaveJson = true;
     QString m_workingDirectory = QCoreApplication::applicationDirPath();    
@@ -51,7 +53,7 @@ public:
 
     virtual void classBegin();
     virtual void componentComplete();
-    Q_INVOKABLE void insertEmptyItemList(int index, QString name);
+    Q_INVOKABLE void insertEmptyItemList(int index, QString name, bool formated = true);
     Q_INVOKABLE void deleteItemList(int index);
     Q_INVOKABLE void clearEvent();
 
@@ -74,7 +76,9 @@ public:
     QString firbaseUrl() const;    
     EAUser *user();
     QString eventKey() const;
-
+    void saveAnswers(EAItemList* eaItemList
+                     , EAItem* item
+                     , QList<EaQuestion*> questionList);
 
 signals:
     void eaInfoChanged(EAInfo* eaInfo);
@@ -105,6 +109,10 @@ public slots:
     void onDataChanged(QString);
 
 private:
+    QJsonObject jsonAnswers(EAItemList* eaItemList
+                            , EAItem *item
+                            , QList<EaQuestion*> questionList);
+
     static void append_eaItemLists(QQmlListProperty<EAItemList> *list
                                    , EAItemList *itemList);
     static int count_eaItemLists(QQmlListProperty<EAItemList> *list);
@@ -117,7 +125,7 @@ private:
     int useNextItemListId();
 
     QString m_firbaseUrl = "https://eventapp-2d821.firebaseio.com/";
-    QString m_eventKey;
+    QString m_eventKey = "";
 };
 
 #endif // EVENTCONTAINER_H

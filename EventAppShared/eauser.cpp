@@ -57,11 +57,11 @@ void EAUser::addIndex(const QString &table, const QString &field)
                                       , getEaContainer()->eventKey());
     Firebase* fbUsers = firebase->child("users");
     fbUsers->setValue(ruleDoc, "PUT", "rules");
-
 }
 
 bool EAUser::login(const QString &userId, const QString &password)
 {
+    tempPassword = password;
     Firebase *firebase = new Firebase(getEaContainer()->firbaseUrl()
                                       , getEaContainer()->eventKey());
     QString path;
@@ -95,13 +95,29 @@ void EAUser::onResponseReady(QByteArray data)
     qDebug()<<data;
 
     QJsonDocument loadDoc = QJsonDocument::fromJson(data);
-    QJsonObject topObj = loadDoc.object();
-    //QJsonObject mainData = topObj.begin().value().toObject();
-    //read(mainData);
+    QJsonObject userObj = loadDoc.object();
+    if (userObj.count() > 0)
+    {
+        QString user = userObj.keys()[0];
+        QJsonObject::const_iterator firstIt = userObj.begin();
+        QJsonObject userData = (*firstIt).toObject();
+        QString password = userData["password"].toString();
+        QString email = userData["email"].toString();
+        if (password == tempPassword)
+        {
+            setUser(user);
+            setEmail(email);
+            setLoggodOn(true);
+            emit userPasswordAccepted(true);
+        }
+        else
+            emit userPasswordAccepted(false);
+    }
+    else
+        emit userPasswordAccepted(false);
+    tempPassword = "";
 
-    //read(topObj);
     qDebug() << "EAContainer::downloadEventApp finished";
-    //emit eaItemListsChanged();
 }
 
 void EAUser::onDataChanged(QString data)

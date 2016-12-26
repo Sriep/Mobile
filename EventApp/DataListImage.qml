@@ -14,13 +14,13 @@ ListView {
     property EAItemList eaLVItemList: undefined
     property bool isExpanded: false
     property alias dataModel: dataModel
+
     onEaLVItemListChanged: {
         console.log("dataListImage eaItemList chnaged");
         resetDataImageListModel(dataModel
                            , eaLVItemList.listName
                            , eaLVItemList.items)
     }
-
 
     model: ListModel { id: dataModel }
     delegate:    DLImageDelegate { id: thisDataDelgate
@@ -37,7 +37,17 @@ ListView {
                 popQuestionList(eaLVItemList.items[index]);
             }
         }
+        Connections {
+            target: dataListImage
+            onIsExpandedChanged: {
+                if (isExpanded === false ) {
+                    eaLVItemList.items[index].saveAnswers();
+                }
+            }
+        }
     }
+
+
 
     function resetDataImageLM() {
         resetDataImageListModel(dataModel

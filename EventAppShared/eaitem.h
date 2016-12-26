@@ -4,7 +4,10 @@
 #include <QQuickItem>
 #include <QUrl>
 #include "eaquestion.h"
+#include "eacontainer.h"
 
+class EAItemList;
+class EAUser;
 class EAItem : public QQuickItem
 {
     Q_OBJECT
@@ -28,8 +31,12 @@ public:
     explicit EAItem(int itemType, const QString& title, const QString& displayText = "");
     explicit EAItem(const QString& title, const QUrl url);
 
-    void read(const QJsonObject &json);
+    Q_INVOKABLE void addTextQuestion(const QString& questionText, int index = -1);
+    Q_INVOKABLE void saveAnswers();
+
+    void read(const QJsonObject &json, EAItemList* eaitemList = NULL);
     void write(QJsonObject &json);
+    void writeAnswers(EAUser* user, QJsonObject &json);
 
     int itemType() const;
     QString title() const;
@@ -39,7 +46,10 @@ public:
     QString urlString() const;
 
     QQmlListProperty<EaQuestion> questions();
-    Q_INVOKABLE void addTextQuestion(const QString& questionText, int index = -1);
+
+
+    EAItemList *getEaItemList() const;
+    void setEaItemList(EAItemList *value);
 
 signals:
     void itemTypeChanged(int itemType);
@@ -56,9 +66,7 @@ public slots:
     void setTitle(QString title);
     void setData(QString data);    
     void setDisplayText(QString displayText);
-
     void setUrl(QUrl url);
-
     void setUrlString(QString urlString);
 
 private:
@@ -74,6 +82,7 @@ private:
     QString m_title;
     QString m_data;
     QString m_displayText;
+    EAItemList* eaItemList;
 
     int id = 0;
     int version = 0;

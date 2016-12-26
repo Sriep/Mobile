@@ -10,6 +10,7 @@ ToolBar {
     property alias menuButton: menuButton
     property alias titleLabel: titleLabel
     property alias userBut: userBut
+    property alias userLable: userLable
 
 
     RowLayout {
@@ -36,6 +37,8 @@ ToolBar {
             Layout.fillWidth: true
         }
 
+
+
         ToolButton {
             id: userBut
             contentItem: Image {
@@ -44,6 +47,16 @@ ToolBar {
                 verticalAlignment: Image.AlignVCenter
                 source:  "qrc:///shared/images/user-shape_16.png"
             }
+        }
+
+        Label {
+            id: userLable
+            text: "logged off"
+            font.pixelSize: 8
+            elide: Label.ElideRight
+           // horizontalAlignment: Qt.AlignHCenter
+           // verticalAlignment: Qt.AlignVCenter
+            //Layout.fillWidth: true
         }
 
         ToolButton {

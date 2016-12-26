@@ -40,6 +40,7 @@ EaldListForm {
         var listView = ldpEventAppPage.stackCtl.children[index];
         var tp = listView.temp;
         listView.resetDataImageLM();
+        //listView.resetDataListModel();
 
         popItemList(eaListDisplayPage.featuredList);
     }

@@ -32,8 +32,8 @@ Item {
 
                     width: 500; height: 700
                     clip: true
-                    property int formatedListStack: 2
-                    property int manualListItem: 3
+                    property int formatedListStack: 1
+                    property int manualListItem: 2
 
                     AddNewList {
                         width: 200; height: 200

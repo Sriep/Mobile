@@ -40,7 +40,7 @@ void EAItem::read(const QJsonObject &json, EAItemList *eaitemList)
     for (int i = 0; i < questionsArray.size(); ++i) {
         QJsonObject readJsonObject = questionsArray[i].toObject();
         EaQuestion* newQuestion = new EaQuestion();
-        newQuestion->read(readJsonObject);
+        newQuestion->read(readJsonObject, this);
         m_eaQuestions.append(newQuestion);
     }
 

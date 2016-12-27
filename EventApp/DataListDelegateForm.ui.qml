@@ -7,7 +7,6 @@ import "dataList.js" as DataListJS
 
 Item {
 
-
     // Create a property to contain the visibility of the details.
     // We can bind multiple element's opacity to this one property,
     // rather than having a "PropertyChanges" line for each element we
@@ -21,13 +20,13 @@ Item {
     property alias topText: topText
 
     // A simple rounded rectangle for the background
-    Rectangle {
+    /*Rectangle {
         id: background
         x: 2; y: 2; width: parent.width - x*2; height: parent.height - y*2
         color: "ivory"
         border.color: "orange"
         radius: 5
-    }
+    }*/
 
     // This mouse region covers the entire delegate.
     // When clicked it changes mode to 'Details'.  If we are already

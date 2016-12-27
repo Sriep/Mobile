@@ -1,6 +1,11 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include "eaquestion.h"
+#include "eaitem.h"
+#include "eauser.h"
+#include "eaitemlist.h"
+#include "eacontainer.h"
+#include "firebase.h"
 
 EaQuestion::EaQuestion()
 {
@@ -17,10 +22,34 @@ QString EaQuestion::question() const
     return m_question;
 }
 
-void EaQuestion::read(const QJsonObject &json)
+void EaQuestion::read(const QJsonObject &json, EAItem* parent)
 {
+    setParentItem(parent);
     setQuestionType(json["type"].toInt());
     setQuestion(json["question"].toString());
+
+    EAContainer* container = parent->getEaItemList()->getEaContainer();
+    QString path = container->eventKey();
+    path += "/answers";
+    path += "/" + parent->getEaItemList()->listName();
+    path += "/" + parent->title();
+    path += "/" + container->user()->user();
+
+    Firebase *firebase=new Firebase(container->firbaseUrl(), path);
+    firebase->getValue();
+    connect(firebase,SIGNAL(eventAnswersReady(QByteArray)),
+            this,SLOT(onAnswersReady(QByteArray)));
+    //connect(firebase,SIGNAL(eventAnswersChanged(QString)),
+    //        this,SLOT(onDataChanged(QString*)));
+}
+
+void EaQuestion::onAnswersReady(QByteArray data)
+{
+    qDebug()<<"answer";
+    QJsonDocument loadDoc = QJsonDocument::fromJson(data);
+    QJsonObject answersObj = loadDoc.object();
+    qDebug() << "EAContainer::onAnswersReady finished";
+    emit eaAnswersDownloaded();
 }
 
 void EaQuestion::write(QJsonObject &json)
@@ -65,4 +94,14 @@ void EaQuestion::setAnswer(QString answer)
 
     m_answer = answer;
     emit answerChanged(answer);
+}
+
+EAItem *EaQuestion::getParentItem() const
+{
+    return parentItem;
+}
+
+void EaQuestion::setParentItem(EAItem *value)
+{
+    parentItem = value;
 }

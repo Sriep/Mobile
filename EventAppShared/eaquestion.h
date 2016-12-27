@@ -3,6 +3,7 @@
 #include <QJsonObject>
 #include <QQuickItem>
 
+class EAItem;
 class EaQuestion : public QQuickItem
 {
     Q_OBJECT
@@ -24,23 +25,30 @@ public:
     QString question() const;
     QString answer() const;
 
-    void read(const QJsonObject &json);
+    void read(const QJsonObject &json, EAItem* parent);
     void write(QJsonObject &json);    
     //void readAnswer(const QJsonObject &json);
     void writeAnswer(QJsonObject &json);
 
 
+    EAItem *getParentItem() const;
+    void setParentItem(EAItem *value);
+
 signals:
 
     void questionTypeChanged(int questionType);
     void questionChanged(QString question);
-
+    void eaAnswersDownloaded();
     void answerChanged(QString answer);
 
 public slots:
     void setQuestionType(int questionType);
     void setQuestion(QString question);
     void setAnswer(QString answer);
+    void onAnswersReady(QByteArray data);
+
+private:
+    EAItem* parentItem;
 };
 
 #endif // EAQUESTION_H

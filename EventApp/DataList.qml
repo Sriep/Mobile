@@ -40,16 +40,6 @@ ListView {
             var newData = dataModel.get(j);
         }
     }
-/*
-    function resetDataListModel(dataModel, name, dataList) {
-        dataModel.clear();
-        for ( var j=0 ; j < dataList["dataItems"].length ; j++ ) {
-            var whatis = dataList["dataItems"][j];
-            dataModel.append(dataList["dataItems"][j]);
-            var picturePath =  "image://" + name + "/" +j.toString();
-            dataModel.setProperty(j, "picture", picturePath);
-            var newData = dataModel.get(j);
-        }
-    }*/
+
 }
 

@@ -74,12 +74,6 @@ ApplicationWindow {
                         ScrollBar.vertical: ScrollBar { }
                     }
                 } //Rectangle
-
-                //TextArea {
-                //    width: 400; height: 500
-                //    id: itemData
-                //    text: eaContainer.answers
-                //}
             }
         }
 
@@ -100,6 +94,7 @@ ApplicationWindow {
         category: "data"
         property alias dataFilename: eaContainer.dataFilename
         property alias firebaseUrl: eaContainer.firbaseUrl
+        property alias databaseKey: eaContainer.eventKey
     }
 }
 

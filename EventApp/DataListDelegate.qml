@@ -69,17 +69,64 @@ DataListDelegateForm {
         text = header ? t1 : t2;
         return text;
     }
-/*
-    function fieldsObjToArr(titles, dataObj) {
-        var formatArr = [];
-        for ( var i=0 ; i < titles.length ; i++ )
-        {
-            var model = titles[i].modelName;
-            var reqField = dataObj[model];
-            formatArr.push(reqField);
-        }
-        return formatArr;
+
+    function createDelegateBox(parent) {
+        console.log("DataListDelegateForm completed")
+        var newObject = Qt.createQmlObject(
+               "import QtQuick 2.7
+                Rectangle {
+                    id: background
+                    x: 2; y: 2; width: parent.width - x*2; height: parent.height - y*2
+                    color: \"ivory\"
+                    border.color: \"orange\"
+                    radius: 5
+                    opacity: 0.0
+                }"
+               ,parent
+               ,"dynamicSnippet1");
+        console.log("DataListDelegateForm completed");
     }
-*/
+
+    Component.onCompleted: {
+        createDelegateBox(dataDelegate);
+    }
+
+    Component.onDestruction: {
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

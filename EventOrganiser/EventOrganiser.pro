@@ -49,12 +49,10 @@ INCLUDEPATH += $$PWD/../EventAppShared
 DEPENDPATH += $$PWD/../EventAppShared
 
 DISTFILES += \
-    WelcomeTabForm.ui.qml \
     EventOrganiser.pro.user \
     content/EAInfoThemeForm.ui.qml \
     content/EAInfoNameForm.ui.qml \
     EAInfoPageForm.ui.qml \
-    MainStackForm.ui.qml \
     EAConstructionPageForm.ui.qml \
     content/EAListDisplayPageForm.ui.qml \
     content/TitleFieldListDelegate.qml \

@@ -19,6 +19,7 @@ Item {
     property alias uploadBut: uploadBut
     property alias downloadKey: downloadKey
     property alias firebaseUrlTB: firebaseUrlTB
+    property alias firbaseUrlBut: firbaseUrlBut
     Flickable {
         Pane {
             id: eventNamePane
@@ -33,9 +34,13 @@ Item {
                     width: parent.width
                     title: qsTr("Data file")
                     ColumnLayout {
+                        x: -12
+                        y: 12
                         RowLayout {
                             TextField {
                                 id: loadFilename
+                                text: settingsData.dataFilename
+                                onEditingFinished: settingsData.dataFilename = text;
                             }
                             Button {
                                 id: openFileDialog1
@@ -66,7 +71,9 @@ Item {
 
                             TextField {
                                 id: downloadKey
-                                text: qsTr("Text Field")
+                                //text: qsTr("Text Field")
+                                text: settingsData.databaseKey
+                                onEditingFinished: settingsData.databaseKey = text;
                             }
 
                             Text {
@@ -94,20 +101,34 @@ Item {
 
                         RowLayout {
                             id: rowLayout3
-                            width: 100
+                            width: 300
                             height: 100
 
-                            TextField {
-                                id: firebaseUrlTB
-                                //placeholderText: qsTr("Enter firebase url")
-                                text: settingsData.firebaseUrl//  qsTr("")
-                                onEditingFinished: eaContainer.firebaseUrl = text;// settingsData.firebaseUrl = text;
-                            }
+                            ColumnLayout {
+                                id: columnLayout1
+                                width: 300
+                                height: 100
 
-                            Text {
-                                id: text2
-                                text: qsTr("Firebase url")
-                                font.pixelSize: 12
+                                Button {
+                                    id: firbaseUrlBut
+                                    text: qsTr("New firebase url")
+                                }
+
+                                TextField {
+                                    id: firebaseUrlTB
+                                    width: 300; height: 30
+                                    //placeholderText: qsTr("Enter firebase url")
+                                    //  qsTr("")
+                                    //onEditingFinished: eaContainer.firebaseUrl = text;
+                                    text: settingsData.firebaseUrl
+                                    onEditingFinished: settingsData.firebaseUrl = text;
+                                }
+
+                                //Text {
+                                //    id: text2
+                                //    text: qsTr("Firebase url")
+                                //    font.pixelSize: 12
+                               // }
                             }
                         } //RowLayout
                     } //ColumnLayout

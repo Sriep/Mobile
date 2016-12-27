@@ -19,6 +19,15 @@ EAConstructionPageForm {
 
     uploadBut.onClicked: eaContainer.uploadApp(downloadKey.text);
     downloadBut.onClicked: eaContainer.downloadApp(downloadKey.text);
+    firbaseUrlBut.onClicked: eaContainer.firbaseUrl = firebaseUrlTB.text;
+
+    // Get some strange ".onEditingFinished" is not available due to component
+    // versioning" error.
+    //firebaseUrlTB.onEditingFinished: {
+    //    eaContainer.firebaseUrl = text;
+    //    settingsData.firebaseUrl = text;
+    //}
+
 
     //firebaseUrlTB.text: eaContainer.firebaseUrl
     //firebaseUrlTB.onEditingFinished: {

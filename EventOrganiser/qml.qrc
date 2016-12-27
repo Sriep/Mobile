@@ -6,13 +6,9 @@
         <file>content/EAInfoName.qml</file>
         <file>content/EAInfoTheme.qml</file>
         <file>content/HeaderTabBarForm.ui.qml</file>
-        <file>WelcomeTabForm.ui.qml</file>
-        <file>WelcomeTab.qml</file>
-        <file>MainStack.qml</file>
         <file>content/EAInfoThemeForm.ui.qml</file>
         <file>content/EAInfoNameForm.ui.qml</file>
         <file>EAInfoPageForm.ui.qml</file>
-        <file>MainStackForm.ui.qml</file>
         <file>EAConstructionPageForm.ui.qml</file>
         <file>content/EAListDisplayPage.qml</file>
         <file>content/EAListDisplayPageForm.ui.qml</file>

@@ -137,7 +137,9 @@ void EAContainer::downloadApp(const QString &eventKey)
 {
     clearEvent();
     setEventKey(eventKey);
+
     Firebase *firebase=new Firebase(firbaseUrl(), eventKey);
+    //Firebase *firebase=new Firebase("https://eventapp-2d821.firebaseio.com/", eventKey);
 
     firebase->getValue();
     connect(firebase,SIGNAL(eventResponseReady(QByteArray)),

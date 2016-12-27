@@ -33,7 +33,6 @@ public:
     void setEaContainer(EAContainer *value);
 
     bool loggodOn() const;
-    QString tempPassword;
 
 signals:
 
@@ -59,6 +58,8 @@ private:
     void addIndex(const QString& table, const QString& field);
 
     EAContainer* eaContainer;
+    QString tempPassword;
+    QString tempUser;
 
 };
 

@@ -62,6 +62,7 @@ void EAUser::addIndex(const QString &table, const QString &field)
 bool EAUser::login(const QString &userId, const QString &password)
 {
     tempPassword = password;
+    tempUser = userId;
     Firebase *firebase = new Firebase(getEaContainer()->firbaseUrl()
                                       , getEaContainer()->eventKey());
     QString path;
@@ -98,14 +99,14 @@ void EAUser::onResponseReady(QByteArray data)
     QJsonObject userObj = loadDoc.object();
     if (userObj.count() > 0)
     {
-        QString user = userObj.keys()[0];
-        QJsonObject::const_iterator firstIt = userObj.begin();
-        QJsonObject userData = (*firstIt).toObject();
-        QString password = userData["password"].toString();
-        QString email = userData["email"].toString();
+        //QString user = userObj.keys()[0];
+        //QJsonObject::const_iterator firstIt = userObj.begin();
+        //QJsonObject userData = (*firstIt).toObject();
+        QString password = userObj["password"].toString();
+        QString email = userObj["email"].toString();
         if (password == tempPassword)
         {
-            setUser(user);
+            setUser(tempUser);
             setEmail(email);
             setLoggodOn(true);
             emit userPasswordAccepted(true);
@@ -115,7 +116,7 @@ void EAUser::onResponseReady(QByteArray data)
     }
     else
         emit userPasswordAccepted(false);
-    tempPassword = "";
+    tempPassword = ""; tempUser = "";
 
     qDebug() << "EAContainer::downloadEventApp finished";
 }

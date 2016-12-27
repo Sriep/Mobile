@@ -39,6 +39,7 @@ class  EAContainer : public QObject, public QQmlParserStatus
     Q_PROPERTY(QString eventKey READ eventKey WRITE setEventKey NOTIFY eventKeyChanged)
 
     Q_PROPERTY(QString firbaseUrl READ firbaseUrl WRITE setFirbaseUrl NOTIFY firbaseUrlChanged)
+    Q_PROPERTY(QString answers READ answers WRITE setAnswers NOTIFY answersChanged)
 
     EAInfo* m_eaInfo;
     QString m_dataFilename = "temp";
@@ -62,6 +63,7 @@ public:
     Q_INVOKABLE  bool saveEventApp(const QString &filename = "");
     Q_INVOKABLE void uploadApp(const QString& eventKey);
     Q_INVOKABLE void downloadApp(const QString& eventKey);
+    Q_INVOKABLE void loadAnswers();
 
     void read(const QJsonObject &json);
     void write(QJsonObject &json);
@@ -80,6 +82,8 @@ public:
                      , EAItem* item
                      , QList<EaQuestion*> questionList);
 
+    QString answers() const;
+
 signals:
     void eaInfoChanged(EAInfo* eaInfo);
     void dataFilenameChanged(QString dataFilename);
@@ -92,7 +96,9 @@ signals:
     void versionChanged(int version);
     void firbaseUrlChanged(QString firbaseUrl);
     void userChanged(EAUser* user);
-    void eventKeyChanged(QString eventKey);
+    void eventKeyChanged(QString eventKey);    
+    void answersChanged(QString answers);
+    void eaAnswersDownloaded();
 
 public slots:
     void setEAInfo(EAInfo* eaInfo);
@@ -104,14 +110,16 @@ public slots:
     void setFirbaseUrl(QString firbaseUrl);
     void setUser(EAUser *user);
     void setEventKey(QString eventKey);
-
     void onResponseReady(QByteArray);
-    void onDataChanged(QString);
+    void onAnswersReady(QByteArray data);
+    void onDataChanged(QString);    
+    void setAnswers(QString answers);
 
 private:
     QJsonObject jsonAnswers(EAItemList* eaItemList
                             , EAItem *item
                             , QList<EaQuestion*> questionList);
+    void setAnswers(QJsonObject jsonAnswers);
 
     static void append_eaItemLists(QQmlListProperty<EAItemList> *list
                                    , EAItemList *itemList);
@@ -126,6 +134,8 @@ private:
 
     QString m_firbaseUrl = "https://eventapp-2d821.firebaseio.com/";
     QString m_eventKey = "";
+    QString m_answers;
+    QJsonObject answersObj;
 };
 
 #endif // EVENTCONTAINER_H

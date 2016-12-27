@@ -47,6 +47,44 @@ ApplicationWindow {
             property alias featuredList: eaListDisplayPage.featuredList
         }
 
+        Item {
+            ColumnLayout {
+                Button {
+                    height: 30
+                    id: addItem
+                    text: qsTr("Load Answers")
+                    onPressed: {
+                        eaContainer.loadAnswers();
+                    }
+                }
+
+                Rectangle {
+                    width: 800; height: 600
+                    border.width : 0.5
+                    border.color : "black"
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    Flickable {
+                        anchors.fill: parent
+                        TextArea.flickable: TextArea {
+                            id: ansersTA
+                            text: eaContainer.answers
+                            wrapMode: TextArea.Wrap
+                        }
+                        ScrollBar.vertical: ScrollBar { }
+                    }
+                } //Rectangle
+
+                //TextArea {
+                //    width: 400; height: 500
+                //    id: itemData
+                //    text: eaContainer.answers
+                //}
+            }
+        }
+
+
+
     }
 
     Settings {

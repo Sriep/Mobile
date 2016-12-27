@@ -19,4 +19,7 @@ TabBar {
   TabButton {
     text: qsTr("Select List")
   }
+  TabButton {
+    text: qsTr("Form answers")
+  }
 }

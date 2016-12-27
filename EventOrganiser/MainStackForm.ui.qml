@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 import Qt.labs.settings 1.0
 import "content"
 
-
+/*
 StackLayout {
       id: mainStackCtl
       anchors.fill: parent
@@ -33,5 +33,5 @@ StackLayout {
         implicitHeight: 200
       }
     }
-
+*/
 

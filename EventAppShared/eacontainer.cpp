@@ -167,6 +167,22 @@ void EAContainer::onDataChanged(QString data)
     qDebug()<<data;
 }
 
+void EAContainer::setAnswers(QString answers)
+{
+    if (m_answers == answers)
+        return;
+
+    m_answers = answers;
+    emit answersChanged(answers);
+}
+
+void EAContainer::setAnswers(QJsonObject jsonAnswers)
+{
+    QJsonDocument anwserDoc(jsonAnswers);
+    answersObj = jsonAnswers;
+    setAnswers(jsonAnswers);
+}
+
 void EAContainer::setFirbaseUrl(QString firbaseUrl)
 {
     if (m_firbaseUrl == firbaseUrl)
@@ -413,6 +429,37 @@ void EAContainer::saveAnswers(EAItemList* eaItemList
     }
 }
 
+void EAContainer::loadAnswers()
+{
+    if (eventKey() != "")
+    {
+        QString path = eventKey();
+        path += "/answers";
+        Firebase *firebase=new Firebase(firbaseUrl(), path);
+        firebase->getValue();
+        connect(firebase,SIGNAL(eventResponseReady(QByteArray)),
+                this,SLOT(onAnswersReady(QByteArray)));
+        connect(firebase,SIGNAL(eventDataChanged(QString)),
+                this,SLOT(onDataChanged(QString*)));
+    }
+}
+
+void EAContainer::onAnswersReady(QByteArray data)
+{
+    qDebug()<<"answer";
+    QJsonDocument loadDoc = QJsonDocument::fromJson(data);
+    answersObj = loadDoc.object();
+    QByteArray ba = loadDoc.toJson(QJsonDocument::Indented);
+    setAnswers(QString(ba));
+    qDebug() << "EAContainer::onAnswersReady finished";
+    emit eaAnswersDownloaded();
+}
+
+QString EAContainer::answers() const
+{
+    return m_answers;
+}
+
 QJsonObject EAContainer::jsonAnswers(EAItemList *eaItemList
                                      , EAItem *item
                                      , QList<EaQuestion *> questionList)
@@ -431,7 +478,6 @@ QJsonObject EAContainer::jsonAnswers(EAItemList *eaItemList
     QJsonObject itemListAnswers{{ eaItemList->listName(), itemAnswers}};
     return itemAnswers;
 }
-
 
 //typedef QQmlListProperty::AppendFunction
 //Synonym for void (*)(QQmlListProperty<T> *property, T *value).

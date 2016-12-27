@@ -11,7 +11,7 @@ UserLoginForm {
     }
 
     logonBut.onPressed: {
-        var result = eaContainer.user.login(emailTB.text, passwordTB.text);
+        var result = eaContainer.user.login(userIdTF.text, passwordTB.text);
     }
 
     logoffBut.onPressed: {

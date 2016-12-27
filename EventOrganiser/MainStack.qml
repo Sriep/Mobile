@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 import Qt.labs.settings 1.0
 import "content"
 import EventAppData 1.0
-
+/*
 MainStackForm {
     id: mainStack
     mainStackCtl.currentIndex: headerTabBar.currentIndex
@@ -26,4 +26,4 @@ MainStackForm {
     }
 
 }
-
+*/

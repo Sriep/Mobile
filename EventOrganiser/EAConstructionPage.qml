@@ -12,9 +12,9 @@ EAConstructionPageForm {
     colourLabel1.text: qsTr("Background colour: ")
                        + eaContainer.eaConstruction.backColour;
 
-    openFileDialog1.onClicked: fileDialog.open();
-    loadEventButton.onClicked: eaContainer.loadEventApp(loadFilename.text);
-    saveEventButton.onClicked: eaContainer.saveEventApp(loadFilename.text);
+    //openFileDialog1.onClicked: fileDialog.open();
+    //loadEventButton.onClicked: eaContainer.loadEventApp(loadFilename.text);
+    //saveEventButton.onClicked: eaContainer.saveEventApp(loadFilename.text);
     newEventBut.onClicked: eaContainer.clearEvent();
 
     uploadBut.onClicked: eaContainer.uploadApp(downloadKey.text);

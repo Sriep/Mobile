@@ -30,16 +30,46 @@ Item {
                 StackLayout {
                     id: listItemEntryStack
                     x:10; y: 10
-
-                    width: 500; height: 700
+                    //width: 500; height: 700
+                    width: parent.width - 2*x; height: parent.height - 2*y
                     clip: true
                     property int formatedListStack: 1
                     property int manualListItem: 2
 
-                    AddNewList {
-                        width: 200; height: 200
-                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                    Item {
+                        id: name
+                        width: parent.width; height: parent.height
+                        ColumnLayout {
+                            width: parent.width; height: parent.height
+                            TabBar {
+                              width: parent.width; height: parent.height
+                              id: addListTab
+                              Layout.minimumWidth: 360
+                              Layout.preferredWidth: 480
+                              TabButton {
+                                text: qsTr("Data")
+                              }
+                              TabButton {
+                                text: qsTr("Display")
+                              }
+                            }
+                            StackLayout {
+                                width: parent.width; height: parent.height
+                                currentIndex: addListTab.currentIndex
+                                AddNewList {
+                                    width: 200; height: 200
+                                    Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+
+                                }
+                                EaDisplayPara {
+
+                                   // color: "blue"
+                                }
+
+                            }
+                        }
                     }
+
                     EaldFormatedList {
                         id: thisFormatedListPanel
                     }

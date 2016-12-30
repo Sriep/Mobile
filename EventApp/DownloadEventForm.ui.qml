@@ -10,10 +10,12 @@ Item {
     property alias progressKeyDL: progressKeyDL
     property alias downloadKeyBut: downloadKeyBut
     property alias downloadFromKey: downloadFromKey
+    property alias getDebugLog: getDebugLog
+    property alias debugLog: debugLog
 
     ColumnLayout {
         id: columnLayout2
-        width: 100
+        width: 445
         height: 100
 
         ColumnLayout {
@@ -25,7 +27,7 @@ Item {
             Label {
                 id: label1
                 width: 105
-                height: 40
+                height: 20
                 text: qsTr("Dwonload from url")
                 verticalAlignment: Text.AlignVCenter
                 font.pixelSize: 12
@@ -33,8 +35,9 @@ Item {
 
             TextField {
                 id: urlText
-                width: 400
-                text: "https://www.dropbox.com/s/qvcmm683cq237ig/test2.json"
+                height: 30; width: 400
+                //text: "https://www.dropbox.com/s/qvcmm683cq237ig/test2.json"
+                text: "https://www.dropbox.com/s/oh1hwo4oz82jdhi/NewEvent.json"
                 horizontalAlignment: Text.AlignLeft
                 Layout.fillWidth: true
                 placeholderText: qsTr("Text Field")
@@ -44,7 +47,7 @@ Item {
             RowLayout {
                 id: rowLayout1
                 width: 100
-                height: 100
+                height: 30
                 anchors.left: parent.left
                 anchors.leftMargin: -20
 
@@ -74,7 +77,7 @@ Item {
             RowLayout {
                 id: rowLayout2
                 width: 100
-                height: 100
+                height: 30
 
                 Text {
                     id: keyText
@@ -86,12 +89,17 @@ Item {
                     id: downloadFromKey
                     text: qsTr("4455")
                 }
+
+                Button {
+                    id: getDebugLog
+                    text: qsTr("Debug log")
+                }
             }
 
             RowLayout {
                 id: rowLayout3
                 width: 100
-                height: 100
+                height: 30
 
                 Button {
                     id: downloadKeyBut
@@ -113,5 +121,24 @@ Item {
             id: quitButton
             text: qsTr("Exit")
         }
+
+        Rectangle {
+            width: 450; height: 300
+            border.width : 0.5
+            border.color : "black"
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            //anchors.bottom: saveTitlesBut.top rowLayout1.top??
+            Flickable {
+                anchors.fill: parent
+                TextArea.flickable: TextArea {
+                    id: debugLog
+                    wrapMode: TextArea.Wrap
+                    readOnly: true
+                }
+                ScrollBar.vertical: ScrollBar { }
+            }
+        } //Rectangle
+
     }
 }

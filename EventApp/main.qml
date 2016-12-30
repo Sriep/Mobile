@@ -53,7 +53,9 @@ ApplicationWindow {
         category: "data"
         property string dataFilename: "defaultData"
         property alias firebaseUrl: eaContainer.firbaseUrl
-       // property alias firebaseUrl: "https://eventapp-2d821.firebaseio.com/"
+        property string style: "default"
+        //property alias style: eaContainer.eaConstruction.style
+        //property alias firebaseUrl: "https://eventapp-2d821.firebaseio.com/"
     }
 
     Settings {

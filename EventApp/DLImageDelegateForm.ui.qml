@@ -1,14 +1,19 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.1
-import QtQuick.Extras 1.4
-import QtWebEngine 1.0
+//For 5.7 to 5.8 switch around QtQuickControls 2.1 and 2.0
+//import QtQuick.Controls 2.1
 import QtWebView 1.1
+//import QtWebEngine 1.0
+import QtQuick.Controls 2.0
+
+import QtQuick.Extras 1.4
+
+
 //import Qt.labs.platform 1.0
 import "dataList.js" as DataListJS
 
 Item {
-    Text{ text: "Whats up folks!"}
+    //Text{ text: "Whats up folks!"}
 
     // Create a property to contain the visibility of the details.
     // We can bind multiple element's opacity to this one property,
@@ -18,9 +23,9 @@ Item {
 
     width: dataListImage.width
     height: 70
-    property alias questionsList: questionsList
+    //property alias questionsList: questionsList
     property alias maDataDelegate: maDataDelegate
-    property alias largePhotoImage: largePhotoImage
+    property alias closeBut: closeBut
     property alias bottomText: bottomText
     property alias photoImage: photoImage
     property alias questionsModel: questionsModel
@@ -86,8 +91,10 @@ Item {
         StackLayout {
             id: itemStackCtl
             currentIndex: itemType
+            clip: true
+
             Image {
-                id: largePhotoImage
+                //id: largePhotoImage
                 source: picture
             }
 
@@ -97,15 +104,25 @@ Item {
               width: details.width
             }
 
-            WebView {
-                id: webView
+
+            Item {
                 width: background.width-10; height: background.height-10
-                y: 5; x:5
-                url: showUrlUrl
+                opacity: imageDelegate.detailsOpacity
+                visible: imageDelegate.detailsOpacity === 1 && itemType === 2
+                WebView {
+                    //id: webView
+                    width: background.width-10; height: background.height-10
+                    //height: imageDelegate.detailsOpacity ? background.height-10 : 0
+                    //width: 0; height: 0
+                    //opacity: imageDelegate.detailsOpacity
+                    //visible: false
+                    y: 5; x:5
+                    url: showUrlUrl
+                }
             }
 
             ListView {
-                id: questionsList
+                //id: questionsList
                 //width: background.width-10; height: background.height-10
                 //width: flick.width-10; height: flick.height-10
                 width: 250; height: 600
@@ -116,15 +133,6 @@ Item {
                 delegate: Item {
                     x:10; y:10
                     width: 250; height: 90
-                    // A simple rounded rectangle for the background
-                    //Rectangle {
-                    //    //id: background
-                    //    id: itemBackground
-                    //    x: 2; y: 2; width: parent.width - x*2; height: parent.height - y*2
-                    //    color: "ivory"
-                    //    border.color: "orange"
-                    //    radius: 5
-                    //}
                     ColumnLayout {
                         Text {
                             y: 15; x:15
@@ -158,6 +166,7 @@ Item {
                     } //ColumnLayout
                 } //delegate: Item
             } //ListView
+
         } //StackLayout
       }
 
@@ -172,6 +181,19 @@ Item {
         source: "qrc:///shared/images/moreDown.png"
         opacity: flick.atYEnd ? 0 : 1
       }
+    }
+
+    // A button to close the detailed view, i.e. set the state back to default ('').
+    Button {
+        id: closeBut
+        y: 10
+        anchors { right: background.right; rightMargin: 10 }
+        opacity: imageDelegate.detailsOpacity
+        text: "Close"
+        //text: dataDelegate.state === 'Details' ? "Close" : "Open"
+        checked: true
+        //onClicked: dataDelegate.state === 'Details' ? "Details" : "";
+        //onClicked: dataDelegate.state === 'Details' ? "" : "Details";
     }
 
     states: State {

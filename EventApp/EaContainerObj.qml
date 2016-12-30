@@ -15,6 +15,7 @@ EAContainer {
   //property alias eaConstruction: eaConstruction
   Component.onCompleted: {
     dataFilename = settingsData.dataFilename;
+    style = style.dataFilename;
     reloadEventApp()
   }
 
@@ -33,5 +34,6 @@ EAContainer {
   
   Component.onDestruction: {
     settingsData.dataFilename = dataFilename;
+    settingsData.style = style;
   }
 }

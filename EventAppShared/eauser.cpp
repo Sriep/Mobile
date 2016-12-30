@@ -36,7 +36,7 @@ bool EAUser::registerUser(const QString& userId
         fbUsers->setValue(userDoc, "PATCH");
         setLoggodOn(true);
 
-        addIndex("users", "password");
+        //addIndex("users", "password");
         return true;
     }
     else
@@ -69,20 +69,20 @@ bool EAUser::login(const QString &userId, const QString &password)
     //path = "users/" + userId + "/" + password;
     path = "users/" + userId;
     Firebase *fbUsers = firebase->child(path);
-    QUrl queryUrl(fbUsers->getPath());
 
-    QUrlQuery query;
-    QString qPasswordQ = "\"password\"";
-    QString qvalueQ = "\"value\"";
-    QString qThePasswordQ = "\"" + password + "\"";
-    query.addQueryItem("orderBy", qPasswordQ);
-    query.addQueryItem("equalTo",  qThePasswordQ);
+    //QUrl queryUrl(fbUsers->getPath());
+    //QUrlQuery query;
+    //QString qPasswordQ = "\"password\"";
+    //QString qvalueQ = "\"value\"";
+    //QString qThePasswordQ = "\"" + password + "\"";
+    //query.addQueryItem("orderBy", qPasswordQ);
+    //query.addQueryItem("equalTo",  qThePasswordQ);
     // queryUrl.setQuery(query);
     //"{\n  \"error\" : \"Index not defined, add \\\".indexOn\\\": \\\"value\\\", "
     //"for path \\\"/4455/users/myemail/password\\\", to the rules\"\n}\n"
+    //fbUsers->getValue(queryUrl);
 
-    fbUsers->getValue(queryUrl);
-    //fbUsers->getValue();
+    fbUsers->getValue();
     connect(fbUsers,SIGNAL(eventResponseReady(QByteArray)),
             this,SLOT(onResponseReady(QByteArray)));
     connect(fbUsers,SIGNAL(eventDataChanged(QString*)),

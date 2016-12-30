@@ -15,7 +15,8 @@ SOURCES += main.cpp \
     ../EventAppShared/eaitem.cpp \
     ../EventAppShared/firebase.cpp \
     ../EventAppShared/eauser.cpp \
-    ../EventAppShared/eaquestion.cpp
+    ../EventAppShared/eaquestion.cpp \
+    ../EventAppShared/eaobjdisplay.cpp
 
 HEADERS += \
     ../EventAppShared/eainfo.h \
@@ -30,7 +31,8 @@ HEADERS += \
     ../EventAppShared/eaitem.h \
     ../EventAppShared/firebase.h \
     ../EventAppShared/eauser.h \
-    ../EventAppShared/eaquestion.h
+    ../EventAppShared/eaquestion.h \
+    ../EventAppShared/eaobjdisplay.h
 
 RESOURCES += qml.qrc \
     ../EventApp/qmlShared.qrc
@@ -47,6 +49,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 INCLUDEPATH += $$PWD/../EventAppShared
 DEPENDPATH += $$PWD/../EventAppShared
+
+#LIBS += -L/usr/lib/crypto++ -lcrypto++
+#INCS += -I/usr/include/crypto++
 
 DISTFILES += \
     EventOrganiser.pro.user \
@@ -75,8 +80,14 @@ DISTFILES += \
     ../build-EventOrganiser-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/android-build/gradle/wrapper/gradle-wrapper.properties \
     ../build-EventOrganiser-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/android-build/gradlew.bat \
     content/EaldItem.qml \
-    content/EaldItemForm.ui.qml
+    content/EaldItemForm.ui.qml \
+    content/EaDisplayParaForm.ui.qml
 
 FORMS +=
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/../build-EventOrganiser-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/android-build
+
+#unix:!macx: LIBS += -L$$PWD/../cryptopp/ -lcryptopp
+#INCLUDEPATH += $$PWD/../cryptopp
+#DEPENDPATH += $$PWD/../cryptopp
+#unix:!macx: PRE_TARGETDEPS += $$PWD/../cryptopp/libcryptopp.a

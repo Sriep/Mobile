@@ -15,18 +15,22 @@ Item {
     width: dataList.width
     height: 70
     property alias maDataDelegate: maDataDelegate
-    property alias photoImage: photoImage
+    //property alias photoImage: photoImage
     property alias bottomText: bottomText
     property alias topText: topText
+    property alias closeBut: closeBut
 
     // A simple rounded rectangle for the background
-    /*Rectangle {
+    Rectangle {
         id: background
         x: 2; y: 2; width: parent.width - x*2; height: parent.height - y*2
         color: "ivory"
         border.color: "orange"
         radius: 5
-    }*/
+
+        //Component.onCompleted: x=2
+       // Component.onDestruction: x=2
+    }
 
     // This mouse region covers the entire delegate.
     // When clicked it changes mode to 'Details'.  If we are already
@@ -34,38 +38,32 @@ Item {
     MouseArea {
         id: maDataDelegate
         anchors.fill: parent
-        //onClicked: dataDelegate.state = dataDelegate.state == 'Details' ? "" : "Details";
+        //onClicked: dataDelegate.state = (dataDelegate.state == 'Details' ? "" : "Details");
     }
 
     // Lay out the page: picture, title and ingredients at the top, and method at the
     // bottom.  Note that elements that should not be visible in the list
     // mode have their opacity set to recipe.detailsOpacity.
-    Row {
-        id: topLayout
-        x: 10; y: 10; height: photoImage.height; width: parent.width
+  Row {
+         id: topLayout
+         x: 10; y: 10; height: photoImage.height; width: parent.width
+        // x: 10; y: 10; height: 50; width: parent.width
         spacing: 10
 
-        Image {
+       Image {
             id: photoImage
-            width: 50;  height: 50
+            width: eaLVItemList.showPhotos ? 50 : 0//50
+            height: 50
             source: picture
         }
 
-        Column {
-            width: background.width - photoImage.width - 20; height: photoImage.height
-            spacing: 5
-            Text { id: topText }
-        }
-    }
-/*
-    SlitItemView {
-        id: topLayout
-        height: photoImage.height; width: parent.width
-        spacing: 10
-        property alias photoImage: photoImage
-        property alias topText: topText
-    }
-*/
+        //Column {
+           // width: background.width - photoImage.width - 20; height: photoImage.height
+         //   spacing: 5
+            Text { id: topText ; text: "Fred" }
+       // }
+   }
+
     Item {
       id: details
       width: parent.width - 20
@@ -83,6 +81,8 @@ Item {
           id: bottomText;
           wrapMode: Text.WordWrap;
           width: details.width
+          text: "Bob"
+          //text: displayText
         }
       }
 
@@ -104,17 +104,31 @@ Item {
         x: 10
     }
 */
+    // A button to close the detailed view, i.e. set the state back to default ('').
+    Button {
+        id: closeBut
+        y: 10
+        anchors { right: background.right; rightMargin: 10 }
+        opacity: dataDelegate.detailsOpacity
+        text: "Close"
+        checked: true
+
+       // onClicked: dataDelegate.state == 'Details' ? "" : "Details";
+    }
+
     states: State {
         id: dldStates
         name: "Details"
 
         PropertyChanges { target: background; color: "white" }
+
         PropertyChanges {
             id: picSicePropCh;
             target: photoImage;
             width: eaLVItemList.showPhotos ? 130 : 0;
             height: eaLVItemList.showPhotos ? 130 : 50;
         } // Make picture bigger
+
         PropertyChanges { target: dataDelegate; detailsOpacity: 1; x: 0 } // Make details visible
         PropertyChanges { target: dataDelegate; height: dataList.height } // Fill the entire list area with the detailed view
 

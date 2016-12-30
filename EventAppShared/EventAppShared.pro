@@ -25,7 +25,8 @@ SOURCES += eventappshared.cpp \
     eaitem.cpp \
     firebase.cpp \
     eauser.cpp \
-    eaquestion.cpp
+    eaquestion.cpp \
+    eaobjdisplay.cpp
 
 HEADERS += eventappshared.h\
     eventappshared_global.h \
@@ -41,7 +42,8 @@ HEADERS += eventappshared.h\
     eaitem.h \
     firebase.h \
     eauser.h \
-    eaquestion.h
+    eaquestion.h \
+    eaobjdisplay.h
 
 unix {
     target.path = /usr/lib

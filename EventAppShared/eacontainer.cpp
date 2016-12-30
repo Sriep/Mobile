@@ -19,6 +19,8 @@
 
 EAContainer::EAContainer()
 {
+    m_eaConstruction = new EAConstruction;
+    m_eaInfo = new EAInfo;
 }
 
 void EAContainer::classBegin()
@@ -141,6 +143,16 @@ void EAContainer::downloadApp(const QString &eventKey)
     Firebase *firebase=new Firebase(firbaseUrl(), eventKey);
     //Firebase *firebase=new Firebase("https://eventapp-2d821.firebaseio.com/", eventKey);
 
+    QString serviceEmail = "eventapp-2d821@appspot.gserviceaccount.com";
+    QJsonObject keyObj = getServiceAccountKey("PrivateKey.json");
+    QString key =  keyObj["private_key"].toString();
+    //QString token = firebase->getToken(serviceEmail, key.toUtf8());
+
+    debugLog += "\nAbout to download event";
+    debugLog += "\nEvent Key: " + eventKey;
+    debugLog += "\nFirebase url: " + firbaseUrl();
+    debugLog += "\nFirebase url: " + firebase->getPath().url();
+
     firebase->getValue();
     connect(firebase,SIGNAL(eventResponseReady(QByteArray)),
             this,SLOT(onResponseReady(QByteArray)));
@@ -153,6 +165,8 @@ void EAContainer::onResponseReady(QByteArray data)
 {
     qDebug()<<"answer";
     //qDebug()<<data;
+    QString strData(data);
+    debugLog += "\nData returned: " + strData.left(100);
 
     QJsonDocument loadDoc = QJsonDocument::fromJson(data);
     QJsonObject topObj = loadDoc.object();
@@ -183,6 +197,19 @@ void EAContainer::setAnswers(QJsonObject jsonAnswers)
     QJsonDocument anwserDoc(jsonAnswers);
     answersObj = jsonAnswers;
     setAnswers(jsonAnswers);
+}
+
+QJsonObject EAContainer::getServiceAccountKey(const QString &filename)
+{
+    QFile loadFile(filename);
+    if (!loadFile.open(QIODevice::ReadOnly)) {
+        qWarning("Couldn't open save file.");
+        return QJsonObject();
+    }
+    QByteArray saveData = loadFile.readAll();
+    QJsonDocument keyDoc(QJsonDocument::fromJson(saveData));
+    return  keyDoc.object();
+
 }
 
 void EAContainer::setFirbaseUrl(QString firbaseUrl)
@@ -527,6 +554,11 @@ void EAContainer::clear_eaItemLists(QQmlListProperty<EAItemList> *list)
 int EAContainer::useNextItemListId()
 {
     return nextItemListId++;
+}
+
+QString EAContainer::getDebugLog() const
+{
+    return debugLog;
 }
 
 

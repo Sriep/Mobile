@@ -1,8 +1,9 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.1
 import Qt.labs.settings 1.0
 import QtQuick.Dialogs 1.0
+import Qt.labs.platform 1.0
 
 Item {
     property alias mouseArea3: mouseArea4
@@ -13,7 +14,7 @@ Item {
     property alias loadFilename: loadFilename
     property alias rectangle1: rectangle1
     property alias colourLabel1: colourLabel1
-    property alias openFileDialog1: openFileDialog1
+    //property alias openFileDialog1: openFileDialog1
     property alias newEventBut: newEventBut
     property alias downloadBut: downloadBut
     property alias uploadBut: uploadBut
@@ -42,20 +43,54 @@ Item {
                                 text: settingsData.dataFilename
                                 onEditingFinished: settingsData.dataFilename = text;
                             }
-                            Button {
+                            /*Button {
                                 id: openFileDialog1
-                                text: "..."                                                            }
+                                text: "..."
+                                Connections {
+                                    onPressed: loadFileDialog.open()
+                                }
+                            }*/
+                            FileDialog {
+                                id: loadFileDialog
+                                fileMode: FileDialog.OpenFile
+                                selectedNameFilter.index: 0
+                                nameFilters: ["Json files (*.json)", "Json binary (*.dat )" ]
+                                folder: eaContainer.workingDirectory
+                                //onAccepted: settingsData.dataFilename = file
+                                Connections {
+                                    onAccepted: eaContainer.loadEventApp(loadFileDialog.file);
+                                }
+                            }
+
+                            FileDialog {
+                                id: saveFileDialog
+                                fileMode: FileDialog.SaveFile
+                                defaultSuffix: ".json"
+                                selectedNameFilter.index: 0
+                                nameFilters:  ["Json files (*.json)", "Json binary (*.dat )" ]
+                                folder: eaContainer.workingDirectory
+                                //onAccepted: settingsData.dataFilename = file
+                                Connections {
+                                    onAccepted: eaContainer.saveEventApp(saveFileDialog.file);
+                                }
+                            }
+
                         }
                         RowLayout {
                             height: implicitHeight
                             Button {
                                 id: loadEventButton
                                 text: "Load"
-
+                                Connections {
+                                    onPressed: loadFileDialog.open()
+                                }
                             }
                             Button {
                                 id: saveEventButton
                                 text: "Save"
+                                Connections {
+                                    onPressed: saveFileDialog.open()
+                                }
                             }
 
                             Button {

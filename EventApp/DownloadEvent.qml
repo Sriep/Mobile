@@ -15,8 +15,22 @@ DownloadEventForm {
         eaContainer.downloadApp(downloadFromKey.text);
     }
 
+    //void error(QString message);
+    Connections {
+        target: httpDownload
+        onError: {
+            console.log("download error", message);
+            debugLog.text = message;
+        }
+    }
+
 
     quitButton.onClicked: {
         stackCtl.currentIndex = stackCtl.topDrawerId;
     }
+
+    getDebugLog.onClicked: {
+        debugLog.text = eaContainer.getDebugLog()
+    }
+
 }

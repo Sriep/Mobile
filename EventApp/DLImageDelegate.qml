@@ -10,11 +10,11 @@ DLImageDelegateForm {
   property int test: 76
 
   topText.text: {
-      return title;
+      topText.text = title;
   }
 
   bottomText.text: {
-      return displayText;
+      bottomText.text = displayText;
   }
 
   property url showUrlUrl: "http://lllconf.co.uk/"
@@ -48,6 +48,7 @@ DLImageDelegateForm {
 
   function popQuestionList (item) { // model=questionsModel
       console.log("Start popItemList");
+
       questionsModel.clear();
       var questionCount = item.questions.length;
       for ( var i=0 ; i<questionCount ; i++ )
@@ -62,4 +63,29 @@ DLImageDelegateForm {
       }
   }
 
+  closeBut.onPressed: {
+      dataListImage.currentIndex = index;
+      imageDelegate.state = imageDelegate.state == 'Details' ? "" : "Details";
+      console.log("maDataDelegate index",index);
+      console.log("maDataDelegate listView.currentIndex",dataList.currentIndex);
+  }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

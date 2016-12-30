@@ -6,24 +6,27 @@ import "dataList.js" as DataListJS
 
 DataListDelegateForm {
     id: dataDelegate
+
     topText.text: { // eaLVItemList for eaItemList
         var one = JSON.parse(eaLVItemList.titleFields);
         var two = dataModel;
         //return DataListJS.displayText(JSON.parse(eaLVItemList.titleFields)
-        return displayText(JSON.parse(eaLVItemList.titleFields)
+        var t = displayText(JSON.parse(eaLVItemList.titleFields)
                                      , dataModel
                                      , true
                                      , eaLVItemList);
+        topText.text = t;
     }
 
     bottomText.text: {
         var one = JSON.parse(eaLVItemList.titleFields);
         var two = dataModel;
         //return DataListJS.displayText(JSON.parse(eaLVItemList.titleFields)
-        return displayText(JSON.parse(eaLVItemList.titleFields)
+        var t = displayText(JSON.parse(eaLVItemList.titleFields)
                                      , dataModel
                                      , false
                                      , eaLVItemList);
+        bottomText.text = t;
     }
 
     transitions: Transition {
@@ -41,7 +44,14 @@ DataListDelegateForm {
         console.log("maDataDelegate listView.currentIndex",dataList.currentIndex);
     }
 
-    photoImage.width: eaLVItemList.showPhotos ? 50 : 0
+    closeBut.onPressed: {
+        dataList.currentIndex = index;
+        dataDelegate.state = dataDelegate.state == 'Details' ? "" : "Details";
+        console.log("maDataDelegate index",index);
+        console.log("maDataDelegate listView.currentIndex",dataList.currentIndex);
+    }
+
+    //photoImage.width: eaLVItemList.showPhotos ? 50 : 0
 
     function displayText(titleFields, dataModel, header, eaItemList) {
         DataListJS.addStringFormat();
@@ -86,14 +96,20 @@ DataListDelegateForm {
                ,"dynamicSnippet1");
         console.log("DataListDelegateForm completed");
     }
-
+/*
     Component.onCompleted: {
         createDelegateBox(dataDelegate);
     }
 
-    Component.onDestruction: {
-
+    Component.onCompleted: {
+//        console.log("completed dataDelegate");
     }
+
+    Component.onDestruction: {
+       // console.log("destroying dataDelegate");
+    }
+*/
+
 }
 
 

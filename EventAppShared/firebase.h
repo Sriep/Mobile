@@ -29,6 +29,7 @@ public:
     QUrl getPath();
     void deleteValue();
     void setToken(QString);
+    //QString getToken(const QString &serviceAccount, const QByteArray &privateKey);
     void listenEvents();
     Firebase* child(QString childName);
 
@@ -41,6 +42,8 @@ public slots:
     void eventFinished();
     void eventReadyRead();
 private:
+    QByteArray signMessage(QByteArray toSign, QByteArray privateKey);
+
     QString host;
     QString firebaseToken="";
     QNetworkAccessManager *manager;

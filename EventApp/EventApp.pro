@@ -17,7 +17,8 @@ SOURCES += main.cpp \
     ../EventAppShared/eventappshared.cpp \
     ../EventAppShared/firebase.cpp \
     ../EventAppShared/eauser.cpp \
-    ../EventAppShared/eaquestion.cpp
+    ../EventAppShared/eaquestion.cpp \
+    ../EventAppShared/eaobjdisplay.cpp
 
 
 HEADERS += \
@@ -35,7 +36,8 @@ HEADERS += \
     ../EventAppShared/eventappshared.h \
     ../EventAppShared/firebase.h \
     ../EventAppShared/eauser.h \
-    ../EventAppShared/eaquestion.h
+    ../EventAppShared/eaquestion.h \
+    ../EventAppShared/eaobjdisplay.h
 
 
 RESOURCES += qml.qrc \
@@ -61,8 +63,17 @@ DEPENDPATH += $$PWD/../EventAppShared
 
 DISTFILES += \
     qml/main.qml \
-    qmldir
+    qmldir \
+    android/AndroidManifest.xml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat
 
 FORMS +=
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 

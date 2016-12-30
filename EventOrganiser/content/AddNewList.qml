@@ -39,7 +39,6 @@ AddNewListForm {
             newListBut.visible = true;
             addListBut.visible = false;
         } else {
-
             addListBut.visible = true;
         }
     }
@@ -66,7 +65,10 @@ AddNewListForm {
         popListsList(eaContainer.eaItemLists);
     }
 
-
+    //Component.onCompleted: {
+    //     console.log("completed AddNewListForm");
+    //     popListsList(eaContainer.eaItemLists);
+    //}
 
 
     //listsCreated.onCreation: {

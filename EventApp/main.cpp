@@ -2,6 +2,9 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QtWebView>
+#include <QSettings>
+#include <QQuickStyle>
+
 #include "eainfo.h"
 #include "eacontainer.h"
 #include "eaconstruction.h"
@@ -9,12 +12,20 @@
 #include "eauser.h"
 #include "eaitem.h"
 #include "httpdownload.h"
+#include "eaobjdisplay.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
     QtWebView::initialize();
+
+    QSettings settings;
+    QString style = QQuickStyle::name();
+    if (!style.isEmpty())
+        settings.setValue("style", style);
+    else
+        QQuickStyle::setStyle(settings.value("style").toString());
 
     app.setOrganizationName("Pierses");
     app.setOrganizationDomain("eventapps.com");
@@ -28,6 +39,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<EAUser>("EventAppData", 1,0, "EAUser");
     qmlRegisterType<EAItem>("EventAppData", 1,0, "EAItem");
     qmlRegisterType<EaQuestion>("EventAppData", 1,0, "EaQuestion");
+    qmlRegisterType<EAObjDisplay>("EventAppData", 1,0, "EAObjDisplay");
     
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("applicationPath", "file://"+qApp->applicationDirPath()+ "/");

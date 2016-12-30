@@ -65,6 +65,7 @@ public:
     Q_INVOKABLE void downloadApp(const QString& eventKey);
     Q_INVOKABLE void loadAnswers();
 
+
     void read(const QJsonObject &json);
     void write(QJsonObject &json);
     QString workingDirectory() const;
@@ -83,6 +84,8 @@ public:
                      , QList<EaQuestion*> questionList);
 
     QString answers() const;
+
+    Q_INVOKABLE QString getDebugLog() const;
 
 signals:
     void eaInfoChanged(EAInfo* eaInfo);
@@ -120,6 +123,7 @@ private:
                             , EAItem *item
                             , QList<EaQuestion*> questionList);
     void setAnswers(QJsonObject jsonAnswers);
+    QJsonObject getServiceAccountKey(const QString& filename);
 
     static void append_eaItemLists(QQmlListProperty<EAItemList> *list
                                    , EAItemList *itemList);
@@ -136,6 +140,8 @@ private:
     QString m_eventKey = "";
     QString m_answers;
     QJsonObject answersObj;
+
+    QString debugLog;
 };
 
 #endif // EVENTCONTAINER_H

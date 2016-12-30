@@ -3,8 +3,60 @@
 #include <QIODevice>
 #include <QBuffer>
 #include <QJsonDocument>
+#include <QJsonObject>
+#include <QDateTime>
+#include <QCryptographicHash>
 //#include <datasnapshot.h>
 #include <QtDebug>
+
+/*
+#include "cryptlib.h"
+#include "pubkey.h"
+#include "integer.h"
+#include "pkcspad.h"
+#include "oaep.h"
+#include "emsa2.h"
+#include "asn.h"
+
+#include "rsa.h"
+#include "filters.h"
+#include "pkcspad.h"
+#include "secblock.h"
+#include "cryptlib.h"
+#include "sha.h"
+#include "pubkey.h"
+
+//using CryptoPP;
+//using CryptoPP::RSASS;
+
+#include "rsa.h"
+using CryptoPP::RSA;
+using CryptoPP::RSASS;
+using CryptoPP::InvertibleRSAFunction;
+
+#include "pssr.h"
+using CryptoPP::PSS;
+
+#include "sha.h"
+using CryptoPP::SHA1;
+
+#include "files.h"
+using CryptoPP::FileSink;
+using CryptoPP::FileSource;
+
+#include "osrng.h"
+using CryptoPP::AutoSeededRandomPool;
+
+#include "SecBlock.h"
+using CryptoPP::SecByteBlock;
+
+#include <string>
+using std::string;
+
+#include <iostream>
+using std::cout;
+using std::endl;
+*/
 
 Firebase::Firebase(QObject *parent) :
     QObject(parent)
@@ -26,6 +78,99 @@ void Firebase::setToken(QString token)
 {
     firebaseToken=token;
 }
+
+/*
+//Not implimented yet
+QString Firebase::getToken(const QString& serviceAccount, const QByteArray& privateKey)
+{
+    QString jwtStr =  "{\"alg\":\"RS256\",\"typ\":\"JWT\"}";
+    QByteArray jwtHeader(jwtStr.toUtf8());
+    QByteArray jwtHeaderBase64 = jwtHeader.toBase64(QByteArray::Base64UrlEncoding);
+    qDebug() << "jwt header: " << jwtHeader;
+    qDebug() << "jwt header base64url: " << jwtHeaderBase64;
+
+
+    //iss   The email address of the service account.
+    //      e.g 761326798069-r5mljlln1rd4lrbhg75efgigp36m78j5@developer.gserviceaccount.com
+    //scope A space-delimited list of the permissions that the
+    //      application requests.
+    //aud 	A descriptor of the intended target of the assertion.
+    //      When making an access token request this value is always
+    //      https://www.googleapis.com/oauth2/v4/token.
+    //exp 	The expiration time of the assertion, specified as seconds
+    //      since 00:00:00 UTC, January 1, 1970. This value has a maximum of
+    //      1 hour after the issued time.
+    //iat 	The time the assertion was issued, specified as seconds since
+    //      00:00:00 UTC, January 1, 1970.
+    QJsonObject jwtClaimObj;
+    jwtClaimObj["iss"] = serviceAccount;
+    jwtClaimObj["scope"] = "https://www.googleapis.com/auth/devstorage.readonly";
+    jwtClaimObj["aud"] = "https://www.googleapis.com/oauth2/v4/token";
+    QDateTime time = QDateTime::currentDateTime();
+    jwtClaimObj["exp"] = (int) time.toTime_t() + 60*60;
+    jwtClaimObj["iat"] = (int) time.toTime_t();
+    QJsonDocument jwtClaimDoc(jwtClaimObj);
+    QByteArray jwtClaim(jwtClaimDoc.toJson());
+    QByteArray jwtClaimBase64 = jwtClaim.toBase64(QByteArray::Base64UrlEncoding);
+
+    QByteArray bytesToSign = jwtHeaderBase64 + "." + jwtClaimBase64;
+    //QByteArray signedMessage = signMessage(bytesToSign, privateKey);
+
+    QCryptographicHash cryptoHash(QCryptographicHash::Sha256);
+    cryptoHash.addData(privateKey);
+
+
+}
+
+QByteArray Firebase::signMessage(QByteArray messageToSign, QByteArray privateKey)
+{
+    //CryptoPP::RSASSA_PKCS1v15_SHA_Signer signer(privateKey);
+    //typedef RSASS<PKCS1v15,SHA>::Signer RSASSA_PKCS1v15_SHA_Signer;
+   // typedef RSASS<CryptoPP::PKCS1v15,CryptoPP::SHA>::Signer RSASSA_PKCS1v15_SHA_Signer;
+    typedef RSASS<CryptoPP::PKCS1v15,CryptoPP::SHA>::Verifier RSASSA_PKCS1v15_SHA_Verifier;
+  // CryptoPP::RSASS<CryptoPP::PKCS1v15,CryptoPP::SHA>::Signer signer1(privateKey);
+
+   AutoSeededRandomPool rng;
+   InvertibleRSAFunction parameters;
+   parameters.GenerateRandomWithKeySize(rng, 1536);
+   RSA::PrivateKey myPrivateKey(parameters);
+   RSA::PublicKey myPublicKey(parameters);
+
+   // Message
+   string message = "Yoda said, Do or Do Not. There is no try.";
+   message = messageToSign.toStdString();
+
+   // Signer object
+   //CryptoPP::RSASSA_PKCS1v15_SHA_Signer signer(privateKey);
+
+   // Create signature space
+   size_t length = signer.MaxSignatureLength();
+
+   //typedef CryptoPP::SecBlock<byte> ::SecByteBlock;
+   CryptoPP::SecByteBlock signature(length);
+
+   // Sign message
+   length = signer.SignMessage(rng, (const byte*) message.c_str(),
+       message.length(), signature);
+
+   // Resize now we know the true size of the signature
+   signature.resize(length);
+
+   // Verifier object
+   RSASSA_PKCS1v15_SHA_Verifier verifier(myPublicKey);
+
+   // Verify
+   bool result = verifier.VerifyMessage((const byte*)message.c_str(),
+       message.length(), signature, signature.size());
+
+   // Result
+   if(true == result) {
+       cout << "Signature on message verified" << endl;
+   } else {
+       cout << "Message verification failed" << endl;
+   }
+}*/
+
 Firebase::Firebase(QString hostName,QString child)
 {
     host=hostName
@@ -83,6 +228,7 @@ void Firebase::eventReadyRead()
     }
     reply->readAll();
 }
+
 void Firebase::onReadyRead(QNetworkReply *reply)
 {
     /*qDebug()<<"incoming data";
@@ -209,3 +355,4 @@ QByteArray Firebase::trimValue(const QByteArray &line) const
         value = line.right(line.size() - index  - 1);
     return value.trimmed();
 }
+

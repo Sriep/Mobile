@@ -31,7 +31,7 @@ Item {
                 id: listsModel
                 // Same model as eventAppMainPage.stackCtl.drawerView.drawerModel
             }
-            delegate: Text {
+            delegate: Label {
                 height: 30
                 text: listName
             }

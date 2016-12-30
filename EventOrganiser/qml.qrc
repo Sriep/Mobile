@@ -23,5 +23,7 @@
         <file>content/AddNewListForm.ui.qml</file>
         <file>content/EaldItem.qml</file>
         <file>content/EaldItemForm.ui.qml</file>
+        <file>content/EaDisplayPara.qml</file>
+        <file>content/EaDisplayParaForm.ui.qml</file>
     </qresource>
 </RCC>

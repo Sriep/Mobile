@@ -23,6 +23,16 @@ ApplicationWindow {
         id: eaContainer
     }
 
+    HttpDownload {
+        id: httpDownload
+        onFinishedDownload: {
+            console.log("Download finished");
+            var fileName = httpDownload.fileDownloaded;
+            console.log("About to call loadNewEventApp", fileName);
+            eaContainer.installNewEvent(fileName);
+        }
+    }
+
     StackLayout {
         id: tabStack
         currentIndex: headerTabBar.currentIndex
@@ -76,9 +86,6 @@ ApplicationWindow {
                 } //Rectangle
             }
         }
-
-
-
     }
 
     Settings {
@@ -95,6 +102,14 @@ ApplicationWindow {
         property alias dataFilename: eaContainer.dataFilename
         property alias firebaseUrl: eaContainer.firbaseUrl
         property alias databaseKey: eaContainer.eventKey
+        property string style:  "default"
+        //property alias style: eaContainer.eaConstruction.style
+    }
+
+    Component.onDestruction: {
+        console.log("onDestruction.style", eaContainer.eaConstruction.style);
+        settingsData.style = eaContainer.eaConstruction.style;
+        console.log("onDestruction.style", settingsData.style);
     }
 }
 

@@ -9,7 +9,9 @@ Page{
     width: 500; height: 600
     property alias stackCtl: stackCtl
     property alias drawerView: drawerView
-    property alias downloadEvent: downloadEvent
+    //property alias downloadEventKey: downloadEventKey
+    //property alias downloadEventFile: downloadEventFile
+    //property alias downloadEventFB: downloadEventFB
     property alias drawerModel: drawerModel
     //property alias drawerDelegate: drawerDelegate
     clip: true
@@ -27,9 +29,11 @@ Page{
         id: stackCtl
         anchors.fill: parent
         property int topDrawerId: 0
-        property int loadEventId: 1
-        property int userLoginId: 2
-        property int startDrawerId: 3
+        property int userLoginId: 1
+        property int loadEventKey: 2
+        property int loadEventFile: 3
+        property int loadEventFB: 4
+        property int startDrawerId: 5
         property alias drawerModel: drawerModel
         ListView {
             id: drawerView
@@ -43,11 +47,19 @@ Page{
                 id: drawerModel
             }
         }
-        DownloadEvent {
-            id: downloadEvent
-        }
+
         UserLogin {
             id: userLogin
+        }
+
+        DownloadEventKey {
+
+        }
+        DownloadEventFile {
+
+        }
+        DownloadEventFB {
+
         }
 
         Connections {

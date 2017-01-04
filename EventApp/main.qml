@@ -32,6 +32,7 @@ ApplicationWindow {
             var fileName = httpDownload.fileDownloaded;
             console.log("About to call loadNewEventApp", fileName);
             eaContainer.installNewEvent(fileName);
+            //settingsData.event = eaContainer
         }
     }
 
@@ -54,8 +55,8 @@ ApplicationWindow {
         property string dataFilename: "defaultData"
         property alias firebaseUrl: eaContainer.firbaseUrl
         property string style: "default"
-        //property alias style: eaContainer.eaConstruction.style
-        //property alias firebaseUrl: "https://eventapp-2d821.firebaseio.com/"
+        property string event: ""
+
     }
 
     Settings {

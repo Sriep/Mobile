@@ -22,6 +22,18 @@ Item {
 
     // A simple rounded rectangle for the background
     Rectangle {
+        id: itemBackground
+        x: eaContainer.eaConstruction.display.x
+        y: eaContainer.eaConstruction.display.x
+        width: parent.width - x*2;
+        height: parent.height - y*2
+        color: eaContainer.eaConstruction.display.colour
+        border.color: eaContainer.eaConstruction.display.borderColour
+        border.width: eaContainer.eaConstruction.display.borderWidth
+        radius: eaContainer.eaConstruction.display.radius
+    }
+    /*
+    Rectangle {
         id: background
         x: 2; y: 2; width: parent.width - x*2; height: parent.height - y*2
         color: "ivory"
@@ -30,7 +42,7 @@ Item {
 
         //Component.onCompleted: x=2
        // Component.onDestruction: x=2
-    }
+    }*/
 
     // This mouse region covers the entire delegate.
     // When clicked it changes mode to 'Details'.  If we are already
@@ -45,10 +57,10 @@ Item {
     // bottom.  Note that elements that should not be visible in the list
     // mode have their opacity set to recipe.detailsOpacity.
   Row {
-         id: topLayout
-         x: 10; y: 10; height: photoImage.height; width: parent.width
+       id: topLayout
+       x: 10; y: 10; height: photoImage.height; width: parent.width
         // x: 10; y: 10; height: 50; width: parent.width
-        spacing: 10
+       spacing: 10
 
        Image {
             id: photoImage
@@ -60,8 +72,22 @@ Item {
         //Column {
            // width: background.width - photoImage.width - 20; height: photoImage.height
          //   spacing: 5
-            Text { id: topText ; text: "Fred" }
+        //    Text { id: topText }//; text: "Fred" }
        // }
+        Text {
+            id: topText
+            //color: "blue"
+            //font.pixelSize: 32
+            font: eaContainer.eaConstruction.display.font
+            color: eaContainer.eaConstruction.display.fontColour
+            style: eaContainer.eaConstruction.display.textStyle
+            styleColor: eaContainer.eaConstruction.display.styleColour
+            text: modelData
+           // anchors.left: parent.left
+            anchors.leftMargin: 10
+            y:10; x:10
+        }
+
    }
 
     Item {
@@ -77,12 +103,26 @@ Item {
         contentHeight: bottomText.height
         clip: true
         x:5
-        Text {
+
+   /*      Text {
           id: bottomText;
           wrapMode: Text.WordWrap;
           width: details.width
-          text: "Bob"
-          //text: displayText
+          //text: "Bob"
+         // text: displayText
+        }*/
+       Text {
+            id: bottomText
+            font: eaContainer.eaConstruction.display.font
+            color: eaContainer.eaConstruction.display.fontColour
+            style: eaContainer.eaConstruction.display.textStyle
+            styleColor: eaContainer.eaConstruction.display.styleColour
+            text: modelData
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            y:10; x:10
+            wrapMode: Text.WordWrap;
+            width: details.width
         }
       }
 
@@ -108,11 +148,11 @@ Item {
     Button {
         id: closeBut
         y: 10
-        anchors { right: background.right; rightMargin: 10 }
+        //anchors { right: background.right; rightMargin: 10 }
+        anchors { right: dataDelegate.right; rightMargin: 10 }
         opacity: dataDelegate.detailsOpacity
         text: "Close"
         checked: true
-
        // onClicked: dataDelegate.state == 'Details' ? "" : "Details";
     }
 

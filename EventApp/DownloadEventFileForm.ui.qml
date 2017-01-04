@@ -7,22 +7,19 @@ Item {
     property alias downloadButton: downloadButton
     property alias progressBar: progressBar
     property alias quitButton: quitButton
-    property alias progressKeyDL: progressKeyDL
-    property alias downloadKeyBut: downloadKeyBut
-    property alias downloadFromKey: downloadFromKey
-    property alias getDebugLog: getDebugLog
     property alias debugLog: debugLog
+    property alias getDebugLog: getDebugLog
 
     ColumnLayout {
         id: columnLayout2
         width: 445
         height: 100
+        x:10
 
         ColumnLayout {
             id: columnLayout1
             width: 445
             height: 139
-
 
             Label {
                 id: label1
@@ -43,21 +40,16 @@ Item {
                 placeholderText: qsTr("Text Field")
             }
 
-
             RowLayout {
                 id: rowLayout1
                 width: 100
                 height: 30
                 anchors.left: parent.left
-                anchors.leftMargin: -20
-
-
                 Button {
                     id: downloadButton
                     text: qsTr("Download from url")
                 }
             }
-
 
             ProgressBar {
                 id: progressBar
@@ -66,54 +58,7 @@ Item {
                 visible: false
                 clip: false
                 value: 0
-            }
-        }
-
-        ColumnLayout {
-            id: columnLayout3
-            width: 100
-            height: 100
-
-            RowLayout {
-                id: rowLayout2
-                width: 100
-                height: 30
-
-                Text {
-                    id: keyText
-                    text: qsTr("Download from key")
-                    font.pixelSize: 12
-                }
-
-                TextField {
-                    id: downloadFromKey
-                    text: qsTr("4455")
-                }
-
-                Button {
-                    id: getDebugLog
-                    text: qsTr("Debug log")
-                }
-            }
-
-            RowLayout {
-                id: rowLayout3
-                width: 100
-                height: 30
-
-                Button {
-                    id: downloadKeyBut
-                    text: qsTr("Download from key")
-                }
-            }
-
-            ProgressBar {
-                id: progressKeyDL
-                width: 400
-                antialiasing: true
-                visible: false
-                clip: false
-                value: 0
+                Layout.fillWidth: true
             }
         }
 
@@ -122,12 +67,19 @@ Item {
             text: qsTr("Exit")
         }
 
+        Button {
+            id: getDebugLog
+            visible: false
+            text: qsTr("Debug log")
+        }
+
         Rectangle {
             width: 450; height: 300
             border.width : 0.5
             border.color : "black"
             anchors.left: parent.left
             anchors.leftMargin: 0
+            visible: false
             //anchors.bottom: saveTitlesBut.top rowLayout1.top??
             Flickable {
                 anchors.fill: parent

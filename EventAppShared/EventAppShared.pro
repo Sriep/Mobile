@@ -26,7 +26,8 @@ SOURCES += eventappshared.cpp \
     firebase.cpp \
     eauser.cpp \
     eaquestion.cpp \
-    eaobjdisplay.cpp
+    eaobjdisplay.cpp \
+    simplecrypt.cpp
 
 HEADERS += eventappshared.h\
     eventappshared_global.h \
@@ -43,7 +44,8 @@ HEADERS += eventappshared.h\
     firebase.h \
     eauser.h \
     eaquestion.h \
-    eaobjdisplay.h
+    eaobjdisplay.h \
+    simplecrypt.h
 
 unix {
     target.path = /usr/lib

@@ -15,7 +15,7 @@ EAContainer {
   //property alias eaConstruction: eaConstruction
   Component.onCompleted: {
     dataFilename = settingsData.dataFilename;
-    style = style.dataFilename;
+    var style = settingsData.style;
     reloadEventApp()
   }
 

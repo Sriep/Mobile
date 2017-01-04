@@ -6,6 +6,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QDebug>
+#include <QCryptographicHash>
 
 
 #include "firebase.h"
@@ -16,6 +17,7 @@
 #include "eauser.h"
 #include "eaitem.h"
 #include "eaquestion.h"
+#include "simplecrypt.h"
 
 EAContainer::EAContainer()
 {
@@ -68,13 +70,7 @@ bool EAContainer::loadNewEventApp(const QString &filename)
 {
     clearEvent();
     setDataFilename(filename);
-    bool rtv = loadEventApp();
-    emit eaItemListsChanged();
-    return rtv;
-}
 
-bool EAContainer::loadEventApp()
-{
     QString pwd = QDir::currentPath();
     qDebug() << "Current working directory" << pwd;
 
@@ -92,8 +88,47 @@ bool EAContainer::loadEventApp()
     QJsonDocument loadDoc(isSaveJson()
         ? QJsonDocument::fromJson(saveData)
         : QJsonDocument::fromBinaryData(saveData));
+    QJsonObject jsonObj(loadDoc.object());
+    read(jsonObj);
+    eventAppToSettings(loadDoc);
 
-    read(loadDoc.object());
+   // bool rtv = loadEventApp();
+    emit eaItemListsChanged();
+    return true;
+}
+
+bool EAContainer::loadEventApp()
+{
+    QSettings settings;
+    if (settings.contains("eventData"))
+    {
+        QJsonDocument eventDoc(eventAppFromSettings());
+        read(eventDoc.object());
+    }
+    else
+    {
+        loadNewEventApp(dataFilename());
+  /*      QString pwd = QDir::currentPath();
+        qDebug() << "Current working directory" << pwd;
+
+        QFile loadFile(isSaveJson()
+                       ? QString(dataFilename() + ".json")
+                       : QString(dataFilename() + ".dat"));
+
+        if (!loadFile.open(QIODevice::ReadOnly)) {
+            qWarning("Couldn't open save file.");
+            return false;
+        }
+
+        QByteArray saveData = loadFile.readAll();
+
+        QJsonDocument loadDoc(isSaveJson()
+            ? QJsonDocument::fromJson(saveData)
+            : QJsonDocument::fromBinaryData(saveData));
+
+        read(loadDoc.object());
+        eventAppToSettings(containerObject);*/
+    }
     qDebug() << "EAContainer::loadEventApp finished";
     emit eaItemListsChanged();
     return true;
@@ -101,9 +136,13 @@ bool EAContainer::loadEventApp()
 
 bool EAContainer::saveEventApp(const QString& filename)
 {
+    qDebug() << "saveEventApp filename: " << filename;
     if (filename != "")
         setDataFilename(filename);
-
+    QString fa = isSaveJson()
+            ? QString(dataFilename() + ".json")
+            : QString(dataFilename() + ".dat");
+    qDebug() << "saveEventApp filename: " << fa;
     QFile saveFile(isSaveJson()
                    ? QString(dataFilename() + ".json")
                    : QString(dataFilename() + ".dat"));
@@ -119,7 +158,72 @@ bool EAContainer::saveEventApp(const QString& filename)
     saveFile.write(isSaveJson()
         ? saveDoc.toJson()
         : saveDoc.toBinaryData());
+
+    eventAppToSettings(saveDoc);
     return true;
+}
+
+bool EAContainer::saveDisplayFormat(const QString &filename)
+{
+    qDebug() << "saveDisplayFormat filename: " << filename;
+
+    QFileInfo info(filename);
+    QString baseName = info.completeBaseName();
+    QString path = info.path();
+    QString extension = info.suffix();
+
+
+    QFile saveFile(baseName + ".json");
+    //QFile saveFile(filename);
+    if (!saveFile.open(QIODevice::WriteOnly)) {
+        qWarning("Couldn't open save file.");
+        return false;
+    }
+    QJsonObject djisplayObject;
+    eaConstruction()->write(djisplayObject);
+    QJsonDocument saveDoc(djisplayObject);
+    saveFile.write(saveDoc.toJson());
+    return true;
+}
+
+bool EAContainer::linkFirebaseUrl(QString eventKey, QDate to, QDate from)
+{
+    SimpleCrypt crypto(SIMPLE_KEY);
+    QString encFbUrl = crypto.encryptToString(firbaseUrl());
+    QString baseFbUrl = crypto.decryptToString(ENCODE_FIREBASE_URL);
+
+    QJsonObject linkData;
+    linkData["link"] = true;
+    linkData["url"] = encFbUrl;
+    linkData["from"] = from.toJulianDay();
+    linkData["to"] = to.toJulianDay();
+    QJsonObject linkObj { {eventKey,  linkData} };
+    QJsonDocument uploadDoc(linkObj);
+
+    Firebase *firebase=new Firebase(baseFbUrl);
+    firebase->setValue(uploadDoc, "PATCH");
+}
+
+void EAContainer::eventAppToSettings(QJsonDocument eventDoc)
+{
+    QSettings settings;
+    QByteArray ba;
+    if (m_isSaveJson)
+        ba = eventDoc.toJson(QJsonDocument::Compact);
+    else
+        ba = eventDoc.toBinaryData();
+    settings.setValue("data/eventData", QVariant(ba));
+}
+
+QJsonDocument EAContainer::eventAppFromSettings()
+{
+    QSettings settings;
+    QByteArray ba(settings.value("data/eventData").toByteArray());
+
+    if (m_isSaveJson)
+        return QJsonDocument::fromJson(ba);
+    else
+        return QJsonDocument::fromBinaryData(ba);
 }
 
 void EAContainer::uploadApp(const QString &eventKey)
@@ -133,19 +237,24 @@ void EAContainer::uploadApp(const QString &eventKey)
 
     Firebase *firebase=new Firebase(firbaseUrl());
     firebase->setValue(uploadDoc, "PATCH");
+
+    eventAppToSettings(uploadDoc);
 }
 
 void EAContainer::downloadApp(const QString &eventKey)
 {
+    downloadApp(eventKey, firbaseUrl());
+}
+
+void EAContainer::downloadApp(const QString &eventKey, const QString& fbUrl)
+{
     clearEvent();
     setEventKey(eventKey);
+    Firebase *firebase=new Firebase(fbUrl, eventKey);
 
-    Firebase *firebase=new Firebase(firbaseUrl(), eventKey);
-    //Firebase *firebase=new Firebase("https://eventapp-2d821.firebaseio.com/", eventKey);
-
-    QString serviceEmail = "eventapp-2d821@appspot.gserviceaccount.com";
-    QJsonObject keyObj = getServiceAccountKey("PrivateKey.json");
-    QString key =  keyObj["private_key"].toString();
+    //QString serviceEmail = "eventapp-2d821@appspot.gserviceaccount.com";
+    //QJsonObject keyObj = getServiceAccountKey("PrivateKey.json");
+    //QString key =  keyObj["private_key"].toString();
     //QString token = firebase->getToken(serviceEmail, key.toUtf8());
 
     debugLog += "\nAbout to download event";
@@ -158,7 +267,14 @@ void EAContainer::downloadApp(const QString &eventKey)
             this,SLOT(onResponseReady(QByteArray)));
     connect(firebase,SIGNAL(eventDataChanged(QString)),
             this,SLOT(onDataChanged(QString*)));
+}
 
+void EAContainer::downloadAppEncoded(const QString &eventKey
+                                     , const QString& encryptedUrl)
+{
+    SimpleCrypt crypto(SIMPLE_KEY);
+    QString fbUrl = crypto.decryptToString(encryptedUrl);
+    downloadApp(eventKey, fbUrl);
 }
 
 void EAContainer::onResponseReady(QByteArray data)
@@ -172,10 +288,26 @@ void EAContainer::onResponseReady(QByteArray data)
     QJsonObject topObj = loadDoc.object();
     //QJsonObject mainData = topObj.begin().value().toObject();
     //read(mainData);
-
-    read(topObj);
-    qDebug() << "EAContainer::downloadEventApp finished";
-    emit eaItemListsChanged();
+    if (topObj["link"].toBool())
+    {
+        qint64 julFrom = topObj["from"].toInt();
+        qint64 julTo = topObj["to"].toInt();
+        QDate fromDate = QDate::fromJulianDay(julFrom);
+        QDate toDate = QDate::fromJulianDay(julTo);
+        QDate today = QDate::currentDate();
+        if (fromDate <= today && today <= toDate)
+        {
+            QString encodedFbUrl = topObj["url"].toString();
+            downloadAppEncoded(eventKey(), encodedFbUrl);
+        }
+    }
+    else
+    {
+        read(topObj);
+        eventAppToSettings(loadDoc);
+        qDebug() << "EAContainer::downloadEventApp finished";
+        emit eaItemListsChanged();
+    }
 }
 
 void EAContainer::onDataChanged(QString data)
@@ -309,6 +441,7 @@ void EAContainer::write(QJsonObject &json)
     json["itemLists"] = listsArray;
     json["nextItemListId"] = nextItemListId;
     json["version"] = ++m_Version;
+    json["link"] = false;
 }
 
 EAConstruction *EAContainer::eaConstruction() const
@@ -472,6 +605,21 @@ void EAContainer::loadAnswers()
                 this,SLOT(onDataChanged(QString*)));
     }
 }
+
+bool EAContainer::loadDisplayFormat(const QString &filename)
+{
+    qDebug() << "loadDisplayFormat filename: " << filename;
+    QFile loadFile(filename);
+    if (!loadFile.open(QIODevice::ReadOnly)) {
+        qWarning("Couldn't open save file.");
+        return false;
+    }
+    QByteArray saveData = loadFile.readAll();
+    QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
+    eaConstruction()->read(loadDoc.object());
+    return true;
+}
+
 
 void EAContainer::onAnswersReady(QByteArray data)
 {

@@ -13,8 +13,13 @@ void EAObjDisplay::read(const QJsonObject &json)
     setHeight(json["height"].toInt());
     setColour(QColor(json["colour"].toString()));
     setBorderColour(QColor(json["borderColour"].toString()));
+    setBorderWidth(json["borderWidth"].toInt());
     setRadius(json["radius"].toInt());
     setFont(json2Font(json["font"].toObject()));
+    setFontColour(QColor(json["fontColour"].toString()));
+    setTextStyle(json["textStyle"].toInt());
+    setStyleColour(QColor(json["styleColour"].toString()));
+
     //qDebug() << m_colour.name() << m_borderColour.name()  << m_radius;
 }
 
@@ -52,8 +57,6 @@ QJsonObject EAObjDisplay::font2Json(const QFont& font)
     return json;
 }
 
-
-
 void EAObjDisplay::write(QJsonObject &json)
 {
     json["x"] = x();
@@ -62,8 +65,32 @@ void EAObjDisplay::write(QJsonObject &json)
     json["height"] = height();
     json["colour"] = QVariant(colour()).toString();
     json["borderColour"] = QVariant(borderColour()).toString();
+    json["borderWidth"] = borderWidth();
     json["radius"] = radius();
     json["font"] = font2Json(font());
+    json["fontColour"] = QVariant(fontColour()).toString();
+    json["textStyle"] = textStyle();
+    json["styleColour"] = QVariant(styleColour()).toString();
+}
+
+int EAObjDisplay::textStyle() const
+{
+    return m_textStyle;
+}
+
+QColor EAObjDisplay::styleColour() const
+{
+    return m_styleColour;
+}
+
+int EAObjDisplay::borderWidth() const
+{
+    return m_borderWidth;
+}
+
+QColor EAObjDisplay::fontColour() const
+{
+    return m_fontColour;
 }
 
 int EAObjDisplay::x() const
@@ -176,4 +203,40 @@ void EAObjDisplay::setFont(QFont font)
 
     m_font = font;
     emit fontChanged(font);
+}
+
+void EAObjDisplay::setFontColour(QColor fontColour)
+{
+    if (m_fontColour == fontColour)
+        return;
+
+    m_fontColour = fontColour;
+    emit fontColourChanged(fontColour);
+}
+
+void EAObjDisplay::setTextStyle(int textStyle)
+{
+    if (m_textStyle == textStyle)
+        return;
+
+    m_textStyle = textStyle;
+    emit textStyleChanged(textStyle);
+}
+
+void EAObjDisplay::setStyleColour(QColor styleColour)
+{
+    if (m_styleColour == styleColour)
+        return;
+
+    m_styleColour = styleColour;
+    emit styleColourChanged(styleColour);
+}
+
+void EAObjDisplay::setBorderWidth(int borderWidth)
+{
+    if (m_borderWidth == borderWidth)
+        return;
+
+    m_borderWidth = borderWidth;
+    emit borderWidthChanged(borderWidth);
 }

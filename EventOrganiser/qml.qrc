@@ -25,5 +25,8 @@
         <file>content/EaldItemForm.ui.qml</file>
         <file>content/EaDisplayPara.qml</file>
         <file>content/EaDisplayParaForm.ui.qml</file>
+        <file>content/FontDlg.qml</file>
+        <file>content/FontDlgForm.ui.qml</file>
+        <file>Calander57.qml</file>
     </qresource>
 </RCC>

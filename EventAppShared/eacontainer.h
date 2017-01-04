@@ -6,6 +6,7 @@
 #include <QQmlEngine>
 #include <QQmlListProperty>
 #include <QtQml>
+#include <QDate>
 
 #include "eventappshared_global.h"
 
@@ -15,12 +16,14 @@ class EAItemList;
 class EAUser;
 class EaQuestion;
 class EAItem;
-//enum SaveFormat {Json, Binary };
+//enum SaveFormat {Json, Binary }
 
+static const QString ENCODE_FIREBASE_URL = "AwLFcODje2DJs+8HlZsBC7zBxnG8+iQvzvWiS5CSDAa91cBitrJwfMqu5w==";
 static const QString EVENT ="event";
 static const QString CONSTRUCTION ="construction";
 static const QString SPEAKERS ="speakers";
 static const QString FIREBASE_URL = "https://eventapp-2d821.firebaseio.com/";
+static const quint64 SIMPLE_KEY = Q_UINT64_C(0x09d96fec6bbdc766);
 
 //class EVENTAPPSHAREDSHARED_EXPORT EAContainer : public QQuickItem
 class  EAContainer : public QObject, public QQmlParserStatus
@@ -62,9 +65,20 @@ public:
     Q_INVOKABLE  bool loadEventApp();
     Q_INVOKABLE  bool saveEventApp(const QString &filename = "");
     Q_INVOKABLE void uploadApp(const QString& eventKey);
-    Q_INVOKABLE void downloadApp(const QString& eventKey);
-    Q_INVOKABLE void loadAnswers();
 
+    Q_INVOKABLE void downloadApp(const QString& eventKey);
+    Q_INVOKABLE void downloadApp(const QString& eventKey, const QString &fbUrl);
+    Q_INVOKABLE void downloadAppEncoded(const QString& eventKey
+                                 , const QString& encryptedUrl = ENCODE_FIREBASE_URL);
+    Q_INVOKABLE void loadAnswers();
+    Q_INVOKABLE  bool loadDisplayFormat(const QString &filename);
+    Q_INVOKABLE  bool saveDisplayFormat(const QString &filename);
+    Q_INVOKABLE bool linkFirebaseUrl(QString eventKey
+                                     , QDate to
+                                     , QDate from = QDate::currentDate());
+
+    void  eventAppToSettings(QJsonDocument eventDoc);
+    QJsonDocument  eventAppFromSettings();
 
     void read(const QJsonObject &json);
     void write(QJsonObject &json);
@@ -136,7 +150,7 @@ private:
     int nextItemListId = 0;
     int useNextItemListId();
 
-    QString m_firbaseUrl = "https://eventapp-2d821.firebaseio.com/";
+    QString m_firbaseUrl = FIREBASE_URL;
     QString m_eventKey = "";
     QString m_answers;
     QJsonObject answersObj;

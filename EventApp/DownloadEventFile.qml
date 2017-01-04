@@ -1,6 +1,6 @@
 import QtQuick 2.7
 
-DownloadEventForm {
+DownloadEventFileForm {
     property bool isExpanded: false
     downloadButton.onClicked: {
         console.log("Button Pressed. Entered text: ", urlText.text);
@@ -8,12 +8,6 @@ DownloadEventForm {
         httpDownload.downloadFile(urlText.text);
     }
 
-    downloadKeyBut.onClicked: {
-        console.log("Key Button Pressed. Entered text: ", downloadFromKey.text);
-        progressKeyDL.visible = true;
-        //httpDownload.downloadFile(keyText.text);
-        eaContainer.downloadApp(downloadFromKey.text);
-    }
 
     //void error(QString message);
     Connections {

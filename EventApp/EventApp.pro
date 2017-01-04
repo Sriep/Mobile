@@ -18,7 +18,8 @@ SOURCES += main.cpp \
     ../EventAppShared/firebase.cpp \
     ../EventAppShared/eauser.cpp \
     ../EventAppShared/eaquestion.cpp \
-    ../EventAppShared/eaobjdisplay.cpp
+    ../EventAppShared/eaobjdisplay.cpp \
+    ../EventAppShared/simplecrypt.cpp
 
 
 HEADERS += \
@@ -37,7 +38,8 @@ HEADERS += \
     ../EventAppShared/firebase.h \
     ../EventAppShared/eauser.h \
     ../EventAppShared/eaquestion.h \
-    ../EventAppShared/eaobjdisplay.h
+    ../EventAppShared/eaobjdisplay.h \
+    ../EventAppShared/simplecrypt.h
 
 
 RESOURCES += qml.qrc \

@@ -18,16 +18,25 @@ EaToolBarForm {
         id: optionsMenu
         x: parent.width - width
         transformOrigin: Menu.TopRight
-
-        MenuItem {
-            id: menuItemLoadEvent
-            text: qsTr("Load Event")
-            onTriggered: stackCtl.currentIndex = stackCtl.loadEventId;
-        }
         MenuItem {
             text: qsTr("Login")
             //onTriggered: settingsPopup.open()
             onTriggered: stackCtl.currentIndex = stackCtl.userLoginId;
+        }
+        MenuItem {
+            id: menuItemLoadEventKey
+            text: qsTr("Load from Key")
+            onTriggered: stackCtl.currentIndex = stackCtl.loadEventKey;
+        }
+        MenuItem {
+            id: menuItemLoadEventFile
+            text: qsTr("Load from file")
+            onTriggered: stackCtl.currentIndex = stackCtl.loadEventFile;
+        }
+        MenuItem {
+            id: menuItemLoadEventFB
+            text: qsTr("Load from Firebase")
+            onTriggered: stackCtl.currentIndex = stackCtl.loadEventFB;
         }
         MenuItem {
             text: qsTr("About")

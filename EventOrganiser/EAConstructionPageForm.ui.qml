@@ -4,6 +4,7 @@ import QtQuick.Controls 2.1
 import Qt.labs.settings 1.0
 import QtQuick.Dialogs 1.0
 import Qt.labs.platform 1.0
+import Qt.labs.calendar 1.0
 
 Item {
     property alias mouseArea3: mouseArea4
@@ -21,6 +22,8 @@ Item {
     property alias downloadKey: downloadKey
     property alias firebaseUrlTB: firebaseUrlTB
     property alias firbaseUrlBut: firbaseUrlBut
+    property alias linkBut: linkBut
+    property alias toCalander: toCalander
     Flickable {
         Pane {
             id: eventNamePane
@@ -43,13 +46,7 @@ Item {
                                 text: settingsData.dataFilename
                                 onEditingFinished: settingsData.dataFilename = text;
                             }
-                            /*Button {
-                                id: openFileDialog1
-                                text: "..."
-                                Connections {
-                                    onPressed: loadFileDialog.open()
-                                }
-                            }*/
+
                             FileDialog {
                                 id: loadFileDialog
                                 fileMode: FileDialog.OpenFile
@@ -158,14 +155,17 @@ Item {
                                     text: settingsData.firebaseUrl
                                     onEditingFinished: settingsData.firebaseUrl = text;
                                 }
+                                Calander57 {
+                                    id: toCalander
+                                }
+                                Button {
+                                    id: linkBut
+                                    text: qsTr("Link to url")
+                                }
 
-                                //Text {
-                                //    id: text2
-                                //    text: qsTr("Firebase url")
-                                //    font.pixelSize: 12
-                               // }
                             }
                         } //RowLayout
+
                     } //ColumnLayout
                 } //GroupBox
 
@@ -250,7 +250,6 @@ Item {
 
                     } //ColumnLayout
                 } // GroupBox
-
 
             } // GridLayout
         } // Pane

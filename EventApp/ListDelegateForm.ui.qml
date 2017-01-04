@@ -35,32 +35,13 @@ Item {
         height: parent.height - y*2
         color: eaContainer.eaConstruction.display.colour
         border.color: eaContainer.eaConstruction.display.borderColour
+        border.width: eaContainer.eaConstruction.display.borderWidth
         radius: eaContainer.eaConstruction.display.radius
     }
-/*
-    Rectangle {
-        //id: background
-        id: itemBackground
-        x: 2; y: 2; width: parent.width - x*2; height: parent.height - y*2
-        color: "ivory"
-        border.color: "orange"
-        radius: 5
-    }
 
-    Rectangle {
-        id: itemBackground
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.margins: 15
-        height: 1
-        //color: "#424246"
-        color: "blue"
-    }
-*/
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        //onClicked: stackCtl.currentIndex = position + 2;
     }
 
     Text {
@@ -68,6 +49,9 @@ Item {
         //color: "blue"
         //font.pixelSize: 32
         font: eaContainer.eaConstruction.display.font
+        color: eaContainer.eaConstruction.display.fontColour
+        style: eaContainer.eaConstruction.display.textStyle
+        styleColor: eaContainer.eaConstruction.display.styleColour
         text: modelData
         anchors.left: parent.left
         anchors.leftMargin: 10
@@ -82,3 +66,23 @@ Item {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

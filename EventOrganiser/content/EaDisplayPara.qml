@@ -25,21 +25,41 @@ EaDisplayParaForm {
         }
     }
 
-
     Connections {
         target: applyBut
         onPressed: {
-            featuredDisplay.x = xTF.text;
-            featuredDisplay.y = yTF.text
-            featuredDisplay.width = widthTF.text
-            featuredDisplay.height = heightTF.text
-            featuredDisplay.radius = radiusTF.text
+            //featuredDisplay.x = xTF.text;
+            featuredDisplay.x = xTF.value;
+            featuredDisplay.y = yTF.value;
+            //featuredDisplay.width = widthTF.text
+            featuredDisplay.height = heightTF.value;
+            featuredDisplay.borderWidth = borderWidthSB.value;
+            featuredDisplay.radius = radiusTF.value;
+            featuredDisplay.textStyle = styleCombo.currentIndex;
+            featuredDisplay.styleColour = styleColourDlg.currentColor;
 
             console.log("style box text", styleBox.displayText);
             //settingsData.style = styleBox.displayText;
             eaContainer.eaConstruction.style = styleBox.displayText;
         }
     }
+
+    Connections {
+        target: fontDlg
+        onAccepted: {
+            var colour;
+            fontDlg.updateFont(featuredDisplay.font, colour);
+            featuredDisplay.fontColour = fontDlg.getFontColour();
+        }
+    }
+    Connections {
+        target: fontDlg
+        onOpened: {
+            fontDlg.populateForm(featuredDisplay.font
+                                , featuredDisplay.fontColour);
+        }
+    }
+
 
 }
 

@@ -34,14 +34,24 @@ Item {
     property alias topText: topText
 
     // A simple rounded rectangle for the background
-    Rectangle {
+   /* Rectangle {
         id: background
         x: 2; y: 2; width: parent.width - x*2; height: parent.height - y*2
         color: "ivory"
         border.color: "orange"
         radius: 5
+    }*/
+    Rectangle {
+        id: background
+        x: eaContainer.eaConstruction.display.x
+        y: eaContainer.eaConstruction.display.x
+        width: parent.width - x*2;
+        height: parent.height - y*2
+        color: eaContainer.eaConstruction.display.colour
+        border.color: eaContainer.eaConstruction.display.borderColour
+        border.width: eaContainer.eaConstruction.display.borderWidth
+        radius: eaContainer.eaConstruction.display.radius
     }
-
     // This mouse region covers the entire delegate.
     // When clicked it changes mode to 'Details'.  If we are already
     // in Details mode, then no change will happen.
@@ -68,8 +78,22 @@ Item {
        // Column {
         //    width: background.width - photoImage.width - 20; height: photoImage.height
        //     spacing: 5
-            Text { id: topText }
+          //  Text { id: topText }
        // }
+            Text {
+                id: topText
+                //color: "blue"
+                //font.pixelSize: 32
+                font: eaContainer.eaConstruction.display.font
+                color: eaContainer.eaConstruction.display.fontColour
+                style: eaContainer.eaConstruction.display.textStyle
+                styleColor: eaContainer.eaConstruction.display.styleColour
+                text: modelData
+               // anchors.left: parent.left
+                anchors.leftMargin: 10
+                y:10; x:10
+            }
+
     }
 
     Item {

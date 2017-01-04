@@ -38,8 +38,8 @@
         <file>images/plus-sign.png</file>
         <file>images/slider_handle.png</file>
         <file>images/tab.png</file>
-        <file>DownloadEvent.qml</file>
-        <file>DownloadEventForm.ui.qml</file>
+        <file>DownloadEventFile.qml</file>
+        <file>DownloadEventFileForm.ui.qml</file>
         <file>ListDelegateForm.ui.qml</file>
         <file>ListDelegate.qml</file>
         <file>EaContainerObj.qml</file>
@@ -62,5 +62,9 @@
         <file>images/user-shape_32White.png</file>
         <file>images/user-shape_16.png</file>
         <file>images/user-shape_24.png</file>
+        <file>DownloadEventKey.qml</file>
+        <file>DownloadEventKeyForm.ui.qml</file>
+        <file>DownloadEventFB.qml</file>
+        <file>DownloadEventFBForm.ui.qml</file>
     </qresource>
 </RCC>

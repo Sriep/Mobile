@@ -21,19 +21,6 @@ EAConstructionPageForm {
     downloadBut.onClicked: eaContainer.downloadApp(downloadKey.text);
     firbaseUrlBut.onClicked: eaContainer.firbaseUrl = firebaseUrlTB.text;
 
-    // Get some strange ".onEditingFinished" is not available due to component
-    // versioning" error.
-    //firebaseUrlTB.onEditingFinished: {
-    //    eaContainer.firebaseUrl = text;
-    //    settingsData.firebaseUrl = text;
-    //}
-
-
-    //firebaseUrlTB.text: eaContainer.firebaseUrl
-    //firebaseUrlTB.onEditingFinished: {
-    //    eaContainer.firebaseUrl = firebaseUrlTB.text;
-    //}
-
     mouseArea1.onClicked:  {
         colorDialog.index = 0;
         colorDialog.title = qsTr("Select background colour for app");
@@ -56,6 +43,15 @@ EAConstructionPageForm {
           //textOrgName.text = eaContainer.organiserName;
           //parentDescription.text = eaContainer.organiserDescription;
       }
+    }
+
+    Connections {
+        target: linkBut
+        onPressed: {
+            var toDate = toCalander.selectedDate;
+            eaContainer.firbaseUrl = firebaseUrlTB.text;
+            eaContainer.linkFirebaseUrl(downloadKey.text, toDate)
+        }
     }
 }
 

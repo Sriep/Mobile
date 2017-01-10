@@ -34,6 +34,6 @@ EAContainer {
   
   Component.onDestruction: {
     settingsData.dataFilename = dataFilename;
-    settingsData.style = style;
+    settingsData.style = eaContainer.eaConstruction.style;
   }
 }

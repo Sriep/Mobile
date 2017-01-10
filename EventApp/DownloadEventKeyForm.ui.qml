@@ -29,6 +29,9 @@ Item {
             TextField {
                 id: downloadFromKey
                 text: qsTr("4455")
+                antialiasing: true
+                cursorVisible: true
+                selectByMouse: true
             }
             Button {
                 visible: false

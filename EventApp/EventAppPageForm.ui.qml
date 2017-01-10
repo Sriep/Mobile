@@ -1,28 +1,35 @@
 import QtQuick 2.7
+import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import Qt.labs.settings 1.0
 import "qrc:///shared"
 
 Page{
-    id: eventAppMainPage
+    //id: eventAppMainPage
     width: 500; height: 600
     property alias stackCtl: stackCtl
     property alias drawerView: drawerView
-    //property alias downloadEventKey: downloadEventKey
-    //property alias downloadEventFile: downloadEventFile
-    //property alias downloadEventFB: downloadEventFB
     property alias drawerModel: drawerModel
+    property alias messageDialog: messageDialog
     //property alias drawerDelegate: drawerDelegate
     clip: true
     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-
+    Rectangle {
+        anchors.fill: parent
+        //color: eaContainer.eaConstruction.backColour
+        color: eaContainer.eaConstruction.display.backColour
+    }
     header: EaToolBar {
         id: toolBar
     }
 
     footer: EaFooterBar {
         id: footerBar
+    }
+
+    MessageDialog {
+        id: messageDialog
     }
 
     StackLayout {
@@ -42,6 +49,11 @@ Page{
             delegate: ListDelegate {
                 id: drawerDelegate
                 text: title
+                /*Connections {
+                    target: eventAppMainPage
+                    onDrawerDisplayChanged: drawerDelegate.setDispalyParameters;
+                }*/
+
             }
             model: ListModel {
                 id: drawerModel

@@ -5,8 +5,12 @@
 #include "eaconstruction.h"
 
 EAConstruction::EAConstruction()
+    : m_backColour (QColor("white"))
 {
     m_display = new EAObjDisplay;
+    m_toolBarDisplay = new EAObjDisplay;
+    m_menuDisplay = new EAObjDisplay;
+
 }
 
 void EAConstruction::read(const QJsonObject &json)
@@ -14,12 +18,22 @@ void EAConstruction::read(const QJsonObject &json)
     setBackColour(QColor(json["backColour"].toString()));
     setForeColour(QColor(json["foreColour"].toString()));
     setFontColour(QColor(json["fontColour"].toString()));
+    setStyle(json["style"].toString());
     if (json.contains("display"))
     {
         m_display = new EAObjDisplay;
         m_display->read(json["display"].toObject());
     }
-    setStyle(json["style"].toString());
+    if (json.contains("toolBarDisplay"))
+    {
+        m_display = new EAObjDisplay;
+        m_display->read(json["toolBarDisplay"].toObject());
+    }
+    if (json.contains("menuDisplay"))
+    {
+        m_display = new EAObjDisplay;
+        m_display->read(json["menuDisplay"].toObject());
+    }
 }
 
 void EAConstruction::write(QJsonObject &json) const
@@ -27,14 +41,19 @@ void EAConstruction::write(QJsonObject &json) const
     json["backColour"] = QVariant(m_backColour).toString();
     json["foreColour"] = QVariant(m_foreColour).toString();
     json["fontColour"] = QVariant(m_fontColour).toString();
-    if (NULL != display())
-    {
-        QJsonObject displayObject;
-        display()->write(displayObject);
-        json["display"] = displayObject;
-    }
     json["style"] = style();
-    qDebug() << m_backColour.name() << m_foreColour.name()  << m_fontColour.name();
+
+    QJsonObject displayObject;
+    display()->write(displayObject);
+    json["display"] = displayObject;
+
+    QJsonObject toolBarDispalyObject;
+    toolBarDisplay()->write(toolBarDispalyObject);
+    json["toolBarDisplay"] = toolBarDispalyObject;
+
+    QJsonObject menuDisplayObject;
+    menuDisplay()->write(menuDisplayObject);
+    json["menuDisplay"] = menuDisplayObject;
 }
 
 QColor EAConstruction::backColour() const
@@ -65,6 +84,16 @@ EAObjDisplay* EAConstruction::display() const
 QString EAConstruction::style() const
 {
     return m_style;
+}
+
+EAObjDisplay *EAConstruction::toolBarDisplay() const
+{
+    return m_toolBarDisplay;
+}
+
+EAObjDisplay* EAConstruction::menuDisplay() const
+{
+    return m_menuDisplay;
 }
 
 void EAConstruction::setBackColour(QColor backColour)
@@ -119,4 +148,22 @@ void EAConstruction::setStyle(QString style)
 
     m_style = style;
     emit styleChanged(style);
+}
+
+void EAConstruction::setToolBarDisplay(EAObjDisplay* toolBarDisplay)
+{
+    if (m_toolBarDisplay == toolBarDisplay)
+        return;
+
+    m_toolBarDisplay = toolBarDisplay;
+    emit toolBarDisplayChanged(toolBarDisplay);
+}
+
+void EAConstruction::setMenuDisplay(EAObjDisplay *menuDisplay)
+{
+    if (m_menuDisplay == menuDisplay)
+        return;
+
+    m_menuDisplay = menuDisplay;
+    emit menuDisplayChanged(menuDisplay);
 }

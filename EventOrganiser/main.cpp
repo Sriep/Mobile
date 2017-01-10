@@ -23,6 +23,8 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     QtWebView::initialize();
     //QtWebEngine::initialize();
+
+    QSettings::setDefaultFormat(QSettings::IniFormat);
     QSettings settings;
     QString style = QQuickStyle::name();
     if (!style.isEmpty())

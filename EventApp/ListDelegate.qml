@@ -2,8 +2,11 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QtQuick.Extras 1.4
+import "qrc:///shared/dataList.js" as DataListJS
 import EventAppData 1.0
 
+
+ //setDisplayParameters(displayData, rectangle, textBox)
 ListDelegateForm {
     width: parent.width
     property EAObjDisplay eaDisplay: eaContainer.eaConstruction.display
@@ -20,8 +23,25 @@ ListDelegateForm {
         var sc = stackCtl;
         console.log("mouseArea onClicked title", title);
         toolBar.titleLabel.text = model.title;
-    }    
+    }
+/*
+    Connections {
+        target: eaContainer.eaConstruction.display
+        //target: eaContainer
+       onDisplayParamtersChanged: {
+        //onEaConstructionChanged: {
+        // onEaInfoChanged: {
+            DataListJS.setDisplayParameters(eaContainer.eaConstruction.display
+                                            , itemBackground, itemText);
+        }
+    }
 
+    function setDispalyParameters () {
+        DataListJS.setDisplayParameters(eaContainer.eaConstruction.display
+                                        , itemBackground
+                                        , itemText);
+    }
+*/
     Connections {
         target: eaDisplay
         onXChanged: {
@@ -40,17 +60,11 @@ ListDelegateForm {
             itemBackground.radius = eaDisplay.radius
         }
     }
-/*
-    Connections {
-        target: eaDisplay
-        onWidthChanged: {
-            drawerDelegate.width = eaDisplay.width
-        }
-    }*/
+
     Connections {
         target: eaDisplay
         onHeightChanged: {
-            drawerDelegate.heigth = eaDisplay.heigth
+            itemBackground.heigth = eaDisplay.heigth
         }
     }
 

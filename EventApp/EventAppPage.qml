@@ -2,10 +2,11 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import Qt.labs.settings 1.0
+import QtQuick.Dialogs 1.2
 import "qrc:///shared"
 
 EventAppPageForm {
-  //id: eventAppMainPage
+  id: eventAppMainPage
   property int testV: 23
 
   function clearStack(stack) {
@@ -23,6 +24,18 @@ EventAppPageForm {
       console.log("stack count: ", stack.count);
     }
     dummy.destroy();
+  }
+
+  Connections {
+      target: eaContainer
+      onError: {
+          messageDialog.title = "Error"
+          messageDialog.text = message
+          messageDialog.informativeText = information
+          messageDialog.icon = icon
+          messageDialog.detailedText = details
+          messageDialog.visible = true
+      }
   }
 
   function refreshLists (stack, model) {

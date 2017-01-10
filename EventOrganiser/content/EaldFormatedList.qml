@@ -22,7 +22,9 @@ EaldFormatedListForm {
 
     function saveTitles(eventList) {
         var count = titlesModel.count;
-        for ( var i=0 ; i<count ; i++ )
+        eventList.shortFormat = topTextArea.text;
+        eventList.longFormat = bottomTextArea.text;
+       /* for ( var i=0 ; i<count ; i++ )
         {
             var titleObj = titlesModel.get(i);
             eventList.amendField(i
@@ -30,19 +32,19 @@ EaldFormatedListForm {
                                      , titleObj.modelName
                                      , titleObj.format
                                      , titleObj.inListView);
-        }
-        eventList.shortFormat = topTextArea.text;
-        eventList.longFormat = bottomTextArea.text;
+        }*/
         eventList.saveTitleChanges();
     }
 
-    loadCsvBut.onPressed: {
-        console.log("EAListDisplayPageForm about to load", csvFilename.text);
-         if (featuredList.readCSV(csvFilename.text)) {
+    //loadCsvBut.onPressed: {
+    function loadCsvFile (filename) {
+         console.log("EAListDisplayPageForm about to load", filename);
+         if (featuredList.readCSV(filename)) {
             popTitlesList(featuredList);
             ldpEventAppPage.needToRefershLists("qrc:///shared/DataList.qml");
-        }
+         }
     }
+    //}
 
     saveTitlesBut.onPressed: {
         saveTitles(featuredList)
@@ -54,13 +56,15 @@ EaldFormatedListForm {
         if (index >= 0) {
             eaContainer.deleteItemList(index);
             ldpEventAppPage.sstackCtl.currentIndex = stackCtl.topDrawerId;
+            dataDisplayTab.currentIndex = 1;
         }
     }
 
     switchManual.onPressed: {
         if (eaListDisplayPage.featuredList !== undefined)
             eaListDisplayPage.featuredList.formatedList = false;
-        listItemEntryStack.currentIndex = 2;
+        //listItemEntryStack.currentIndex = 2;
+        dataDisplayTab.currentIndex = 2;
     }
 
     loadPhotosBut.onClicked: {

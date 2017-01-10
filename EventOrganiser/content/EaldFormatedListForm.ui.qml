@@ -1,11 +1,13 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.0
-import QtQuick.Extras 1.4
+import QtQuick.Controls 2.1
+import Qt.labs.settings 1.0
+import QtQuick.Dialogs 1.0
+import Qt.labs.platform 1.0
 import "qrc:///shared"
 
 Item {
-    property alias csvFilename: csvFilename
+    //property alias csvFilename: csvFilename
     property alias titlesList: titlesList
     property alias topTextArea: topTextArea
     property alias bottomTextArea: bottomTextArea
@@ -25,17 +27,31 @@ Item {
             id: columnLayout1
             width: 200; height: 60
             y:5
+            FileDialog {
+                id: loadCsvDialog
+                fileMode: FileDialog.OpenFile
+                selectedNameFilter.index: 0
+                nameFilters: ["Csv files (*.csv)", "Other (*.* )" ]
+                folder: eaContainer.workingDirectory
+                //onAccepted: settingsData.dataFilename = file
+                Connections {
+                    onAccepted: loadCsvFile(loadCsvDialog.file);
+                }
+            }
             Button {
                 height: 50
                 id: loadCsvBut
                 text: qsTr("Load csv file")
-                enabled: csvFilename !== ""
+                Connections {
+                    onPressed: loadCsvDialog.open()
+                }
+                //enabled: csvFilename !== ""
             }
-            TextField {
+          /*  TextField {
                 height: 50
                 id: csvFilename
                 placeholderText: qsTr("Enter csv filename")
-            }
+            }*/
         } // RowLayout
 
         RowLayout {
@@ -73,6 +89,9 @@ Item {
                                 id: topTextArea
                                 text:  qsTr("Text Area")
                                 wrapMode: TextArea.Wrap
+                                cursorVisible: true
+                                selectByKeyboard: true
+                                selectByMouse: true
                             }
                             ScrollBar.vertical: ScrollBar { }
                         } // Flickable
@@ -80,7 +99,7 @@ Item {
                 } //RowLayout
 
                 Rectangle {
-                    width: 450; height: 300
+                    width: 450; height: 170
                     border.width : 0.5
                     border.color : "black"
                     anchors.left: parent.left
@@ -92,6 +111,9 @@ Item {
                             id: bottomTextArea
                             text:  qsTr("Text Area")
                             wrapMode: TextArea.Wrap
+                            cursorVisible: true
+                            selectByKeyboard: true
+                            selectByMouse: true
                         }
                         ScrollBar.vertical: ScrollBar { }
                     }

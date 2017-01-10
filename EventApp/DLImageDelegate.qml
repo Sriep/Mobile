@@ -67,7 +67,7 @@ DLImageDelegateForm {
       dataListImage.currentIndex = index;
       imageDelegate.state = imageDelegate.state == 'Details' ? "" : "Details";
       console.log("maDataDelegate index",index);
-      console.log("maDataDelegate listView.currentIndex",dataList.currentIndex);
+      //console.log("maDataDelegate listView.currentIndex",dataList.currentIndex);
   }
 
 }

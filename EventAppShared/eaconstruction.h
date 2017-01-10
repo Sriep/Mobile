@@ -12,16 +12,20 @@ class  EAConstruction : public QQuickItem
     Q_PROPERTY(QColor backColour READ backColour WRITE setBackColour NOTIFY backColourChanged)
     Q_PROPERTY(QColor foreColour READ foreColour WRITE setForeColour NOTIFY foreColourChanged)
     Q_PROPERTY(QFont font READ font WRITE setFont NOTIFY mainChanged)
-    Q_PROPERTY(QColor fontColour READ fontColour WRITE setFontColour NOTIFY fontColourChanged)
-    Q_PROPERTY(EAObjDisplay* display READ display WRITE setDisplay NOTIFY displayChanged)
+    Q_PROPERTY(QColor fontColour READ fontColour WRITE setFontColour NOTIFY fontColourChanged)    
     Q_PROPERTY(QString style READ style WRITE setStyle NOTIFY styleChanged)
+    Q_PROPERTY(EAObjDisplay* display READ display WRITE setDisplay NOTIFY displayChanged)
+    Q_PROPERTY(EAObjDisplay* toolBarDisplay READ toolBarDisplay WRITE setToolBarDisplay NOTIFY toolBarDisplayChanged)
+    Q_PROPERTY(EAObjDisplay* menuDisplay READ menuDisplay WRITE setMenuDisplay NOTIFY menuDisplayChanged)
 
     QColor m_backColour;
     QColor m_foreColour;
     QFont m_font;
     QColor m_fontColour;
     EAObjDisplay* m_display = NULL;    
-    QString m_style = "Default";
+    QString m_style = "Default";    
+    EAObjDisplay* m_toolBarDisplay;
+    EAObjDisplay* m_menuDisplay;
 
 public:
     EAConstruction();
@@ -34,7 +38,9 @@ public:
     QFont font() const;
     QColor fontColour() const;    
     EAObjDisplay* display() const;    
-    QString style() const;
+    QString style() const;    
+    EAObjDisplay* toolBarDisplay() const;
+    EAObjDisplay* menuDisplay() const;
 
 signals:
 
@@ -43,7 +49,9 @@ signals:
     void mainChanged(QFont font);
     void fontColourChanged(QColor fontColour);    
     void displayChanged(EAObjDisplay* display);    
-    void styleChanged(QString style);
+    void styleChanged(QString style);    
+    void toolBarDisplayChanged(EAObjDisplay* toolBarDisplay);
+    void menuDisplayChanged(EAObjDisplay* menuDisplay);
 
 public slots:
     void setBackColour(QColor backColour);
@@ -52,6 +60,8 @@ public slots:
     void setFontColour(QColor fontColour);
     void setDisplay(EAObjDisplay* display);
     void setStyle(QString style);
+    void setToolBarDisplay(EAObjDisplay* toolBarDisplay);
+    void setMenuDisplay(EAObjDisplay* menuDisplay);
 };
 
 #endif // EVENTAPPCONSTRUCTION_H

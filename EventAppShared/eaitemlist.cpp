@@ -8,6 +8,7 @@
 #include <QRegExp>
 #include <QBuffer>
 #include <QUrl>
+#include <QDir>
 
 #include <QQmlEngine>
 #include <QtQml>
@@ -52,8 +53,8 @@ void EAItemList::clear(EAContainer* eacontainer)
 void EAItemList::resetImageProvider(EAContainer* eacontainer)
 {
     QString df = eacontainer->dataFilename();
-    QQmlContext *  qqc = QQmlEngine::contextForObject(eacontainer);
-    QQmlEngine* en = qqc->engine();
+    //QQmlContext *  qqc = QQmlEngine::contextForObject(eacontainer);
+    //QQmlEngine* en = qqc->engine();
 
     QQmlEngine* engine = qmlEngine(eacontainer);
     if (engine)
@@ -279,8 +280,10 @@ void EAItemList::setDataList(QString dataList)
     emit dataListChanged(dataList);
 }
 
-bool EAItemList::readCSV(const QString filename)
+bool EAItemList::readCSV(const QString filenameUrl)
 {
+    QString filename = QUrl(filenameUrl).toLocalFile();
+
     QList<QStringList> csvListLines = CSV::parseFromFile(filename);
     if (csvListLines.length() > 0 )
     {
@@ -359,23 +362,23 @@ void EAItemList::loadPhotos(const QString &format)
 bool EAItemList::insertListItem(int index
                                 , int itemType
                                 , const QString &title
-                                , const QString &imageFile
-                                , const QString& textFilename
+                                , const QString &imageFileUrl
+                                , const QString& textFilenameUrl
                                 , const QString& url)
 {
-    EAItem* newItem;// = new EAItem(itemType, title, data);
-    if (imageFile != "")
-    {
-        addPicture(index, imageFile);
-    }
+    EAItem* newItem;
 
     switch (itemType) {
     case EAItem::ItemType::Image:
+    {
+        QString imageFile = QUrl(imageFileUrl).toLocalFile();
         addPicture(index, imageFile);
         newItem = new EAItem(itemType, title);
         break;
+    }
     case EAItem::ItemType::Document:
     {
+        QString textFilename = QUrl(textFilenameUrl).toLocalFile();
         QFile loadFile(textFilename);
         if (!loadFile.open(QIODevice::ReadOnly)) {
             qWarning("Couldn't open save file.");
@@ -399,6 +402,42 @@ bool EAItemList::insertListItem(int index
     m_eaItems.insert(index, newItem);
     emit eaItemListChanged();
     return true;
+}
+
+bool EAItemList::updateListItem(int index
+                                , int itemType
+                                , const QString &title
+                                , const QString &imageFileUrl
+                                , const QString &textFilenameUrl
+                                , const QString &url)
+{
+
+}
+
+void EAItemList::removeItem(int index)
+{
+    if (0 <= index && index < getEaItems().size())
+    {
+        //getEaItems().removeAt(index);
+        m_eaItems.removeAt(index);
+        emit eaItemListChanged();
+    }
+}
+
+void EAItemList::saveAnswers(int itemIndex)
+{
+    if (m_eaItems.length() > itemIndex && getEaContainer())
+    {
+        QList<EaQuestion*> questions = m_eaItems[itemIndex]->getEaQuestions();
+        if (questions.length()>0)
+        {
+            int itemListIndex = getIndex();
+            if (itemListIndex !=-1)
+                getEaContainer()->saveAnswers(itemListIndex
+                                                      , itemIndex
+                                                      , questions);
+        }
+    }
 }
 
 void EAItemList::addPicture(int index, const QString& filename)
@@ -435,6 +474,17 @@ EAContainer *EAItemList::getEaContainer() const
 void EAItemList::setEaContainer(EAContainer *value)
 {
     eaContainer = value;
+}
+
+int EAItemList::getIndex()
+{
+    QList<EAItemList*> list = getEaContainer()->getEaItemLists();
+    for ( int i = 0 ; i < list.length() ; i++ )
+    {
+        if (list[i] == this)
+            return i;
+    }
+    return -1;
 }
 
 /*
@@ -602,6 +652,16 @@ void EAItemList::clear_eaItems(QQmlListProperty<EAItem> *list)
 {
     EAItemList *eaItemColl = qobject_cast<EAItemList *>(list->object);
     eaItemColl->m_eaItems.clear();
+}
+
+QList<EAItem *> EAItemList::getEaItems() const
+{
+    return m_eaItems;
+}
+
+void EAItemList::setEaItems(const QList<EAItem *> &eaItems)
+{
+    m_eaItems = eaItems;
 }
 
 

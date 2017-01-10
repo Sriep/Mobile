@@ -55,7 +55,7 @@ AddNewListForm {
     updateListBut.onPressed: {
         var index = listsCreated.currentIndex;
         eaContainer.eaItemLists[index].listType = listType.currentIndex;
-        eaContainer.eaItemLists[index].listType = newListName.text;
+        eaContainer.eaItemLists[index].listName = newListName.text;
         popListsList(eaContainer.eaItemLists);
     }
 

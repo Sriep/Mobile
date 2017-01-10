@@ -60,6 +60,8 @@ Item {
             TextField {
                 id: itemTitle
                 text: featuredItem !== undefined ? featuredItem.title : "";
+                cursorVisible: true
+                selectByMouse: true
             }
             Text {
                 id: text1
@@ -75,6 +77,8 @@ Item {
             TextField {
                 id: itemData
                 text: qsTr("")
+                cursorVisible: true
+                selectByMouse: true
             }
             Text {
                 id: text2
@@ -90,6 +94,8 @@ Item {
             TextField {
                 id: textFilename
                 text: featuredItem !== undefined ? featuredItem.displayText : "";
+                cursorVisible: true
+                selectByMouse: true
             }
             Text {
                 id: text3
@@ -105,6 +111,8 @@ Item {
             TextField {
                 id: urlItem
                 text: featuredItem !== undefined ? featuredItem.urlString : "";
+                cursorVisible: true
+                selectByMouse: true
             }
             Text {
                 id: text4

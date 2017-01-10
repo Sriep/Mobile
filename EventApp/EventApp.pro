@@ -12,7 +12,6 @@ SOURCES += main.cpp \
     ../EventAppShared/csv.cpp \
     ../EventAppShared/picturelistimageprovider.cpp \
     ../EventAppShared/eaitem.cpp \
-    ../EventAppShared/eaitemlistbase.cpp \
     ../EventAppShared/eapropertylist.cpp \
     ../EventAppShared/eventappshared.cpp \
     ../EventAppShared/firebase.cpp \
@@ -31,7 +30,6 @@ HEADERS += \
     ../EventAppShared/csv.h \
     ../EventAppShared/picturelistimageprovider.h \
     ../EventAppShared/eaitem.h \
-    ../EventAppShared/eaitemlistbase.h \
     ../EventAppShared/eapropertylist.h \
     ../EventAppShared/eventappshared_global.h \
     ../EventAppShared/eventappshared.h \

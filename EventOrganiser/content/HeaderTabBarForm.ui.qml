@@ -13,11 +13,14 @@ TabBar {
   TabButton {
     text: qsTr("Construction")
   }
+  //TabButton {
+  //  text: qsTr("Event")
+  //}
   TabButton {
-    text: qsTr("Event")
+    text: qsTr("Data")
   }
   TabButton {
-    text: qsTr("Select List")
+    text: qsTr("Display")
   }
   TabButton {
     text: qsTr("Form answers")

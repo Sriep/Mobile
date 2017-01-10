@@ -13,7 +13,8 @@ Item {
     // want to fade.
     property real detailsOpacity : 0
     width: dataList.width
-    height: 70
+    Layout.fillWidth: true
+    height: eaContainer.eaConstruction.display.height
     property alias maDataDelegate: maDataDelegate
     //property alias photoImage: photoImage
     property alias bottomText: bottomText
@@ -32,17 +33,6 @@ Item {
         border.width: eaContainer.eaConstruction.display.borderWidth
         radius: eaContainer.eaConstruction.display.radius
     }
-    /*
-    Rectangle {
-        id: background
-        x: 2; y: 2; width: parent.width - x*2; height: parent.height - y*2
-        color: "ivory"
-        border.color: "orange"
-        radius: 5
-
-        //Component.onCompleted: x=2
-       // Component.onDestruction: x=2
-    }*/
 
     // This mouse region covers the entire delegate.
     // When clicked it changes mode to 'Details'.  If we are already
@@ -59,7 +49,6 @@ Item {
   Row {
        id: topLayout
        x: 10; y: 10; height: photoImage.height; width: parent.width
-        // x: 10; y: 10; height: 50; width: parent.width
        spacing: 10
 
        Image {
@@ -69,23 +58,20 @@ Item {
             source: picture
         }
 
-        //Column {
-           // width: background.width - photoImage.width - 20; height: photoImage.height
-         //   spacing: 5
-        //    Text { id: topText }//; text: "Fred" }
-       // }
         Text {
             id: topText
-            //color: "blue"
-            //font.pixelSize: 32
             font: eaContainer.eaConstruction.display.font
             color: eaContainer.eaConstruction.display.fontColour
             style: eaContainer.eaConstruction.display.textStyle
             styleColor: eaContainer.eaConstruction.display.styleColour
-            text: modelData
-           // anchors.left: parent.left
+            x: eaContainer.eaConstruction.display.xText
+            y: eaContainer.eaConstruction.display.yText
+            //verticalAlignment: eaContainer.eaConstruction.display.vAlignment
+            //horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
+            text: "hi"//modelData
             anchors.leftMargin: 10
-            y:10; x:10
+            //opacity: 0.0
+            //y:10; x:10
         }
 
    }
@@ -117,6 +103,8 @@ Item {
             color: eaContainer.eaConstruction.display.fontColour
             style: eaContainer.eaConstruction.display.textStyle
             styleColor: eaContainer.eaConstruction.display.styleColour
+            //verticalAlignment: eaContainer.eaConstruction.display.vAlignment
+            //horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
             text: modelData
             anchors.left: parent.left
             anchors.leftMargin: 10

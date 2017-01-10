@@ -5,6 +5,7 @@
 #include <QUrl>
 #include <QNetworkAccessManager>
 #include <QString>
+#include <QByteArray>
 
 #include "eventappshared_global.h"
 
@@ -25,13 +26,18 @@ class  HttpDownload : public QQuickItem
 
 public:
     HttpDownload();
-    Q_INVOKABLE QString downloadFile(QUrl url);
+    Q_INVOKABLE QString downloadFile(const QString url);
+    Q_INVOKABLE QString downloadFileData(const QString url);
 
     QUrl url() const;
     QString user() const;
     QString password() const;
-
     QString fileDownloaded() const;
+    bool storeData() const;
+    QByteArray downloadData() const;
+
+    bool sendFile() const;
+    void setSendFile(bool sendFile);
 
 signals:
     void urlChanged(QUrl url);
@@ -42,7 +48,8 @@ signals:
     void authenticationRequired();
     void userChanged(QString user);
     void passwordChanged(QString password);
-
+    void downloadedData(QByteArray data);
+    void downloadDataFinished();
     void fileDownloadedChanged(QString fileDownloaded);
 
 public slots:
@@ -73,6 +80,8 @@ private:
     QString m_user;
     QString m_password;
     QString m_fileDownloaded;
+    bool m_senddata;
+    QByteArray m_downloadData;
 };
 
 

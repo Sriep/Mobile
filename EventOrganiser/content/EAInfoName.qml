@@ -4,27 +4,16 @@ import QtQuick.Layouts 1.3
 import EventAppData 1.0
 
 EAInfoNameForm {
-    eventDescription.width: Math.max(implicitWidth, Math.min(implicitWidth * 3, eventNamePane.availableWidth / 3))
-    parentDescription.width: Math.max(implicitWidth, Math.min(implicitWidth * 3, eventNamePane.availableWidth / 3))
-    textEventName.text: eventInfo.eventName;
-    eventDescription.text: eventInfo.eventDescription;
-    textOrgName.text: eventInfo.organiserName;
-    parentDescription.text: eventInfo.organiserDescription;
+    textEventName.text: eaContainer.eaInfo.eventName;
 
     saveInfo.onClicked: {
-        eventInfo.eventName = textEventName.text;
-        eventInfo.eventDescription = eventDescription.text;
-        eventInfo.organiserName = textOrgName.text;
-        eventInfo.organiserDescription = parentDescription.text;
+        eaContainer.eaInfo.eventName = textEventName.text;
     }
 
     Connections {
       target: eaContainer
       onEaItemListsChanged: {
-          textEventName.text = eventInfo.eventName;
-          eventDescription.text = eventInfo.eventDescription;
-          textOrgName.text = eventInfo.organiserName;
-          parentDescription.text = eventInfo.organiserDescription;
+          textEventName.text = eaContainer.eaInfo.eventName;
       }
     }
 }

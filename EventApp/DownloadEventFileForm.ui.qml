@@ -34,10 +34,13 @@ Item {
                 id: urlText
                 height: 30; width: 400
                 //text: "https://www.dropbox.com/s/qvcmm683cq237ig/test2.json"
-                text: "https://www.dropbox.com/s/oh1hwo4oz82jdhi/NewEvent.json"
+                //text: "https://www.dropbox.com/s/oh1hwo4oz82jdhi/NewEvent.json"
+                text: "https://www.dropbox.com/s/y22jqfwuei1ew70/4455.json?raw=1"
                 horizontalAlignment: Text.AlignLeft
                 Layout.fillWidth: true
                 placeholderText: qsTr("Text Field")
+                cursorVisible: true
+                selectByMouse: true
             }
 
             RowLayout {

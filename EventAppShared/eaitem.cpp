@@ -138,7 +138,7 @@ void EAItem::addTextQuestion(const QString &questionText, int index)
         m_eaQuestions.insert(index, newQuestion);
     emit eaQuestionsChanged();
 }
-
+/*
 void EAItem::saveAnswers()
 {
     if (eaItemList
@@ -148,7 +148,7 @@ void EAItem::saveAnswers()
         eaItemList->getEaContainer()->saveAnswers(eaItemList, this, m_eaQuestions);
     }
 }
-
+*/
 void EAItem::setItemType(int itemType)
 {
     if (m_itemType == itemType)
@@ -243,6 +243,16 @@ void EAItem::clear_eaQuestion(QQmlListProperty<EaQuestion> *list)
 {
     EAItem *eaItemColl = qobject_cast<EAItem *>(list->object);
     eaItemColl->m_eaQuestions.clear();
+}
+
+QList<EaQuestion *> EAItem::getEaQuestions() const
+{
+    return m_eaQuestions;
+}
+
+void EAItem::setEaQuestions(const QList<EaQuestion *> &eaQuestions)
+{
+    m_eaQuestions = eaQuestions;
 }
 
 EAItemList *EAItem::getEaItemList() const

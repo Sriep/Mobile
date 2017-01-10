@@ -1,6 +1,8 @@
 #QT += qml quick
 QT += quick quickcontrols2
 QT += qml quick webview
+QT += location
+QT += widgets
 CONFIG += c++11
 
 SOURCES += main.cpp \
@@ -11,7 +13,6 @@ SOURCES += main.cpp \
     ../EventAppShared/csv.cpp \
     ../EventAppShared/eaitemlist.cpp \
     ../EventAppShared/picturelistimageprovider.cpp \
-    ../EventAppShared/eaitemlistbase.cpp \
     ../EventAppShared/eaitem.cpp \
     ../EventAppShared/firebase.cpp \
     ../EventAppShared/eauser.cpp \
@@ -28,7 +29,6 @@ HEADERS += \
     ../EventAppShared/csv.h \
     ../EventAppShared/eaitemlist.h \
     ../EventAppShared/picturelistimageprovider.h \
-    ../EventAppShared/eaitemlistbase.h \
     ../EventAppShared/eaitem.h \
     ../EventAppShared/firebase.h \
     ../EventAppShared/eauser.h \
@@ -84,7 +84,10 @@ DISTFILES += \
     content/EaldItem.qml \
     content/EaldItemForm.ui.qml \
     content/EaDisplayParaForm.ui.qml \
-    content/FontDlgForm.ui.qml
+    content/FontDlgForm.ui.qml \
+    content/DisplayTabForm.ui.qml \
+    content/EaCommonDisplayParaForm.ui.qml \
+    content/EaItemListDataForm.ui.qml
 
 FORMS +=
 

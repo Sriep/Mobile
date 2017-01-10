@@ -19,8 +19,33 @@ void EAObjDisplay::read(const QJsonObject &json)
     setFontColour(QColor(json["fontColour"].toString()));
     setTextStyle(json["textStyle"].toInt());
     setStyleColour(QColor(json["styleColour"].toString()));
+    setXText(json["xText"].toInt());
+    setYText(json["yText"].toInt());
+    setVAlignment(json["vAlignmet"].toInt());
+    setHAlignment(json["hAlignment"].toInt());
+    setBackColour(QColor(json["backColour"].toString()));
+    emit displayParamtersChanged();
+}
 
-    //qDebug() << m_colour.name() << m_borderColour.name()  << m_radius;
+void EAObjDisplay::write(QJsonObject &json)
+{
+    json["x"] = x();
+    json["y"] = y();
+    json["width"] = width();
+    json["height"] = height();
+    json["colour"] = QVariant(colour()).toString();
+    json["borderColour"] = QVariant(borderColour()).toString();
+    json["borderWidth"] = borderWidth();
+    json["radius"] = radius();
+    json["font"] = font2Json(font());
+    json["fontColour"] = QVariant(fontColour()).toString();
+    json["textStyle"] = textStyle();
+    json["styleColour"] = QVariant(styleColour()).toString();
+    json["xText"] = xText();
+    json["yText"] = yText();
+    json["vAlignmet"] = vAlignment();
+    json["hAlignment"] = hAlignment();
+    json["backColour"] = QVariant(backColour()).toString();
 }
 
 QFont EAObjDisplay::json2Font(const QJsonObject& json)
@@ -57,22 +82,6 @@ QJsonObject EAObjDisplay::font2Json(const QFont& font)
     return json;
 }
 
-void EAObjDisplay::write(QJsonObject &json)
-{
-    json["x"] = x();
-    json["y"] = y();
-    json["width"] = width();
-    json["height"] = height();
-    json["colour"] = QVariant(colour()).toString();
-    json["borderColour"] = QVariant(borderColour()).toString();
-    json["borderWidth"] = borderWidth();
-    json["radius"] = radius();
-    json["font"] = font2Json(font());
-    json["fontColour"] = QVariant(fontColour()).toString();
-    json["textStyle"] = textStyle();
-    json["styleColour"] = QVariant(styleColour()).toString();
-}
-
 int EAObjDisplay::textStyle() const
 {
     return m_textStyle;
@@ -86,6 +95,31 @@ QColor EAObjDisplay::styleColour() const
 int EAObjDisplay::borderWidth() const
 {
     return m_borderWidth;
+}
+
+int EAObjDisplay::xText() const
+{
+    return m_xText;
+}
+
+int EAObjDisplay::yText() const
+{
+    return m_yText;
+}
+
+int EAObjDisplay::vAlignment() const
+{
+    return m_vAlignment;
+}
+
+int EAObjDisplay::hAlignment() const
+{
+    return m_hAlignment;
+}
+
+QColor EAObjDisplay::backColour() const
+{
+    return m_backColour;
 }
 
 QColor EAObjDisplay::fontColour() const
@@ -194,6 +228,7 @@ void EAObjDisplay::setRadius(int radius)
 
     m_radius = radius;
     emit radiusChanged(radius);
+    emit displayParamtersChanged();
 }
 
 void EAObjDisplay::setFont(QFont font)
@@ -239,4 +274,49 @@ void EAObjDisplay::setBorderWidth(int borderWidth)
 
     m_borderWidth = borderWidth;
     emit borderWidthChanged(borderWidth);
+}
+
+void EAObjDisplay::setXText(int xText)
+{
+    if (m_xText == xText)
+        return;
+
+    m_xText = xText;
+    emit xTextChanged(xText);
+}
+
+void EAObjDisplay::setYText(int yText)
+{
+    if (m_yText == yText)
+        return;
+
+    m_yText = yText;
+    emit yTextChanged(yText);
+}
+
+void EAObjDisplay::setVAlignment(int verticalAlignment)
+{
+    if (m_vAlignment == verticalAlignment)
+        return;
+
+    m_vAlignment = verticalAlignment;
+    emit vAlignmentChanged(verticalAlignment);
+}
+
+void EAObjDisplay::setHAlignment(int horizontalAlignment)
+{
+    if (m_hAlignment == horizontalAlignment)
+        return;
+
+    m_hAlignment = horizontalAlignment;
+    emit hAlignmentChanged(horizontalAlignment);
+}
+
+void EAObjDisplay::setBackColour(QColor backColour)
+{
+    if (m_backColour == backColour)
+        return;
+
+    m_backColour = backColour;
+    emit backColourChanged(backColour);
 }

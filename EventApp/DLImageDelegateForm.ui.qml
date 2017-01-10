@@ -22,7 +22,8 @@ Item {
     property real detailsOpacity : 0
 
     width: dataListImage.width
-    height: 70
+    Layout.fillWidth: true
+    height: eaContainer.eaConstruction.display.height
     //property alias questionsList: questionsList
     property alias maDataDelegate: maDataDelegate
     property alias closeBut: closeBut
@@ -34,13 +35,6 @@ Item {
     property alias topText: topText
 
     // A simple rounded rectangle for the background
-   /* Rectangle {
-        id: background
-        x: 2; y: 2; width: parent.width - x*2; height: parent.height - y*2
-        color: "ivory"
-        border.color: "orange"
-        radius: 5
-    }*/
     Rectangle {
         id: background
         x: eaContainer.eaConstruction.display.x
@@ -72,28 +66,29 @@ Item {
         Image {
             id: photoImage
             width: 50;  height: 50
+           // width: parent.width;  height: parent.height
             source: picture
+            x:20; y:10
         }
 
-       // Column {
-        //    width: background.width - photoImage.width - 20; height: photoImage.height
-       //     spacing: 5
-          //  Text { id: topText }
-       // }
-            Text {
-                id: topText
-                //color: "blue"
-                //font.pixelSize: 32
-                font: eaContainer.eaConstruction.display.font
-                color: eaContainer.eaConstruction.display.fontColour
-                style: eaContainer.eaConstruction.display.textStyle
-                styleColor: eaContainer.eaConstruction.display.styleColour
-                text: modelData
-               // anchors.left: parent.left
-                anchors.leftMargin: 10
-                y:10; x:10
-            }
+        Text {
+            id: topText
+            //color: "blue"
+            //font.pixelSize: 32
+            font: eaContainer.eaConstruction.display.font
+            color: eaContainer.eaConstruction.display.fontColour
+            style: eaContainer.eaConstruction.display.textStyle
+            styleColor: eaContainer.eaConstruction.display.styleColour
+            x: eaContainer.eaConstruction.display.xText
+            y: eaContainer.eaConstruction.display.yText
+            verticalAlignment: eaContainer.eaConstruction.display.vAlignment
+            horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
 
+            text: modelData
+           // anchors.left: parent.left
+            //anchors.leftMargin: 10
+            //y:10; x:10
+        }
     }
 
     Item {
@@ -116,12 +111,15 @@ Item {
             id: itemStackCtl
             currentIndex: itemType
             clip: true
-
-            Image {
-                //id: largePhotoImage
-                source: picture
+            Item{
+                Image {
+                    //id: largePhotoImage
+                    width: 400//eventAppMainPage.width
+                    height: 600
+                    source: picture
+                    x:20; y:10
+                }
             }
-
             Text {
               id: bottomText;
               wrapMode: Text.WordWrap;
@@ -149,23 +147,35 @@ Item {
                 //id: questionsList
                 //width: background.width-10; height: background.height-10
                 //width: flick.width-10; height: flick.height-10
-                width: 250; height: 600
+                //width: 250;
+                width: eventAppMainPage.width
+                //width: parent.width
+                height: 600
+                //width: parent.width; height: parent.height
                 //x:10; y:10
                 model: ListModel {
                     id: questionsModel
                 }
                 delegate: Item {
-                    x:10; y:10
-                    width: 250; height: 90
+                    x:10; y:50
+                    //width: 250; height: 90
+                    width: parent.width
+                    height: 90
+
                     ColumnLayout {
+                        y:20
                         Text {
                             y: 15; x:15
-                            height: 30
+                            height: 30 + 15*lineCount
+                            width: 480// parent.width - 2*y
                             text: question
                         }
                         Rectangle {
                             y: 5; x:5
-                            width: 250; height: 60
+                            //width: parent.width-2*y; height: 60
+                            height: 60
+                            //width: parent.width// - 2*y
+                            width: 460
                             //x: 2; y: 2; width: parent.width - x*2; height: parent.height - y*2
                             border.width : 0.5
                             border.color : "black"
@@ -175,10 +185,17 @@ Item {
                                 y: 5; x:5
                                 TextArea.flickable: TextArea {
                                     id: answerTA
+                                    //width: parent.width-2*y//; height: 60
+                                    width: 450
+                                    height: 30 + 15*lineCount
+                                    Layout.fillWidth: true
                                     y: 5; x:5
                                     placeholderText: question
                                     text: answer
                                     wrapMode: TextArea.Wrap
+                                    //cursorVisible: true
+                                    selectByMouse: true
+
                                 }
                                 ScrollBar.vertical: ScrollBar { }
                                 Connections {

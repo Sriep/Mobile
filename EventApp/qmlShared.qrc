@@ -66,5 +66,6 @@
         <file>DownloadEventKeyForm.ui.qml</file>
         <file>DownloadEventFB.qml</file>
         <file>DownloadEventFBForm.ui.qml</file>
+        <file>MenuItemDelegate.qml</file>
     </qresource>
 </RCC>

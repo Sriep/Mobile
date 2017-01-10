@@ -23,6 +23,8 @@ Item {
                         TextField {
                             id: textField1
                             placeholderText: qsTr("filename .json or .dat")
+                            cursorVisible: true
+                            selectByMouse: true
                         }
                         RowLayout {
                             height: implicitHeight

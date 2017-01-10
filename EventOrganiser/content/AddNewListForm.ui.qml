@@ -19,28 +19,6 @@ Item {
         id: columnLayout2
         width: 200; height: 200
 
-        ListView {
-            id: listsCreated
-            width: 110; height: 160
-
-            highlightFollowsCurrentItem: true
-            highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
-            focus: true
-
-            model: ListModel {
-                id: listsModel
-                // Same model as eventAppMainPage.stackCtl.drawerView.drawerModel
-            }
-            delegate: Label {
-                height: 30
-                text: listName
-            }
-            MouseArea {
-                id: mouseAreaLC
-                anchors.fill: parent
-            }
-        }
-
         GroupBox {
             id: groupBox1
             width: 250; height: 250
@@ -64,6 +42,8 @@ Item {
                     id: newListName
                     text: ""
                     placeholderText: qsTr("New list title")
+                    cursorVisible: true
+                    selectByMouse: true
                 }
 
                 RowLayout {
@@ -97,6 +77,27 @@ Item {
                     }
 
                 }
+            }
+        }
+        ListView {
+            id: listsCreated
+            width: 110; height: 160
+
+            highlightFollowsCurrentItem: true
+            highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+            focus: true
+
+            model: ListModel {
+                id: listsModel
+                // Same model as eventAppMainPage.stackCtl.drawerView.drawerModel
+            }
+            delegate: Label {
+                height: 30
+                text: listName
+            }
+            MouseArea {
+                id: mouseAreaLC
+                anchors.fill: parent
             }
         }
     }

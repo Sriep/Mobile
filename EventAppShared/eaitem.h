@@ -32,7 +32,7 @@ public:
     explicit EAItem(const QString& title, const QUrl url);
 
     Q_INVOKABLE void addTextQuestion(const QString& questionText, int index = -1);
-    Q_INVOKABLE void saveAnswers();
+   // Q_INVOKABLE void saveAnswers();
 
     void read(const QJsonObject &json, EAItemList* eaitemList = NULL);
     void write(QJsonObject &json);
@@ -50,11 +50,15 @@ public:
 
     EAItemList *getEaItemList() const;
     void setEaItemList(EAItemList *value);
+    int getIndex();
+
+    QList<EaQuestion *> getEaQuestions() const;
+    void setEaQuestions(const QList<EaQuestion *> &eaQuestions);
 
 signals:
     void itemTypeChanged(int itemType);
     void titleChanged(QString title);
-    void DataChanged(QString data);    
+    void DataChanged(QString data);
     void displayTextChanged(QString displayText);
 
     void urlChanged(QUrl url);

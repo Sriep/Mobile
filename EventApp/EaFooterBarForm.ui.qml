@@ -8,6 +8,7 @@ import "qrc:///shared"
 
 ToolBar {
     id: footerBar
+    property alias backBut: backBut
     RowLayout {
         spacing: 20
         anchors.fill: parent
@@ -20,7 +21,7 @@ ToolBar {
                 verticalAlignment: Image.AlignVCenter
                 source:  "qrc:///shared/images/back.png"
             }
-
+/*
             Connections {
                 target: backBut
                 onClicked: {
@@ -28,7 +29,7 @@ ToolBar {
                     stackCtl.currentIndex = stackCtl.topDrawerId;
                 }
             }
-
+*/
         }
 
     }

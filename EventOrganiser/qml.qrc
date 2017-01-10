@@ -28,5 +28,11 @@
         <file>content/FontDlg.qml</file>
         <file>content/FontDlgForm.ui.qml</file>
         <file>Calander57.qml</file>
+        <file>content/DisplayTab.qml</file>
+        <file>content/DisplayTabForm.ui.qml</file>
+        <file>content/EaCommonDisplayPara.qml</file>
+        <file>content/EaCommonDisplayParaForm.ui.qml</file>
+        <file>content/EaItemListData.qml</file>
+        <file>content/EaItemListDataForm.ui.qml</file>
     </qresource>
 </RCC>

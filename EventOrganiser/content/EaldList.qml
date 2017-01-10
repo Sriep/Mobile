@@ -46,12 +46,19 @@ EaldListForm {
     }
 
     updateItem.onPressed: {
-        eaItem = eventList.items[i];
+        //var index = itmesEntered.currentIndex;
+        //eaItem = eventList.items[index];
+        eaListDisplayPage.featuredList.updateListItem(itmesEntered.currentIndex
+                                                      , itemDataType.currentIndex
+                                                      , itemTitle.text
+                                                      , itemData.text
+                                                      , textFilename.text
+                                                      , urlItem.text);
         popItemList(eaListDisplayPage.featuredList);
     }
 
     deleteBut.onPressed: {
-        itemsModel.remove(itmesEntered.currentIndex);
+        eaListDisplayPage.featuredList.removeItem(itmesEntered.currentIndex);
         popItemList(eaListDisplayPage.featuredList);
     }
 
@@ -59,24 +66,32 @@ EaldListForm {
         itmesEntered.currentIndex = -1;
         itemDataType.currentIndex = -1;
         itemTitle.text = "";
-        itemData.text = ""
+       // loadImage.file = "";
+        itemData.text = "";
         textFilename.text = "";
         urlItem.text = "";
     }
 
     switchFormat.onPressed: {
         eaListDisplayPage.featuredList.formatedList = true;
-        listItemEntryStack.currentIndex = 1;
+        //listItemEntryStack.currentIndex = 1;
+        dataDisplayTab.currentIndex = 1;
     }
 
     mouseAreaLV.onClicked: {
         var index = itmesEntered.indexAt(mouse.x, mouse.y);
-        itmesEntered.currentIndex = index;
-        itemDataType.currentIndex = itemsModel.get(index).itemType;
-        itemTitle.text = itemsModel.get(index).title;
-        itemData.text = itemsModel.get(index).picture;
-        textFilename.text = itemsModel.get(index).displayText;
-        urlItem.text = itemsModel.get(index).urlString;
+        if (index >= 0)
+        {
+            itmesEntered.currentIndex = index;
+            itemDataType.currentIndex = itemsModel.get(index).itemType;
+            itemTitle.text = itemsModel.get(index).title;
+
+            itemData.text = itemsModel.get(index).picture;
+            //loadImage.file = itemsModel.get(index).picture;
+
+            textFilename.text = itemsModel.get(index).displayText;
+            urlItem.text = itemsModel.get(index).urlString;
+        }
     }
 
 

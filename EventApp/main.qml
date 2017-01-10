@@ -31,7 +31,7 @@ ApplicationWindow {
             console.log("Download finished");
             var fileName = httpDownload.fileDownloaded;
             console.log("About to call loadNewEventApp", fileName);
-            eaContainer.installNewEvent(fileName);
+            //eaContainer.installNewEvent(fileName);
             //settingsData.event = eaContainer
         }
     }

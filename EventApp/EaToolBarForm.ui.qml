@@ -11,7 +11,17 @@ ToolBar {
     property alias titleLabel: titleLabel
     property alias userBut: userBut
     property alias userLable: userLable
-
+    Rectangle {
+        id: itemBackground
+        x: eaContainer.eaConstruction.toolBarDisplay.x
+        y: eaContainer.eaConstruction.toolBarDisplay.x
+        width: parent.width - x*2;
+        height: parent.height - y*2
+        color: eaContainer.eaConstruction.toolBarDisplay.colour
+        border.color: eaContainer.eaConstruction.toolBarDisplay.borderColour
+        border.width: eaContainer.eaConstruction.toolBarDisplay.borderWidth
+        radius: eaContainer.eaConstruction.toolBarDisplay.radius
+    }
 
     RowLayout {
         spacing: 20
@@ -29,15 +39,19 @@ ToolBar {
 
         Label {
             id: titleLabel
-            text: "Gallery"
-            font.pixelSize: 20
+            text: eaContainer.eaInfo.eventName
             elide: Label.ElideRight
-            horizontalAlignment: Qt.AlignHCenter
-            verticalAlignment: Qt.AlignVCenter
             Layout.fillWidth: true
+
+            font: eaContainer.eaConstruction.toolBarDisplay.font
+            color: eaContainer.eaConstruction.toolBarDisplay.fontColour
+            style: eaContainer.eaConstruction.toolBarDisplay.textStyle
+            styleColor: eaContainer.eaConstruction.toolBarDisplay.styleColour
+            x: eaContainer.eaConstruction.toolBarDisplay.xText
+            y: eaContainer.eaConstruction.toolBarDisplay.yText
+            verticalAlignment: eaContainer.eaConstruction.toolBarDisplay.vAlignment
+            horizontalAlignment: eaContainer.eaConstruction.toolBarDisplay.hAlignment
         }
-
-
 
         ToolButton {
             id: userBut
@@ -51,12 +65,16 @@ ToolBar {
 
         Label {
             id: userLable
-            text: "logged off"
+            //text: "logged off"
+            text:  eaContainer.user.loggedOn ? eaContainer.user.user : "logged off"
+            font.family: eaContainer.eaConstruction.toolBarDisplay.font.family
             font.pixelSize: 8
             elide: Label.ElideRight
-           // horizontalAlignment: Qt.AlignHCenter
-           // verticalAlignment: Qt.AlignVCenter
-            //Layout.fillWidth: true
+            Connections {
+                target: eaContainer.user
+                onLoggedOn: userLable.text =  eaContainer.user.loggedOn
+                            ? eaContainer.user.user : "logged off"
+            }
         }
 
         ToolButton {

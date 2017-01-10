@@ -30,13 +30,16 @@ Item {
             TextField {
                 id: userIdTF
                 text: qsTr("")
+                cursorVisible: true
+                selectByMouse: true
             }
 
-            Text {
+            Label {
                 id: text4
                 text: qsTr("User id")
                 font.pixelSize: 12
             }
+
         }
 
         RowLayout {
@@ -48,9 +51,12 @@ Item {
                 id: emailTB
                 text: qsTr("")
                 placeholderText: qsTr("a@b.co.uk");
+                cursorVisible: true
+                selectByMouse: true
+                visible: false
             }
 
-            Text {
+            Label {
                 id: text2
                 text: qsTr("Email")
                 font.pixelSize: 12
@@ -65,9 +71,12 @@ Item {
             TextField {
                 id: passwordTB
                 text: qsTr("")
+                cursorVisible: true
+                selectByMouse: true
+                echoMode: TextInput.PasswordEchoOnEdit
             }
 
-            Text {
+            Label {
                 id: text3
                 text: qsTr("Password")
                 font.pixelSize: 12

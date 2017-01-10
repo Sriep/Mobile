@@ -19,14 +19,24 @@ bool EAUser::registerUser(const QString& userId
                           , const QString& email
                           , const QString& password)
 {
+    if (getEaContainer()->isEventStatic())
+    {
+        emit getEaContainer()->error(tr("Error registering user")
+                    ,tr("Event does not support users")
+                    ,"EAUser::registerUser\nisEventStatic==true"
+                    , Warning);
+        return false;
+    }
+
     if (!isUserEmailTaken(email))
     {
         QJsonObject jsonUserData;
-        jsonUserData["password"] = password;
-        jsonUserData["email"] = email;
+        jsonUserData["password"] = password.trimmed();
+        jsonUserData["email"] = email.trimmed();
 
+        QString userIdTrimmed = userId.trimmed();
         QJsonObject jsonUser;
-        jsonUser[userId] = jsonUserData;
+        jsonUser[userIdTrimmed] = jsonUserData;
         setEmail(email);
 
         QJsonDocument userDoc(jsonUser);
@@ -34,7 +44,7 @@ bool EAUser::registerUser(const QString& userId
                                           , getEaContainer()->eventKey());
         Firebase* fbUsers = firebase->child("users");
         fbUsers->setValue(userDoc, "PATCH");
-        setLoggodOn(true);
+        setLoggedOn(true);
 
         //addIndex("users", "password");
         return true;
@@ -42,7 +52,7 @@ bool EAUser::registerUser(const QString& userId
     else
         return false;
 }
-
+/*
 void EAUser::addIndex(const QString &table, const QString &field)
 {
     QJsonArray indexArray = {
@@ -58,9 +68,18 @@ void EAUser::addIndex(const QString &table, const QString &field)
     Firebase* fbUsers = firebase->child("users");
     fbUsers->setValue(ruleDoc, "PUT", "rules");
 }
-
+*/
 bool EAUser::login(const QString &userId, const QString &password)
 {
+    if (getEaContainer()->isEventStatic())
+    {
+        emit getEaContainer()->error(tr("Error loging on")
+                    ,tr("Event does not support users")
+                    ,"EAUser::login\nisEventStatic==true"
+                    , Warning);
+        return false;
+    }
+
     tempPassword = password;
     tempUser = userId;
     Firebase *firebase = new Firebase(getEaContainer()->firbaseUrl()
@@ -108,7 +127,8 @@ void EAUser::onResponseReady(QByteArray data)
         {
             setUser(tempUser);
             setEmail(email);
-            setLoggodOn(true);
+            setLoggedOn(true);
+            //emit loggedOnChanged(true);
             emit userPasswordAccepted(true);
         }
         else
@@ -130,7 +150,7 @@ void EAUser::logoff()
 {
     setUser("");
     setEmail("");
-    setLoggodOn(false);
+    setLoggedOn(false);
 }
 
 bool EAUser::isUserEmailTaken(const QString email)
@@ -181,13 +201,13 @@ void EAUser::setEmail(QString email)
     emit emailChanged(email);
 }
 
-void EAUser::setLoggodOn(bool loggodOn)
+void EAUser::setLoggedOn(bool loggedOn)
 {
-    if (m_loggodOn == loggodOn)
+    if (m_loggedOn == loggedOn)
         return;
 
-    m_loggodOn = loggodOn;
-    emit loggodOnChanged(loggodOn);
+    m_loggedOn = loggedOn;
+    emit loggedOnChanged(loggedOn);
 }
 
 EAContainer *EAUser::getEaContainer() const
@@ -200,7 +220,7 @@ void EAUser::setEaContainer(EAContainer *value)
     eaContainer = value;
 }
 
-bool EAUser::loggodOn() const
+bool EAUser::loggedOn() const
 {
-    return m_loggodOn;
+    return m_loggedOn;
 }

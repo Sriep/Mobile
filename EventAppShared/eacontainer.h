@@ -16,14 +16,20 @@ class EAItemList;
 class EAUser;
 class EaQuestion;
 class EAItem;
+class HttpDownload;
 //enum SaveFormat {Json, Binary }
 
 static const QString ENCODE_FIREBASE_URL = "AwLFcODje2DJs+8HlZsBC7zBxnG8+iQvzvWiS5CSDAa91cBitrJwfMqu5w==";
 static const QString EVENT ="event";
 static const QString CONSTRUCTION ="construction";
 static const QString SPEAKERS ="speakers";
-static const QString FIREBASE_URL = "https://eventapp-2d821.firebaseio.com/";
+//static const QString FIREBASE_URL = "https://eventapp-2d821.firebaseio.com/";
 static const quint64 SIMPLE_KEY = Q_UINT64_C(0x09d96fec6bbdc766);
+static const int NoIcon	= 0;	//the message box does not have any icon.
+static const int Question =	4;	//an icon indicating that the message is asking a question.
+static const int Information = 1;	//an icon indicating that the message is nothing out of the ordinary.
+static const int Warning = 2;	//an icon indicating that the message is a warning, but can be dealt with.
+static const int Critical = 3;	//an icon indicating that the message represents a critical problem.
 
 //class EVENTAPPSHAREDSHARED_EXPORT EAContainer : public QQuickItem
 class  EAContainer : public QObject, public QQmlParserStatus
@@ -43,6 +49,7 @@ class  EAContainer : public QObject, public QQmlParserStatus
 
     Q_PROPERTY(QString firbaseUrl READ firbaseUrl WRITE setFirbaseUrl NOTIFY firbaseUrlChanged)
     Q_PROPERTY(QString answers READ answers WRITE setAnswers NOTIFY answersChanged)
+    Q_PROPERTY(bool isEventStatic READ isEventStatic WRITE setIsEventStatic NOTIFY isEventStaticChanged)
 
     EAInfo* m_eaInfo;
     QString m_dataFilename = "temp";
@@ -53,6 +60,8 @@ class  EAContainer : public QObject, public QQmlParserStatus
     EAUser* m_user = NULL;
 
 public:
+    enum EventSource { None = 0, FileUrl, FBDirect, FBIndirect };
+
     EAContainer();
 
     virtual void classBegin();
@@ -61,9 +70,10 @@ public:
     Q_INVOKABLE void deleteItemList(int index);
     Q_INVOKABLE void clearEvent();
 
-    Q_INVOKABLE  bool loadNewEventApp(const QString& filename = "NewEvent");
+    Q_INVOKABLE void downloadFromUrl(const QString& urlString);
+    Q_INVOKABLE  bool loadNewEventApp(const QString& filenameUrl = "NewEvent");
     Q_INVOKABLE  bool loadEventApp();
-    Q_INVOKABLE  bool saveEventApp(const QString &filename = "");
+    Q_INVOKABLE  bool saveEventApp(const QString &filenameUrl = "");
     Q_INVOKABLE void uploadApp(const QString& eventKey);
 
     Q_INVOKABLE void downloadApp(const QString& eventKey);
@@ -71,11 +81,12 @@ public:
     Q_INVOKABLE void downloadAppEncoded(const QString& eventKey
                                  , const QString& encryptedUrl = ENCODE_FIREBASE_URL);
     Q_INVOKABLE void loadAnswers();
-    Q_INVOKABLE  bool loadDisplayFormat(const QString &filename);
-    Q_INVOKABLE  bool saveDisplayFormat(const QString &filename);
+    Q_INVOKABLE  bool loadDisplayFormat(const QString &filenameUrl);
+    Q_INVOKABLE  bool saveDisplayFormat(const QString &filenameUrl);
     Q_INVOKABLE bool linkFirebaseUrl(QString eventKey
                                      , QDate to
                                      , QDate from = QDate::currentDate());
+    Q_INVOKABLE QString getDebugLog() const;
 
     void  eventAppToSettings(QJsonDocument eventDoc);
     QJsonDocument  eventAppFromSettings();
@@ -83,7 +94,6 @@ public:
     void read(const QJsonObject &json);
     void write(QJsonObject &json);
     QString workingDirectory() const;
-
     EAInfo* eaInfo() const;
     QString dataFilename() const;
     EAConstruction* eaConstruction() const;
@@ -93,13 +103,18 @@ public:
     QString firbaseUrl() const;    
     EAUser *user();
     QString eventKey() const;
-    void saveAnswers(EAItemList* eaItemList
-                     , EAItem* item
+    void saveAnswers(int itemListIndex
+                     , int itemIndex
                      , QList<EaQuestion*> questionList);
 
+    void dowloadFirbaseUrl();
     QString answers() const;
 
-    Q_INVOKABLE QString getDebugLog() const;
+    bool isEventStatic() const;
+    EventSource getEventSource() const;
+    void setEventSource(const EventSource &eventSource);
+    QList<EAItemList *> getEaItemLists() const;
+    void setEaItemLists(const QList<EAItemList *> &eaItemLists);
 
 signals:
     void eaInfoChanged(EAInfo* eaInfo);
@@ -117,6 +132,20 @@ signals:
     void answersChanged(QString answers);
     void eaAnswersDownloaded();
 
+    //detailedText : string
+    //icon : QQuickStandardIcon::Icon
+    //informativeText : string
+    //text : string
+    //title : string
+
+    void error(const QString& message
+            , const QString& information
+            , const QString& details
+            , int icon);
+            //, int icon);
+
+    void isEventStaticChanged(bool isEventStatic);
+
 public slots:
     void setEAInfo(EAInfo* eaInfo);
     void setDataFilename(const QString &dataFilename);
@@ -128,9 +157,14 @@ public slots:
     void setUser(EAUser *user);
     void setEventKey(QString eventKey);
     void onResponseReady(QByteArray);
+    void onFindFBUrlRequestReady(QByteArray);
     void onAnswersReady(QByteArray data);
     void onDataChanged(QString);    
     void setAnswers(QString answers);
+    //void onFileDownloaded(QByteArray data);
+    void onFileDownloadError(QString);
+    void httpDownloadFinished();
+    void setIsEventStatic(bool isEventStatic);
 
 private:
     QJsonObject jsonAnswers(EAItemList* eaItemList
@@ -145,17 +179,22 @@ private:
     static EAItemList* at_eaItemLists(QQmlListProperty<EAItemList> *list
                                       , int index);
     static void clear_eaItemLists(QQmlListProperty<EAItemList> *list);
+    static QString getBaseFirebaseUrl();
 
     int m_Version = 0;
     int nextItemListId = 0;
     int useNextItemListId();
 
-    QString m_firbaseUrl = FIREBASE_URL;
+    QString m_firbaseUrl = "";
     QString m_eventKey = "";
     QString m_answers;
     QJsonObject answersObj;
 
+    HttpDownload* httpDownload;
     QString debugLog;
+    bool m_isEventStatic = true;
+    EventSource m_eventSource = None;
+    bool indiretDownload = false;
 };
 
 #endif // EVENTCONTAINER_H

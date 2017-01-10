@@ -7,15 +7,9 @@ import Qt.labs.platform 1.0
 import Qt.labs.calendar 1.0
 
 Item {
-    property alias mouseArea3: mouseArea4
-    property alias mouseArea2: mouseArea2
-    property alias mouseArea1: mouseArea1
     property alias loadEventButton: loadEventButton
     property alias saveEventButton: saveEventButton
-    property alias loadFilename: loadFilename
-    property alias rectangle1: rectangle1
-    property alias colourLabel1: colourLabel1
-    //property alias openFileDialog1: openFileDialog1
+    //property alias loadFilename: loadFilename
     property alias newEventBut: newEventBut
     property alias downloadBut: downloadBut
     property alias uploadBut: uploadBut
@@ -24,11 +18,12 @@ Item {
     property alias firbaseUrlBut: firbaseUrlBut
     property alias linkBut: linkBut
     property alias toCalander: toCalander
+    property alias text1: text1
     Flickable {
         Pane {
             id: eventNamePane
             width: parent.width
-            GridLayout {
+            ColumnLayout {
                 width: parent.width;
                 anchors.top: parent.top
                 anchors.left: parent.left
@@ -38,15 +33,14 @@ Item {
                     width: parent.width
                     title: qsTr("Data file")
                     ColumnLayout {
-                        x: -12
-                        y: 12
                         RowLayout {
+                            /*
                             TextField {
                                 id: loadFilename
                                 text: settingsData.dataFilename
                                 onEditingFinished: settingsData.dataFilename = text;
                             }
-
+                            */
                             FileDialog {
                                 id: loadFileDialog
                                 fileMode: FileDialog.OpenFile
@@ -55,7 +49,7 @@ Item {
                                 folder: eaContainer.workingDirectory
                                 //onAccepted: settingsData.dataFilename = file
                                 Connections {
-                                    onAccepted: eaContainer.loadEventApp(loadFileDialog.file);
+                                    onAccepted: eaContainer.loadNewEventApp(loadFileDialog.file);
                                 }
                             }
 
@@ -73,26 +67,25 @@ Item {
                             }
 
                         }
+                        Button {
+                            id: newEventBut
+                            text: qsTr("New event")
+                        }
                         RowLayout {
                             height: implicitHeight
                             Button {
                                 id: loadEventButton
-                                text: "Load"
+                                text: "Load from file"
                                 Connections {
                                     onPressed: loadFileDialog.open()
                                 }
                             }
                             Button {
                                 id: saveEventButton
-                                text: "Save"
+                                text: "Save to file"
                                 Connections {
                                     onPressed: saveFileDialog.open()
                                 }
-                            }
-
-                            Button {
-                                id: newEventBut
-                                text: qsTr("New event")
                             }
                         }
 
@@ -110,7 +103,9 @@ Item {
 
                             Text {
                                 id: text1
-                                text: qsTr("Dodwnload Key")
+                                text: qsTr("Key")
+                                width: 100
+                                Layout.fillWidth: true
                                 font.pixelSize: 12
                             }
                         }
@@ -143,17 +138,17 @@ Item {
 
                                 Button {
                                     id: firbaseUrlBut
-                                    text: qsTr("New firebase url")
+                                    text: qsTr("Save firebase url")
                                 }
 
                                 TextField {
                                     id: firebaseUrlTB
                                     width: 300; height: 30
-                                    //placeholderText: qsTr("Enter firebase url")
-                                    //  qsTr("")
-                                    //onEditingFinished: eaContainer.firebaseUrl = text;
                                     text: settingsData.firebaseUrl
                                     onEditingFinished: settingsData.firebaseUrl = text;
+                                    Layout.fillWidth: true
+                                    cursorVisible: true
+                                    selectByMouse: true
                                 }
                                 Calander57 {
                                     id: toCalander
@@ -168,88 +163,6 @@ Item {
 
                     } //ColumnLayout
                 } //GroupBox
-
-                GroupBox {
-                    title: qsTr("Event app colours");
-                    ColumnLayout {
-                        RowLayout {
-                            spacing: parent.spacing
-                            height: colourLabel1.implicitHeight * 2.0
-                            Rectangle {
-                                id: rectangle1
-                                height: parent.height
-                                width: height * 2
-                                border.color: "black"
-                                MouseArea {
-                                    id: mouseArea1
-                                    anchors.fill: parent
-                                }
-                            }
-                            Label {
-                                id: colourLabel1
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
-                        } // RowLayout
-                        RowLayout {
-                            spacing: parent.spacing
-                            height: colourLable2.implicitHeight * 2.0
-                            Rectangle {
-                                color: eaContainer.eaConstruction.foreColour
-                                height: parent.height
-                                width: height * 2
-                                border.color: "black"
-                                MouseArea {
-                                    id: mouseArea2
-                                    anchors.fill: parent
-                                }
-                            }
-                            Label {
-                                id: colourLable2
-                                text: qsTr("Foreground colour");
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
-                        } // RowLayout
-                        RowLayout {
-                            spacing: parent.spacing
-                            height: colourLabel2.implicitHeight * 2.0
-                            Rectangle {
-                                color: eaContainer.eaConstruction.fontColour
-                                height: parent.height
-                                width: height * 2
-                                border.color: "black"
-                                MouseArea {
-                                    id: mouseArea4
-                                    anchors.fill: parent
-                                }
-                            }
-                            Label {
-                                id: colourLabel2
-                                text: qsTr("Font colour");
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
-                        } // RowLayout
-                        RowLayout {
-                            spacing: parent.spacing
-                            height: colourLabel2.implicitHeight * 2.0
-                            Rectangle {
-                                color: "#FD871C"
-                                height: parent.height
-                                width: height * 2
-                                border.color: "black"
-                                MouseArea {
-                                    id: mouseArea5
-                                    anchors.fill: parent
-                                }
-                            }
-                            Label {
-                                id: colourLabel3
-                                text: qsTr("Font colour");
-                                anchors.verticalCenter: parent.verticalCenter
-                            }
-                        } // RowLayout
-
-                    } //ColumnLayout
-                } // GroupBox
 
             } // GridLayout
         } // Pane

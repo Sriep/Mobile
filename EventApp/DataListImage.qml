@@ -43,7 +43,8 @@ ListView {
             target: dataListImage
             onIsExpandedChanged: {
                 if (isExpanded === false ) {
-                    eaLVItemList.items[index].saveAnswers();
+                    //eaLVItemList.items[index].saveAnswers();
+                    eaLVItemList.saveAnswers(index);
                 }
             }
         }
@@ -70,7 +71,6 @@ ListView {
                 "itemType" : items[i].itemType
                 ,"title" : items[i].title
                 ,"displayText" : items[i].displayText
-                //,"showUrl" : "http://lllconf.co.uk/"//items[i].url
                 ,"showUrl" : items[i].url
                 ,"picture" : picturePath
             }

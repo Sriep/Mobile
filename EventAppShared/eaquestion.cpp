@@ -29,18 +29,21 @@ void EaQuestion::read(const QJsonObject &json, EAItem* parent)
     setQuestion(json["question"].toString());
 
     EAContainer* container = parent->getEaItemList()->getEaContainer();
-    QString path = container->eventKey();
-    path += "/answers";
-    path += "/" + parent->getEaItemList()->listName();
-    path += "/" + parent->title();
-    path += "/" + container->user()->user();
+    if (container->user()->user().size() > 0)
+    {
+        QString path = container->eventKey();
+        path += "/answers";
+        path += "/" + parent->getEaItemList()->listName();
+        path += "/" + parent->title();
+        path += "/" + container->user()->user();
 
-    Firebase *firebase=new Firebase(container->firbaseUrl(), path);
-    firebase->getValue();
-    connect(firebase,SIGNAL(eventAnswersReady(QByteArray)),
-            this,SLOT(onAnswersReady(QByteArray)));
-    //connect(firebase,SIGNAL(eventAnswersChanged(QString)),
-    //        this,SLOT(onDataChanged(QString*)));
+        Firebase *firebase=new Firebase(container->firbaseUrl(), path);
+        firebase->getValue();
+        connect(firebase,SIGNAL(eventAnswersReady(QByteArray)),
+                this,SLOT(onAnswersReady(QByteArray)));
+        //connect(firebase,SIGNAL(eventAnswersChanged(QString)),
+        //        this,SLOT(onDataChanged(QString*)));
+    }
 }
 
 void EaQuestion::onAnswersReady(QByteArray data)

@@ -11,12 +11,12 @@ class EAUser : public QQuickItem
     Q_PROPERTY(QString user READ user WRITE setUser NOTIFY userChanged)
     Q_PROPERTY(int index READ index WRITE setIndex NOTIFY indexChanged)
     Q_PROPERTY(QString email READ email WRITE setEmail NOTIFY emailChanged)
-    Q_PROPERTY(bool loggodOn READ loggodOn WRITE setLoggodOn NOTIFY loggodOnChanged)
+    Q_PROPERTY(bool loggedOn READ loggedOn WRITE setLoggedOn NOTIFY loggedOnChanged)
 
     QString m_user;
     int m_index;
     QString m_email;
-    bool m_loggodOn = false;
+    bool m_loggedOn = false;
 public:
     EAUser();
     EAUser(EAContainer *eaContainer);
@@ -32,7 +32,7 @@ public:
     EAContainer *getEaContainer() const;
     void setEaContainer(EAContainer *value);
 
-    bool loggodOn() const;
+    bool loggedOn() const;
 
 signals:
 
@@ -40,7 +40,7 @@ signals:
     void indexChanged(int index);
     void emailChanged(QString email);
 
-    void loggodOnChanged(bool loggodOn);
+    void loggedOnChanged(bool loggedOn);
     void userPasswordAccepted(bool);
 
 
@@ -48,14 +48,14 @@ public slots:
     void setUser(QString user);
     void setIndex(int index);
     void setEmail(QString email);
-    void setLoggodOn(bool loggodOn);
+    void setLoggedOn(bool loggedOn);
 
     void onResponseReady(QByteArray);
     void onDataChanged(QString);
 
 private:
     bool isUserEmailTaken(const QString email);
-    void addIndex(const QString& table, const QString& field);
+    //void addIndex(const QString& table, const QString& field);
 
     EAContainer* eaContainer;
     QString tempPassword;

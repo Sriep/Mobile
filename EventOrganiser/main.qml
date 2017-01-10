@@ -33,61 +33,87 @@ ApplicationWindow {
         }
     }
 
-    StackLayout {
-        id: tabStack
-        currentIndex: headerTabBar.currentIndex
-        anchors.fill: parent
+    RowLayout {
 
-        //WelcomeTab {}
+        width: 1100; height: 870;
+        Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
+        spacing: 10
+        //x:10; y:10
 
-        EAConstructionPage {
-            property alias eaConstruction: eaContainer.eaConstruction
-            property alias dataFilename: eaContainer.dataFilename
-            property alias firbaseUrl: eaContainer.firbaseUrl
-        }
+        StackLayout {
+            id: tabStack
+            currentIndex: headerTabBar.currentIndex
+            anchors.fill: parent
 
-        EAInfoPage {
-            property alias eventInfo: eaContainer.eaInfo
-            property alias dataFilename: eaContainer.dataFilename
-        }
+            EAConstructionPage {
+                property alias eaConstruction: eaContainer.eaConstruction
+                property alias dataFilename: eaContainer.dataFilename
+                property alias firbaseUrl: eaContainer.firbaseUrl
+            }
 
-        EAListDisplayPage {
-            id: eaListDisplayPage
-            property alias dataFilename: eaContainer.dataFilename
-            property alias featuredList: eaListDisplayPage.featuredList
-        }
+            //EAInfoPage {
+            //    property alias eventInfo: eaContainer.eaInfo
+            //    property alias dataFilename: eaContainer.dataFilename
+            //}
 
-        Item {
-            ColumnLayout {
-                Button {
-                    height: 30
-                    id: addItem
-                    text: qsTr("Load Answers")
-                    onPressed: {
-                        eaContainer.loadAnswers();
-                    }
-                }
+            EAListDisplayPage {
+                id: eaListDisplayPage
+                property alias dataFilename: eaContainer.dataFilename
+                property alias featuredList: eaListDisplayPage.featuredList
+            }
 
-                Rectangle {
-                    width: 800; height: 600
-                    border.width : 0.5
-                    border.color : "black"
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
-                    Flickable {
-                        anchors.fill: parent
-                        TextArea.flickable: TextArea {
-                            id: ansersTA
-                            text: eaContainer.answers
-                            wrapMode: TextArea.Wrap
+            DisplayTab {
+
+            }
+
+            //EaDisplayPara {
+
+            //}
+
+            Item {
+                ColumnLayout {
+                    Button {
+                        height: 30
+                        id: addItem
+                        text: qsTr("Load Answers")
+                        onPressed: {
+                            eaContainer.loadAnswers();
                         }
-                        ScrollBar.vertical: ScrollBar { }
                     }
-                } //Rectangle
+
+                    Rectangle {
+                        width: 800; height: 600
+                        border.width : 0.5
+                        border.color : "black"
+                        anchors.left: parent.left
+                        anchors.leftMargin: 0
+                        Flickable {
+                            anchors.fill: parent
+                            TextArea.flickable: TextArea {
+                                id: ansersTA
+                                text: eaContainer.answers
+                                wrapMode: TextArea.Wrap
+                            }
+                            ScrollBar.vertical: ScrollBar { }
+                        }
+                    } //Rectangle
+                }
             }
         }
+        Rectangle {
+            id: dataBox
+            width: 520; height: 720
+            border.width : 0.5; border.color : "black"
+            clip: true
+            visible: tabStack.currentIndex === 1
+                     || tabStack.currentIndex === 2
+            EventAppPage {
+                x:10; y:10
+                width: parent.width-20; height: parent.height-20
+                id: ldpEventAppPage
+            }
+        } //Rectangle
     }
-
     Settings {
         category: "geometry"
         property alias x: appwin.x

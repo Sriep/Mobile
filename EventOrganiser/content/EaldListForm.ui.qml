@@ -1,7 +1,9 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.0
-import QtQuick.Extras 1.4
+import QtQuick.Controls 2.1
+import Qt.labs.settings 1.0
+import QtQuick.Dialogs 1.0
+import Qt.labs.platform 1.0
 import "qrc:///shared"
 
 Item {
@@ -23,6 +25,29 @@ Item {
         id: columnLayout1
         width: 200
         height: 200
+        FileDialog {
+            id: loadImage
+            fileMode: FileDialog.OpenFile
+            selectedNameFilter.index: 0
+            nameFilters: [ "Image files (*.png *.bmp *.jpg *.jpeg *.pbm *.pgm *.ppm *.xbm *.xpm)"]
+
+            /*nameFilters: [
+                "png files (*.png)"
+                , "bmp files (*.bmp )"
+                , "jpg files (*.jpg)"
+                , "jpeg files (*.jpeg)"
+                , "pbm files (*.pbm)"
+                , "pgm files (*.pgm)"
+                , "ppm files (*.ppm)"
+                , "xbm files (*.xbm)"
+                , "xpm files (*.xpm)"
+            ]*/
+            folder: eaContainer.workingDirectory
+            //onAccepted: settingsData.dataFilename = file
+            Connections {
+                onAccepted: itemData.text = loadImage.file;
+            }
+        }
 
         ListView {
             id: itmesEntered
@@ -77,15 +102,25 @@ Item {
             width: 100
             height: 100
             visible: itemDataType.currentIndex === 0
+            Button  {
+                id: imageFile
+                text: qsTr("Load image file")
+                Connections {
+                    onPressed: loadImage.open()
+                }
+            }
+
             TextField {
                 id: itemData
                 text: qsTr("")
             }
+            /*
             Text {
                 id: text2
                 text: qsTr("Image filename")
                 font.pixelSize: 12
             }
+*/
         }
         RowLayout {
             id: rowLayout3

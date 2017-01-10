@@ -30,6 +30,8 @@ Item {
                 id: firebaseUrlTF
                 //text: "https://????.firebaseio.com/"
                 text: "https://mytestproject-be3ee.firebaseio.com/"
+                cursorVisible: true
+                selectByMouse: true
             }
         }
 
@@ -45,6 +47,8 @@ Item {
             TextField {
                 id: downloadFromKey
                 text: qsTr("4455")
+                cursorVisible: true
+                selectByMouse: true
             }
             Button {
                 visible: false

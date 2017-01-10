@@ -6,20 +6,48 @@ import "qrc:///shared"
 
 Item {
     id: formatedListPanel
-    width: 1100; height: 800;
+    //width: 1100; height: 800;
+    width: 600; height: 800;
     //property alias listTypeCombo: listTypeCombo
     property alias thisItemList: thisItemList
     property alias listItemEntryStack: listItemEntryStack
     property alias thisFormatedListPanel: thisFormatedListPanel
-    property alias formatedListPanel: formatedListPanel
-    property alias ldpEventAppPage: ldpEventAppPage
-    Row {
-        width: 1100; height: 700
-        Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
-        spacing: 10
-        x:10; y:10
+    property alias dataDisplayTab: dataDisplayTab
+    //property alias formatedListPanel: formatedListPanel
+    //property alias ldpEventAppPage: ldpEventAppPage
+    //RowLayout {
+        //width: 1100; height: 700
+        //width: parent.width; height: parent.height -100
+        //Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
+        //spacing: 10
+        //x:10; y:10
         Column {
-            DataListImage {}
+            width: parent.width; height: parent.height -100
+            spacing: 10
+            x:10; y:10
+            TabBar {
+                //width: parent.width; //height: parent.height
+                width: 520
+                id: dataDisplayTab
+                Layout.minimumWidth: 360
+                Layout.preferredWidth: 480
+                TabButton {
+                    text: qsTr("Main")
+                }
+                TabButton {
+                    text: qsTr("Drawer")
+                }
+                TabButton {
+                    text: qsTr("Csv file")
+                }
+                TabButton {
+                    text: qsTr("Manual")
+                }
+                TabButton {
+                    text: qsTr("Item")
+                }
+            }
+           // DataListImage {}
 
             clip: true
             Rectangle {
@@ -27,47 +55,21 @@ Item {
                 width: 520; height: 720
                 border.width : 1; border.color : "green"
                 //y: 300
+
                 StackLayout {
                     id: listItemEntryStack
+                    currentIndex: dataDisplayTab.currentIndex
                     x:10; y: 10
                     //width: 500; height: 700
                     width: parent.width - 2*x; height: parent.height - 2*y
                     clip: true
                     property int formatedListStack: 1
                     property int manualListItem: 2
+                    EAInfoName {
 
-                    Item {
-                        id: name
-                        width: parent.width; height: parent.height
-                        ColumnLayout {
-                            width: parent.width; height: parent.height
-                            TabBar {
-                              width: parent.width; height: parent.height
-                              id: addListTab
-                              Layout.minimumWidth: 360
-                              Layout.preferredWidth: 480
-                              TabButton {
-                                text: qsTr("Data")
-                              }
-                              TabButton {
-                                text: qsTr("Display")
-                              }
-                            }
-                            StackLayout {
-                                width: parent.width; height: parent.height
-                                currentIndex: addListTab.currentIndex
-                                AddNewList {
-                                    width: 200; height: 200
-                                    Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                    }
+                    AddNewList {
 
-                                }
-                                EaDisplayPara {
-
-                                   // color: "blue"
-                                }
-
-                            }
-                        }
                     }
 
                     EaldFormatedList {
@@ -94,19 +96,6 @@ Item {
                 } //StackLayout
             }  //Rectangle
        } //ColumnLayout
-
-        Rectangle {
-            id: dataBox
-            width: 520; height: 720
-            border.width : 0.5; border.color : "black"
-            clip: true
-            EventAppPage {
-                x:10; y:10
-                width: parent.width-20; height: parent.height-20
-                id: ldpEventAppPage
-            }
-        } //Rectangle
-    } //RowLayout
 
 } //Item
 

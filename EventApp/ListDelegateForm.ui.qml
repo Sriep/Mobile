@@ -8,7 +8,8 @@ Item {
     id: drawerDelegate
     //width: 100//parent.width
     //height: 88
-    width: 100//eaContainer.eaConstruction.display.width
+    //width: //eaContainer.eaConstruction.display.width
+    Layout.fillWidth: true
     height: eaContainer.eaConstruction.display.height
     property alias mouseArea: mouseArea
     property alias nextImage: nextImage
@@ -46,16 +47,17 @@ Item {
 
     Text {
         id: itemText
-        //color: "blue"
-        //font.pixelSize: 32
+        width: parent.width-nextImage.sourceSize.width; height: parent.height
         font: eaContainer.eaConstruction.display.font
         color: eaContainer.eaConstruction.display.fontColour
         style: eaContainer.eaConstruction.display.textStyle
         styleColor: eaContainer.eaConstruction.display.styleColour
+        x: eaContainer.eaConstruction.display.xText
+        y: eaContainer.eaConstruction.display.yText
+        verticalAlignment: eaContainer.eaConstruction.display.vAlignment
+        horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
+
         text: modelData
-        anchors.left: parent.left
-        anchors.leftMargin: 10
-        y:10; x:10
     }
 
     Image {
@@ -63,8 +65,8 @@ Item {
         anchors.right: parent.right
         anchors.rightMargin: 0
         source: "qrc:///shared/images/navigation_next_item.png"
+        sourceSize.height: eaContainer.eaConstruction.display.height
     }
-
 }
 
 

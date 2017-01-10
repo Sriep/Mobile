@@ -15,9 +15,17 @@ HttpDownload::HttpDownload()
             this, &HttpDownload::slotAuthenticationRequired);
 }
 
-QString HttpDownload::downloadFile(QUrl url)
+QString HttpDownload::downloadFileData(const QString url)
 {
-    m_url = url;
+    m_senddata = true;
+    return downloadFile(url);
+}
+
+//QString HttpDownload::downloadFile(QUrl url)
+QString HttpDownload::downloadFile(const QString url)
+{
+    m_url = QUrl(url);
+    m_senddata = true;
     //const QString urlSpec = urlLineEdit->text().trimmed();
     if (m_url.isEmpty())
     {
@@ -25,7 +33,16 @@ QString HttpDownload::downloadFile(QUrl url)
         return "";
     }
 
-    preProcessUrl();
+    // Add query back in
+    int firstQ = url.indexOf('?');
+    if ( firstQ > 1)
+    {
+        QString queryText = url.right(url.size() - firstQ -1);
+        QUrlQuery  myQuery(queryText);
+        m_url.setQuery(myQuery);
+    }
+
+    //preProcessUrl();
     if (!m_url.isValid())
     {
         emit error(tr("Invalid url"));
@@ -39,7 +56,7 @@ QString HttpDownload::downloadFile(QUrl url)
         QFile::remove(fileName);
 
     file = openFileForWrite(fileName);
-    if (!file)
+    if (!file && !m_senddata)
     {
         emit error(tr("Problem opening file"));
         setFileDownloaded("");
@@ -50,6 +67,7 @@ QString HttpDownload::downloadFile(QUrl url)
     setFileDownloaded(fileName);
     return fileName;
 }
+
 void HttpDownload::preProcessUrl()
 {
     if (m_url.host() == "www.dropbox.com")
@@ -97,9 +115,6 @@ void HttpDownload::httpFinished()
     }
 
     const QVariant redirectionTarget = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
-    reply->deleteLater();
-    reply = Q_NULLPTR;
-
     if (!redirectionTarget.isNull()) {
         setUrl(m_url.resolved(redirectionTarget.toUrl()));
         file = openFileForWrite(fi.absoluteFilePath());
@@ -109,13 +124,23 @@ void HttpDownload::httpFinished()
         startRequest();
         return;
     }
+    else  if (m_senddata)
+    {
+         m_downloadData = reply->readAll();
+         //emit downloadedData(m_downloadData);
+         emit downloadDataFinished();
+    }
+
+    reply->deleteLater();
+    reply = Q_NULLPTR;
+
     emit finishedDownload();
 }
 
 QFile *HttpDownload::openFileForWrite(const QString &fileName)
 {
     QScopedPointer<QFile> file(new QFile(fileName));
-    if (!file->open(QIODevice::WriteOnly)) {
+    if (!file->open(QIODevice::WriteOnly) && !m_senddata) {
        // QMessageBox::information(this, tr("Error")
        //                          , tr("Unable to save the file %1: %2.").arg(QDir::toNativeSeparators(fileName)
        //                          , file->errorString()));
@@ -126,13 +151,38 @@ QFile *HttpDownload::openFileForWrite(const QString &fileName)
     return file.take();
 }
 
+bool HttpDownload::sendFile() const
+{
+    return m_senddata;
+}
+
+void HttpDownload::setSendFile(bool sendFile)
+{
+    m_senddata = sendFile;
+}
+
+QByteArray HttpDownload::downloadData() const
+{
+    return m_downloadData;
+}
+
+bool HttpDownload::storeData() const
+{
+    return m_senddata;
+}
+
 void HttpDownload::httpReadyRead()
 {
     // this slot gets called every time the QNetworkReply has new data.
     // We read all of its new data and write it into the file.
     // That way we use less RAM than when reading it at the finished()
     // signal of the QNetworkReply
-    if (file)
+    if (m_senddata)
+    {
+        //m_downloadData.append(reply->readAll());
+        //emit downloadedData(reply->readAll())
+    }
+    else if (file)
         file->write(reply->readAll());
 }
 

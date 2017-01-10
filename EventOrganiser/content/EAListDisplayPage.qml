@@ -30,17 +30,20 @@ EAListDisplayPageForm {
             eaListDisplayPage.featuredList = eaContainer.eaItemLists[index];
             if (eaListDisplayPage.featuredList.formatedList) {
                 thisFormatedListPanel.popTitlesList(eaListDisplayPage.featuredList);
-                listItemEntryStack.currentIndex = 1;
+                //listItemEntryStack.currentIndex = 1;
+                dataDisplayTab.currentIndex = 2;
             } else {
                 thisItemList.popItemList(eaListDisplayPage.featuredList);
-                listItemEntryStack.currentIndex = 2;
+                //listItemEntryStack.currentIndex = 2;
+                dataDisplayTab.currentIndex = 3;
             }
             console.log("current listName"
                         , eaListDisplayPage.featuredList.listName);
         }
         else
         {
-            listItemEntryStack.currentIndex = 0;
+            //listItemEntryStack.currentIndex = 0;
+            dataDisplayTab.currentIndex = 1;
             console.log("add new list");
         }
     }
@@ -65,7 +68,8 @@ EAListDisplayPageForm {
             var offset = ldpEventAppPage.stackCtl.startDrawerId;
             var drawerIndex = ldpEventAppPage.stackCtl.currentIndex-offset;
             if (isExpanded && drawerIndex>=0) {
-                listItemEntryStack.currentIndex = 3;
+                //listItemEntryStack.currentIndex = 3;
+                dataDisplayTab.currentIndex = 4;
                 var itemIndex = listCtl.currentIndex;
                 var itemList = listCtl.eaLVItemList;
                 var fe = featuredList;
@@ -92,7 +96,14 @@ EAListDisplayPageForm {
             }
         }
     }
-
+/*
+    Connections {
+        target: dataDisplayTab
+        onPressed: {
+           //listItemEntryStack.currentIndex = dataDisplayTab.currentIndex;
+        }
+     }
+*/
 }
 
 

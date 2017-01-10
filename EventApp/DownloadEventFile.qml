@@ -5,7 +5,8 @@ DownloadEventFileForm {
     downloadButton.onClicked: {
         console.log("Button Pressed. Entered text: ", urlText.text);
         progressBar.visible = true;
-        httpDownload.downloadFile(urlText.text);
+        eaContainer.downloadFromUrl(urlText.text);
+        //httpDownload.downloadFile(urlText.text);
     }
 
 

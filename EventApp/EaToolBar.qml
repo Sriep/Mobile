@@ -3,14 +3,14 @@ import QtQuick.Controls 2.0
 
 EaToolBarForm {
     id: toolBar
-    titleLabel.text: eaContainer.eaInfo.eventName
-    userLable.text: eaContainer.user.loggodOn ? eaContainer.user.user : "logged off"
+    //titleLabel.text: eaContainer.eaInfo.eventName
+    //userLable.text: eaContainer.user.loggodOn ? eaContainer.user.user : "logged off"
     drawerButton.onClicked: {
         drawer.open()
     }
 
     userBut.onClicked: {
-
+        stackCtl.currentIndex = stackCtl.userLoginId;
     }
 
     menuButton.onClicked: optionsMenu.open()
@@ -20,8 +20,8 @@ EaToolBarForm {
         transformOrigin: Menu.TopRight
         MenuItem {
             text: qsTr("Login")
-            //onTriggered: settingsPopup.open()
             onTriggered: stackCtl.currentIndex = stackCtl.userLoginId;
+            visible: !eaContainer.isEventStatic
         }
         MenuItem {
             id: menuItemLoadEventKey
@@ -52,24 +52,17 @@ EaToolBarForm {
         id: drawer
         width: Math.min(eventAppMainPage.width, eventAppMainPage.height) / 3 * 2
         height: eventAppMainPage.height
+        background: Rectangle {
+            color: eaContainer.eaConstruction.menuDisplay.backColour
+        }
 
         ListView {
             id: menuListView
             currentIndex: -1
             anchors.fill: parent
 
-            delegate: ItemDelegate {
-                width: parent.width
-                text: model.title
-                highlighted: ListView.isCurrentItem
-                onClicked: {
-                    if (menuListView.currentIndex != index) {
-                        menuListView.currentIndex = index;
-                        stackCtl.currentIndex = position + stackCtl.startDrawerId
-                        titleLabel.text = model.title
-                    }
-                    drawer.close();
-                }
+            delegate: MenuItemDelegate {
+                id: menuItemDelegate
             }
             model: stackCtl.drawerModel
 

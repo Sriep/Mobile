@@ -10,7 +10,6 @@
 #include <QSet>
 #include <QString>
 
-#include "eaitemlistbase.h"
 #include "eaitem.h"
 
 static const char seperator = ',';
@@ -37,7 +36,8 @@ class EAItemList :  public QQuickItem //public EAItemListBase
     Q_PROPERTY(QQmlListProperty<EAItem> items READ items)
 
 public:
-    enum ListType { High, Low, VeryHigh, VeryLow };
+    //enum ListType { High, Low, VeryHigh, VeryLow };
+    enum ListType { Csv, Manual, UserNames, Schedule };
     Q_ENUM(ListType)
 
     EAItemList();
@@ -52,7 +52,7 @@ public:
     //virtual void clear(QQmlEngine *engine);
     virtual void clear(EAContainer* eacontainer);
 
-    Q_INVOKABLE bool readCSV(const QString filename);
+    Q_INVOKABLE bool readCSV(const QString filenameUrl);
     Q_INVOKABLE void amendField(int index
                                 , const QString& field
                                 , const QString& modelName
@@ -63,9 +63,17 @@ public:
     Q_INVOKABLE bool insertListItem(int index
                                     , int itemType
                                     , const QString& title
-                                    , const QString& imageFile =""
-                                    , const QString& textFilename = ""
+                                    , const QString& imageFileUrl =""
+                                    , const QString& textFilenameUrl = ""
                                     , const QString &url = "");
+    Q_INVOKABLE bool updateListItem(int index
+                                    , int itemType
+                                    , const QString& title
+                                    , const QString& imageFileUrl =""
+                                    , const QString& textFilenameUrl = ""
+                                    , const QString &url = "");
+    Q_INVOKABLE void removeItem(int index);
+    Q_INVOKABLE void saveAnswers(int itemIndex);
     //Q_INVOKABLE int itemListLength();
 
 
@@ -81,6 +89,10 @@ public:
 
     EAContainer *getEaContainer() const;
     void setEaContainer(EAContainer *value);
+    int getIndex();
+
+    QList<EAItem *> getEaItems() const;
+    void setEaItems(const QList<EAItem *> &eaItems);
 
 signals:
     void titleFieldsChanged(QString titleFields);

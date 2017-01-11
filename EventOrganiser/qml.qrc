@@ -1,14 +1,12 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>EAInfoPage.qml</file>
         <file>EAConstructionPage.qml</file>
         <file>content/EAInfoName.qml</file>
         <file>content/EAInfoTheme.qml</file>
         <file>content/HeaderTabBarForm.ui.qml</file>
         <file>content/EAInfoThemeForm.ui.qml</file>
         <file>content/EAInfoNameForm.ui.qml</file>
-        <file>EAInfoPageForm.ui.qml</file>
         <file>EAConstructionPageForm.ui.qml</file>
         <file>content/EAListDisplayPage.qml</file>
         <file>content/EAListDisplayPageForm.ui.qml</file>

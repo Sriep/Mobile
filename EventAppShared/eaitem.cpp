@@ -6,6 +6,7 @@
 #include "eaquestion.h"
 #include "eacontainer.h"
 #include "eaitemlist.h"
+#include "eamap.h"
 
 EAItem::EAItem()
 {
@@ -44,6 +45,12 @@ void EAItem::read(const QJsonObject &json, EAItemList *eaitemList)
         m_eaQuestions.append(newQuestion);
     }
 
+    if (json.contains("mapInfo"))
+    {
+        setMapInfo(new EAMap());
+        mapInfo()->read(json["mapInfo"].toObject());
+    }
+
     id = json["id"].toInt();
     version = json["version"].toInt();
 }
@@ -66,9 +73,15 @@ void EAItem::write(QJsonObject &json)
 
     }
     json["questions"] = questionsArray;
-
     json["id"] = id;
     json["version"] = ++version;
+
+    if (NULL != mapInfo())
+    {
+        QJsonObject mapObj;
+        mapInfo()->write(mapObj);
+        json["mapInfo"] = mapObj;
+    }
 }
 
 void EAItem::writeAnswers(EAUser* user, QJsonObject &json)
@@ -203,6 +216,15 @@ void EAItem::setUrlString(QString urlString)
     emit urlStringChanged(urlString);
 }
 
+void EAItem::setMapInfo(EAMap *mapInfo)
+{
+    if (m_mapInfo == mapInfo)
+        return;
+
+    m_mapInfo = mapInfo;
+    emit mapInfoChanged(mapInfo);
+}
+
 
 //typedef QQmlListProperty::AppendFunction
 //Synonym for void (*)(QQmlListProperty<T> *property, T *value).
@@ -253,6 +275,11 @@ QList<EaQuestion *> EAItem::getEaQuestions() const
 void EAItem::setEaQuestions(const QList<EaQuestion *> &eaQuestions)
 {
     m_eaQuestions = eaQuestions;
+}
+
+EAMap *EAItem::mapInfo() const
+{
+    return m_mapInfo;
 }
 
 EAItemList *EAItem::getEaItemList() const

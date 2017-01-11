@@ -48,10 +48,12 @@ void EAContainer::componentComplete()
     //emit eaComponentComplete();
 }
 
-void EAContainer::insertEmptyItemList(int index, QString name, bool formated)
+//void EAContainer::insertEmptyItemList(int index, QString name, bool formated)
+void EAContainer::insertEmptyItemList(int index, QString name, int listType)
 {
     EAItemList* newItemList = new EAItemList(name);
-    newItemList->setFormatedList(formated);
+    //newItemList->setFormatedList(formated);
+    newItemList->setListType(listType);
     newItemList->setEaContainer(this);
     m_eaItemLists.insert(index, newItemList);
     emit eaItemListsChanged();

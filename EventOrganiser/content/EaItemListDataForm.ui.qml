@@ -7,9 +7,14 @@ import Qt.labs.platform 1.0
 import QtQuick.Controls.Styles 1.4
 
 Item {
+    property alias thisItemList: thisItemList
+    property alias thisFormatedListPanel: thisFormatedListPanel
+    property alias editItemEntryStack: editItemEntryStack
+
     StackLayout {
-        id: listItemEntryStack
-        currentIndex: eaContainer.eaItemLists[index].listType
+        id: editItemEntryStack
+        //currentIndex: eaListDisplayPage.featuredList.listType
+        //currentIndex: eaContainer.eaItemLists[index].listType
         x:10; y: 10
         //width: 500; height: 700
         width: parent.width; height: parent.height
@@ -23,5 +28,6 @@ Item {
             width: parent.width; height: parent.height
             id: thisItemList
         }
+
     } //StackLayout
 }

@@ -51,11 +51,6 @@ ApplicationWindow {
                 property alias firbaseUrl: eaContainer.firbaseUrl
             }
 
-            //EAInfoPage {
-            //    property alias eventInfo: eaContainer.eaInfo
-            //    property alias dataFilename: eaContainer.dataFilename
-            //}
-
             EAListDisplayPage {
                 id: eaListDisplayPage
                 property alias dataFilename: eaContainer.dataFilename
@@ -63,12 +58,7 @@ ApplicationWindow {
             }
 
             DisplayTab {
-
             }
-
-            //EaDisplayPara {
-
-            //}
 
             Item {
                 ColumnLayout {

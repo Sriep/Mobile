@@ -21,13 +21,13 @@ SOURCES += eventappshared.cpp \
     eaitemlist.cpp \
     csv.cpp \
     picturelistimageprovider.cpp \
-    eaitemlistbase.cpp \
     eaitem.cpp \
     firebase.cpp \
     eauser.cpp \
     eaquestion.cpp \
     eaobjdisplay.cpp \
-    simplecrypt.cpp
+    simplecrypt.cpp \
+    eamap.cpp
 
 HEADERS += eventappshared.h\
     eventappshared_global.h \
@@ -45,7 +45,8 @@ HEADERS += eventappshared.h\
     eauser.h \
     eaquestion.h \
     eaobjdisplay.h \
-    simplecrypt.h
+    simplecrypt.h \
+    eamap.h
 
 unix {
     target.path = /usr/lib

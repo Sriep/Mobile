@@ -44,7 +44,8 @@ EventAppPageForm {
       var countItemLists = eaContainer.eaItemLists.length;
       for (var i = 0; i < countItemLists; i++) {
           var component;
-          if (eaContainer.eaItemLists[i].formatedList)
+          //if (eaContainer.eaItemLists[i].formatedList)
+          if (0 === eaContainer.eaItemLists[i].listType)
               component = "qrc:///shared/DataList.qml";
           else
               component = "qrc:///shared/DataListImage.qml";

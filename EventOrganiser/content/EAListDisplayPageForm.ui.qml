@@ -8,10 +8,12 @@ Item {
     id: formatedListPanel
     //width: 1100; height: 800;
     width: 600; height: 800;
+    property alias thisItemListData: thisItemListData
+    //property alias thisFormatedListPanel: thisFormatedListPanel
+    //property alias thisItemList: thisItemList
+
     //property alias listTypeCombo: listTypeCombo
-    property alias thisItemList: thisItemList
     property alias listItemEntryStack: listItemEntryStack
-    property alias thisFormatedListPanel: thisFormatedListPanel
     property alias dataDisplayTab: dataDisplayTab
     //property alias formatedListPanel: formatedListPanel
     //property alias ldpEventAppPage: ldpEventAppPage
@@ -38,16 +40,20 @@ Item {
                     text: qsTr("Drawer")
                 }
                 TabButton {
+                    text: qsTr("ItemList")
+                }
+ /*
+                TabButton {
                     text: qsTr("Csv file")
                 }
                 TabButton {
                     text: qsTr("Manual")
                 }
+                */
                 TabButton {
                     text: qsTr("Item")
                 }
             }
-           // DataListImage {}
 
             clip: true
             Rectangle {
@@ -72,12 +78,17 @@ Item {
 
                     }
 
+                    EaItemListData {
+                        id: thisItemListData
+                    }
+/*
                     EaldFormatedList {
                         id: thisFormatedListPanel
                     }
                     EaldList {
                         id: thisItemList
                     }
+ */
                     EaldItem {
                         id: thisItem
                     }

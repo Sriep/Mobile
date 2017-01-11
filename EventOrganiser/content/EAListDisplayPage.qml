@@ -27,15 +27,17 @@ EAListDisplayPageForm {
         if (index>=0)
         {
             console.log("new listName", eaContainer.eaItemLists[index].listName);
+            console.log("new listType", eaContainer.eaItemLists[index].listType);
             eaListDisplayPage.featuredList = eaContainer.eaItemLists[index];
             if (eaListDisplayPage.featuredList.formatedList) {
-                thisFormatedListPanel.popTitlesList(eaListDisplayPage.featuredList);
+                thisItemListData.thisFormatedListPanel.popTitlesList(eaListDisplayPage.featuredList);
                 //listItemEntryStack.currentIndex = 1;
                 dataDisplayTab.currentIndex = 2;
             } else {
-                thisItemList.popItemList(eaListDisplayPage.featuredList);
+                thisItemListData.thisItemList.popItemList(eaListDisplayPage.featuredList);
                 //listItemEntryStack.currentIndex = 2;
-                dataDisplayTab.currentIndex = 3;
+                //dataDisplayTab.currentIndex = 3;
+                dataDisplayTab.currentIndex = 2;
             }
             console.log("current listName"
                         , eaListDisplayPage.featuredList.listName);
@@ -69,7 +71,8 @@ EAListDisplayPageForm {
             var drawerIndex = ldpEventAppPage.stackCtl.currentIndex-offset;
             if (isExpanded && drawerIndex>=0) {
                 //listItemEntryStack.currentIndex = 3;
-                dataDisplayTab.currentIndex = 4;
+                //dataDisplayTab.currentIndex = 4;
+                dataDisplayTab.currentIndex = 3;
                 var itemIndex = listCtl.currentIndex;
                 var itemList = listCtl.eaLVItemList;
                 var fe = featuredList;
@@ -86,13 +89,16 @@ EAListDisplayPageForm {
         }
     }
 
+
+
     Connections {
         target: listItemEntryStack
         onCurrentIndexChanged: {
+            console.log("listItemEntryStack currentIndex", listItemEntryStack.currentIndex);
             if (listItemEntryStack.currentIndex === 1) {
-                thisFormatedListPanel.popTitlesList(eaListDisplayPage.featuredList);
+                thisItemListData.thisFormatedListPanel.popTitlesList(eaListDisplayPage.featuredList);
             } else  if (listItemEntryStack.currentIndex === 2) {
-                thisItemList.popItemList(eaListDisplayPage.featuredList);
+                thisItemListData.thisItemList.popItemList(eaListDisplayPage.featuredList);
             }
         }
     }

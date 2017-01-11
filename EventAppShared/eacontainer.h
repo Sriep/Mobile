@@ -20,11 +20,13 @@ class HttpDownload;
 //enum SaveFormat {Json, Binary }
 
 static const QString ENCODE_FIREBASE_URL = "AwLFcODje2DJs+8HlZsBC7zBxnG8+iQvzvWiS5CSDAa91cBitrJwfMqu5w==";
+static const QString ENCODE_MAPBOX_TOKEN = "";
 static const QString EVENT ="event";
 static const QString CONSTRUCTION ="construction";
 static const QString SPEAKERS ="speakers";
 //static const QString FIREBASE_URL = "https://eventapp-2d821.firebaseio.com/";
 static const quint64 SIMPLE_KEY = Q_UINT64_C(0x09d96fec6bbdc766);
+static const quint64 MAP_KEY =    Q_UINT64_C(0x37f072cd54fd0545);
 static const int NoIcon	= 0;	//the message box does not have any icon.
 static const int Question =	4;	//an icon indicating that the message is asking a question.
 static const int Information = 1;	//an icon indicating that the message is nothing out of the ordinary.
@@ -66,7 +68,8 @@ public:
 
     virtual void classBegin();
     virtual void componentComplete();
-    Q_INVOKABLE void insertEmptyItemList(int index, QString name, bool formated = true);
+    //Q_INVOKABLE void insertEmptyItemList(int index, QString name, bool formated = true);
+    Q_INVOKABLE void insertEmptyItemList(int index, QString name, int listType);
     Q_INVOKABLE void deleteItemList(int index);
     Q_INVOKABLE void clearEvent();
 

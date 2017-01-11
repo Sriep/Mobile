@@ -75,10 +75,7 @@ void EAItemList::read(const QJsonObject &json
                       , QQmlEngine *engine
                       , EAContainer *eacontainer)
 {
-    //eaContainer =  eacontainer;
     setEaContainer(eacontainer);
-    //EAItemListBase::read(json, eacontainer);//engine);
-    //EAItemListBase::read(json, engine);
 
     jsonFields = json["headerFields"].toArray();
     setTitleFields(jsonFields);
@@ -91,11 +88,10 @@ void EAItemList::read(const QJsonObject &json
     setShortFormat(json["shortFormat"].toString());
     setLongFormat(json["longFormat"].toString());
     setFormatedList(json["formatedList"].toBool());
-
+    setListType(json["listType"].toInt());
     nextItemId = json["nextItemId"].toInt();
     id = json["id"].toInt();
     version = json["version"].toInt();
-
     setListName(json["listName"].toString());
     setShowPhotos(json["showPhotos"].toBool());
     jsonPictures = json["pictures"].toArray();
@@ -127,6 +123,7 @@ void EAItemList::write(QJsonObject &json)
     json["headerFields"] = jsonFields;
     json["dataList"] = jsonData;
     json["listName"] = listName();
+    json["listType"] = listType();
     json["nextItemId"] = nextItemId;
     json["showPhotos"] = m_showPhotos;
     json["pictures"] = jsonPictures;
@@ -147,8 +144,6 @@ void EAItemList::write(QJsonObject &json)
 
     }
     json["itemsList"] = itemsArray;
-
-    //EAItemListBase::write(json);
 }
 
 QString EAItemList::titleFields() const
@@ -359,7 +354,7 @@ void EAItemList::loadPhotos(const QString &format)
     qDebug() << "photos read " << jsonPictures.count();
 }
 
-bool EAItemList::insertListItem(int index
+int EAItemList::insertListItem(int index
                                 , int itemType
                                 , const QString &title
                                 , const QString &imageFileUrl
@@ -395,23 +390,62 @@ bool EAItemList::insertListItem(int index
     case EAItem::ItemType::Questions:
         newItem = new EAItem(itemType, title);
         break;
+    case EAItem::ItemType::Map:
+        newItem = new EAItem(itemType, title);
     default:
-        return false;
+        return -1;
     }
-    newItem->setEaItemList(this);
+    newItem->setEaItemList(this);   
     m_eaItems.insert(index, newItem);
     emit eaItemListChanged();
-    return true;
+    if ( index < 0 )
+        return 0;
+    else if ( index >= m_eaItems.size())
+        return m_eaItems.size();
+    else
+        return index;
 }
 
-bool EAItemList::updateListItem(int index
+int EAItemList::updateListItem(int index
                                 , int itemType
                                 , const QString &title
                                 , const QString &imageFileUrl
                                 , const QString &textFilenameUrl
                                 , const QString &url)
 {
-
+    EAItem* item = m_eaItems[index];
+    item->setItemType(itemType);
+    item->setTitle(title);
+    switch (itemType) {
+    case EAItem::ItemType::Image:
+    {
+        QString imageFile = QUrl(imageFileUrl).toLocalFile();
+        addPicture(index, imageFile);
+        break;
+    }
+    case EAItem::ItemType::Document:
+    {
+        QString textFilename = QUrl(textFilenameUrl).toLocalFile();
+        QFile loadFile(textFilename);
+        if (!loadFile.open(QIODevice::ReadOnly)) {
+            qWarning("Couldn't open save file.");
+            return false;
+        }
+        QByteArray fileData = loadFile.readAll();
+        QString fileText(fileData);
+        item->setDisplayText(fileText);
+        break;
+    }
+    case EAItem::ItemType::Url:
+        item->setUrl(QUrl(url));
+        break;
+    case EAItem::ItemType::Questions:
+        break;
+    case EAItem::ItemType::Map:
+    default:
+        return index;
+    }
+    return index;
 }
 
 void EAItemList::removeItem(int index)

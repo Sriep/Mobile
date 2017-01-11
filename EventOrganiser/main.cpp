@@ -6,7 +6,8 @@
 #include <QtWebView>
 #include <QSettings>
 #include <QQuickStyle>
-
+#include "../QtAdMob/QtAdMobBanner.h"
+#include "../QtAdMob/QtAdMobInterstitial.h"
 #include "eainfo.h"
 #include "eacontainer.h"
 #include "eaconstruction.h"
@@ -31,6 +32,9 @@ int main(int argc, char *argv[])
         settings.setValue("style", style);
     else
         QQuickStyle::setStyle(settings.value("style").toString());
+
+    QmlAdMobBanner::DeclareQML();           // <== Call it before loading qml
+    QmlAdMobInterstitial::DeclareQML();     // <== Call it before loading qml
 
     app.setOrganizationName("Pierses");
     app.setOrganizationDomain("eventapps.com");

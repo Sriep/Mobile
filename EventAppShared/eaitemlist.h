@@ -60,13 +60,13 @@ public:
                                 , bool inListView);
     Q_INVOKABLE void saveTitleChanges();
     Q_INVOKABLE void loadPhotos(const QString& format);
-    Q_INVOKABLE bool insertListItem(int index
+    Q_INVOKABLE int insertListItem(int index
                                     , int itemType
                                     , const QString& title
                                     , const QString& imageFileUrl =""
                                     , const QString& textFilenameUrl = ""
                                     , const QString &url = "");
-    Q_INVOKABLE bool updateListItem(int index
+    Q_INVOKABLE int updateListItem(int index
                                     , int itemType
                                     , const QString& title
                                     , const QString& imageFileUrl =""

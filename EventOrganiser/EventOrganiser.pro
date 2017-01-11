@@ -3,6 +3,10 @@ QT += quick quickcontrols2
 QT += qml quick webview
 QT += location
 QT += widgets
+
+DEFINES += QTADMOB_QML
+include(../QtAdMob/QtAdMob.pri)
+
 CONFIG += c++11
 
 SOURCES += main.cpp \
@@ -18,7 +22,8 @@ SOURCES += main.cpp \
     ../EventAppShared/eauser.cpp \
     ../EventAppShared/eaquestion.cpp \
     ../EventAppShared/eaobjdisplay.cpp \
-    ../EventAppShared/simplecrypt.cpp
+    ../EventAppShared/simplecrypt.cpp \
+    ../EventAppShared/eamap.cpp
 
 HEADERS += \
     ../EventAppShared/eainfo.h \
@@ -34,7 +39,8 @@ HEADERS += \
     ../EventAppShared/eauser.h \
     ../EventAppShared/eaquestion.h \
     ../EventAppShared/eaobjdisplay.h \
-    ../EventAppShared/simplecrypt.h
+    ../EventAppShared/simplecrypt.h \
+    ../EventAppShared/eamap.h
 
 RESOURCES += qml.qrc \
     ../EventApp/qmlShared.qrc
@@ -51,6 +57,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 INCLUDEPATH += $$PWD/../EventAppShared
 DEPENDPATH += $$PWD/../EventAppShared
+INCLUDEPATH += $$PWD/../QtAddMob
+DEPENDPATH += $$PWD/../QtAddMob
 
 #LIBS += -L/usr/lib/crypto++ -lcrypto++
 #INCS += -I/usr/include/crypto++

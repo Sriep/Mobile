@@ -37,7 +37,7 @@ class EAObjDisplay : public QQuickItem
     int m_x = 2;
     int m_y = 2;
     int m_width = 4;
-    int m_height = 35;
+    int m_height = 40;
     QColor m_colour = "ivory";
     QColor m_borderColour = "orange";
     int m_radius = 5;

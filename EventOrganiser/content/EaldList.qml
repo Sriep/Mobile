@@ -41,7 +41,7 @@ EaldListForm {
         var tp = listView.temp;
         listView.resetDataImageLM();
         //listView.resetDataListModel();
-
+        //ldpEventAppPage.needToRefershLists("qrc:///shared/DataList.qml");
         popItemList(eaListDisplayPage.featuredList);
     }
 
@@ -59,6 +59,7 @@ EaldListForm {
 
     deleteBut.onPressed: {
         eaListDisplayPage.featuredList.removeItem(itmesEntered.currentIndex);
+        ldpEventAppPage.sstackCtl.currentIndex = stackCtl.topDrawerId;
         popItemList(eaListDisplayPage.featuredList);
     }
 
@@ -71,13 +72,13 @@ EaldListForm {
         textFilename.text = "";
         urlItem.text = "";
     }
-
+/*
     switchFormat.onPressed: {
         eaListDisplayPage.featuredList.formatedList = true;
         //listItemEntryStack.currentIndex = 1;
         dataDisplayTab.currentIndex = 1;
     }
-
+*/
     mouseAreaLV.onClicked: {
         var index = itmesEntered.indexAt(mouse.x, mouse.y);
         if (index >= 0)

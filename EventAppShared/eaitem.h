@@ -8,6 +8,7 @@
 
 class EAItemList;
 class EAUser;
+class EAMap;
 class EAItem : public QQuickItem
 {
     Q_OBJECT
@@ -20,9 +21,10 @@ class EAItem : public QQuickItem
     Q_PROPERTY(QUrl url READ url WRITE setUrl NOTIFY urlChanged)
     Q_PROPERTY(QString urlString READ urlString WRITE setUrlString NOTIFY urlStringChanged)
     Q_PROPERTY(QQmlListProperty<EaQuestion> questions READ questions)
+    Q_PROPERTY(EAMap* mapInfo READ mapInfo WRITE setMapInfo NOTIFY mapInfoChanged)
 
 public:
-    enum ItemType { Image=0, Document, Url, Questions };
+    enum ItemType { Image=0, Document, Url, Questions, Map };
     Q_ENUM(ItemType)
    // enum ListType { FromCsv=0, Manual, Questions, Users };
     //Q_ENUM(ListType)
@@ -53,17 +55,18 @@ public:
     int getIndex();
 
     QList<EaQuestion *> getEaQuestions() const;
-    void setEaQuestions(const QList<EaQuestion *> &eaQuestions);
+    void setEaQuestions(const QList<EaQuestion *> &eaQuestions);    
+    EAMap* mapInfo() const;
 
 signals:
     void itemTypeChanged(int itemType);
     void titleChanged(QString title);
     void DataChanged(QString data);
     void displayTextChanged(QString displayText);
-
     void urlChanged(QUrl url);
     void eaQuestionsChanged();
-    void urlStringChanged(QString urlString);
+    void urlStringChanged(QString urlString);    
+    void mapInfoChanged(EAMap* mapInfo);
 
 public slots:
     void setItemType(int itemType);
@@ -71,7 +74,8 @@ public slots:
     void setData(QString data);    
     void setDisplayText(QString displayText);
     void setUrl(QUrl url);
-    void setUrlString(QString urlString);
+    void setUrlString(QString urlString);    
+    void setMapInfo(EAMap* mapInfo);
 
 private:
     void loadTextFile();
@@ -94,6 +98,7 @@ private:
     QString m_urlString;
     QQmlListProperty<EaQuestion> m_questions;
     QList<EaQuestion*> m_eaQuestions;
+    EAMap* m_mapInfo = NULL;
 };
 
 #endif // EAITEM_H

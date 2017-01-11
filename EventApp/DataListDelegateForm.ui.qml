@@ -54,7 +54,8 @@ Item {
        Image {
             id: photoImage
             width: eaLVItemList.showPhotos ? 50 : 0//50
-            height: 50
+            //height: 50
+            height: eaContainer.eaConstruction.display.height
             source: picture
         }
 

@@ -2,6 +2,8 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QtQuick.Extras 1.4
+import QtLocation 5.6
+import QtPositioning 5.6
 import "dataList.js" as DataListJS
 
 DLImageDelegateForm {
@@ -46,9 +48,8 @@ DLImageDelegateForm {
 
   photoImage.width: eaLVItemList.showPhotos ? 50 : 0
 
-  function popQuestionList (item) { // model=questionsModel
+  function popQuestionList (item) {
       console.log("Start popItemList");
-
       questionsModel.clear();
       var questionCount = item.questions.length;
       for ( var i=0 ; i<questionCount ; i++ )
@@ -68,6 +69,72 @@ DLImageDelegateForm {
       imageDelegate.state = imageDelegate.state == 'Details' ? "" : "Details";
       console.log("maDataDelegate index",index);
       //console.log("maDataDelegate listView.currentIndex",dataList.currentIndex);
+  }
+  /*mapData.maptype = "mapbox";
+  mapData.accessToken = userMap.checked ? accessTokenTF.text : "";
+  mapData.mapId = mapIDTF.text;
+  mapData.latitude = latitudeTF.text;
+  mapData.lonitude = longitudeTF.text;
+  mapData.zoomLevel = zoomLevelSB.value;
+  mapData.useCurrent = useDevicePosition.checked;*/
+    function popMapInfo(mapInfo) {
+        if (undefined !== mapInfo) {
+
+            var qmlString = "import QtQuick 2.7
+import QtLocation 5.6
+import QtPositioning 5.6
+Plugin {
+      name: \"mapbox\"
+      PluginParameter {
+         name: \"mapbox.access_token\"\n";
+            qmlString += "\tvalue: \"" + mapInfo.accessToken + "\"\n";
+            qmlString += " }
+  PluginParameter {
+      name: \"mapbox.map_id\"\n";
+            qmlString += "\tvalue: \"" + mapInfo.mapId + "\"\n}\n}";
+/*
+            var qmlString = "import QtQuick 2.7
+            import QtLocation 5.6
+            import QtPositioning 5.6
+            Plugin {
+                  name: \"mapbox\"
+                  PluginParameter {
+                     name: \"mapbox.access_token\"
+                     value: \"pk.eyJ1Ijoic3JpZXAiLCJhIjoiY2l2aWgxb21oMDA2eDJ6cGZzMHBrYmozdCJ9.qiqUQDSmGbN9Yy0856efSQ\"
+                  }
+                  PluginParameter {
+                      name: \"mapbox.map_id\"
+                      value: \"examples.map-zr0njcqy\"
+                  }
+            }"
+*/
+            console.log("Plugin qml", qmlString);
+            var newObject = Qt.createQmlObject(
+                        qmlString
+                       ,imageDelegate
+                       ,"dynamicSnippet1");
+            map.plugin = newObject;
+        }
+    }
+
+  Plugin {
+        name: "mapbox"
+        PluginParameter {
+           name: "mapbox.access_token"
+           value: "pk.eyJ1Ijoic3JpZXAiLCJhIjoiY2l2aWgxb21oMDA2eDJ6cGZzMHBrYmozdCJ9.qiqUQDSmGbN9Yy0856efSQ"
+        }
+        PluginParameter {
+            name: "mapbox.map_id"
+            value: "examples.map-zr0njcqy"
+            //value: "mapbox.mapbox-streets"
+        }
+  }
+
+
+  PositionSource {
+      id: positionSource
+      onPositionChanged: {
+      }
   }
 
 }

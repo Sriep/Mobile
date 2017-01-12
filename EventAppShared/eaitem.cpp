@@ -168,6 +168,8 @@ void EAItem::setItemType(int itemType)
         return;
 
     m_itemType = itemType;
+    if (ItemType::Map == itemType)
+        setMapInfo(new EAMap());
     emit itemTypeChanged(itemType);
 }
 

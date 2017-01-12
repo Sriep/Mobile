@@ -17,6 +17,7 @@
 #include "eaitem.h"
 #include "httpdownload.h"
 #include "eaobjdisplay.h"
+#include "eamap.h"
 
 int main(int argc, char *argv[])
 {
@@ -49,6 +50,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<EAItem>("EventAppData", 1,0, "EAItem");
     qmlRegisterType<EaQuestion>("EventAppData", 1,0, "EaQuestion");
     qmlRegisterType<EAObjDisplay>("EventAppData", 1,0, "EAObjDisplay");
+    qmlRegisterType<EAMap>("EventAppData", 1,0, "EAMap");
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("applicationPath", "file://"+qApp->applicationDirPath()+ "/");

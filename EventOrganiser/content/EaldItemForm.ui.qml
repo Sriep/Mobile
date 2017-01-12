@@ -6,7 +6,7 @@ import "qrc:///shared"
 Item {
     property alias itemDataType: itemDataType
     property alias itemTitle: itemTitle
-    property alias itemData: itemData
+    property alias imageItemEditGroup: imageIEditGroup
     property alias addItem: addItem
     property alias textFilename: textFilename
     property alias urlItem: urlItem
@@ -26,7 +26,8 @@ Item {
                 qsTr("Image"),
                 qsTr("Document"),
                 qsTr("External url"),
-                qsTr("Questions")
+                qsTr("Questions"),
+                qsTr("Map")
             ]
         }/*
         ListView {
@@ -69,7 +70,7 @@ Item {
                 font.pixelSize: 12
             }
         }
-        RowLayout {
+  /*      RowLayout {
             id: rowLayout2
             width: 100
             height: 100
@@ -85,7 +86,13 @@ Item {
                 text: qsTr("Image filename")
                 font.pixelSize: 12
             }
+        }*/
+        EditImageGroup {
+            id: imageIEditGroup
+            //visible: itemDataType.currentIndex === EAItem.Image
+            visible: itemDataType.currentIndex === 0
         }
+
         RowLayout {
             id: rowLayout3
             width: 100
@@ -119,6 +126,11 @@ Item {
                 text: qsTr("Url")
                 font.pixelSize: 12
             }
+        }
+        EditMapGroup {
+            id: mapEditGroup
+            //visible: itemDataType.currentIndex === EAItem.Map
+            visible: itemDataType.currentIndex === 4
         }
         RowLayout {
             id: rowLayout5

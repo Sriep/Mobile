@@ -23,13 +23,13 @@ ListView {
     }
 
     model: ListModel { id: dataModel }
-    //delegate: Text{ text: "Whats up folks!"}
 
     delegate:    DLImageDelegate { id: thisDataDelgate
         onStateChanged: {
             dataListImage.isExpanded = state === "Details";
             console.log("DLImageDelegate", index);
             popQuestionList(eaLVItemList.items[index]);
+            popMapInfo(eaLVItemList.items[index].mapInfo);
         }
 
         Connections {

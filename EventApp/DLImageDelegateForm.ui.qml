@@ -5,7 +5,8 @@ import QtQuick.Layouts 1.3
 import QtWebView 1.1
 //import QtWebEngine 1.0
 import QtQuick.Controls 2.0
-
+import QtLocation 5.6
+import QtPositioning 5.6
 import QtQuick.Extras 1.4
 
 
@@ -24,6 +25,7 @@ Item {
     width: dataListImage.width
     Layout.fillWidth: true
     height: eaContainer.eaConstruction.display.height
+    property alias map: map
     //property alias questionsList: questionsList
     property alias maDataDelegate: maDataDelegate
     property alias closeBut: closeBut
@@ -120,12 +122,13 @@ Item {
                     x:20; y:10
                 }
             }
-            Text {
-              id: bottomText;
-              wrapMode: Text.WordWrap;
-              width: details.width
+            Item {
+                Text {
+                  id: bottomText;
+                  wrapMode: Text.WordWrap;
+                  width: details.width
+                }
             }
-
 
             Item {
                 width: background.width-10; height: background.height-10
@@ -207,6 +210,20 @@ Item {
                     } //ColumnLayout
                 } //delegate: Item
             } //ListView
+
+            Item {
+                Map {
+                    id: map
+                    //width: 300; height: 499
+                    anchors.fill: parent
+                    //plugin: mapboxPlugin
+                    center {
+                        latitude: 52.665329
+                        longitude: 1.346240
+                    }
+                    zoomLevel: 6
+                }
+            }
 
         } //StackLayout
       }

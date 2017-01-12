@@ -41,12 +41,12 @@ QString EAMap::mapId() const
     return m_mapId;
 }
 
-int EAMap::latitude() const
+double EAMap::latitude() const
 {
     return m_latitude;
 }
 
-int EAMap::longitude() const
+double EAMap::longitude() const
 {
     return m_longitude;
 }
@@ -88,7 +88,7 @@ void EAMap::setMapId(QString mapId)
     emit mapIdChanged(mapId);
 }
 
-void EAMap::setLatitude(int latitude)
+void EAMap::setLatitude(double latitude)
 {
     if (m_latitude == latitude)
         return;
@@ -97,7 +97,7 @@ void EAMap::setLatitude(int latitude)
     emit latitudeChanged(latitude);
 }
 
-void EAMap::setLongitude(int longitude)
+void EAMap::setLongitude(double longitude)
 {
     if (m_longitude == longitude)
         return;

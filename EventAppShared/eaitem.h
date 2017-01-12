@@ -27,7 +27,7 @@ public:
     enum ItemType { Image=0, Document, Url, Questions, Map };
     Q_ENUM(ItemType)
    // enum ListType { FromCsv=0, Manual, Questions, Users };
-    //Q_ENUM(ListType)
+    //Q_ENUM(ListType),apInfo
 
     EAItem();
     explicit EAItem(int itemType, const QString& title, const QString& displayText = "");

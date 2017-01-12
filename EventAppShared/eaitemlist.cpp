@@ -15,6 +15,7 @@
 
 #include "eaitemlist.h"
 #include "picturelistimageprovider.h"
+#include "eamap.h"
 
 
 EAItemList::EAItemList()
@@ -398,6 +399,33 @@ int EAItemList::insertListItem(int index
     newItem->setEaItemList(this);   
     m_eaItems.insert(index, newItem);
     emit eaItemListChanged();
+
+    if ( index < 0 )
+        return 0;
+    else if ( index >= m_eaItems.size())
+        return m_eaItems.size();
+    else
+        return index;
+}
+
+int EAItemList::insertMapItem(int index, const QString &title
+                              , const QString &maptype, const QString &token
+                              , const QString &mapID, double latitude
+                              , double longitude, int zoomLevel, bool useCurrent)
+{
+    EAItem* newItem;
+    newItem = new EAItem(EAItem::ItemType::Map, title);
+    m_eaItems.insert(index, newItem);
+    EAMap* mapInfo = newItem->mapInfo();
+    mapInfo->setMaptype(maptype);
+    mapInfo->setAccessToken(token);
+    mapInfo->setMapId(mapID);
+    mapInfo->setLatitude(latitude);
+    mapInfo->setLongitude(longitude);
+    mapInfo->setZoomLevel(zoomLevel);
+    mapInfo->setUseCurrent(useCurrent);
+
+    emit eaItemListChanged();
     if ( index < 0 )
         return 0;
     else if ( index >= m_eaItems.size())
@@ -446,6 +474,11 @@ int EAItemList::updateListItem(int index
         return index;
     }
     return index;
+}
+
+int EAItemList::updateMapItem(int index, int itemType, const QString &title, const QString &maptype, const QString &token, const QString &mapID, double latitude, double longitude, int zoomLevel, bool useCurrent)
+{
+
 }
 
 void EAItemList::removeItem(int index)

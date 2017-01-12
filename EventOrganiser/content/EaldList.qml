@@ -1,4 +1,5 @@
-import QtQuick 2.0
+import QtQuick 2.6
+import EventAppData 1.0
 
 EaldListForm {
     function popItemList (eventList) {
@@ -25,17 +26,35 @@ EaldListForm {
     addItem.onPressed: {
         eaListDisplayPage.featuredList.formatedList = false;
         //eaContainer.insertEmptyItemList(0, newListName.text);
+        var itMap = EAItem.Map
+        console.log("ItemType.map", itMap);
+        console.log("ListType.MAnual", EAItemList.Manual);
         var c= itemTitle.text;
-        var a = itemData.text;
+        var a = imageEditGroup.imageFileTF.text;
         var b = textFilename.text;
         var ii = itemDataType.currentIndex;
         var itemType = itemDataType.currentIndex;
-        eaListDisplayPage.featuredList.insertListItem(itemsModel.count
-                                    , itemDataType.currentIndex
-                                    , itemTitle.text
-                                    , itemData.text
-                                    , textFilename.text
-                                    , urlItem.text);
+        if (itemDataType.currentIndex == EAItem.Map) {
+            var token = "";
+            if (mapEditGroup.userMap.checked)
+                token = mapEditGroup.accessTokenTF.text;
+            eaListDisplayPage.featuredList.insertMapItem(itemsModel.count
+                                            , itemTitle.text
+                                            , "mapbox"
+                                            , token
+                                            , mapEditGroup.mapIDTF.text
+                                            , mapEditGroup.latitudeTF.text
+                                            , mapEditGroup.longitudeTF.text
+                                            , mapEditGroup.zoomLevelSB.value
+                                            , mapEditGroup.useDevicePosition.checked);
+        } else {
+            eaListDisplayPage.featuredList.insertListItem(itemsModel.count
+                                        , itemDataType.currentIndex
+                                        , itemTitle.text
+                                        , imageEditGroup.imageFileTF.text
+                                        , textFilename.text
+                                        , urlItem.text);
+        }
         var index = ldpEventAppPage.stackCtl.currentIndex;
         var listView = ldpEventAppPage.stackCtl.children[index];
         var tp = listView.temp;
@@ -44,16 +63,33 @@ EaldListForm {
         //ldpEventAppPage.needToRefershLists("qrc:///shared/DataList.qml");
         popItemList(eaListDisplayPage.featuredList);
     }
-
+/*
+    function populateMapData (mapData) {
+        //var a0 = eaListDisplayPage.featuredList;
+        // var a2 = eaListDisplayPage.featuredList.items[newIndex];
+        // var a1 = eaListDisplayPage.featuredList.items;
+        //if (itemDataType.currentIndex == EAItem.Map)
+        //    populateMapData(eaListDisplayPage.featuredList.items);
+        mapData.maptype = "mapbox";
+        mapData.accessToken = userMap.checked ? accessTokenTF.text : "";
+        mapData.mapId = mapIDTF.text;
+        mapData.latitude = latitudeTF.text;
+        mapData.lonitude = longitudeTF.text;
+        mapData.zoomLevel = zoomLevelSB.value;
+        mapData.useCurrent = useDevicePosition.checked;
+    }
+*/
     updateItem.onPressed: {
         //var index = itmesEntered.currentIndex;
         //eaItem = eventList.items[index];
         eaListDisplayPage.featuredList.updateListItem(itmesEntered.currentIndex
                                                       , itemDataType.currentIndex
                                                       , itemTitle.text
-                                                      , itemData.text
+                                                      , imageEditGroup.imageFileTF.text
                                                       , textFilename.text
                                                       , urlItem.text);
+        if (itemDataType.currentIndex == EAItem.Map)
+            populateMapData(eaListDisplayPage.featuredList.mapInfo);
         popItemList(eaListDisplayPage.featuredList);
     }
 
@@ -68,7 +104,7 @@ EaldListForm {
         itemDataType.currentIndex = -1;
         itemTitle.text = "";
        // loadImage.file = "";
-        itemData.text = "";
+        imageEditGroup.imageFileTF.text = "";
         textFilename.text = "";
         urlItem.text = "";
     }
@@ -87,8 +123,8 @@ EaldListForm {
             itemDataType.currentIndex = itemsModel.get(index).itemType;
             itemTitle.text = itemsModel.get(index).title;
 
-            itemData.text = itemsModel.get(index).picture;
-            //loadImage.file = itemsModel.get(index).picture;
+            //itemData.text = itemsModel.get(index).picture;
+            imageEditGroup.imageFileTF.text = itemsModel.get(index).picture;
 
             textFilename.text = itemsModel.get(index).displayText;
             urlItem.text = itemsModel.get(index).urlString;

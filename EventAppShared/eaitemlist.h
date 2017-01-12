@@ -66,12 +66,33 @@ public:
                                     , const QString& imageFileUrl =""
                                     , const QString& textFilenameUrl = ""
                                     , const QString &url = "");
+    Q_INVOKABLE int insertMapItem(int index
+                                    , const QString& title
+                                    , const QString& maptype
+                                    , const QString& token
+                                    , const QString& mapID
+                                    , double latitude
+                                    , double longitude
+                                    , int zoomLevel
+                                    , bool useCurrent);
+
     Q_INVOKABLE int updateListItem(int index
                                     , int itemType
                                     , const QString& title
                                     , const QString& imageFileUrl =""
                                     , const QString& textFilenameUrl = ""
                                     , const QString &url = "");
+    Q_INVOKABLE int updateMapItem(int index
+                                    , int itemType
+                                    , const QString& title
+                                    , const QString& maptype
+                                    , const QString& token
+                                    , const QString& mapID
+                                    , double latitude
+                                    , double longitude
+                                    , int zoomLevel
+                                    , bool useCurrent);
+
     Q_INVOKABLE void removeItem(int index);
     Q_INVOKABLE void saveAnswers(int itemIndex);
     //Q_INVOKABLE int itemListLength();

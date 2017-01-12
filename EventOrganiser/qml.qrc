@@ -32,5 +32,7 @@
         <file>content/EaCommonDisplayParaForm.ui.qml</file>
         <file>content/EaItemListData.qml</file>
         <file>content/EaItemListDataForm.ui.qml</file>
+        <file>content/EditMapGroup.qml</file>
+        <file>content/EditImageGroup.qml</file>
     </qresource>
 </RCC>

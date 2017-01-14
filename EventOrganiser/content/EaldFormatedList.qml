@@ -55,7 +55,7 @@ EaldFormatedListForm {
         var index = ldpEventAppPage.stackCtl.currentIndex-offset
         if (index >= 0) {
             eaContainer.deleteItemList(index);
-            ldpEventAppPage.sstackCtl.currentIndex = stackCtl.topDrawerId;
+            ldpEventAppPage.stackCtl.currentIndex = ldpEventAppPage.stackCtl.topDrawerId;
             dataDisplayTab.currentIndex = 1;
         }
     }

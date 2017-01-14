@@ -8,9 +8,6 @@ import QtQuick.Controls 2.0
 import QtLocation 5.6
 import QtPositioning 5.6
 import QtQuick.Extras 1.4
-
-
-//import Qt.labs.platform 1.0
 import "dataList.js" as DataListJS
 
 Item {
@@ -26,7 +23,7 @@ Item {
     Layout.fillWidth: true
     height: eaContainer.eaConstruction.display.height
     property alias map: map
-    //property alias questionsList: questionsList
+    property alias largePhotoImage: largePhotoImage
     property alias maDataDelegate: maDataDelegate
     property alias closeBut: closeBut
     property alias bottomText: bottomText
@@ -75,8 +72,6 @@ Item {
 
         Text {
             id: topText
-            //color: "blue"
-            //font.pixelSize: 32
             font: eaContainer.eaConstruction.display.font
             color: eaContainer.eaConstruction.display.fontColour
             style: eaContainer.eaConstruction.display.textStyle
@@ -86,10 +81,7 @@ Item {
             verticalAlignment: eaContainer.eaConstruction.display.vAlignment
             horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
 
-            text: modelData
-           // anchors.left: parent.left
-            //anchors.leftMargin: 10
-            //y:10; x:10
+            text:  eaLVItemList.items[itemIndex].title;
         }
     }
 
@@ -114,8 +106,12 @@ Item {
             currentIndex: itemType
             clip: true
             Item{
+                //Text {
+                //    text: picture
+                //}
+
                 Image {
-                    //id: largePhotoImage
+                    id: largePhotoImage
                     width: 400//eventAppMainPage.width
                     height: 600
                     source: picture
@@ -127,6 +123,7 @@ Item {
                   id: bottomText;
                   wrapMode: Text.WordWrap;
                   width: details.width
+                  text: eaLVItemList.items[itemIndex].displayText;
                 }
             }
 
@@ -135,27 +132,15 @@ Item {
                 opacity: imageDelegate.detailsOpacity
                 visible: imageDelegate.detailsOpacity === 1 && itemType === 2
                 WebView {
-                    //id: webView
                     width: background.width-10; height: background.height-10
-                    //height: imageDelegate.detailsOpacity ? background.height-10 : 0
-                    //width: 0; height: 0
-                    //opacity: imageDelegate.detailsOpacity
-                    //visible: false
                     y: 5; x:5
-                    url: showUrlUrl
+                    url: eaLVItemList.items[itemIndex].url;
                 }
             }
 
             ListView {
-                //id: questionsList
-                //width: background.width-10; height: background.height-10
-                //width: flick.width-10; height: flick.height-10
-                //width: 250;
                 width: eventAppMainPage.width
-                //width: parent.width
                 height: 600
-                //width: parent.width; height: parent.height
-                //x:10; y:10
                 model: ListModel {
                     id: questionsModel
                 }

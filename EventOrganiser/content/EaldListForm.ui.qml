@@ -64,23 +64,39 @@ Item {
             id: rowLayout3
             width: 100
             height: 100
-            visible: itemDataType.currentIndex === 1
+            visible: itemDataType.currentIndex === EAItem.Document
+            FileDialog {
+                id: loadDoc
+                fileMode: FileDialog.OpenFile
+                selectedNameFilter.index: 0
+                nameFilters: [ "Text files (*.txt *.html *.* .*)"]
+                folder: eaContainer.workingDirectory
+                Connections {
+                    onAccepted: textFilename.text = loadDoc.file;
+                }
+            }
+            Label {
+                text: qsTr("Text/Html filenmae")
+            }
             TextField {
                 id: textFilename
                 text: qsTr("")
                 selectByMouse: true
             }
-            Label {
-                id: text3
-                text: qsTr("Text/Html filenmae")
-                font.pixelSize: 12
+            Button  {
+                id: imageFile
+                text: qsTr("Load document")
+                Connections {
+                    onPressed: loadDoc.open()
+                }
             }
+
         }
         RowLayout {
             id: rowLayout4
             width: 100
             height: 100
-            visible: itemDataType.currentIndex === 2
+            visible: itemDataType.currentIndex === EAItem.Url
             TextField {
                 id: urlItem
                 text: qsTr("")
@@ -123,27 +139,30 @@ Item {
                 text: qsTr("Clear")
             }
         }
-        ListView {
-            id: itmesEntered
+        Rectangle {
+            border.color: "black"
+            border.width: 1
             width: 110; height: 160
-
-            highlightFollowsCurrentItem: true
-            highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
-            focus: true
-
-            model: ListModel {
-                id: itemsModel
-                // Same model as dataListImage.dataImageModel
+            ListView {
+                id: itmesEntered
+                //width: 110; height: 160
+                width: parent.width; height: parent.height
+                highlightFollowsCurrentItem: true
+                highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+                focus: true
+                model: ListModel {
+                    id: itemsModel
+                    // Same model as dataListImage.dataImageModel
+                }
+                delegate: Text {
+                    height: 30
+                    text: title
+                }
+                MouseArea {
+                    id: mouseAreaLV
+                    anchors.fill: parent
+                }
             }
-            delegate: Text {
-                height: 30
-                text: title
-            }
-            MouseArea {
-                id: mouseAreaLV
-                anchors.fill: parent
-            }
-        }
-        // }
+         }
     }
 }

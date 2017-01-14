@@ -11,15 +11,22 @@ DLImageDelegateForm {
   id: imageDelegate
   property int test: 76
 
-  topText.text: {
-      topText.text = title;
-  }
+  //topText.text: {
+      //topText.text = title;
+     // topText.text = eaLVItemList.items[itemIndex].title;
+ // }
 
-  bottomText.text: {
-      bottomText.text = displayText;
-  }
+ // bottomText.text: {
+      //bottomText.text = displayText;
+     // bottomText.text = eaLVItemList.items[itemIndex].displayText
+ // }
 
-  property url showUrlUrl: "http://lllconf.co.uk/"
+  //largePhotoImage.source: {
+  //    console.log("largePhoto", "image://" + name + "/" + itemIndex.toString());
+  //    largePhotoImage.source =  "image://" + name + "/" + itemIndex.toString();
+  //}
+
+  //property url showUrlUrl: "http://lllconf.co.uk/"
 
   transitions: Transition {
         // Make the state changes smooth
@@ -82,11 +89,11 @@ DLImageDelegateForm {
 */
 
   function popMapInfo(mapInfo) {
-      if (undefined !== mapInfo) {
-          //setMapPlugin(map, mapInfo.accessToken, mapInfo.mapId);
-          setMapPlugin(map
-                       , "pk.eyJ1Ijoic3JpZXAiLCJhIjoiY2l2aWgxb21oMDA2eDJ6cGZzMHBrYmozdCJ9.qiqUQDSmGbN9Yy0856efSQ"
-                       ,"examples.map-zr0njcqy");
+      if (undefined !== mapInfo && null !== mapInfo) {
+          setMapPlugin(map, mapInfo.accessToken, mapInfo.mapId);
+          //setMapPlugin(map
+          //             , "pk.eyJ1Ijoic3JpZXAiLCJhIjoiY2l2aWgxb21oMDA2eDJ6cGZzMHBrYmozdCJ9.qiqUQDSmGbN9Yy0856efSQ"
+          //             ,"examples.map-zr0njcqy");
       }
   }
 

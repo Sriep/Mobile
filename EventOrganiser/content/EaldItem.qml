@@ -38,4 +38,8 @@ EaldItemForm {
             model.append(dic);
         }
     }
+
+    deleteBut.onPressed: {
+
+    }
 }

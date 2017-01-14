@@ -486,10 +486,10 @@ void EAContainer::read(const QJsonObject &json)
     QJsonArray listsArray = json["itemLists"].toArray();
     for (int i = 0; i < listsArray.size(); ++i) {
         QJsonObject readJsonObject = listsArray[i].toObject();
-        EAItemList* newList = new EAItemList();
-        newList->read(readJsonObject, engine, this);
+        EAItemList* newList = new EAItemList();        
         //newList->read(readJsonObject, this);
         m_eaItemLists.append(newList);
+        newList->read(readJsonObject, engine, this);
     }
 
     nextItemListId = json["version"].toInt();

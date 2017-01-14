@@ -80,22 +80,22 @@ EaldListForm {
     }
 */
     updateItem.onPressed: {
-        //var index = itmesEntered.currentIndex;
-        //eaItem = eventList.items[index];
-        eaListDisplayPage.featuredList.updateListItem(itmesEntered.currentIndex
-                                                      , itemDataType.currentIndex
-                                                      , itemTitle.text
-                                                      , imageEditGroup.imageFileTF.text
-                                                      , textFilename.text
-                                                      , urlItem.text);
-        if (itemDataType.currentIndex == EAItem.Map)
-            populateMapData(eaListDisplayPage.featuredList.mapInfo);
-        popItemList(eaListDisplayPage.featuredList);
+        if (itmesEntered.currentIndex >= 0 && itemDataType.currentIndex >= 0) {
+            eaListDisplayPage.featuredList.updateListItem(itmesEntered.currentIndex
+                                              , itemDataType.currentIndex
+                                              , itemTitle.text
+                                              , imageEditGroup.imageFileTF.text
+                                              , textFilename.text
+                                              , urlItem.text);
+            if (itemDataType.currentIndex == EAItem.Map)
+                populateMapData(eaListDisplayPage.featuredList.mapInfo);
+            popItemList(eaListDisplayPage.featuredList);
+        }
     }
 
     deleteBut.onPressed: {
         eaListDisplayPage.featuredList.removeItem(itmesEntered.currentIndex);
-        ldpEventAppPage.sstackCtl.currentIndex = stackCtl.topDrawerId;
+        ldpEventAppPage.stackCtl.currentIndex = ldpEventAppPage.stackCtl.topDrawerId;
         popItemList(eaListDisplayPage.featuredList);
     }
 
@@ -108,13 +108,7 @@ EaldListForm {
         textFilename.text = "";
         urlItem.text = "";
     }
-/*
-    switchFormat.onPressed: {
-        eaListDisplayPage.featuredList.formatedList = true;
-        //listItemEntryStack.currentIndex = 1;
-        dataDisplayTab.currentIndex = 1;
-    }
-*/
+
     mouseAreaLV.onClicked: {
         var index = itmesEntered.indexAt(mouse.x, mouse.y);
         if (index >= 0)
@@ -130,7 +124,4 @@ EaldListForm {
             urlItem.text = itemsModel.get(index).urlString;
         }
     }
-
-
-
 }

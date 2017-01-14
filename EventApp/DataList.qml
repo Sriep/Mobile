@@ -35,7 +35,10 @@ ListView {
         for ( var j=0 ; j < dataList["dataItems"].length ; j++ ) {
             var whatis = dataList["dataItems"][j];
             dataModel.append(dataList["dataItems"][j]);
-            var picturePath =  "image://" + name + "/" +j.toString();
+            //var picturePath =  "image://" + name + "/" +j.toString();
+            var picturePath = "image://list_";
+           // var ii =  eaLVItemList.getIndex();
+            picturePath += eaLVItemList.getIndex().toString() + "/" +j.toString();
             dataModel.setProperty(j, "picture", picturePath);
             var newData = dataModel.get(j);
         }

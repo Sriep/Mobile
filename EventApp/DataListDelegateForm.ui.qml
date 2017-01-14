@@ -50,6 +50,9 @@ Item {
        id: topLayout
        x: 10; y: 10; height: photoImage.height; width: parent.width
        spacing: 10
+       //Text {
+       //    text: picture
+       //}
 
        Image {
             id: photoImage

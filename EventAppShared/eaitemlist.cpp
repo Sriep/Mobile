@@ -21,7 +21,6 @@
 EAItemList::EAItemList()
 {
 }
-
 EAItemList::EAItemList(const QString &name)
     : m_listName(name) //EAItemListBase(name)
 {
@@ -53,19 +52,22 @@ void EAItemList::clear(EAContainer* eacontainer)
 
 void EAItemList::resetImageProvider(EAContainer* eacontainer)
 {
-    QString df = eacontainer->dataFilename();
+    //QString df = eacontainer->dataFilename();
     //QQmlContext *  qqc = QQmlEngine::contextForObject(eacontainer);
     //QQmlEngine* en = qqc->engine();
 
     QQmlEngine* engine = qmlEngine(eacontainer);
     if (engine)
     {
-        QQmlImageProviderBase* provider = engine->imageProvider(listName());
+        QString picList = "list_" + QString::number(getIndex());
+        QQmlImageProviderBase* provider = engine->imageProvider(picList);
+        //QQmlImageProviderBase* provider = engine->imageProvider(listName());
         if (!provider)
         {
             PictureListImageProvider* provider
                     = new PictureListImageProvider(jsonPictures);
-            engine->addImageProvider(listName(), provider);
+            //engine->addImageProvider(listName(), provider);
+            engine->addImageProvider(picList, provider);
         }
     }
 }
@@ -107,16 +109,22 @@ void EAItemList::read(const QJsonObject &json
 
     resetImageProvider(getEaContainer());
     //QQmlEngine*  engine = qmlEngine(this);
+/*
     if (engine)
     {
+        QString namePicList = "list_" + QString::number(getIndex());
+        //QQmlImageProviderBase* provider = engine->imageProvider(namePicList);
         QQmlImageProviderBase* provider = engine->imageProvider(listName());
         if (!provider)
         {
+
             PictureListImageProvider* provider
                     = new PictureListImageProvider(jsonPictures);
             engine->addImageProvider(listName(), provider);
+            //engine->addImageProvider(namePicList, provider);
         }
     }
+    */
 }
 
 void EAItemList::write(QJsonObject &json)

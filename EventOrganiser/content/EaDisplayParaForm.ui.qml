@@ -8,19 +8,12 @@ import QtQuick.Controls.Styles 1.4
 
 Item {
     property alias groupDispalyPara: groupDispalyPara
-    //property alias colourBut: colourBut
-   // property alias colorDialog: colorDialog
     property alias yTF: yTF
     property alias xTF: xTF
-    //property alias widthTF: widthTF
     property alias radiusTF: radiusTF
     property alias applyBut: applyBut
-    //property alias button3: button3
-    //property alias button4: button4
     property alias heightTF: heightTF
-    //property alias styleBox: styleBox
     property alias fontDlg: fontDlg
-    //property alias styleColourBut: styleColourBut
     property alias styleColourDlg: styleColourDlg
     property alias button1: button1
     property alias borderWidthSB: borderWidthSB

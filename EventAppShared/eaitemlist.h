@@ -95,6 +95,7 @@ public:
 
     Q_INVOKABLE void removeItem(int index);
     Q_INVOKABLE void saveAnswers(int itemIndex);
+    Q_INVOKABLE int getIndex();
     //Q_INVOKABLE int itemListLength();
 
 
@@ -110,7 +111,6 @@ public:
 
     EAContainer *getEaContainer() const;
     void setEaContainer(EAContainer *value);
-    int getIndex();
 
     QList<EAItem *> getEaItems() const;
     void setEaItems(const QList<EAItem *> &eaItems);

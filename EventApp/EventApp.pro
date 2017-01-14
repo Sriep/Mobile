@@ -18,7 +18,8 @@ SOURCES += main.cpp \
     ../EventAppShared/eauser.cpp \
     ../EventAppShared/eaquestion.cpp \
     ../EventAppShared/eaobjdisplay.cpp \
-    ../EventAppShared/simplecrypt.cpp
+    ../EventAppShared/simplecrypt.cpp \
+    ../EventAppShared/eamap.cpp
 
 
 HEADERS += \
@@ -37,7 +38,8 @@ HEADERS += \
     ../EventAppShared/eauser.h \
     ../EventAppShared/eaquestion.h \
     ../EventAppShared/eaobjdisplay.h \
-    ../EventAppShared/simplecrypt.h
+    ../EventAppShared/simplecrypt.h \
+    ../EventAppShared/eamap.h
 
 
 RESOURCES += qml.qrc \

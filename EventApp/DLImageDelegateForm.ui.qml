@@ -216,7 +216,6 @@ Item {
                     id: map
                     //width: 300; height: 499
                     anchors.fill: parent
-                    //plugin: mapboxPlugin
                     center {
                         latitude: 52.665329
                         longitude: 1.346240

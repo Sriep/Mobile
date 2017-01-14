@@ -70,66 +70,46 @@ DLImageDelegateForm {
       console.log("maDataDelegate index",index);
       //console.log("maDataDelegate listView.currentIndex",dataList.currentIndex);
   }
-  /*mapData.maptype = "mapbox";
+
+  /*
+  mapData.maptype = "mapbox";
   mapData.accessToken = userMap.checked ? accessTokenTF.text : "";
   mapData.mapId = mapIDTF.text;
   mapData.latitude = latitudeTF.text;
   mapData.lonitude = longitudeTF.text;
   mapData.zoomLevel = zoomLevelSB.value;
-  mapData.useCurrent = useDevicePosition.checked;*/
-    function popMapInfo(mapInfo) {
-        if (undefined !== mapInfo) {
-
-            var qmlString = "import QtQuick 2.7
-import QtLocation 5.6
-import QtPositioning 5.6
-Plugin {
-      name: \"mapbox\"
-      PluginParameter {
-         name: \"mapbox.access_token\"\n";
-            qmlString += "\tvalue: \"" + mapInfo.accessToken + "\"\n";
-            qmlString += " }
-  PluginParameter {
-      name: \"mapbox.map_id\"\n";
-            qmlString += "\tvalue: \"" + mapInfo.mapId + "\"\n}\n}";
-/*
-            var qmlString = "import QtQuick 2.7
-            import QtLocation 5.6
-            import QtPositioning 5.6
-            Plugin {
-                  name: \"mapbox\"
-                  PluginParameter {
-                     name: \"mapbox.access_token\"
-                     value: \"pk.eyJ1Ijoic3JpZXAiLCJhIjoiY2l2aWgxb21oMDA2eDJ6cGZzMHBrYmozdCJ9.qiqUQDSmGbN9Yy0856efSQ\"
-                  }
-                  PluginParameter {
-                      name: \"mapbox.map_id\"
-                      value: \"examples.map-zr0njcqy\"
-                  }
-            }"
+  mapData.useCurrent = useDevicePosition.checked;
 */
-            console.log("Plugin qml", qmlString);
-            var newObject = Qt.createQmlObject(
-                        qmlString
-                       ,imageDelegate
-                       ,"dynamicSnippet1");
-            map.plugin = newObject;
-        }
-    }
 
-  Plugin {
-        name: "mapbox"
-        PluginParameter {
-           name: "mapbox.access_token"
-           value: "pk.eyJ1Ijoic3JpZXAiLCJhIjoiY2l2aWgxb21oMDA2eDJ6cGZzMHBrYmozdCJ9.qiqUQDSmGbN9Yy0856efSQ"
-        }
-        PluginParameter {
-            name: "mapbox.map_id"
-            value: "examples.map-zr0njcqy"
-            //value: "mapbox.mapbox-streets"
-        }
+  function popMapInfo(mapInfo) {
+      if (undefined !== mapInfo) {
+          //setMapPlugin(map, mapInfo.accessToken, mapInfo.mapId);
+          setMapPlugin(map
+                       , "pk.eyJ1Ijoic3JpZXAiLCJhIjoiY2l2aWgxb21oMDA2eDJ6cGZzMHBrYmozdCJ9.qiqUQDSmGbN9Yy0856efSQ"
+                       ,"examples.map-zr0njcqy");
+      }
   }
 
+  function setMapPlugin (map, token, mapId) {
+      var qmlString = "import QtQuick 2.7\n"
+              + "import QtLocation 5.6\n"
+              + "import QtPositioning 5.6\n"
+              +"Plugin {\n"
+              + "\tname: \"mapbox\"\n"
+              + "\tPluginParameter {\n"
+              + "\t\tname: \"mapbox.access_token\"\n";
+      qmlString += "\t\tvalue: \"" + token + "\"\n";
+      qmlString += "\t}\n"
+              + "\tPluginParameter {\n"
+              + "\t\tname: \"mapbox.map_id\"\n";
+      qmlString += "\t\tvalue: \"" + mapId + "\"\n\t}\n}";
+      console.log("Plugin qml", qmlString);
+      var newObject = Qt.createQmlObject(
+                  qmlString
+                 ,imageDelegate
+                 ,"dynamicSnippet1");
+      map.plugin = newObject;
+  }
 
   PositionSource {
       id: positionSource

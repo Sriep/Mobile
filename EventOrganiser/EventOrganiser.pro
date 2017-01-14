@@ -4,6 +4,7 @@ QT += qml quick webview
 QT += location
 QT += widgets
 
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/../build-EventOrganiser-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/android-build
 DEFINES += QTADMOB_QML
 include(../QtAdMob/QtAdMob.pri)
 
@@ -99,7 +100,7 @@ DISTFILES += \
 
 FORMS +=
 
-ANDROID_PACKAGE_SOURCE_DIR = $$PWD/../build-EventOrganiser-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/android-build
+
 
 #unix:!macx: LIBS += -L$$PWD/../cryptopp/ -lcryptopp
 #INCLUDEPATH += $$PWD/../cryptopp

@@ -16,7 +16,7 @@ Item {
     Layout.fillWidth: true
     height: eaContainer.eaConstruction.display.height
     property alias maDataDelegate: maDataDelegate
-    //property alias photoImage: photoImage
+    property alias itemBackground: itemBackground
     property alias bottomText: bottomText
     property alias topText: topText
     property alias closeBut: closeBut
@@ -70,8 +70,8 @@ Item {
             styleColor: eaContainer.eaConstruction.display.styleColour
             x: eaContainer.eaConstruction.display.xText
             y: eaContainer.eaConstruction.display.yText
-            //verticalAlignment: eaContainer.eaConstruction.display.vAlignment
-            //horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
+            verticalAlignment: eaContainer.eaConstruction.display.vAlignment
+            horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
             text: "hi"//modelData
             anchors.leftMargin: 10
             //opacity: 0.0

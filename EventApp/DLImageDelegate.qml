@@ -27,7 +27,7 @@ DLImageDelegateForm {
   //}
 
   //property url showUrlUrl: "http://lllconf.co.uk/"
-
+  
   transitions: Transition {
         // Make the state changes smooth
         ParallelAnimation {
@@ -122,6 +122,23 @@ DLImageDelegateForm {
       id: positionSource
       onPositionChanged: {
       }
+  }
+
+  function setDisplayParameters() {
+      var displayData = eaContainer.eaConstruction.display;
+      var rectangle = imageDelegate.itemBackground;
+      var itemTextv = imageDelegate.topText;
+      rectangle.x = displayData.x
+      rectangle.y = displayData.y
+      rectangle.color = displayData.colour
+      rectangle.border.color = displayData.borderColour
+      rectangle.border.width = displayData.borderWidth
+      rectangle.radius = displayData.radius
+
+      textBox.font = displayData.font
+      textBox.color = displayData.fontColour
+      textBox.style = displayData.textStyle
+      textBox.styleColor = displayData.styleColour
   }
 
 }

@@ -26,6 +26,12 @@ ListView {
         onStateChanged: {
             dataList.isExpanded = state === "Details";
         }
+        Connections {
+            target: eaContainer
+            onEaConstructionChanged: {
+                setDisplayParameters();
+            }
+        }
     }
 
     function resetDataListModel() {

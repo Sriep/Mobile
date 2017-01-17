@@ -134,20 +134,13 @@ signals:
     void eventKeyChanged(QString eventKey);    
     void answersChanged(QString answers);
     void eaAnswersDownloaded();
-
-    //detailedText : string
-    //icon : QQuickStandardIcon::Icon
-    //informativeText : string
-    //text : string
-    //title : string
-
     void error(const QString& message
             , const QString& information
             , const QString& details
             , int icon);
             //, int icon);
-
     void isEventStaticChanged(bool isEventStatic);
+    void displayParasChanged();
 
 public slots:
     void setEAInfo(EAInfo* eaInfo);

@@ -32,7 +32,8 @@ ListDelegateForm {
         //onEaConstructionChanged: {
         // onEaInfoChanged: {
             DataListJS.setDisplayParameters(eaContainer.eaConstruction.display
-                                            , itemBackground, itemText);
+                                            , itemBackground, i
+                                                temText);
         }
     }
 

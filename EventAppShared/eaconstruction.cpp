@@ -76,14 +76,14 @@ QColor EAConstruction::fontColour() const
     return m_fontColour;
 }
 
-EAObjDisplay* EAConstruction::display() const
-{
-    return m_display;
-}
-
 QString EAConstruction::style() const
 {
     return m_style;
+}
+
+EAObjDisplay* EAConstruction::display() const
+{
+    return m_display;
 }
 
 EAObjDisplay *EAConstruction::toolBarDisplay() const

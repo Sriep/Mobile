@@ -40,6 +40,7 @@ ListView {
                 popQuestionList(eaLVItemList.items[index]);
             }
         }
+
         Connections {
             target: dataListImage
             onIsExpandedChanged: {
@@ -49,9 +50,14 @@ ListView {
                 }
             }
         }
+
+        Connections {
+            target: eaContainer
+            onEaConstructionChanged: {
+                setDisplayParameters();
+            }
+        }
     }
-
-
 
     function resetDataImageLM() {
         resetDataImageListModel(dataModel

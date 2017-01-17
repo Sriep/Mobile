@@ -35,19 +35,7 @@ function fieldsObjToArr(titles, dataObj) {
     return formatArr;
 }
 
-function setDisplayParameters(displayData, rectangle, textBox) {
-    rectangle.x = displayData.x
-    rectangle.y = displayData.x
-    rectangle.color = displayData.colour
-    rectangle.border.color = displayData.borderColour
-    rectangle.border.width = displayData.borderWidth
-    rectangle.radius = displayData.radius
 
-    textBox.font = displayData.font
-    textBox.color = displayData.fontColour
-    textBox.style = displayData.textStyle
-    textBox.styleColor = displayData.styleColour
-}
 
 
 

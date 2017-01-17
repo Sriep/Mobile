@@ -54,7 +54,37 @@ EaDisplayParaForm {
         }
     }
 
+    Connections {
+        target: eaContainer //(eaConstruction)
+        onEaConstructionChanged: {
+            console.log("eaContainer onDisplayChanged");
+            xTF.value = featuredDisplay.x;
+            yTF.value = featuredDisplay.y;
+            heightTF.value = featuredDisplay.height;
+            borderWidthSB.value = featuredDisplay.width;
+            radiusTF.value = featuredDisplay.radius;
+            styleCombo.currentIndex = featuredDisplay.textStyle;
+            styleColourDlg.currentColor = featuredDisplay.styleColour;
+            dxTextSB.value = featuredDisplay.xText;
+            dyTextSB.value = featuredDisplay.yText;
+            hAlignCombo.currentIndex = Math.round(Math.log(featuredDisplay.hAlignment)/Math.LN2);
+            vAlignCombo.currentIndex = Math.round(Math.log(featuredDisplay.vAlignment)/Math.LN2 - 5);
+            fontDlg.populateForm(featuredDisplay.font, featuredDisplay.fontColour);
+        }
+    }
+    /*
+        rectangle.x = featuredDisplay.x
+        rectangle.y = featuredDisplay.y
+        rectangle.color = featuredDisplay.colour
+        rectangle.border.color = featuredDisplay.borderColour
+        rectangle.border.width = featuredDisplay.borderWidth
+        rectangle.radius = featuredDisplay.radius
 
+        textBox.font = featuredDisplay.font
+        textBox.color = featuredDisplay.fontColour
+        textBox.style = featuredDisplay.textStyle
+        textBox.styleColor = featuredDisplay.styleColour
+        */
 }
 
 

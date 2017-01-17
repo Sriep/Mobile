@@ -8,7 +8,6 @@
 #include <QDebug>
 #include <QCryptographicHash>
 
-
 #include "firebase.h"
 #include "eacontainer.h"
 #include "eainfo.h"
@@ -109,13 +108,14 @@ bool EAContainer::loadNewEventApp(const QString &filenameUrl)
     eventAppToSettings(loadDoc);
 
     emit eaItemListsChanged();
+    //emit displayParasChanged();
     return true;
 }
 
 bool EAContainer::loadEventApp()
 {
     QSettings settings;
-    if (settings.contains("eventData"))
+    if (settings.contains("data/eventData"))
     {
         QJsonDocument eventDoc(eventAppFromSettings());
         read(eventDoc.object());
@@ -127,6 +127,7 @@ bool EAContainer::loadEventApp()
     }
     qDebug() << "EAContainer::loadEventApp finished";
     emit eaItemListsChanged();
+    //emit displayParasChanged();
     return true;
 }
 
@@ -350,6 +351,7 @@ void EAContainer::onResponseReady(QByteArray data)
         eventAppToSettings(loadDoc);
         qDebug() << "EAContainer::downloadEventApp finished";
         emit eaItemListsChanged();
+        //emit displayParasChanged();
     }
 }
 
@@ -725,6 +727,8 @@ bool EAContainer::loadDisplayFormat(const QString &filenameUrl)
     QByteArray saveData = loadFile.readAll();
     QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
     eaConstruction()->read(loadDoc.object());
+    emit eaConstructionChanged(eaConstruction());
+    //emit displayParasChanged();
     return true;
 }
 

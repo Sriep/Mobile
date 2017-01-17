@@ -18,7 +18,6 @@ Item {
     // rather than having a "PropertyChanges" line for each element we
     // want to fade.
     property real detailsOpacity : 0
-
     width: dataListImage.width
     Layout.fillWidth: true
     height: eaContainer.eaConstruction.display.height
@@ -29,9 +28,7 @@ Item {
     property alias bottomText: bottomText
     property alias photoImage: photoImage
     property alias questionsModel: questionsModel
-
-    //property alias bottomText: bottomText
-    property alias topText: topText
+    property alias topText: topText    
 
     // A simple rounded rectangle for the background
     Rectangle {
@@ -62,6 +59,7 @@ Item {
         x: 10; y: 10; height: photoImage.height; width: parent.width
         spacing: 10
         opacity: !imageDelegate.detailsOpacity
+        clip: true
         Image {
             id: photoImage
             width: 50;  height: 50
@@ -99,12 +97,12 @@ Item {
 
         contentHeight: bottomText.height
         clip: true
-        x:5
 
         StackLayout {
             id: itemStackCtl
             currentIndex: itemType
             clip: true
+            x: 20
             Item{
                 //Text {
                 //    text: picture
@@ -198,6 +196,7 @@ Item {
 
             Item {
                 Map {
+                    x: 20
                     id: map
                     //width: 300; height: 499
                     anchors.fill: parent

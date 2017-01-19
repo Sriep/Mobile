@@ -6,6 +6,7 @@ import QtQuick.Extras 1.4
 import "dataList.js" as DataListJS
 
 Item {
+   // color: eaContainer.eaConstruction.display.backColour
 
     // Create a property to contain the visibility of the details.
     // We can bind multiple element's opacity to this one property,
@@ -28,10 +29,19 @@ Item {
         y: eaContainer.eaConstruction.display.x
         width: parent.width - x*2;
         height: parent.height - y*2
-        color: eaContainer.eaConstruction.display.colour
+        //color: eaContainer.eaConstruction.display.colour
         border.color: eaContainer.eaConstruction.display.borderColour
         border.width: eaContainer.eaConstruction.display.borderWidth
         radius: eaContainer.eaConstruction.display.radius
+        color: backmouse.pressed ? eaContainer.eaConstruction.display.highlitedColour
+                 : eaContainer.eaConstruction.display.colour
+        MouseArea {
+            id: backmouse
+            anchors.fill: parent
+            //anchors.margins: -10
+            //onClicked: stackView.pop()
+            onPressed: topText.text = "!!!!!!!!!!!!!!!!!!!!11";
+        }
     }
 
     // This mouse region covers the entire delegate.

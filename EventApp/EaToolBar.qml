@@ -47,7 +47,14 @@ EaToolBarForm {
             onTriggered: Qt.quit()
         }
     }
-
+/*
+    Connections {
+        target: eaContainer
+        onEaConstructionChanged: {
+            setToolBarDisplayParameters();
+        }
+    }
+*/
     Drawer {
         id: drawer
         width: Math.min(eventAppMainPage.width, eventAppMainPage.height) / 3 * 2
@@ -63,6 +70,20 @@ EaToolBarForm {
 
             delegate: MenuItemDelegate {
                 id: menuItemDelegate
+
+                Connections {
+                    target: eaContainer
+                    onEaConstructionChanged: {
+                        setMenuListDisplayParameters();
+                    }
+                }                
+                Connections {
+                    target: drawer
+                    onOpen: {
+                        setMenuListDisplayParameters();
+                    }
+                }             
+                
             }
             model: stackCtl.drawerModel
 
@@ -70,7 +91,73 @@ EaToolBarForm {
         }
     }
 
+    function setToolBarDisplayParameters() {
+        console.log("setToolBarDisplayParameters");
+        var displayData = eaContainer.eaConstruction.display;
+        var rectangle = dataDelegate.itemBackground;
+        var itemTextv = dataDelegate.topText;
+
+        itemBackground.x = eaContainer.eaConstruction.toolBarDisplay.x
+        itemBackground.y = eaContainer.eaConstruction.toolBarDisplay.x
+        //itemBackground.width = parent.width - x*2;
+        //itemBackground.height = parent.height - y*2
+        itemBackground.color = eaContainer.eaConstruction.toolBarDisplay.colour
+        itemBackground.border.color = eaContainer.eaConstruction.toolBarDisplay.borderColour
+        itemBackground.border.width = eaContainer.eaConstruction.toolBarDisplay.borderWidth
+        itemBackground.radius = eaContainer.eaConstruction.toolBarDisplay.radius
+
+        titleLabel.font = eaContainer.eaConstruction.toolBarDisplay.font
+        titleLabel.color = eaContainer.eaConstruction.toolBarDisplay.fontColour
+        titleLabel.style = eaContainer.eaConstruction.toolBarDisplay.textStyle
+        titleLabel.styleColor = eaContainer.eaConstruction.toolBarDisplay.styleColour
+        titleLabel.x = eaContainer.eaConstruction.toolBarDisplay.xText
+        titleLabel.y = eaContainer.eaConstruction.toolBarDisplay.yText
+        titleLabel.verticalAlignment = eaContainer.eaConstruction.toolBarDisplay.vAlignment
+        titleLabel.horizontalAlignment = eaContainer.eaConstruction.toolBarDisplay.hAlignment
+
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

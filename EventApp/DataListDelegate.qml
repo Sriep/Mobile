@@ -112,17 +112,17 @@ DataListDelegateForm {
         var displayData = eaContainer.eaConstruction.display;
         var rectangle = dataDelegate.itemBackground;
         var itemTextv = dataDelegate.topText;
-        rectangle.x = displayData.x
-        rectangle.y = displayData.y
-        rectangle.color = displayData.colour
-        rectangle.border.color = displayData.borderColour
-        rectangle.border.width = displayData.borderWidth
-        rectangle.radius = displayData.radius
+        itemBackground.x = displayData.x
+        itemBackground.y = displayData.y
+        itemBackground.color = displayData.colour
+        itemBackground.border.color = displayData.borderColour
+        itemBackground.border.width = displayData.borderWidth
+        itemBackground.radius = displayData.radius
 
-        textBox.font = displayData.font
-        textBox.color = displayData.fontColour
-        textBox.style = displayData.textStyle
-        textBox.styleColor = displayData.styleColour
+        topText.font = displayData.font
+        topText.color = displayData.fontColour
+        topText.style = displayData.textStyle
+        topText.styleColor = displayData.styleColour
     }
 /*
     Component.onCompleted: {

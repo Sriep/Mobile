@@ -3,7 +3,7 @@ import QtQuick.Controls 2.0
 //import QtQuick.Controls.Material 2.0
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
-import EventAppData 1.0
+//import EventAppData 1.0
 import "qrc:///shared"
 
 ToolBar {
@@ -21,18 +21,6 @@ ToolBar {
                 verticalAlignment: Image.AlignVCenter
                 source:  "qrc:///shared/images/back.png"
             }
-/*
-            Connections {
-                target: backBut
-                onClicked: {
-                    toolBar.titleLabel.text = eaContainer.eaInfo.eventName
-                    stackCtl.currentIndex = stackCtl.topDrawerId;
-                }
-            }
-*/
         }
-
     }
-    
-
 }

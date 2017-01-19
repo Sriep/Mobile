@@ -32,6 +32,9 @@ EaDisplayParaForm {
             console.log("after vAlignment", featuredDisplay.vAlignment);
             console.log("after hAlignment", Math.log(featuredDisplay.hAlignment)/Math.LN2);
             console.log("after vAlignment", Math.log(featuredDisplay.vAlignment)/Math.LN2-4);
+            fontDlg.updateFont(featuredDisplay.font);
+            featuredDisplay.fontColour = fontDlg.getFontColour();
+            eaContainer.eaConstructionChanged(eaContainer.eaConstruction);            
         }
     }
 
@@ -41,8 +44,7 @@ EaDisplayParaForm {
     Connections {
         target: fontDlg
         onAccepted: {
-            var colour;
-            fontDlg.updateFont(featuredDisplay.font, colour);
+            fontDlg.updateFont(featuredDisplay.font);
             featuredDisplay.fontColour = fontDlg.getFontColour();
         }
     }

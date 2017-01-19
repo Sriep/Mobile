@@ -33,6 +33,7 @@ class EAObjDisplay : public QQuickItem
     Q_PROPERTY(int vAlignment READ vAlignment WRITE setVAlignment NOTIFY vAlignmentChanged)
     Q_PROPERTY(int hAlignment READ hAlignment WRITE setHAlignment NOTIFY hAlignmentChanged)
     Q_PROPERTY(QColor backColour READ backColour WRITE setBackColour NOTIFY backColourChanged)
+    Q_PROPERTY(QColor highlitedColour READ highlitedColour WRITE setHighlitedColour NOTIFY highlitedColourChanged)
 
     int m_x = 2;
     int m_y = 2;
@@ -50,7 +51,8 @@ class EAObjDisplay : public QQuickItem
     int m_yText = 5;
     int m_vAlignment = AlignRight;
     int m_hAlignment = AlignVCenter;    
-    QColor m_backColour;
+    QColor m_backColour;    
+    QColor m_highlitedColour;
 
 public:
     EAObjDisplay();    
@@ -76,7 +78,8 @@ public:
     int yText() const;
     int vAlignment() const;
     int hAlignment() const;    
-    QColor backColour() const;
+    QColor backColour() const;    
+    QColor highlitedColour() const;
 
 signals:
     void xChanged(int x);
@@ -96,7 +99,8 @@ signals:
     void vAlignmentChanged(int vAlignment);
     void hAlignmentChanged(int hAlignment);
     void displayParamtersChanged();    
-    void backColourChanged(QColor backColour);
+    void backColourChanged(QColor backColour);    
+    void highlitedColourChanged(QColor highlitedColour);
 
 public slots:
     void setX(int x);
@@ -116,6 +120,7 @@ public slots:
     void setVAlignment(int vAlignment);
     void setHAlignment(int hAlignment);
     void setBackColour(QColor backColour);
+    void setHighlitedColour(QColor highlitedColour);
 };
 
 #endif // EAOBJDISPLAY_H

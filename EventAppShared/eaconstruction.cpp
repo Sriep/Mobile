@@ -26,13 +26,13 @@ void EAConstruction::read(const QJsonObject &json)
     }
     if (json.contains("toolBarDisplay"))
     {
-        m_display = new EAObjDisplay;
-        m_display->read(json["toolBarDisplay"].toObject());
+        m_toolBarDisplay = new EAObjDisplay;
+        m_toolBarDisplay->read(json["toolBarDisplay"].toObject());
     }
     if (json.contains("menuDisplay"))
     {
-        m_display = new EAObjDisplay;
-        m_display->read(json["menuDisplay"].toObject());
+        m_menuDisplay = new EAObjDisplay;
+        m_menuDisplay->read(json["menuDisplay"].toObject());
     }
 }
 

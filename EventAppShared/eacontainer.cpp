@@ -351,6 +351,7 @@ void EAContainer::onResponseReady(QByteArray data)
         eventAppToSettings(loadDoc);
         qDebug() << "EAContainer::downloadEventApp finished";
         emit eaItemListsChanged();
+        emit eaConstructionChanged(eaConstruction());
         //emit displayParasChanged();
     }
 }

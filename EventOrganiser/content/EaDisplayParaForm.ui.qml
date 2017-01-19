@@ -221,7 +221,7 @@ Item {
                     RowLayout {
                         Label {
                             id: label7
-                            text: qsTr("Background colour")
+                            text: qsTr("Back colour")
                             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                         }
 
@@ -247,6 +247,35 @@ Item {
                             }
                             Connections {
                                 onPressed: bkColorDialog.open();
+                            }
+                        }
+
+                        Label {
+                            text: qsTr("Highlight back colour")
+                            Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
+                        }
+
+                        Button {
+                           // id: bkColourBut
+                            // text: qsTr(colorDialog.currentColor.name);
+                            text: bkHColorDialog.currentColor
+                            flat: true
+                            Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
+                            background: Rectangle {
+                                implicitWidth: 100
+                                implicitHeight: 40
+                                opacity: enabled ? 1 : 0.3
+                                color: featuredDisplay.highlitedColour
+                            }
+                            ColorDialog {
+                                id: bkHColorDialog
+                                currentColor: featuredDisplay.highlitedColour
+                                Connections {
+                                    onAccepted: featuredDisplay.highlitedColour = bkHColorDialog.currentColor;
+                                }
+                            }
+                            Connections {
+                                onPressed: bkHColorDialog.open();
                             }
                         }
                     }

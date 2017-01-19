@@ -36,7 +36,7 @@ Dialog {
         return fontForm.tempColour ;
     }
 
-    function updateFont(font, colour) {        
+    function updateFont(font) {
         font.family = fontForm.fontFamilyDlg.font.family
         font.bold = fontForm.boldBox.checked
         font.italic = fontForm.italicBox.checked

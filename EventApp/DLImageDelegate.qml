@@ -128,17 +128,17 @@ DLImageDelegateForm {
       var displayData = eaContainer.eaConstruction.display;
       var rectangle = imageDelegate.itemBackground;
       var itemTextv = imageDelegate.topText;
-      rectangle.x = displayData.x
-      rectangle.y = displayData.y
-      rectangle.color = displayData.colour
-      rectangle.border.color = displayData.borderColour
-      rectangle.border.width = displayData.borderWidth
-      rectangle.radius = displayData.radius
+      background.x = displayData.x
+      background.y = displayData.y
+      background.color = displayData.colour
+      background.border.color = displayData.borderColour
+      background.border.width = displayData.borderWidth
+      background.radius = displayData.radius
 
-      textBox.font = displayData.font
-      textBox.color = displayData.fontColour
-      textBox.style = displayData.textStyle
-      textBox.styleColor = displayData.styleColour
+      topText.font = displayData.font
+      topText.color = displayData.fontColour
+      topText.style = displayData.textStyle
+      topText.styleColor = displayData.styleColour
   }
 
 }

@@ -7,6 +7,7 @@ DownloadEventKeyForm {
         progressKeyDL.visible = true;
         //httpDownload.downloadFile(keyText.text);
         eaContainer.downloadAppEncoded(downloadFromKey.text);
+        eaContainer.eaConstructionChanged(eaContainer.eaConstruction);
     }
 
     quitButton.onClicked: {

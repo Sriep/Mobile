@@ -17,7 +17,11 @@ EAConstructionPageForm {
     newEventBut.onClicked: eaContainer.clearEvent();
 
     uploadBut.onClicked: eaContainer.uploadApp(downloadKey.text);
-    downloadBut.onClicked: eaContainer.downloadApp(downloadKey.text);
+    downloadBut.onClicked:{
+        eaContainer.downloadApp(downloadKey.text);
+        eaContainer.eaConstructionChanged(eaContainer.eaConstruction);
+        console.log("downloadBut.onClicked");
+    }
     firbaseUrlBut.onClicked: eaContainer.firbaseUrl = firebaseUrlTB.text;
 
 

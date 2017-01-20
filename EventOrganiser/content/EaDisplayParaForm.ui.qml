@@ -70,6 +70,8 @@ Item {
                                 onPressed: fontDlg.open();
                             }
                         }
+                    }
+                    RowLayout {
                         Label {
                             id: label6
                             text: qsTr("Text back colour")
@@ -99,6 +101,34 @@ Item {
                                 onPressed: colorDialog.open();
                             }
                         }
+
+                        Label {
+                            text: qsTr("Highlight back colour")
+                            Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
+                        }
+
+                        Button {
+                            text: bkHColorDialog.currentColor
+                            flat: true
+                            Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
+                            background: Rectangle {
+                                implicitWidth: 100
+                                implicitHeight: 40
+                                opacity: enabled ? 1 : 0.3
+                                color: featuredDisplay.highlitedColour
+                            }
+                            ColorDialog {
+                                id: bkHColorDialog
+                                currentColor: featuredDisplay.highlitedColour
+                                Connections {
+                                    onAccepted: featuredDisplay.highlitedColour = bkHColorDialog.currentColor;
+                                }
+                            }
+                            Connections {
+                                onPressed: bkHColorDialog.open();
+                            }
+                        }
+
                     }
 
                     RowLayout {
@@ -250,34 +280,6 @@ Item {
                             }
                         }
 
-                        Label {
-                            text: qsTr("Highlight back colour")
-                            Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
-                        }
-
-                        Button {
-                           // id: bkColourBut
-                            // text: qsTr(colorDialog.currentColor.name);
-                            text: bkHColorDialog.currentColor
-                            flat: true
-                            Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
-                            background: Rectangle {
-                                implicitWidth: 100
-                                implicitHeight: 40
-                                opacity: enabled ? 1 : 0.3
-                                color: featuredDisplay.highlitedColour
-                            }
-                            ColorDialog {
-                                id: bkHColorDialog
-                                currentColor: featuredDisplay.highlitedColour
-                                Connections {
-                                    onAccepted: featuredDisplay.highlitedColour = bkHColorDialog.currentColor;
-                                }
-                            }
-                            Connections {
-                                onPressed: bkHColorDialog.open();
-                            }
-                        }
                     }
 
                     GridLayout {

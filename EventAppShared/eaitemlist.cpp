@@ -351,7 +351,7 @@ void EAItemList::loadPhotos(const QString &format)
         QString filename = QString(format).arg(firstField);
 
         QImage  picImage(filename);
-        picImage.scaled(100,100);
+        picImage.scaled(100,100, Qt::AspectRatioMode::KeepAspectRatio);
         QPixmap pix = QPixmap::fromImage(picImage);
         QJsonValue jsonPic = jsonValFromPixmap(pix);
         if (jsonPictures.size() > i)

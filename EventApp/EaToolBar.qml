@@ -47,14 +47,7 @@ EaToolBarForm {
             onTriggered: Qt.quit()
         }
     }
-/*
-    Connections {
-        target: eaContainer
-        onEaConstructionChanged: {
-            setToolBarDisplayParameters();
-        }
-    }
-*/
+
     Drawer {
         id: drawer
         width: Math.min(eventAppMainPage.width, eventAppMainPage.height) / 3 * 2
@@ -63,10 +56,24 @@ EaToolBarForm {
             color: eaContainer.eaConstruction.menuDisplay.backColour
         }
 
+        Connections {
+            target: menuListView
+            onUpadeteDisplay: {
+                console.log("onUpadeteDisplay");
+            }
+        }
+        Connections {
+            target: eaContainer
+            onEaConstructionChanged: {
+                console.log("onEaConstructionChanged");
+            }
+        }
+
         ListView {
             id: menuListView
             currentIndex: -1
             anchors.fill: parent
+            signal upadeteDisplay()
 
             delegate: MenuItemDelegate {
                 id: menuItemDelegate
@@ -82,7 +89,13 @@ EaToolBarForm {
                     onOpen: {
                         setMenuListDisplayParameters();
                     }
-                }             
+                }
+                Connections {
+                    target: menuListView
+                    onUpadeteDisplay: {
+                        setMenuListDisplayParameters();
+                    }
+                }
                 
             }
             model: stackCtl.drawerModel

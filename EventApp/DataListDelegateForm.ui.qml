@@ -13,6 +13,7 @@ Item {
     // rather than having a "PropertyChanges" line for each element we
     // want to fade.
     property real detailsOpacity : 0
+    clip: true
     width: dataList.width
     Layout.fillWidth: true
     height: eaContainer.eaConstruction.display.height
@@ -33,15 +34,17 @@ Item {
         border.color: eaContainer.eaConstruction.display.borderColour
         border.width: eaContainer.eaConstruction.display.borderWidth
         radius: eaContainer.eaConstruction.display.radius
+        color: eaContainer.eaConstruction.display.colour
+        /*
         color: backmouse.pressed ? eaContainer.eaConstruction.display.highlitedColour
                  : eaContainer.eaConstruction.display.colour
-        MouseArea {
+       MouseArea {
             id: backmouse
             anchors.fill: parent
             //anchors.margins: -10
             //onClicked: stackView.pop()
             onPressed: topText.text = "!!!!!!!!!!!!!!!!!!!!11";
-        }
+        }*/
     }
 
     // This mouse region covers the entire delegate.
@@ -57,18 +60,24 @@ Item {
     // bottom.  Note that elements that should not be visible in the list
     // mode have their opacity set to recipe.detailsOpacity.
   Row {
-       id: topLayout
-       x: 10; y: 10; height: photoImage.height; width: parent.width
-       spacing: 10
-       //Text {
-       //    text: picture
-       //}
-
+        id: topLayout
+        x: 10; y: 10;
+       // x: eaContainer.eaConstruction.display.borderWidth
+       // y: -eaContainer.eaConstruction.display.borderWidth
+        height: photoImage.height; width: parent.width
+        spacing: 10
+        clip: true
        Image {
+            clip: true
             id: photoImage
-            width: eaLVItemList.showPhotos ? 50 : 0//50
+            y:-eaContainer.eaConstruction.display.borderWidth
+            x: eaContainer.eaConstruction.display.borderWidth
+            //width: eaLVItemList.showPhotos ? 50 : 0
             //height: 50
+            //width:
+            fillMode: Image.PreserveAspectFit
             height: eaContainer.eaConstruction.display.height
+                    - 2*eaContainer.eaConstruction.display.borderWidth-4
             source: picture
         }
 
@@ -78,7 +87,7 @@ Item {
             color: eaContainer.eaConstruction.display.fontColour
             style: eaContainer.eaConstruction.display.textStyle
             styleColor: eaContainer.eaConstruction.display.styleColour
-            x: eaContainer.eaConstruction.display.xText
+            x: eaContainer.eaConstruction.display.xText + photoImage.width
             y: eaContainer.eaConstruction.display.yText
             verticalAlignment: eaContainer.eaConstruction.display.vAlignment
             horizontalAlignment: eaContainer.eaConstruction.display.hAlignment

@@ -19,7 +19,8 @@ EAConstructionPageForm {
     uploadBut.onClicked: eaContainer.uploadApp(downloadKey.text);
     downloadBut.onClicked:{
         eaContainer.downloadApp(downloadKey.text);
-        eaContainer.eaConstructionChanged(eaContainer.eaConstruction);
+        //eaContainer.eaConstructionChanged(eaContainer.eaConstruction);
+        ldpEventAppPage.toolBar.drawer.menuListView.upadeteDisplay();
         console.log("downloadBut.onClicked");
     }
     firbaseUrlBut.onClicked: eaContainer.firbaseUrl = firebaseUrlTB.text;

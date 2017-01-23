@@ -14,8 +14,7 @@ Item {
 
     ColumnLayout {
         id: columnLayout3
-        width: 442
-        height: 100
+        //width: 442;  height: 100
         RowLayout {
             id: rowLayout1
             width: 100

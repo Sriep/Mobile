@@ -8,6 +8,7 @@ DownloadEventKeyForm {
         //httpDownload.downloadFile(keyText.text);
         eaContainer.downloadAppEncoded(downloadFromKey.text);
         eaContainer.eaConstructionChanged(eaContainer.eaConstruction);
+        console.log("banner heigth", banner.height);
     }
 
     quitButton.onClicked: {

@@ -1,7 +1,13 @@
 # += qml quick
 QT += quick quickcontrols2
 QT += qml quick webview
+QT += widgets
 CONFIG += c++11
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+DEFINES += QTADMOB_QML
+include(../QtAdMob/QtAdMob.pri)
+
 
 SOURCES += main.cpp \
     ../EventAppShared/eacontainer.cpp \
@@ -60,6 +66,13 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 #  unix:!macx: LIBS += -L$$PWD/../build-EventAppShared-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/ -lEventAppShared
 #}
 
+#/media/piers/h/Mobile/Mobile/build-EventApp-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/android-build/src/org/dreamdev/QtAdMob
+android:
+{
+    DISTFILES += \
+                $$ANDROID_PACKAGE_SOURCE_DIR/src/org/dreamdev/QtAdMob/QtAdMobActivity.java \
+}
+
 INCLUDEPATH += $$PWD/../EventAppShared
 DEPENDPATH += $$PWD/../EventAppShared
 
@@ -76,6 +89,8 @@ DISTFILES += \
 
 FORMS +=
 
-ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
+
+
 
 

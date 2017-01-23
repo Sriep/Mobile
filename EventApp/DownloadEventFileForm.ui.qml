@@ -12,8 +12,7 @@ Item {
 
     ColumnLayout {
         id: columnLayout2
-        width: 445
-        height: 100
+        //width: 445;  height: 100
         x:10
 
         ColumnLayout {

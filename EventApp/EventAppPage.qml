@@ -34,6 +34,7 @@ EventAppPageForm {
           messageDialog.informativeText = information
           messageDialog.icon = icon
           messageDialog.detailedText = details
+          messageDialog.detailedText = "height " + eaContainer.screenHeight
           messageDialog.visible = true
       }
   }

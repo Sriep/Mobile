@@ -4,6 +4,10 @@
 #include <QtWebView>
 #include <QSettings>
 #include <QQuickStyle>
+#include <QApplication>
+
+#include "../QtAdMob/QtAdMobBanner.h"
+#include "../QtAdMob/QtAdMobInterstitial.h"
 
 #include "eainfo.h"
 #include "eacontainer.h"
@@ -29,9 +33,12 @@ int main(int argc, char *argv[])
     else
         QQuickStyle::setStyle(settings.value("style").toString());
 
+    QmlAdMobBanner::DeclareQML();           // <== Call it before loading qml
+    QmlAdMobInterstitial::DeclareQML();     // <== Call it before loading qml
+
     app.setOrganizationName("Pierses");
     app.setOrganizationDomain("eventapps.com");
-    app.setApplicationName("PiersesEventApp");
+    app.setApplicationName("Event App");
 
     qmlRegisterType<EAContainer>("EventAppData", 1,0, "EAContainer");
     qmlRegisterType<EAConstruction>("EventAppData", 1,0, "EAConstruction");
@@ -46,6 +53,7 @@ int main(int argc, char *argv[])
     
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("applicationPath", "file://"+qApp->applicationDirPath()+ "/");
+
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
 
     return app.exec();

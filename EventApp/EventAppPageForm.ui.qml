@@ -7,7 +7,7 @@ import "qrc:///shared"
 
 Page{
     //id: eventAppMainPage
-    width: 500; height: 600
+    //width: 500; height: 600
     property alias stackCtl: stackCtl
     property alias drawerView: drawerView
     property alias drawerModel: drawerModel
@@ -50,11 +50,6 @@ Page{
             delegate: ListDelegate {
                 id: drawerDelegate
                 text: title
-                /*Connections {
-                    target: eventAppMainPage
-                    onDrawerDisplayChanged: drawerDelegate.setDispalyParameters;
-                }*/
-
             }
             model: ListModel {
                 id: drawerModel

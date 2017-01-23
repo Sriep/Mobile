@@ -16,4 +16,5 @@ EaFooterBarForm {
            stackCtl.currentIndex = stackCtl.topDrawerId;
        }
      }
+
 }

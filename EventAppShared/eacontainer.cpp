@@ -5,8 +5,11 @@
 #include <QJsonValue>
 #include <QFileInfo>
 #include <QDir>
-#include <QDebug>
 #include <QCryptographicHash>
+#include <QDebug>
+
+#include <QApplication>
+#include <QScreen>
 
 #include "firebase.h"
 #include "eacontainer.h"
@@ -27,6 +30,32 @@ QList<EAItemList *> EAContainer::getEaItemLists() const
 void EAContainer::setEaItemLists(const QList<EAItemList *> &eaItemLists)
 {
     m_eaItemLists = eaItemLists;
+}
+
+int EAContainer::screenWidth() const
+{
+    QScreen *screen = QApplication::screens().at(0);
+    int width =screen->availableGeometry().width();
+    //int height  =screen->availableGeometry().height();
+    return width;
+    //return m_screenWidth;
+}
+
+int EAContainer::screenHeight() const
+{
+    QScreen *screen = QApplication::screens().at(0);
+    //int width =screen->availableGeometry().width();
+    int height  =screen->availableGeometry().height();
+    return height;
+    //return m_screenHeight;
+}
+
+qreal EAContainer::point2PixelH() const
+{
+    QScreen *screen = QApplication::screens().at(0);
+    qreal dotsInch = screen->logicalDotsPerInchY();
+
+    return dotsInch/72;
 }
 
 EAContainer::EAContainer()
@@ -258,6 +287,11 @@ void EAContainer::downloadApp(const QString &eventKey, const QString& fbUrl)
     //QString key =  keyObj["private_key"].toString();
     //QString token = firebase->getToken(serviceEmail, key.toUtf8());
 
+    QScreen *screen = QApplication::screens().at(0);
+    int width =screen->availableGeometry().width();
+    int height  =screen->availableGeometry().height();
+    qDebug() << "screen width: " << width << " screen height: " << height;
+
     debugLog += "\nAbout to download event";
     debugLog += "\nEvent Key: " + eventKey;
     debugLog += "\nFirebase url: " + firbaseUrl();
@@ -293,6 +327,33 @@ void EAContainer::setIsEventStatic(bool isEventStatic)
 
     m_isEventStatic = isEventStatic;
     emit isEventStaticChanged(isEventStatic);
+}
+
+void EAContainer::setScreenWidth(int screenWidth)
+{
+    if (m_screenWidth == screenWidth)
+        return;
+
+    m_screenWidth = screenWidth;
+    emit screenWidthChanged(screenWidth);
+}
+
+void EAContainer::setScreenHeight(int screenHeight)
+{
+    if (m_screenHeight == screenHeight)
+        return;
+
+    m_screenHeight = screenHeight;
+    emit screenHeightChanged(screenHeight);
+}
+
+void EAContainer::setPoint2PixelH(qreal point2Pixel)
+{
+    if (m_point2PixelH == point2Pixel)
+        return;
+
+    m_point2PixelH = point2Pixel;
+    emit point2PixelHChanged(point2Pixel);
 }
 
 void EAContainer::onResponseReady(QByteArray data)

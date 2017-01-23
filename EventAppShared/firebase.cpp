@@ -1,62 +1,12 @@
 #include "firebase.h"
 #include <string.h>
 #include <QIODevice>
-#include <QBuffer>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QDateTime>
 #include <QCryptographicHash>
-//#include <datasnapshot.h>
 #include <QtDebug>
-
-/*
-#include "cryptlib.h"
-#include "pubkey.h"
-#include "integer.h"
-#include "pkcspad.h"
-#include "oaep.h"
-#include "emsa2.h"
-#include "asn.h"
-
-#include "rsa.h"
-#include "filters.h"
-#include "pkcspad.h"
-#include "secblock.h"
-#include "cryptlib.h"
-#include "sha.h"
-#include "pubkey.h"
-
-//using CryptoPP;
-//using CryptoPP::RSASS;
-
-#include "rsa.h"
-using CryptoPP::RSA;
-using CryptoPP::RSASS;
-using CryptoPP::InvertibleRSAFunction;
-
-#include "pssr.h"
-using CryptoPP::PSS;
-
-#include "sha.h"
-using CryptoPP::SHA1;
-
-#include "files.h"
-using CryptoPP::FileSink;
-using CryptoPP::FileSource;
-
-#include "osrng.h"
-using CryptoPP::AutoSeededRandomPool;
-
-#include "SecBlock.h"
-using CryptoPP::SecByteBlock;
-
-#include <string>
-using std::string;
-
-#include <iostream>
-using std::cout;
-using std::endl;
-*/
+#include <QBuffer>
 
 Firebase::Firebase(QObject *parent) :
     QObject(parent)
@@ -248,7 +198,7 @@ void Firebase::setValue(QString strVal)
     QNetworkRequest request(buildPath(1));
     request.setHeader(QNetworkRequest::ContentTypeHeader,
                       "application/x-www-form-urlencoded");
-    QBuffer *buffer=new QBuffer();
+ /*   QBuffer *buffer=new QBuffer();
     buffer->open((QBuffer::ReadWrite));
     buffer->write(createJson(strVal).toUtf8());
     buffer->seek(0);
@@ -256,13 +206,13 @@ void Firebase::setValue(QString strVal)
     //QByteArray ba = buffer->buffer();
     //QString stb(ba);
     //qDebug() << stb;
-    /*
-     * To be able to send "PATCH" request sendCustomRequest method is used.
-     * sendCustomRequest requires a QIOdevice so QBuffer is used.
-     * I had to seek 0 because it starts reading where it paused.
-     */
+
+     ////* To be able to send "PATCH" request sendCustomRequest method is used.
+    //// * sendCustomRequest requires a QIOdevice so QBuffer is used.
+     //* I had to seek 0 because it starts reading where it paused.
+
     manager->sendCustomRequest(request,"PATCH",buffer);
-    buffer->close();
+    buffer->close();*/
 }
 
 void Firebase::setValue(QJsonDocument jsonDoc
@@ -273,24 +223,16 @@ void Firebase::setValue(QJsonDocument jsonDoc
     QNetworkRequest request(buildPath(1, endPath));
     request.setHeader(QNetworkRequest::ContentTypeHeader,
                       "application/x-www-form-urlencoded");
-    QByteArray jsonBA = jsonDoc.toJson(QJsonDocument::Compact);
+ /*   QByteArray jsonBA = jsonDoc.toJson(QJsonDocument::Compact);
 
     QBuffer *buffer=new QBuffer();
     buffer->open((QBuffer::ReadWrite));
     buffer->write(jsonBA);
     buffer->seek(0);
 
-    //QByteArray ba = buffer->buffer();
-    //QString stb(ba);
-    //qDebug() << stb;
-    /*
-     * To be able to send "PATCH" request sendCustomRequest method is used.
-     * sendCustomRequest requires a QIOdevice so QBuffer is used.
-     * I had to seek 0 because it starts reading where it paused.
-     */
     QByteArray verbBA = verb.toUtf8();
     manager->sendCustomRequest(request, verbBA ,buffer);
-    buffer->close();
+    buffer->close();*/
 }
 
 void Firebase::getValue()

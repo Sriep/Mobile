@@ -72,7 +72,7 @@ ToolBar {
             elide: Label.ElideRight
             Connections {
                 target: eaContainer.user
-                onLoggedOn: userLable.text =  eaContainer.user.loggedOn
+                onLoggedOnChanged: userLable.text =  eaContainer.user.loggedOn
                             ? eaContainer.user.user : "logged off"
             }
         }

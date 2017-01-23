@@ -12,9 +12,6 @@ ListDelegateForm {
     property EAObjDisplay eaDisplay: eaContainer.eaConstruction.display
 
     itemPresseed.color: "#11ffffff"
-    //itemText.color: "green"
-    //itemBackground.color: "#424246"
-    //itemBackground.color: "blue"
     nextImage.source: "qrc:///shared/images/navigation_next_item.png"
 
     mouseArea.onClicked: {
@@ -24,25 +21,7 @@ ListDelegateForm {
         console.log("mouseArea onClicked title", title);
         toolBar.titleLabel.text = model.title;
     }
-/*
-    Connections {
-        target: eaContainer.eaConstruction.display
-        //target: eaContainer
-       onDisplayParamtersChanged: {
-        //onEaConstructionChanged: {
-        // onEaInfoChanged: {
-            DataListJS.setDisplayParameters(eaContainer.eaConstruction.display
-                                            , itemBackground, i
-                                                temText);
-        }
-    }
 
-    function setDispalyParameters () {
-        DataListJS.setDisplayParameters(eaContainer.eaConstruction.display
-                                        , itemBackground
-                                        , itemText);
-    }
-*/
     Connections {
         target: eaDisplay
         onXChanged: {

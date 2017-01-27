@@ -33,7 +33,9 @@ ToolBar {
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter
-                source:  "qrc:///shared/images/drawer@4x.png"
+                source:  eaContainer.eaConstruction.toolBarDisplay.whiteIcons
+                         ? "qrc:///shared/images/drawerW@4x.png"
+                         : "qrc:///shared/images/drawer@4x.png"
             }
         }
 
@@ -59,7 +61,9 @@ ToolBar {
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter
-                source:  "qrc:///shared/images/user-shape_16.png"
+                source:  eaContainer.eaConstruction.toolBarDisplay.whiteIcons
+                           ? "qrc:///shared/images/user-shape_32White.png"
+                           : "qrc:///shared/images/user-shape_32.png"
             }
         }
 
@@ -68,6 +72,9 @@ ToolBar {
             //text: "logged off"
             text:  eaContainer.user.loggedOn ? eaContainer.user.user : "logged off"
             font.family: eaContainer.eaConstruction.toolBarDisplay.font.family
+            color: eaContainer.eaConstruction.toolBarDisplay.fontColour
+            style: eaContainer.eaConstruction.toolBarDisplay.textStyle
+            styleColor: eaContainer.eaConstruction.toolBarDisplay.styleColour
             font.pixelSize: 8
             elide: Label.ElideRight
             Connections {
@@ -83,7 +90,9 @@ ToolBar {
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter
-                source:  "qrc:///shared/images/menu@4x.png"
+                source:  eaContainer.eaConstruction.toolBarDisplay.whiteIcons
+                            ? "qrc:///shared/images/menuW@4x.png"
+                            : "qrc:///shared/images/menu@4x.png"
             }
 
         }

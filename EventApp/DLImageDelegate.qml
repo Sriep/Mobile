@@ -7,27 +7,9 @@ import QtPositioning 5.6
 import "dataList.js" as DataListJS
 
 DLImageDelegateForm {
-//DataListDelegateForm {
   id: imageDelegate
   property int test: 76
 
-  //topText.text: {
-      //topText.text = title;
-     // topText.text = eaLVItemList.items[itemIndex].title;
- // }
-
- // bottomText.text: {
-      //bottomText.text = displayText;
-     // bottomText.text = eaLVItemList.items[itemIndex].displayText
- // }
-
-  //largePhotoImage.source: {
-  //    console.log("largePhoto", "image://" + name + "/" + itemIndex.toString());
-  //    largePhotoImage.source =  "image://" + name + "/" + itemIndex.toString();
-  //}
-
-  //property url showUrlUrl: "http://lllconf.co.uk/"
-  
   transitions: Transition {
         // Make the state changes smooth
         ParallelAnimation {
@@ -77,16 +59,6 @@ DLImageDelegateForm {
       console.log("maDataDelegate index",index);
       //console.log("maDataDelegate listView.currentIndex",dataList.currentIndex);
   }
-
-  /*
-  mapData.maptype = "mapbox";
-  mapData.accessToken = userMap.checked ? accessTokenTF.text : "";
-  mapData.mapId = mapIDTF.text;
-  mapData.latitude = latitudeTF.text;
-  mapData.lonitude = longitudeTF.text;
-  mapData.zoomLevel = zoomLevelSB.value;
-  mapData.useCurrent = useDevicePosition.checked;
-*/
 
   function popMapInfo(mapInfo) {
       if (undefined !== mapInfo && null !== mapInfo) {

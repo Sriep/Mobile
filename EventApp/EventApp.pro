@@ -1,4 +1,5 @@
 # += qml quick
+QT += network
 QT += quick quickcontrols2
 QT += qml quick webview
 QT += widgets
@@ -67,10 +68,15 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 #}
 
 #/media/piers/h/Mobile/Mobile/build-EventApp-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/android-build/src/org/dreamdev/QtAdMob
-android:
-{
+
+android: {
     DISTFILES += \
                 $$ANDROID_PACKAGE_SOURCE_DIR/src/org/dreamdev/QtAdMob/QtAdMobActivity.java \
+}
+
+contains(ANDROID_TARGET_ARCH, armeabi-v7a) {
+  ANDROID_EXTRA_LIBS += ../libs/libssl.so
+  ANDROID_EXTRA_LIBS += ../libs/libcrypto.so
 }
 
 INCLUDEPATH += $$PWD/../EventAppShared
@@ -88,6 +94,14 @@ DISTFILES += \
     android/gradlew.bat
 
 FORMS +=
+
+contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
+    ANDROID_EXTRA_LIBS =
+}
+
+contains(ANDROID_TARGET_ARCH,x86) {
+    ANDROID_EXTRA_LIBS =
+}
 
 
 

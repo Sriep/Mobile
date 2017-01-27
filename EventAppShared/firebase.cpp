@@ -198,7 +198,7 @@ void Firebase::setValue(QString strVal)
     QNetworkRequest request(buildPath(1));
     request.setHeader(QNetworkRequest::ContentTypeHeader,
                       "application/x-www-form-urlencoded");
- /*   QBuffer *buffer=new QBuffer();
+    QBuffer *buffer=new QBuffer();
     buffer->open((QBuffer::ReadWrite));
     buffer->write(createJson(strVal).toUtf8());
     buffer->seek(0);
@@ -212,7 +212,7 @@ void Firebase::setValue(QString strVal)
      //* I had to seek 0 because it starts reading where it paused.
 
     manager->sendCustomRequest(request,"PATCH",buffer);
-    buffer->close();*/
+    buffer->close();
 }
 
 void Firebase::setValue(QJsonDocument jsonDoc
@@ -223,7 +223,7 @@ void Firebase::setValue(QJsonDocument jsonDoc
     QNetworkRequest request(buildPath(1, endPath));
     request.setHeader(QNetworkRequest::ContentTypeHeader,
                       "application/x-www-form-urlencoded");
- /*   QByteArray jsonBA = jsonDoc.toJson(QJsonDocument::Compact);
+    QByteArray jsonBA = jsonDoc.toJson(QJsonDocument::Compact);
 
     QBuffer *buffer=new QBuffer();
     buffer->open((QBuffer::ReadWrite));
@@ -232,7 +232,7 @@ void Firebase::setValue(QJsonDocument jsonDoc
 
     QByteArray verbBA = verb.toUtf8();
     manager->sendCustomRequest(request, verbBA ,buffer);
-    buffer->close();*/
+    buffer->close();
 }
 
 void Firebase::getValue()

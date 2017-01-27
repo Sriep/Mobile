@@ -2,8 +2,6 @@ import QtQuick 2.0
 
 EaDisplayParaForm {
     width: parent.width; height: parent.height
-    //property alias title: title
-    //property var featuredDisplay: eaContainer.eaConstruction.display
     groupDispalyPara.title: title;
 
     Connections {
@@ -19,6 +17,7 @@ EaDisplayParaForm {
             featuredDisplay.styleColour = styleColourDlg.currentColor;
             featuredDisplay.xText = dxTextSB.value;
             featuredDisplay.yText = dyTextSB.value;
+            featuredDisplay.whiteIcons = whiteIconsCB.checked;
 
             console.log("hAlignment", hAlignCombo.currentIndex);
             console.log("vAlignment", vAlignCombo.currentIndex);
@@ -63,12 +62,13 @@ EaDisplayParaForm {
             xTF.value = featuredDisplay.x;
             yTF.value = featuredDisplay.y;
             heightTF.value = featuredDisplay.height;
-            borderWidthSB.value = featuredDisplay.width;
+            borderWidthSB.value = featuredDisplay.borderWidth;
             radiusTF.value = featuredDisplay.radius;
             styleCombo.currentIndex = featuredDisplay.textStyle;
             styleColourDlg.currentColor = featuredDisplay.styleColour;
             dxTextSB.value = featuredDisplay.xText;
             dyTextSB.value = featuredDisplay.yText;
+            whiteIconsCB.checked = featuredDisplay.whiteIcons;
             hAlignCombo.currentIndex = Math.round(Math.log(featuredDisplay.hAlignment)/Math.LN2);
             vAlignCombo.currentIndex = Math.round(Math.log(featuredDisplay.vAlignment)/Math.LN2 - 5);
             fontDlg.populateForm(featuredDisplay.font, featuredDisplay.fontColour);

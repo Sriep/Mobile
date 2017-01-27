@@ -287,10 +287,10 @@ void EAContainer::downloadApp(const QString &eventKey, const QString& fbUrl)
     //QString key =  keyObj["private_key"].toString();
     //QString token = firebase->getToken(serviceEmail, key.toUtf8());
 
-    QScreen *screen = QApplication::screens().at(0);
-    int width =screen->availableGeometry().width();
-    int height  =screen->availableGeometry().height();
-    qDebug() << "screen width: " << width << " screen height: " << height;
+    //QScreen *screen = QApplication::screens().at(0);
+    //int width =screen->availableGeometry().width();
+    //int height  =screen->availableGeometry().height();
+    //qDebug() << "screen width: " << width << " screen height: " << height;
 
     debugLog += "\nAbout to download event";
     debugLog += "\nEvent Key: " + eventKey;
@@ -575,6 +575,20 @@ void EAContainer::clearEvent()
     emit eaItemListsChanged();
 }
 
+QString EAContainer::listDisplayFormats()
+{
+    //QDirIterator it(":/content/displays/", QDirIterator:: Subdirectories);
+    QString formats;
+    QDirIterator it(":/content/displays/", QDirIterator::NoIteratorFlags);
+    while (it.hasNext()) {
+        qDebug() << it.next();
+        formats += it.fileName();
+        qDebug() << it.fileName();
+        //formats += " ";
+    }
+    return formats;
+}
+
 void EAContainer::downloadFromUrl(const QString &urlString)
 {
     httpDownload = new HttpDownload;
@@ -745,15 +759,18 @@ void EAContainer::saveAnswers(int itemListIndex
     {
         QString path = eventKey();
         path += "/answers";
+        path += "/" + user()->user();
         path += "/" + QString::number(itemListIndex);
         path += "/" + QString::number(itemIndex);
 
-        QJsonObject answersObj;
         EAItemList* itemList = m_eaItemLists[itemListIndex];
         EAItem* item = itemList->getEaItems()[itemIndex];
-        item->writeAnswers(user(), answersObj);
-        QJsonDocument uploadDoc(answersObj);
+        //QJsonArray answersArray = item->getAnsers();
+        //QJsonDocument uploadDoc(answersArray);
 
+        QJsonObject answersObj;
+        answersObj["answers"] = item->getAnsers();
+        QJsonDocument uploadDoc(answersObj);
         Firebase *firebase=new Firebase(firbaseUrl(), path);
         firebase->setValue(uploadDoc, "PATCH");
     }
@@ -790,7 +807,25 @@ bool EAContainer::loadDisplayFormat(const QString &filenameUrl)
     QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
     eaConstruction()->read(loadDoc.object());
     emit eaConstructionChanged(eaConstruction());
-    //emit displayParasChanged();
+    return true;
+}
+
+bool EAContainer::loadDisplayResource(const QString &filename)
+{
+   // QString filename = QUrl(filenameUrl).toLocalFile();
+    //qDebug() << "loadDisplayFormat filename: " << filename;
+    QFile loadFile(filename);
+    if (!loadFile.open(QIODevice::ReadOnly)) {
+        emit error("Error loading dispaly parameters from file"
+                    ,"Cannot open file " + filename
+                    ,"EAContainer::loadDisplayFormat\nloadFile.open==false"
+                    , Critical);
+        return false;
+    }
+    QByteArray saveData = loadFile.readAll();
+    QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
+    eaConstruction()->read(loadDoc.object());
+    emit eaConstructionChanged(eaConstruction());
     return true;
 }
 

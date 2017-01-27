@@ -29,29 +29,7 @@ Item {
                 qsTr("Questions"),
                 qsTr("Map")
             ]
-        }/*
-        ListView {
-            id: questionsEntered
-            //width: 110; height: 3 === itemDataType.currentIndex ? 160 : 0
-            width: 110; height:1603
-
-            highlightFollowsCurrentItem: true
-            highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
-            focus: true
-
-            model: ListModel {
-                id: questionsModel
-            }
-            delegate: Text {
-                //height: 3 === itemDataType.currentIndex ? 30 : 0
-                height: 30
-                text: title
-            }
-            MouseArea {
-                id: mouseAreaQLV
-                anchors.fill: parent
-            }
-        }*/
+        }
 
         RowLayout {
             id: rowLayout1
@@ -70,23 +48,7 @@ Item {
                 font.pixelSize: 12
             }
         }
-  /*      RowLayout {
-            id: rowLayout2
-            width: 100
-            height: 100
-            visible: itemDataType.currentIndex === 0
-            TextField {
-                id: itemData
-                text: qsTr("")
-                cursorVisible: true
-                selectByMouse: true
-            }
-            Text {
-                id: text2
-                text: qsTr("Image filename")
-                font.pixelSize: 12
-            }
-        }*/
+
         EditImageGroup {
             id: imageIEditGroup
             //visible: itemDataType.currentIndex === EAItem.Image
@@ -129,7 +91,6 @@ Item {
         }
         EditMapGroup {
             id: mapEditGroup
-            //visible: itemDataType.currentIndex === EAItem.Map
             visible: itemDataType.currentIndex === 4
         }
         RowLayout {
@@ -152,7 +113,6 @@ Item {
                 text: qsTr("Delete")
             }
         }
-       // }
     }
 
 }

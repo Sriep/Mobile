@@ -64,7 +64,9 @@ Item {
         id: nextImage
         anchors.right: parent.right
         anchors.rightMargin: 0
-        source: "qrc:///shared/images/navigation_next_item.png"
+        source: eaContainer.eaConstruction.display.whiteIcons
+                ? "qrc:///shared/images/navigation_next_item.png"
+                : "qrc:///shared/images/next.png"
         sourceSize.height: eaContainer.eaConstruction.display.height
     }
 }

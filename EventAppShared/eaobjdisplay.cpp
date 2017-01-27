@@ -25,6 +25,8 @@ void EAObjDisplay::read(const QJsonObject &json)
     setHAlignment(json["hAlignment"].toInt());
     setBackColour(QColor(json["backColour"].toString()));
     setHighlitedColour(QColor(json["highlitedColour"].toString()));
+    setWhiteIcons(json["whiteIcons"].toBool());
+    setDisplayType(json["displayType"].toInt());
     emit displayParamtersChanged();
 }
 
@@ -48,6 +50,8 @@ void EAObjDisplay::write(QJsonObject &json)
     json["hAlignment"] = hAlignment();
     json["backColour"] = QVariant(backColour()).toString();
     json["highlitedColour"] = QVariant(backColour()).toString();
+    json["whiteIcons"] = whiteIcons();
+    json["displayType"] = displayType();
 }
 
 QFont EAObjDisplay::json2Font(const QJsonObject& json)
@@ -127,6 +131,16 @@ QColor EAObjDisplay::backColour() const
 QColor EAObjDisplay::highlitedColour() const
 {
     return m_highlitedColour;
+}
+
+int EAObjDisplay::displayType() const
+{
+    return m_displayType;
+}
+
+bool EAObjDisplay::whiteIcons() const
+{
+    return m_whiteIcons;
 }
 
 QColor EAObjDisplay::fontColour() const
@@ -335,4 +349,22 @@ void EAObjDisplay::setHighlitedColour(QColor highlitedBackColour)
 
     m_highlitedColour = highlitedBackColour;
     emit highlitedColourChanged(highlitedBackColour);
+}
+
+void EAObjDisplay::setDisplayType(int displayType)
+{
+    if (m_displayType == displayType)
+        return;
+
+    m_displayType = displayType;
+    emit displayTypeChanged(displayType);
+}
+
+void EAObjDisplay::setWhiteIcons(bool whiteIcons)
+{
+    if (m_whiteIcons == whiteIcons)
+        return;
+
+    m_whiteIcons = whiteIcons;
+    emit whiteIconsChanged(whiteIcons);
 }

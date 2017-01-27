@@ -22,6 +22,7 @@ Item {
     property alias dyTextSB: dyTextSB
     property alias dxTextSB: dxTextSB
     property alias styleCombo: styleCombo
+    property alias whiteIconsCB: whiteIconsCB
 
     GroupBox {
         id: groupDispalyPara
@@ -398,6 +399,12 @@ Item {
                             ToolTip.visible: hovered
                             ToolTip.text: qsTr("Border width in pixels.")
                         }
+                    }
+
+                    CheckBox {
+                        id: whiteIconsCB
+                        checked: featuredDisplay.whiteIcons
+                        text: qsTr("Use White Icons")
                     }
                 }
             }

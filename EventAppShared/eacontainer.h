@@ -76,6 +76,7 @@ public:
     Q_INVOKABLE void insertEmptyItemList(int index, QString name, int listType);
     Q_INVOKABLE void deleteItemList(int index);
     Q_INVOKABLE void clearEvent();
+    Q_INVOKABLE QString listDisplayFormats();
 
     Q_INVOKABLE void downloadFromUrl(const QString& urlString);
     Q_INVOKABLE  bool loadNewEventApp(const QString& filenameUrl = "NewEvent");
@@ -89,6 +90,7 @@ public:
                                  , const QString& encryptedUrl = ENCODE_FIREBASE_URL);
     Q_INVOKABLE void loadAnswers();
     Q_INVOKABLE  bool loadDisplayFormat(const QString &filenameUrl);
+    Q_INVOKABLE  bool loadDisplayResource(const QString &filenameUrl);
     Q_INVOKABLE  bool saveDisplayFormat(const QString &filenameUrl);
     Q_INVOKABLE bool linkFirebaseUrl(QString eventKey
                                      , QDate to

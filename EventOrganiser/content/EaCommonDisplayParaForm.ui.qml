@@ -14,10 +14,15 @@ Item {
     //property alias rectangle4: rectangle4
     //property alias rectangle1: rectangle1
     //property alias mouseArea2: mouseArea2
+    property alias pumpkin: pumpkin
     property alias styleBox: styleBox
     property alias applyBut: applyBut
     property alias loadBut: loadBut
     property alias saveAsBut: saveAsBut
+    property alias mouseAreaLV: mouseAreaLV
+    property alias displayList: displayList
+    property alias newFormat: newFormat
+    property alias displaysModel: displaysModel
 
     ColumnLayout {
         FileDialog {
@@ -57,42 +62,7 @@ Item {
                 Component.onCompleted: setStyleCombo
             }
         }
-        /*
-        GroupBox {
-            title: qsTr("Event app colours");
-            ColumnLayout {
-                Label {
-                    id: colourLabel1
-                    text: qsTr("Global back colour/")
-                }
-                Button {
-                    id: backColourBut
-                    text: backColorDialog.currentColor
-                    flat: true
-                    Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
-                    background: Rectangle {
-                        id: colourButBackgound
-                        implicitWidth: 100
-                        implicitHeight: 40
-                        opacity: enabled ? 1 : 0.3
-                        color: eaContainer.eaConstruction.backColour
-                    }
-                    ColorDialog {
-                        id: backColorDialog
-                        currentColor: featuredDisplay.colour
-                        Connections {
-                            onAccepted: eaContainer.eaConstruction.backColour
-                                            = backColorDialog.currentColor;
-                        }
-                    }
-                    Connections {
-                        onPressed: backColorDialog.open();
-                    }
-                }
 
-            } //ColumnLayout
-        } // GroupBox
-*/
         RowLayout {
             id: rowLayout1
             width: 100
@@ -112,9 +82,9 @@ Item {
             }
 
             Button {
-                id: saveBut
-                visible: false
-                text: qsTr("Save")
+                id: pumpkin
+               // visible: false
+                text: qsTr("Load pumkin")
             }
 
             Button {
@@ -123,6 +93,48 @@ Item {
                 Connections {
                     onPressed: saveFileDialog.open()
                 }
+            }
+        }
+
+        GroupBox {
+            width: 200; height: 200
+            ColumnLayout {
+                Rectangle {
+                    border.color: "black"
+                    border.width: 1
+                    width: 200; height: 200
+                    clip: true
+                    ListView {
+                        id: displayList
+                        y: 10
+                        x: 10
+                        //width: 110; height: 160
+                        width: parent.width-20; height: parent.height
+                        highlightFollowsCurrentItem: true
+                        highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+                        focus: true
+                        model: ListModel {
+                            id: displaysModel
+                            // Same model as dataListImage.dataImageModel
+                        }
+                        delegate: Text {
+                            y:10
+                            height: 30
+                            text: displayName
+                        }
+                        MouseArea {
+                            id: mouseAreaLV
+                            anchors.fill: parent
+                        }
+                        //Component.onCompleted:  popDisplayList;
+                    }
+                 }
+                Button {
+                    id: newFormat
+                   // visible: false
+                    text: qsTr("Apply format")
+                }
+
             }
         }
     }

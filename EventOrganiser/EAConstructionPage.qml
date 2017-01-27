@@ -8,8 +8,6 @@ import EventAppData 1.0
 
 EAConstructionPageForm {
     //loadFilename.text: settingsData.dataFilename// eaContainer.dataFilename
-
-
     //openFileDialog1.onClicked: fileDialog.open();
     //loadEventButton.onClicked: eaContainer.loadEventApp(loadFilename.text);
     //saveEventButton.onClicked: eaContainer.saveEventApp(loadFilename.text);
@@ -24,8 +22,6 @@ EAConstructionPageForm {
         console.log("downloadBut.onClicked");
     }
     firbaseUrlBut.onClicked: eaContainer.firbaseUrl = firebaseUrlTB.text;
-
-
 
     Connections {
       target: eaContainer

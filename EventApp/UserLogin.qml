@@ -7,7 +7,8 @@ UserLoginForm {
 
     registerBut.onPressed: {
         var userObj = eaContainer.user;
-        var result = userObj.registerUser(userIdTF.text, emailTB.text, passwordTB.text);
+        //var result = userObj.registerUser(userIdTF.text, emailTB.text, passwordTB.text);
+        userObj.registerUser(userIdTF.text, "", passwordTB.text);
     }
 
     logonBut.onPressed: {

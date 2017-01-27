@@ -110,8 +110,8 @@ Item {
 
                 Image {
                     id: largePhotoImage
-                    width: 400//eventAppMainPage.width
-                    height: 600
+                    width: parent.width//400//eventAppMainPage.width
+                    height: parent.height
                     source: picture
                     x:20; y:10
                 }
@@ -129,7 +129,10 @@ Item {
                 width: background.width-10; height: background.height-10
                 opacity: imageDelegate.detailsOpacity
                 visible: imageDelegate.detailsOpacity === 1 && itemType === 2
+                clip: true
                 WebView {
+                    clip: true
+                    opacity: imageDelegate.detailsOpacity
                     width: background.width-10; height: background.height-10
                     y: 5; x:5
                     url: eaLVItemList.items[itemIndex].url;
@@ -138,48 +141,44 @@ Item {
 
             ListView {
                 width: eventAppMainPage.width
-                height: 600
+                height: eventAppMainPage.height //600
                 model: ListModel {
                     id: questionsModel
                 }
                 delegate: Item {
                     x:10; y:50
                     //width: 250; height: 90
-                    width: parent.width
-                    height: 90
+                    width: eventAppMainPage.width
+                    height: 100
 
                     ColumnLayout {
-                        y:20
+                        //y:20
                         Text {
-                            y: 15; x:15
+                            y: 10; x:15
                             height: 30 + 15*lineCount
-                            width: 480// parent.width - 2*y
+                            width: eventAppMainPage.width - 2*y
                             text: question
                         }
                         Rectangle {
+                            id: answerRec
                             y: 5; x:5
-                            //width: parent.width-2*y; height: 60
                             height: 60
-                            //width: parent.width// - 2*y
-                            width: 460
-                            //x: 2; y: 2; width: parent.width - x*2; height: parent.height - y*2
+                            width: eventAppMainPage.width - 60 //457
                             border.width : 0.5
                             border.color : "black"
                             anchors.rightMargin: 0
                             Flickable {
-                                anchors.fill: parent
+                                //id: answerFlick
+                                width: eventAppMainPage.width - 80
                                 y: 5; x:5
+                                height: 60
                                 TextArea.flickable: TextArea {
                                     id: answerTA
-                                    //width: parent.width-2*y//; height: 60
-                                    width: 450
-                                    height: 30 + 15*lineCount
-                                    Layout.fillWidth: true
-                                    y: 5; x:5
+                                    width: eventAppMainPage.width -80//450
+                                    height: 60 //+ 15*lineCount
                                     placeholderText: question
                                     text: answer
                                     wrapMode: TextArea.Wrap
-                                    //cursorVisible: true
                                     selectByMouse: true
 
                                 }

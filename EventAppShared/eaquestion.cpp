@@ -29,13 +29,13 @@ void EaQuestion::read(const QJsonObject &json, EAItem* parent)
     setQuestion(json["question"].toString());
 
     EAContainer* container = parent->getEaItemList()->getEaContainer();
-    if (container->user()->user().size() > 0)
+    if (container->user()->loggedOn() && container->user()->user().size() > 0)
     {
         QString path = container->eventKey();
         path += "/answers";
-        path += "/" + parent->getEaItemList()->listName();
-        path += "/" + parent->title();
-        path += "/" + container->user()->user();
+        //path += "/" +  user()->user();
+        path += "/" + QString::number(getParentItem()->getEaItemList()->getIndex());//itemListIndex
+       // path += "/" + QString::number(getParentItem()->getIndex());//itemIndex
 
         Firebase *firebase=new Firebase(container->firbaseUrl(), path);
         firebase->getValue();

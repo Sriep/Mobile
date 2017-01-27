@@ -34,5 +34,7 @@
         <file>content/EaItemListDataForm.ui.qml</file>
         <file>content/EditMapGroup.qml</file>
         <file>content/EditImageGroup.qml</file>
+        <file>content/displays/pumpkin.json</file>
+        <file>content/displays/grey.json</file>
     </qresource>
 </RCC>

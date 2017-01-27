@@ -16,6 +16,7 @@
 #include "eaitemlist.h"
 #include "picturelistimageprovider.h"
 #include "eamap.h"
+#include "eauser.h"
 
 
 EAItemList::EAItemList()
@@ -486,7 +487,7 @@ int EAItemList::updateListItem(int index
 
 int EAItemList::updateMapItem(int index, int itemType, const QString &title, const QString &maptype, const QString &token, const QString &mapID, double latitude, double longitude, int zoomLevel, bool useCurrent)
 {
-
+    return 0;
 }
 
 void EAItemList::removeItem(int index)
@@ -501,7 +502,9 @@ void EAItemList::removeItem(int index)
 
 void EAItemList::saveAnswers(int itemIndex)
 {
-    if (m_eaItems.length() > itemIndex && getEaContainer())
+    if (m_eaItems.length() > itemIndex
+            && getEaContainer()
+            && getEaContainer()->user()->loggedOn())
     {
         QList<EaQuestion*> questions = m_eaItems[itemIndex]->getEaQuestions();
         if (questions.length()>0)

@@ -7,7 +7,7 @@ Item {
     property alias logoffBut: logoffBut
     property alias logonBut: logonBut
     property alias passwordTB: passwordTB
-    property alias emailTB: emailTB
+    //property alias emailTB: emailTB
     property alias quitButton: quitButton
     property alias userIdTF: userIdTF
 
@@ -15,12 +15,6 @@ Item {
         id: columnLayout1
         width: 100
         height: 100
-
-        Text {
-            id: text1
-            text: qsTr("Text")
-            font.pixelSize: 12
-        }
 
         RowLayout {
             id: rowLayout4
@@ -41,7 +35,7 @@ Item {
             }
 
         }
-
+/*
         RowLayout {
             id: rowLayout1
             width: 100
@@ -62,7 +56,7 @@ Item {
                 font.pixelSize: 12
             }
         }
-
+*/
         RowLayout {
             id: rowLayout2
             width: 100

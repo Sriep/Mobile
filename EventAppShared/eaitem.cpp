@@ -86,15 +86,19 @@ void EAItem::write(QJsonObject &json)
 
 void EAItem::writeAnswers(EAUser* user, QJsonObject &json)
 {
+    json[user->user()] = getAnsers();
+}
+
+QJsonArray EAItem::getAnsers()
+{
     QJsonArray answersArray;
     foreach (EaQuestion* answer, m_eaQuestions)
     {
         QJsonObject answerObj;
         answer->writeAnswer(answerObj);
-        //QJsonObject userAnswerObj {{ user()->user(), QJsonValue(answerObj)}};
         answersArray.append(answerObj);
     }
-    json[user->user()] = answersArray;
+    return answersArray;
 }
 
 int EAItem::itemType() const

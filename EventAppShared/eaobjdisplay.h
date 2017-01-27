@@ -35,6 +35,9 @@ class EAObjDisplay : public QQuickItem
     Q_PROPERTY(QColor backColour READ backColour WRITE setBackColour NOTIFY backColourChanged)
     Q_PROPERTY(QColor highlitedColour READ highlitedColour WRITE setHighlitedColour NOTIFY highlitedColourChanged)
 
+    Q_PROPERTY(bool whiteIcons READ whiteIcons WRITE setWhiteIcons NOTIFY whiteIconsChanged)
+    Q_PROPERTY(int displayType READ displayType WRITE setDisplayType NOTIFY displayTypeChanged)
+
     int m_x = 2;
     int m_y = 2;
     int m_width = 4;
@@ -52,10 +55,16 @@ class EAObjDisplay : public QQuickItem
     int m_vAlignment = AlignRight;
     int m_hAlignment = AlignVCenter;    
     QColor m_backColour;    
-    QColor m_highlitedColour;
+    QColor m_highlitedColour;    
+    int m_displayType;
+
+    bool m_whiteIcons;
 
 public:
-    EAObjDisplay();    
+    enum DisplayType { Menu=0, Toolbar, Drawer };
+    Q_ENUM(DisplayType)
+
+    EAObjDisplay();
 
     void read(const QJsonObject &json);
     void write(QJsonObject &json);
@@ -79,7 +88,10 @@ public:
     int vAlignment() const;
     int hAlignment() const;    
     QColor backColour() const;    
-    QColor highlitedColour() const;
+    QColor highlitedColour() const;    
+    int displayType() const;
+
+    bool whiteIcons() const;
 
 signals:
     void xChanged(int x);
@@ -100,7 +112,10 @@ signals:
     void hAlignmentChanged(int hAlignment);
     void displayParamtersChanged();    
     void backColourChanged(QColor backColour);    
-    void highlitedColourChanged(QColor highlitedColour);
+    void highlitedColourChanged(QColor highlitedColour);    
+    void displayTypeChanged(int displayType);
+
+    void whiteIconsChanged(bool whiteIcons);
 
 public slots:
     void setX(int x);
@@ -121,6 +136,8 @@ public slots:
     void setHAlignment(int hAlignment);
     void setBackColour(QColor backColour);
     void setHighlitedColour(QColor highlitedColour);
+    void setDisplayType(int displayType);
+    void setWhiteIcons(bool whiteIcons);
 };
 
 #endif // EAOBJDISPLAY_H

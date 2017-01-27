@@ -27,6 +27,7 @@ import QtQuick.Controls 2.1
         property alias fontColour: fontColour
         property alias familyBut: familyBut
         property alias fontFamilyDlg: fontFamilyDlg
+
         RowLayout {
            // width: parent.width//; height: 720
            // width: 500
@@ -49,7 +50,7 @@ import QtQuick.Controls 2.1
                     font.pixelSize: pixelSizeSpin.value
                     font.letterSpacing: letterSpacingSpin.value
                     font.wordSpacing: wordSpacingSpin.value
-                    font.weight: weightCombo.currentIndex
+                    font.weight: weightCombo.weightValue
                     font.capitalization: capitalizationCombo.currentIndex
                     color: tempColour
                     verticalAlignment: Text.AlignVCenter

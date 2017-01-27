@@ -14,15 +14,18 @@ ApplicationWindow {
     visible: true
     //width: 480; height: 640 1280 x
     //width: 720; height: 1280
+    width: settingsGeometry.width
+    height: settingsGeometry.height
+
     title: eaContainer.eaInfo.eventName
 
     EaContainerObj {
         id: eaContainer
-        Component.onCompleted: {
-            appwin.height = eaContainer.screenHeight
-            appwin.width = eaContainer.screenWidth
-            heightData();
-        }
+       // Component.onCompleted: {
+            //appwin.height = eaContainer.screenHeight
+            //appwin.width = eaContainer.screenWidth
+            //heightData();
+        //}
     }
 
     Rectangle {
@@ -32,12 +35,12 @@ ApplicationWindow {
         anchors.fill: parent
     }
 
-    onHeightChanged: {
-        heightData();
+   // onHeightChanged: {
+        //heightData();
         //banner.y = eaContainer.screenHeight - banner.height;
         //eventAppPage.width = appwin.height;
         //banner.y = eventAppPage.height;
-    }
+   // }
 
     EventAppPage {
         id: eventAppPage
@@ -55,7 +58,7 @@ ApplicationWindow {
             banner.size = AdMobBanner.Banner;
             banner.visible = true;
             console.log("banner onCompleted")
-            heightData();
+            //heightData();
         }
     }
 
@@ -76,6 +79,7 @@ ApplicationWindow {
     }
 
     Settings {
+        id: settingsGeometry
         category: "geometry"
         property alias x: appwin.x
         property alias y: appwin.y

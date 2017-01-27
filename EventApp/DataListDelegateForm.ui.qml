@@ -69,14 +69,14 @@ Item {
        Image {
             clip: true
             id: photoImage
-            y:-eaContainer.eaConstruction.display.borderWidth
+            y:-eaContainer.eaConstruction.display.borderWidth-5
             x: eaContainer.eaConstruction.display.borderWidth
             //width: eaLVItemList.showPhotos ? 50 : 0
             //height: 50
             //width:
             fillMode: Image.PreserveAspectFit
             height: eaContainer.eaConstruction.display.height
-                    - 2*eaContainer.eaConstruction.display.borderWidth-4
+                    - 2*eaContainer.eaConstruction.display.borderWidth-10
             source: picture
         }
 

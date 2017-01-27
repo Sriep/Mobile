@@ -28,7 +28,7 @@ Dialog {
          fontForm.pixelSizeSpin.value= font.pixelSize;
          fontForm.letterSpacingSpin.value= font.letterSpacing;
          fontForm.wordSpacingSpin.value= font.wordSpacing;
-         fontForm.weightCombo.currentIndex = font.weight;
+         fontForm.weightCombo.currentIndex = fontWeight2Index(font.weight);
          fontForm.capitalizationCombo.currentIndex= font.capitalization;
     }
 
@@ -47,7 +47,8 @@ Dialog {
         font.pixelSize = fontForm.pixelSizeSpin.value
         font.letterSpacing = fontForm.letterSpacingSpin.value
         font.wordSpacing = fontForm.wordSpacingSpin.value
-        font.weight = fontForm.weightCombo.currentIndex
+        //font.weight = fontForm.weightCombo.currentIndex
+        font.weight = fontIndex2Weight(fontForm.weightCombo.currentIndex);
         font.capitalization = fontForm.capitalizationCombo.currentIndex
     }
 
@@ -65,7 +66,47 @@ Dialog {
         id: fontForm
         property color tempColour: "black"
     }
+
+    function fontWeight2Index(weight) {
+        if (weight < 12) return 0;
+        if (weight < 25) return 1;
+        if (weight < 50) return 2;
+        if (weight < 57) return 3;
+        if (weight < 63) return 4;
+        if (weight < 75) return 5;
+        if (weight < 81) return 6;
+        if (weight < 87) return 7;
+        return 8;
+     }
+
+    function fontIndex2Weight(index) {
+        switch (index) {
+        case 0:
+            return 0;
+        case 1:
+            return 12;
+        case 2:
+            return 25
+        case 3:
+            return 50;
+        case 4:
+            return 57;
+        case 5:
+            return 63;
+        case 6:
+            return 75;
+        case 7:
+            return 81;
+        case 8:
+            return 87;
+        default:
+            return 50;
+        }
+    }
 }
+
+
+
 
 
 

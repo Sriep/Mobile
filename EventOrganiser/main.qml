@@ -21,7 +21,7 @@ ApplicationWindow {
     EaContainerObj {
         id: eaContainer
     }
-
+/*
     HttpDownload {
         id: httpDownload
         onFinishedDownload: {
@@ -31,7 +31,7 @@ ApplicationWindow {
             eaContainer.installNewEvent(fileName);
         }
     }
-
+*/
     RowLayout {
 
         width: 1100; height: 870;
@@ -88,6 +88,7 @@ ApplicationWindow {
                     } //Rectangle
                 }
             }
+
         }
         Rectangle {
             id: dataBox

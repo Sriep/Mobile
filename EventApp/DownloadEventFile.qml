@@ -9,7 +9,7 @@ DownloadEventFileForm {
         //httpDownload.downloadFile(urlText.text);
     }
 
-
+/*
     //void error(QString message);
     Connections {
         target: httpDownload
@@ -18,7 +18,7 @@ DownloadEventFileForm {
             debugLog.text = message;
         }
     }
-
+*/
 
     quitButton.onClicked: {
         stackCtl.currentIndex = stackCtl.topDrawerId;

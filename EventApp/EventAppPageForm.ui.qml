@@ -17,9 +17,7 @@ Page{
     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
     Rectangle {
         anchors.fill: parent
-        //color: eaContainer.eaConstruction.backColour
         color: eaContainer.eaConstruction.display.backColour
-        //color:  "white"//eaContainer.eaConstruction.display.backColour
     }
     header: EaToolBar {
         id: toolBar

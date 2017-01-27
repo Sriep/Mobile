@@ -2,6 +2,7 @@
 #define EAITEM_H
 #include <QJsonObject>
 #include <QQuickItem>
+#include <QJsonArray>
 #include <QUrl>
 #include "eaquestion.h"
 #include "eacontainer.h"
@@ -39,6 +40,7 @@ public:
     void read(const QJsonObject &json, EAItemList* eaitemList = NULL);
     void write(QJsonObject &json);
     void writeAnswers(EAUser* user, QJsonObject &json);
+    QJsonArray getAnsers();
 
     int itemType() const;
     QString title() const;

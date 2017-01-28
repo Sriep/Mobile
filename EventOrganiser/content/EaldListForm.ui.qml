@@ -18,16 +18,33 @@ Item {
     property alias mouseAreaLV: mouseAreaLV
     property alias deleteBut: deleteBut
     property alias updateItem: updateItem
-    property alias clearBut: clearBut    
+    property alias clearBut: clearBut
     property alias mapEditGroup: mapEditGroup
+    property alias itemNameTA: itemNameTA
+    property alias updateTitleBut: updateTitleBut
 
     ColumnLayout {
         id: columnLayout1
         width: parent.width; height: parent.height
+        RowLayout {
+            id: rowLayout
+            width: parent.width
+            height: 100
+            Button {
+                id: updateTitleBut
+                text: qsTr("Update")
+                onPressed: featuredList.listName = itemNameTA.text;
+            }
+            TextField {
+                id: itemNameTA
+                width: parent.width - updateTitleBut.width -10
+            }
+
+        }
         GroupBox {
             y:5
             width: parent.width -20
-            title: "Item information"
+            title: "Add new Item information"
             ColumnLayout {
                 ComboBox {
                     id: itemDataType
@@ -115,38 +132,41 @@ Item {
                     id: mapEditGroup
                     visible: itemDataType.currentIndex === EAItem.Map
                 }
-            }
-        }
 
-        RowLayout {
-            id: rowLayout5
-            width: 100
-            height: 100
+                RowLayout {
+                    id: rowLayout5
+                    width: 100
+                    height: 100
 
-            Button {
-                id: updateItem
-                text: qsTr("Update")
-            }
+                    Button {
+                        id: updateItem
+                        text: qsTr("Update")
+                        visible: false
+                    }
 
-            Button {
-                id: addItem
-                text: qsTr("Add new")
-            }
+                    Button {
+                        id: addItem
+                        text: qsTr("Add new")
+                    }
 
-            Button {
-                id: deleteBut
-                text: qsTr("Delete")
-            }
+                    Button {
+                        id: deleteBut
+                        text: qsTr("Delete")
+                        visible: false
+                    }
 
-            Button {
-                id: clearBut
-                text: qsTr("Clear")
+                    Button {
+                        id: clearBut
+                        text: qsTr("Clear")
+                    }
+                }
             }
         }
 
         GroupBox {
             width: parent.width; height: 300
             title: "Item lists"
+            visible: false
             ColumnLayout {
                 Rectangle {
                     border.color: "black"
@@ -176,8 +196,10 @@ Item {
                             anchors.fill: parent
                         }
                     }
-                 }
+                }
             }
         }
+
+
     }
 }

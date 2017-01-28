@@ -11,11 +11,14 @@ AddNewListForm {
         popListsList(eaContainer.eaItemLists);
     }
 
+    Component.onCompleted: {
+        console.log("AddNewListForm completed");
+    }
+
     function popListsList (eaItemLists) {
         listsModel.clear();
         var listCount = eaItemLists.length;
-        for ( var i=0 ; i<listCount ; i++ )
-        {
+        for ( var i=0 ; i<listCount ; i++ ) {
             var thisList  = eaItemLists[i];
             var dic = {
                 "listType" : eaItemLists[i].listType

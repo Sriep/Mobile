@@ -2,6 +2,39 @@ import QtQuick 2.6
 import EventAppData 1.0
 
 EaldListForm {
+
+    Component.onCompleted: {
+        console.log("EaldListForm completed");
+        console.log("listName", featuredList.listName);
+        refreshFields();
+    }
+
+    Connections {
+      target: eaContainer
+      onEaItemListsChanged: {
+          refreshFields();
+      }
+    }
+
+    Connections {
+      target: eaListDisplayPage
+      onFeaturedListChanged: {
+          refreshFields();
+      }
+    }
+ /*
+    Connections {
+      target: updateTitleBut
+      onPressed: {
+          featuredList.listName = itemNameTA.text;
+      }
+    }
+*/
+    function refreshFields() {
+        console.log("listName", featuredList.listName);
+        itemNameTA.text = featuredList.listName;
+    }
+
     function popItemList (eventList) {
         console.log("Start popItemList");
         itemsModel.clear();
@@ -79,25 +112,6 @@ EaldListForm {
         mapData.useCurrent = useDevicePosition.checked;
     }
 */
-    updateItem.onPressed: {
-        if (itmesEntered.currentIndex >= 0 && itemDataType.currentIndex >= 0) {
-            eaListDisplayPage.featuredList.updateListItem(itmesEntered.currentIndex
-                                              , itemDataType.currentIndex
-                                              , itemTitle.text
-                                              , imageEditGroup.imageFileTF.text
-                                              , textFilename.text
-                                              , urlItem.text);
-            if (itemDataType.currentIndex == EAItem.Map)
-                populateMapData(eaListDisplayPage.featuredList.mapInfo);
-            popItemList(eaListDisplayPage.featuredList);
-        }
-    }
-
-    deleteBut.onPressed: {
-        eaListDisplayPage.featuredList.removeItem(itmesEntered.currentIndex);
-        ldpEventAppPage.stackCtl.currentIndex = ldpEventAppPage.stackCtl.topDrawerId;
-        popItemList(eaListDisplayPage.featuredList);
-    }
 
     clearBut.onPressed: {
         itmesEntered.currentIndex = -1;

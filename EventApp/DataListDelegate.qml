@@ -23,6 +23,10 @@ DataListDelegateForm {
         onShortFormatChanged: setTopText();
     }
 
+     Component.onCompleted: {
+         console.log("dataDelegate completed");
+     }
+
     bottomText.text: setBottomText()
     function setBottomText() {
         var one = JSON.parse(eaLVItemList.titleFields);

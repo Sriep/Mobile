@@ -22,6 +22,7 @@ Item {
         ComboBox {
             id: itemDataType
             currentIndex: featuredItem !== undefined ? featuredItem.itemType : 0;
+            enabled: false
             model: [
                 qsTr("Image"),
                 qsTr("Document"),
@@ -105,6 +106,7 @@ Item {
 
             Button {
                 id: addItem
+                visible: itemDataType.currentIndex === 3
                 text: qsTr("Add new")
             }
 

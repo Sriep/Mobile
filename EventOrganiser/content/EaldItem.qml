@@ -15,13 +15,6 @@ EaldItemForm {
         var item = eaListDisplayPage.featuredList.items[ealdItemForm.listIndex];
         console.log("item title", item.title);
         item.addTextQuestion(itemTitle.text);
-
-       // var index = ldpEventAppPage.stackCtl.currentIndex;
-        //var listView = ldpEventAppPage.stackCtl.children[index];
-        //var tp = listView.temp;
-        //listView.resetQuestionList(item);
-
-        //popQuestionList(item, questionsModel);
     }
 
     function popQuestionList (item, model) { // model=questionsModel
@@ -39,7 +32,23 @@ EaldItemForm {
         }
     }
 
-    deleteBut.onPressed: {
+    updateItem.onPressed: {
+        if (itmesEntered.currentIndex >= 0 && itemDataType.currentIndex >= 0) {
+            eaListDisplayPage.featuredList.updateListItem(itmesEntered.currentIndex
+                                              , itemDataType.currentIndex
+                                              , itemTitle.text
+                                              , imageEditGroup.imageFileTF.text
+                                              , textFilename.text
+                                              , urlItem.text);
+            if (itemDataType.currentIndex == EAItem.Map)
+                populateMapData(eaListDisplayPage.featuredList.mapInfo);
+            popItemList(eaListDisplayPage.featuredList);
+        }
+    }
 
+    deleteBut.onPressed: {
+        eaListDisplayPage.featuredList.removeItem(itmesEntered.currentIndex);
+        ldpEventAppPage.stackCtl.currentIndex = ldpEventAppPage.stackCtl.topDrawerId;
+        popItemList(eaListDisplayPage.featuredList);
     }
 }

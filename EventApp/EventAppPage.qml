@@ -41,7 +41,8 @@ EventAppPageForm {
 
   function refreshLists (stack, model) {
       model.clear();
-      clearStack(stack)
+      //clearStack(stack)
+      var stackCount = stack.count;
       var countItemLists = eaContainer.eaItemLists.length;
       for (var i = 0; i < countItemLists; i++) {
           var component;
@@ -51,21 +52,35 @@ EventAppPageForm {
           else
               component = "qrc:///shared/DataListImage.qml";
           var newList = Qt.createComponent(component, stack);
-          newList.createObject(stack
-              , {"eaLVItemList": eaContainer.eaItemLists[i]});
+          if (stackCount < 10) {
+              newList.createObject(stack
+                  , {"eaLVItemList": eaContainer.eaItemLists[i]});
+          } else {
+              newList.createObject(null
+                  , {"eaLVItemList": eaContainer.eaItemLists[i]});
+          }
+
           model.append({
               "title" : eaContainer.eaItemLists[i].listName,
               "position" : i
           });
           console.log("refreshLists mount count", model.count);
       } //for
+      console.log("End refreshLists")
   }
 
   function needToRefershLists(dataComponet) {
       refreshLists(stackCtl, stackCtl.drawerModel);
   }
 
-
+  Connections {
+      target: eaContainer
+      onEaItemListsChanged: {
+            console.log("Page onEaItemListsChanged");
+            refreshLists(stackCtl, drawerModel)
+            console.log("Page onEaItemListsChanged");
+      }
+  }
 
 }
 

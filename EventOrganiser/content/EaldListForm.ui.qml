@@ -16,12 +16,14 @@ Item {
     property alias textFilename: textFilename
     property alias urlItem: urlItem
     property alias mouseAreaLV: mouseAreaLV
-    property alias deleteBut: deleteBut
     property alias updateItem: updateItem
     property alias clearBut: clearBut
     property alias mapEditGroup: mapEditGroup
     property alias itemNameTA: itemNameTA
     property alias updateTitleBut: updateTitleBut
+    property alias downItemBut: downItemBut
+    property alias deleteItemBut: deleteItemBut
+    property alias upItemBut: upItemBut
 
     ColumnLayout {
         id: columnLayout1
@@ -48,7 +50,7 @@ Item {
             ColumnLayout {
                 ComboBox {
                     id: itemDataType
-                    currentIndex: 0
+                    currentIndex: -1
                     model: [
                         qsTr("Image"),
                         qsTr("Document"),
@@ -150,12 +152,6 @@ Item {
                     }
 
                     Button {
-                        id: deleteBut
-                        text: qsTr("Delete")
-                        visible: false
-                    }
-
-                    Button {
                         id: clearBut
                         text: qsTr("Clear")
                     }
@@ -166,12 +162,12 @@ Item {
         GroupBox {
             width: parent.width; height: 300
             title: "Item lists"
-            visible: false
+            visible: itemDataType.currentIndex === -1
             ColumnLayout {
                 Rectangle {
                     border.color: "black"
                     border.width: 1
-                    width: 200; height: 200
+                    width: 300; height: 250
                     clip: true
                     ListView {
                         id: itmesEntered
@@ -179,12 +175,12 @@ Item {
                         x: 10
                         //width: 110; height: 160
                         width: parent.width-20; height: parent.height
+                        scale: 0.01
                         highlightFollowsCurrentItem: true
                         highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
                         focus: true
                         model: ListModel {
                             id: itemsModel
-                            // Same model as dataListImage.dataImageModel
                         }
                         delegate: Text {
                             y:10
@@ -195,6 +191,26 @@ Item {
                             id: mouseAreaLV
                             anchors.fill: parent
                         }
+                    }
+                }
+
+                RowLayout {
+                    id: rowLayout2
+                    //width: 100
+                    height: 100
+
+                    Button {
+                        id: upItemBut
+                        text: qsTr("Move up")
+                    }
+
+                    Button {
+                        id: downItemBut
+                        text: qsTr("Move down")
+                    }
+                    Button {
+                        id: deleteItemBut
+                        text: qsTr("Delete")
                     }
                 }
             }

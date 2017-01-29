@@ -13,7 +13,9 @@ EAInfoNameForm {
     Connections {
       target: eaContainer
       onEaItemListsChanged: {
+          console.log("EAInfoNameForm onEaItemListsChanged");
           textEventName.text = eaContainer.eaInfo.eventName;
+          console.log("EAInfoNameForm onEaItemListsChanged");
       }
     }
 }

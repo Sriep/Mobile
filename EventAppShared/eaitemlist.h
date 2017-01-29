@@ -96,6 +96,8 @@ public:
     Q_INVOKABLE void removeItem(int index);
     Q_INVOKABLE void saveAnswers(int itemIndex);
     Q_INVOKABLE int getIndex();
+    Q_INVOKABLE void deleteItem(int index);
+    Q_INVOKABLE int moveItem(int index, bool directionUp);
     //Q_INVOKABLE int itemListLength();
 
 
@@ -125,6 +127,7 @@ signals:
     void eaItemListChanged();
     void formatedListChanged(bool formatedList);    
     void listTypeChanged(int listType);
+    void eaItemsChnged();
 
 public slots:
     void setTitleFields(QString titleFields);

@@ -12,6 +12,12 @@ Item {
     property alias urlItem: urlItem
     property alias deleteBut: deleteBut
     property alias updateItem: updateItem
+    property alias deleteQuestionBut: deleteQuestionBut
+    property alias downQuestionBut: downQuestionBut
+    property alias upQuestionBut: upQuestionBut
+    property alias quMouseAreaLV: quMouseAreaLV
+    property alias questionsList: questionsList
+    property alias questionsListModel: questionsListModel
 
     ColumnLayout {
         id: columnLayout1
@@ -113,6 +119,64 @@ Item {
             Button {
                 id: deleteBut
                 text: qsTr("Delete")
+            }
+        }
+
+        GroupBox {
+            width: parent.width; height: 300
+            title: "Item lists"
+            visible: itemDataType.currentIndex === 3
+            ColumnLayout {
+                Rectangle {
+                    border.color: "black"
+                    border.width: 1
+                    width: 300; height: 250
+                    clip: true
+                    ListView {
+                        id: questionsList
+                        y: 10
+                        x: 10
+                        //width: 110; height: 160
+                        width: parent.width-20; height: parent.height
+                        scale: 0.01
+                        highlightFollowsCurrentItem: true
+                        highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+                        focus: true
+                        model: ListModel {
+                            id: questionsListModel
+                            // Same model as dataListImage.dataImageModel
+                        }
+                        delegate: Label {
+                            y:10
+                            height: 30
+                            text: question
+                        }
+                        MouseArea {
+                            id: quMouseAreaLV
+                            anchors.fill: parent
+                        }
+                    }
+                }
+
+                RowLayout {
+                    id: rowLayout2
+                    //width: 100
+                    height: 100
+
+                    Button {
+                        id: upQuestionBut
+                        text: qsTr("Move up")
+                    }
+
+                    Button {
+                        id: downQuestionBut
+                        text: qsTr("Move down")
+                    }
+                    Button {
+                        id: deleteQuestionBut
+                        text: qsTr("Delete")
+                    }
+                }
             }
         }
     }

@@ -57,6 +57,15 @@ ListView {
                 setDisplayParameters();
             }
         }
+
+        Connections {
+            target: eaLVItemList
+            onEaItemsChnged: {
+                  console.log("Page onEaItemsChnged");
+                  resetDataImageLM()
+                  console.log("Page onEaItemsChnged");
+            }
+        }
     }
 
     function resetDataImageLM() {

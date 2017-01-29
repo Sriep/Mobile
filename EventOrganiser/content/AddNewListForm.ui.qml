@@ -13,7 +13,9 @@ Item {
     property alias listsModel: listsModel
     property alias newListBut: newListBut
     property alias updateListBut: updateListBut
-    property alias deleteListBut: deleteListBut
+    property alias deleteItemListBut: deleteItemListBut
+    property alias downItemListBut: downItemListBut
+    property alias upItemListBut: upItemListBut
 
     ColumnLayout {
         id: columnLayout2
@@ -69,16 +71,10 @@ Item {
                         text: qsTr("Update")
                         visible: false
                     }
-
-                    Button {
-                        id: deleteListBut
-                        text: qsTr("Delete")
-                        visible: false
-                    }
-
                 }
             }
         }
+        /*
         ListView {
             id: listsCreated
             width: 110; height: 160
@@ -98,6 +94,63 @@ Item {
             MouseArea {
                 id: mouseAreaLC
                 anchors.fill: parent
+            }
+        }
+        */
+        GroupBox {
+            width: parent.width; height: 300
+            title: "Item lists"
+            //visible: itemDataType.currentIndex === -1
+            ColumnLayout {
+                Rectangle {
+                    border.color: "black"
+                    border.width: 1
+                    width: 300; height: 250
+                    clip: true
+                    ListView {
+                        id: listsCreated
+                        y: 10
+                        x: 10
+                        //width: 110; height: 160
+                        width: parent.width-20; height: parent.height
+                        highlightFollowsCurrentItem: true
+                        highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
+                        focus: true
+                        model: ListModel {
+                            id: listsModel
+                            // Same model as dataListImage.dataImageModel
+                        }
+                        delegate: Label {
+                            y:10
+                            height: 30
+                            text: listName
+                        }
+                        MouseArea {
+                            id: mouseAreaLC
+                            anchors.fill: parent
+                        }
+                    }
+                }
+
+                RowLayout {
+                    id: rowLayout2
+                    //width: 100
+                    height: 100
+
+                    Button {
+                        id: upItemListBut
+                        text: qsTr("Move up")
+                    }
+
+                    Button {
+                        id: downItemListBut
+                        text: qsTr("Move down")
+                    }
+                    Button {
+                        id: deleteItemListBut
+                        text: qsTr("Delete")
+                    }
+                }
             }
         }
     }

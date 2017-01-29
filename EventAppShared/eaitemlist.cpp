@@ -565,6 +565,71 @@ int EAItemList::getIndex()
     return -1;
 }
 
+void EAItemList::deleteItem(int index)
+{
+    if (index < m_eaItems.count() && index >= 0)
+    {
+        m_eaItems.removeAt(index);
+        emit eaItemsChnged();
+    }
+    else
+    {
+        emit getEaContainer()->error(tr("Error deleting itme")
+                    ,tr("Invalid index ") + QString::number(index)
+                    ,"EAItemList::deleteItem"
+                    , Warning);
+    }
+}
+
+int EAItemList::moveItem(int index, bool directionUp)
+{
+    if (index < m_eaItems.count() && index >= 0)
+    {
+        if (directionUp)
+        {
+            if (0 == index)
+            {
+                emit getEaContainer()->error(tr("Error moving item")
+                            ,tr("Item already at top of list")
+                            ,"EAItemList::moveItem"
+                            , Warning);
+                return index;
+            }
+            else
+            {
+                m_eaItems.swap(index, index -1);
+                emit eaItemsChnged();
+                return index-1;
+            }
+        }
+        else
+        {
+            if (m_eaItems.count()-1 == index)
+            {
+                emit getEaContainer()->error(tr("Error moving itme")
+                            ,tr("Item already at bottom of list")
+                            ,"EAItemList::moveItem"
+                            , Warning);
+                return index;
+            }
+            else
+            {
+                m_eaItems.swap(index, index +1);
+                emit eaItemsChnged();
+                return index +1;
+            }
+        }
+    }
+    else
+    {
+        emit getEaContainer()->error(tr("Error moving item")
+                    ,tr("Invalid index ") + QString::number(index)
+                    ,"EAItemList::moveItem"
+                    , Warning);
+        return -1;
+    }
+}
+
 /*
 int EAItemList::itemListLength()
 {

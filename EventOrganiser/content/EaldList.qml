@@ -4,15 +4,15 @@ import EventAppData 1.0
 EaldListForm {
 
     Component.onCompleted: {
-        console.log("EaldListForm completed");
-        console.log("listName", featuredList.listName);
         refreshFields();
     }
 
     Connections {
       target: eaContainer
       onEaItemListsChanged: {
+          console.log("EaldListForm onEaItemListsChanged");
           refreshFields();
+          console.log("EaldListForm onEaItemListsChanged");
       }
     }
 
@@ -41,7 +41,8 @@ EaldListForm {
         var itemCount = eventList.items.length;
         for ( var i=0 ; i<itemCount ; i++ )
         {
-            var eaItem = eventList.items[i];//.at(i);
+            var eaItem = eventList.items[i];
+            /*
             var name = eventList.listName;
             var picturePath =  "image://" + name + "/" +i.toString();
             var dic = {
@@ -52,8 +53,11 @@ EaldListForm {
                 , "urlString" : eaItem.urlString
                 , "picture" : picturePath
             };
-            itemsModel.append(dic);
+            itemsModel.append(dic);*/
+            itemsModel.append({"title" : eaItem.title} );
         }
+        var v = itmesEntered.count;
+        console.log("End popItemList");
     }
 
     addItem.onPressed: {
@@ -96,22 +100,6 @@ EaldListForm {
         //ldpEventAppPage.needToRefershLists("qrc:///shared/DataList.qml");
         popItemList(eaListDisplayPage.featuredList);
     }
-/*
-    function populateMapData (mapData) {
-        //var a0 = eaListDisplayPage.featuredList;
-        // var a2 = eaListDisplayPage.featuredList.items[newIndex];
-        // var a1 = eaListDisplayPage.featuredList.items;
-        //if (itemDataType.currentIndex == EAItem.Map)
-        //    populateMapData(eaListDisplayPage.featuredList.items);
-        mapData.maptype = "mapbox";
-        mapData.accessToken = userMap.checked ? accessTokenTF.text : "";
-        mapData.mapId = mapIDTF.text;
-        mapData.latitude = latitudeTF.text;
-        mapData.lonitude = longitudeTF.text;
-        mapData.zoomLevel = zoomLevelSB.value;
-        mapData.useCurrent = useDevicePosition.checked;
-    }
-*/
 
     clearBut.onPressed: {
         itmesEntered.currentIndex = -1;
@@ -121,6 +109,7 @@ EaldListForm {
         imageEditGroup.imageFileTF.text = "";
         textFilename.text = "";
         urlItem.text = "";
+        popItemList(eaListDisplayPage.featuredList);
     }
 
     mouseAreaLV.onClicked: {
@@ -128,14 +117,80 @@ EaldListForm {
         if (index >= 0)
         {
             itmesEntered.currentIndex = index;
+ /*
             itemDataType.currentIndex = itemsModel.get(index).itemType;
             itemTitle.text = itemsModel.get(index).title;
-
-            //itemData.text = itemsModel.get(index).picture;
             imageEditGroup.imageFileTF.text = itemsModel.get(index).picture;
-
             textFilename.text = itemsModel.get(index).displayText;
             urlItem.text = itemsModel.get(index).urlString;
+*/
         }
+        popItemList(eaListDisplayPage.featuredList);
     }
+
+    deleteItemBut.onPressed: {
+        var index = itmesEntered.currentIndex;
+        eaListDisplayPage.featuredList.deleteItem(index);
+        popItemList(eaListDisplayPage.featuredList);
+        itmesEntered.currentIndex = index-1;
+    }
+
+    upItemBut.onPressed: {
+        var v = itmesEntered.count;
+        var index = itmesEntered.currentIndex;
+        var newIndex = eaListDisplayPage.featuredList.moveItem(index, true);
+        popItemList(eaListDisplayPage.featuredList);
+        itmesEntered.currentIndex = newIndex;
+    }
+
+    downItemBut.onPressed: {
+        var index = itmesEntered.currentIndex;
+        var newIndex = eaListDisplayPage.featuredList.moveItem(index, false);
+        popItemList(eaListDisplayPage.featuredList);
+        itmesEntered.currentIndex = newIndex;
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

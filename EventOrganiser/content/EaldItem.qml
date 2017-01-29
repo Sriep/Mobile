@@ -10,6 +10,10 @@ EaldItemForm {
 
     property int listIndex: eaListDisplayPage.featuredItemIndex
 
+    Component.onCompleted: {
+        popQuestionList (featuredItem, questionsListModel);
+    }
+
     addItem.onPressed: {
         console.log("EaldItemForm addItem listIndex",ealdItemForm.listIndex);
         var item = eaListDisplayPage.featuredList.items[ealdItemForm.listIndex];
@@ -50,5 +54,13 @@ EaldItemForm {
         eaListDisplayPage.featuredList.removeItem(itmesEntered.currentIndex);
         ldpEventAppPage.stackCtl.currentIndex = ldpEventAppPage.stackCtl.topDrawerId;
         popItemList(eaListDisplayPage.featuredList);
+    }
+
+    quMouseAreaLV.onClicked: {
+        var index = itmesEntered.indexAt(mouse.x, mouse.y);
+        if (index >= 0) {
+            questionsList.currentIndex = index;
+        }
+        popQuestionList (featuredItem, questionsListModel);
     }
 }

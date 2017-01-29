@@ -5,6 +5,7 @@ import Qt.labs.settings 1.0
 import "qrc:///shared"
 
 AddNewListForm {
+
     addListBut.onClicked: {
         //eaContainer.insertEmptyItemList(0, newListName.text, listType.currentIndex === 0);
         eaContainer.insertEmptyItemList(0, newListName.text, listType.currentIndex);
@@ -13,6 +14,7 @@ AddNewListForm {
 
     Component.onCompleted: {
         console.log("AddNewListForm completed");
+        popListsList(eaContainer.eaItemLists)
     }
 
     function popListsList (eaItemLists) {
@@ -63,11 +65,26 @@ AddNewListForm {
         popListsList(eaContainer.eaItemLists);
     }
 
-    deleteListBut.onPressed: {
+    deleteItemListBut.onPressed: {
         var index = listsCreated.currentIndex;
         eaContainer.deleteItemList(index);
         popListsList(eaContainer.eaItemLists);
     }
+
+    upItemListBut.onPressed: {
+        var index = listsCreated.currentIndex;
+        var newIndex = eaContainer.moveItemList(index, true);
+        popListsList(eaContainer.eaItemLists);
+        listsCreated.currentIndex = newIndex;
+    }
+
+    downItemListBut.onPressed: {
+        var index = listsCreated.currentIndex;
+        var newIndex = eaContainer.moveItemList(index, false);
+        popListsList(eaContainer.eaItemLists);
+        listsCreated.currentIndex = newIndex;
+    }
+
 
     //Component.onCompleted: {
     //     console.log("completed AddNewListForm");

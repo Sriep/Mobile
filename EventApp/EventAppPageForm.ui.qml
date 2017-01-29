@@ -67,11 +67,32 @@ Page{
         DownloadEventFB {
 
         }
-
+/*
         Connections {
             target: eaContainer
             onEaItemListsChanged: refreshLists(stackCtl, drawerModel)
-        }
+            console.log("Page onEaItemListsChanged");
+        }*/
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

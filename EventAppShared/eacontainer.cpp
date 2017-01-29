@@ -89,10 +89,61 @@ void EAContainer::insertEmptyItemList(int index, QString name, int listType)
 
 void EAContainer::deleteItemList(int index)
 {
-    if (index < m_eaItemLists.count())
+    if (index >= 0 && index < m_eaItemLists.count())
     {
         m_eaItemLists.removeAt(index);
         emit eaItemListsChanged();
+    }
+}
+
+int EAContainer::moveItemList(int index, bool directionUp)
+{
+    if (index < m_eaItemLists.count() && index >= 0)
+    {
+        if (directionUp)
+        {
+            if (0 == index)
+            {
+                emit error(tr("Error moving item list")
+                            ,tr("Item already at top of list")
+                            ,"EAContainer::moveItemList"
+                            , Warning);
+                return index;
+            }
+            else
+            {
+                m_eaItemLists.swap(index, index -1);
+                emit eaItemListsChanged();
+                return index-1;
+            }
+        }
+        else
+        {
+            if (m_eaItemLists.count()-1 == index)
+            {
+                emit error(tr("Error moving itme list")
+                            ,tr("Item already at bottom of list")
+                            ,"EAContainer::moveItemList"
+                            , Warning);
+                return index;
+            }
+            else
+            {
+                m_eaItemLists.swap(index, index +1);
+                emit eaItemListsChanged();
+                return index +1;
+            }
+        }
+
+
+    }
+    else
+    {
+        emit error(tr("Error moving item list")
+                    ,tr("Invalid index ") + QString::number(index)
+                    ,"EAContainer::moveItemList"
+                    , Warning);
+        return -1;
     }
 }
 
@@ -170,8 +221,8 @@ bool EAContainer::saveEventApp(const QString& filenameUrl)
 
     QFile saveFile(filename);
     if (!saveFile.open(QIODevice::WriteOnly)) {
-        emit error("Error saving event to file"
-                    ,"Cannot open file " + filename
+        emit error(tr("Error saving event to file")
+                    ,tr("Cannot open file ") + filename
                     ,"EAContainer::saveEventApp\nsaveFile.open==false"
                     , Critical);
         return false;
@@ -196,8 +247,8 @@ bool EAContainer::saveDisplayFormat(const QString &filenameUrl)
     QFile saveFile(filename);
     //QFile saveFile(filename);
     if (!saveFile.open(QIODevice::WriteOnly)) {
-        emit error("Error saving dispaly parameters to file"
-                    ,"Cannot open file " + filename
+        emit error(tr("Error saving dispaly parameters to file")
+                    ,tr("Cannot open file ") + filename
                     ,"EAContainer::saveDisplayFormat\nsaveFile.open==false"
                     , Critical);
         return false;
@@ -400,7 +451,7 @@ void EAContainer::onResponseReady(QByteArray data)
         {
             emit error(tr("Error downloading app")
                         ,tr("Invalid date")
-                        ,"fromDate > today || today > toDate"
+                        ,tr("fromDate > today || today > toDate")
                         , Critical);
         }
     }
@@ -797,8 +848,8 @@ bool EAContainer::loadDisplayFormat(const QString &filenameUrl)
     qDebug() << "loadDisplayFormat filename: " << filename;
     QFile loadFile(filename);
     if (!loadFile.open(QIODevice::ReadOnly)) {
-        emit error("Error loading dispaly parameters from file"
-                    ,"Cannot open file " + filename
+        emit error(tr("Error loading dispaly parameters from file")
+                    ,tr("Cannot open file ") + filename
                     ,"EAContainer::loadDisplayFormat\nloadFile.open==false"
                     , Critical);
         return false;
@@ -812,12 +863,12 @@ bool EAContainer::loadDisplayFormat(const QString &filenameUrl)
 
 bool EAContainer::loadDisplayResource(const QString &filename)
 {
-   // QString filename = QUrl(filenameUrl).toLocalFile();
+    //QString filename = QUrl(filenameUrl).toLocalFile();
     //qDebug() << "loadDisplayFormat filename: " << filename;
     QFile loadFile(filename);
     if (!loadFile.open(QIODevice::ReadOnly)) {
-        emit error("Error loading dispaly parameters from file"
-                    ,"Cannot open file " + filename
+        emit error(tr("Error loading dispaly parameters from file")
+                    ,tr("Cannot open file ") + filename
                     ,"EAContainer::loadDisplayFormat\nloadFile.open==false"
                     , Critical);
         return false;

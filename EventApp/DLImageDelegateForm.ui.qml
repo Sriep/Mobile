@@ -180,7 +180,6 @@ Item {
                                     text: answer
                                     wrapMode: TextArea.Wrap
                                     selectByMouse: true
-
                                 }
                                 ScrollBar.vertical: ScrollBar { }
                                 Connections {

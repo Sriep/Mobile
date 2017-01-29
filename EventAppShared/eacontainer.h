@@ -75,6 +75,7 @@ public:
     //Q_INVOKABLE void insertEmptyItemList(int index, QString name, bool formated = true);
     Q_INVOKABLE void insertEmptyItemList(int index, QString name, int listType);
     Q_INVOKABLE void deleteItemList(int index);
+    Q_INVOKABLE int moveItemList(int index, bool directionUp);
     Q_INVOKABLE void clearEvent();
     Q_INVOKABLE QString listDisplayFormats();
 

@@ -24,16 +24,6 @@ EAConstructionPageForm {
     firbaseUrlBut.onClicked: eaContainer.firbaseUrl = firebaseUrlTB.text;
 
     Connections {
-      target: eaContainer
-      onEaItemListsChanged: {
-          //loadFilename.text = eaContainer.dataFilename;
-          //eventDescription.text = eaContainer.eventDescription;
-          //textOrgName.text = eaContainer.organiserName;
-          //parentDescription.text = eaContainer.organiserDescription;
-      }
-    }
-
-    Connections {
         target: linkBut
         onPressed: {
             var toDate = toCalander.selectedDate;

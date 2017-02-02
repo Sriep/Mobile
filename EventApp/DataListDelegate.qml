@@ -11,7 +11,6 @@ DataListDelegateForm {
     function setTopText() {
         var one = JSON.parse(eaLVItemList.titleFields);
         var two = dataModel;
-        //return DataListJS.displayText(JSON.parse(eaLVItemList.titleFields)
         var t = displayText(JSON.parse(eaLVItemList.titleFields)
                                      , dataModel
                                      , true
@@ -70,21 +69,6 @@ DataListDelegateForm {
     function displayText(titleFields, dataModel, header, eaItemList) {
         DataListJS.addStringFormat();
         var text = "";
- /*       for ( var i=0 ; i < titleFields["headerFields"].length ; i++ ) {
-            if (titleFields["headerFields"][i].inListView === header)
-            {
-                var formatStr = titleFields["headerFields"][i].format;
-                var title = titleFields["headerFields"][i].field;
-                var model = titleFields["headerFields"][i].modelName;
-                var myData = dataModel.get(index);
-                var reqField = myData[model];
-                var formatArr = [];//[title, reqField];
-                formatArr.push(title);
-                formatArr.push(reqField);
-                var item = formatStr.format(formatArr);
-                text += item;
-            }
-        }*/
         var myArr = DataListJS.fieldsObjToArr(titleFields["headerFields"], dataModel.get(index));
         var topFormat = eaItemList.shortFormat;
         var t1 = topFormat.format(myArr);

@@ -37,7 +37,8 @@ class EAItemList :  public QQuickItem //public EAItemListBase
 
 public:
     //enum ListType { High, Low, VeryHigh, VeryLow };
-    enum ListType { Csv, Manual, UserNames, Schedule };
+    //enum ListType { Csv, Manual, UserNames, Schedule };
+    enum ListType { Formated, Manual, UserNames, Schedule };
     Q_ENUM(ListType)
 
     EAItemList();
@@ -52,7 +53,8 @@ public:
     //virtual void clear(QQmlEngine *engine);
     virtual void clear(EAContainer* eacontainer);
 
-    Q_INVOKABLE bool readCSV(const QString filenameUrl);
+    Q_INVOKABLE void loadCSV(const QString filenameUrl);
+    Q_INVOKABLE void saveCSV(const QString filenameUrl);
     Q_INVOKABLE void amendField(int index
                                 , const QString& field
                                 , const QString& modelName
@@ -147,6 +149,14 @@ private:
     QJsonObject newDataItem(const QStringList &speakerData
                             , const QStringList &header);
     QString getModelName(const QString& name) const;
+    QString savePicture(int index, const QString &path);
+    QList<QStringList> formatted2StringLists(const QString &imagePath);
+    QList<QStringList> manual2StringLists(const QString &imagePath);
+    QString saveItemFilename(int index, const QString& path);
+    QStringList headerList();
+    void readFormatedList(QList<QStringList> csvListLines);
+    void readMixedList(QList<QStringList> listlist);
+
     //void unpackPhotos() const;
     void resetImageProvider(EAContainer* eacontainer = NULL);
     void addPicture(int index, const QString& filename);

@@ -42,10 +42,6 @@ class  EAContainer : public QObject, public QQmlParserStatus
     Q_PROPERTY(EAConstruction* eaConstruction READ eaConstruction WRITE setEAConstruction NOTIFY eaConstructionChanged)
     Q_PROPERTY(QQmlListProperty<EAItemList> eaItemLists READ eaItemLists)
 
-    Q_PROPERTY(int screenWidth READ screenWidth WRITE setScreenWidth NOTIFY screenWidthChanged)
-    Q_PROPERTY(int screenHeight READ screenHeight WRITE setScreenHeight NOTIFY screenHeightChanged)
-    Q_PROPERTY(qreal point2PixelH READ point2PixelH WRITE setPoint2PixelH NOTIFY point2PixelHChanged)
-
     Q_PROPERTY(QString workingDirectory READ workingDirectory WRITE setWorkingDirectory NOTIFY workingDirectoryChanged)
     Q_PROPERTY(QString dataFilename READ dataFilename WRITE setDataFilename NOTIFY dataFilenameChanged)
     Q_PROPERTY(bool isSaveJson READ isSaveJson WRITE setIsSaveJson NOTIFY isSaveJsonChanged)
@@ -176,10 +172,6 @@ public slots:
     void onFileDownloadError(QString);
     void httpDownloadFinished();
     void setIsEventStatic(bool isEventStatic);    
-    void setScreenWidth(int screenWidth);
-    void setScreenHeight(int screenHeight);
-
-    void setPoint2PixelH(qreal point2Pixel);
 
 private:
     QJsonObject jsonAnswers(EAItemList* eaItemList
@@ -210,9 +202,7 @@ private:
     bool m_isEventStatic = true;
     EventSource m_eventSource = None;
     bool indiretDownload = false;
-    int m_screenWidth;
-    int m_screenHeight;
-    qreal m_point2PixelH;
+
 };
 
 #endif // EVENTCONTAINER_H

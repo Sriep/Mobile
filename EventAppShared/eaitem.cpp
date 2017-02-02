@@ -155,6 +155,72 @@ void EAItem::addTextQuestion(const QString &questionText, int index)
         m_eaQuestions.insert(index, newQuestion);
     emit eaQuestionsChanged();
 }
+
+void EAItem::deleteQuestion(int index)
+{
+    //m_eaQuestions
+    if (index < m_eaQuestions.count() && index >= 0)
+    {
+        m_eaQuestions.removeAt(index);
+        emit eaQuestionsChanged();
+    }
+    else
+    {
+        emit getEaItemList()->getEaContainer()->error(tr("Error deleting question")
+                    ,tr("Invalid index ") + QString::number(index)
+                    ,"EAItemList::deleteItem"
+                    , Warning);
+    }
+}
+
+int EAItem::moveQuestion(int index, bool directionUp)
+{
+    if (index < m_eaQuestions.count() && index >= 0)
+    {
+        if (directionUp)
+        {
+            if (0 == index)
+            {
+                emit getEaItemList()->getEaContainer()->error(tr("Error moving item")
+                            ,tr("Item already at top of list")
+                            ,"EAItemList::moveItem"
+                            , Warning);
+                return index;
+            }
+            else
+            {
+                m_eaQuestions.swap(index, index -1);
+                emit eaQuestionsChanged();
+                return index-1;
+            }
+        }
+        else
+        {
+            if (m_eaQuestions.count()-1 == index)
+            {
+                emit getEaItemList()->getEaContainer()->error(tr("Error moving itme")
+                            ,tr("Item already at bottom of list")
+                            ,"EAItemList::moveItem"
+                            , Warning);
+                return index;
+            }
+            else
+            {
+                m_eaQuestions.swap(index, index +1);
+                emit eaQuestionsChanged();
+                return index +1;
+            }
+        }
+    }
+    else
+    {
+        emit getEaItemList()->getEaContainer()->error(tr("Error moving item")
+                    ,tr("Invalid index ") + QString::number(index)
+                    ,"EAItemList::moveItem"
+                    , Warning);
+        return -1;
+    }
+}
 /*
 void EAItem::saveAnswers()
 {

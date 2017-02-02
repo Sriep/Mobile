@@ -67,5 +67,7 @@
         <file>DownloadEventFB.qml</file>
         <file>DownloadEventFBForm.ui.qml</file>
         <file>MenuItemDelegate.qml</file>
+        <file>ListsDrawer.qml</file>
+        <file>OptionsDrawer.qml</file>
     </qresource>
 </RCC>

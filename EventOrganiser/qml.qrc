@@ -36,5 +36,9 @@
         <file>content/EditImageGroup.qml</file>
         <file>content/displays/pumpkin.json</file>
         <file>content/displays/grey.json</file>
+        <file>content/displays/grey-white.json</file>
+        <file>content/displays/LLaw.json</file>
+        <file>content/EaStringsForm.ui.qml</file>
+        <file>content/EaStrings.qml</file>
     </qresource>
 </RCC>

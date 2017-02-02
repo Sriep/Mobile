@@ -2,8 +2,9 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 
 ItemDelegate {
-    // A simple rounded rectangle for the background
-    //id: menuItemDelegate
+    property  alias itemBackground: itemBackground
+    property  alias itemText: itemText
+
     width: parent.width
     highlighted: ListView.isCurrentItem
     clip: true
@@ -16,8 +17,9 @@ ItemDelegate {
         height: eaContainer.eaConstruction.menuDisplay.height
 
         //color: eaContainer.eaConstruction.menuDisplay.colour
-        color: menuItemDelegate.highlighted ? eaContainer.eaConstruction.menuDisplay.highlitedColour
-                                            : eaContainer.eaConstruction.menuDisplay.colour
+        //color: menuItemDelegate.highlighted ? eaContainer.eaConstruction.menuDisplay.highlitedColour
+        //                                    : eaContainer.eaConstruction.menuDisplay.colour
+        color: eaContainer.eaConstruction.menuDisplay.colour
 
         border.color: eaContainer.eaConstruction.menuDisplay.borderColour
         border.width: eaContainer.eaConstruction.menuDisplay.borderWidth
@@ -38,7 +40,7 @@ ItemDelegate {
 
         text: model.title
     }
-
+/*
     Connections {
         target: menuListView
         onCurrentItemChanged: {
@@ -55,8 +57,57 @@ ItemDelegate {
             stackCtl.currentIndex = position + stackCtl.startDrawerId
             titleLabel.text = model.title
         }
-        drawer.close();
+        listsDrawer.close();
     }
+
+    Component.onCompleted: {
+        setToolBarDisplayDataParameters(itemBackground
+                     , itemText
+                     , eaContainer.eaConstruction.menuDisplay
+                     , menuItemDelegate);
+    }
+
+    function setMenuListDisplayParameters() {
+        setToolBarDisplayDataParameters(itemBackground
+                     , itemText
+                     , eaContainer.eaConstruction.menuDisplay
+                     , menuItemDelegate);
+    }
+*/
+/*
+    function setToolBarDisplayDataParameters(rectangle
+                                          , textBox
+                                          , displayData
+                                          , delegate) {
+
+
+        console.log("setMenuListdisplayDataParameters");
+        rectangle.height = displayData.height
+
+        rectangle.x = displayData.x
+        rectangle.y = displayData.y
+        rectangle.color = displayData.colour
+        rectangle.color = delegate.highlighted
+                ? displayData.highlitedColour
+                : displayData.colour
+        rectangle.border.color = displayData.borderColour
+        rectangle.border.width = displayData.borderWidth
+        rectangle.radius = displayData.radius
+
+        textBox.font = displayData.font
+        textBox.color = displayData.fontColour
+        textBox.style = displayData.textStyle
+        textBox.styleColor = displayData.styleColour
+
+        textBox.x = displayData.xText
+        textBox.y = displayData.yText
+        textBox.verticalAlignment = displayData.vAlignment
+        textBox.horizontalAlignment = displayData.hAlignment
+        var it = rectangle;
+        var itx = textBox;
+        console.log("rectangle.border.color",rectangle.border.color);
+    }
+
 
     function setMenuListDisplayParameters() {
         console.log("setMenuListDisplayParameters");
@@ -87,4 +138,5 @@ ItemDelegate {
         var itx = itemText;
         console.log("itemBackground.border.color",itemBackground.border.color);
     }
+    */
 }

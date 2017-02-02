@@ -43,20 +43,14 @@ EAItemList::~EAItemList()
 {
 }
 
-//void EAItemList::clear(QQmlEngine *engine)
 void EAItemList::clear(EAContainer* eacontainer)
 {
     EAItemList::clear(eacontainer);
-    //resetImageProvider();
 }
 
 
 void EAItemList::resetImageProvider(EAContainer* eacontainer)
 {
-    //QString df = eacontainer->dataFilename();
-    //QQmlContext *  qqc = QQmlEngine::contextForObject(eacontainer);
-    //QQmlEngine* en = qqc->engine();
-
     QQmlEngine* engine = qmlEngine(eacontainer);
     if (engine)
     {
@@ -73,8 +67,6 @@ void EAItemList::resetImageProvider(EAContainer* eacontainer)
     }
 }
 
-
-//void EAItemList::read(const QJsonObject &json, EAContainer* eacontainer)//QQmlEngine *engine)
 void EAItemList::read(const QJsonObject &json
                       , QQmlEngine *engine
                       , EAContainer *eacontainer)
@@ -109,23 +101,6 @@ void EAItemList::read(const QJsonObject &json
     }
 
     resetImageProvider(getEaContainer());
-    //QQmlEngine*  engine = qmlEngine(this);
-/*
-    if (engine)
-    {
-        QString namePicList = "list_" + QString::number(getIndex());
-        //QQmlImageProviderBase* provider = engine->imageProvider(namePicList);
-        QQmlImageProviderBase* provider = engine->imageProvider(listName());
-        if (!provider)
-        {
-
-            PictureListImageProvider* provider
-                    = new PictureListImageProvider(jsonPictures);
-            engine->addImageProvider(listName(), provider);
-            //engine->addImageProvider(namePicList, provider);
-        }
-    }
-    */
 }
 
 void EAItemList::write(QJsonObject &json)
@@ -285,19 +260,30 @@ void EAItemList::setDataList(QString dataList)
     emit dataListChanged(dataList);
 }
 
-bool EAItemList::readCSV(const QString filenameUrl)
+void EAItemList::loadCSV(const QString filenameUrl)
 {
     QString filename = QUrl(filenameUrl).toLocalFile();
 
     QList<QStringList> csvListLines = CSV::parseFromFile(filename);
     if (csvListLines.length() > 0 )
     {
+        readFormatedList(csvListLines);
+  /*
         QStringList headerList = csvListLines[0];
+        //csvListLines.removeFirst();
+
+
         QStringList headerModels = addHeaderFields(headerList);
         if (headerModels.length() == 0)
-            return false;
+        {
+            emit getEaContainer()->error(tr("Error loading csv file")
+                        ,tr("No header fields found ")
+                        ,"headerModels.length() == 0"
+                        , Warning);
+            return;
+        }
 
-        if (csvListLines.length() > 1)
+        if (csvListLines.length() > 0)
         {
             for ( int line=1 ; line < csvListLines.length() ; line++ )
             {
@@ -307,13 +293,180 @@ bool EAItemList::readCSV(const QString filenameUrl)
             }
             setDataList(jsonData);
         }
-        return true;
+        */
     }
     else
     {
-        return false;
+        emit getEaContainer()->error(tr("Error loading csv file")
+                    ,tr("No data found ")
+                    ,"EAItemList::loadCSV csvListLines.length() <= 0"
+                    , Warning);
     }
 
+}
+
+void EAItemList::readFormatedList(QList<QStringList> csvListLines)
+{
+    QStringList headerList = csvListLines[0];
+    csvListLines.removeFirst();
+
+    QStringList headerModels = addHeaderFields(headerList);
+    if (headerModels.length() == 0)
+    {
+        emit getEaContainer()->error(tr("Error loading csv file")
+                    ,tr("No header fields found ")
+                    ,"headerModels.length() == 0"
+                    , Warning);
+        return;
+    }
+
+    for ( int line=1 ; line < csvListLines.length() ; line++ )
+    {
+        QJsonObject newItem = newDataItem(csvListLines[line], headerModels);
+        newItem["id"] = useNextItemId();
+        jsonData.append(newItem);
+    }
+    setDataList(jsonData);
+}
+
+void EAItemList::readMixedList(QList<QStringList> listlist)
+{
+
+}
+
+void EAItemList::saveCSV(const QString filenameUrl)
+{
+    QString filename = QUrl(filenameUrl).toLocalFile();
+
+    QList<QStringList> dataStringLists;
+    if (listType() == ListType::Formated)
+        dataStringLists = formatted2StringLists(filename);
+    else if (listType() == ListType::Manual)
+        dataStringLists = manual2StringLists(filename);
+
+    dataStringLists.prepend(headerList());
+    CSV::write(dataStringLists, filename);
+}
+
+QList<QStringList> EAItemList::formatted2StringLists(const QString& imagePath)
+{
+    QJsonDocument tfDoc(QJsonDocument::fromJson(titleFields().toUtf8()));
+    QJsonObject titleObject = tfDoc.object();
+    QJsonDocument dlDoc(QJsonDocument::fromJson(dataList().toUtf8()));
+    QJsonObject dataObject = dlDoc.object();
+    QJsonArray headers = titleObject["headerFields"].toArray();
+    QJsonArray data = dataObject["dataItems"].toArray();
+
+    QList<QStringList> rtv;
+    QStringList headerRow, headerNames;
+    for ( int i=0 ; i<headers.size() ; i++ )
+    {
+        headerRow << headers[i].toObject()["field"].toString();
+        headerNames << headers[i].toObject()["modelName"].toString();
+    }
+    if (showPhotos())
+        headerRow << "picture";
+    rtv << headerRow;
+
+    for ( int j=0 ; j<data.size() ; j++ )
+    {
+        QJsonObject rowObject = data[j].toObject();
+        QStringList row;
+        for ( int i=0 ; i<headers.size() ; i++ )
+        {
+            QString cellData = rowObject[headerNames[i]].toString();
+            row << cellData;
+        }
+
+        if (showPhotos())
+        {
+            row << savePicture(j, imagePath);
+        }
+
+        rtv << row;
+    }
+
+    return rtv;
+}
+
+QString EAItemList::savePicture(int index, const QString& path)
+{
+    QImage image = pixmapFrom(jsonPictures[index]).toImage();
+    //QString fname = path + "_" + QString::number(getIndex());
+    //fname += "_" + QString::number(index) + ".png";
+    QString fname = saveItemFilename(index, path) + ".png";
+    image.save(fname, "PNG");
+    return fname;
+}
+
+QString EAItemList::saveItemFilename(int index, const QString &path)
+{
+    return path + "_" + QString::number(getIndex())
+            + "_" + QString::number(index);
+}
+
+QStringList EAItemList::headerList()
+{
+    QStringList rtv;
+    rtv << "EventAppDrawer";
+    rtv << QString::number(listType());
+    rtv << listName();
+    return rtv;
+}
+
+QList<QStringList> EAItemList::manual2StringLists(const QString& imagePath)
+{
+    QList<QStringList> rtv;
+
+    for ( int i=0 ; i<getEaItems().size() ; i++ )
+    {
+        QStringList row;
+
+        EAItem* item = getEaItems()[i];
+        switch (item->itemType()) {
+        case EAItem::ItemType::Image:
+            row << "Image";
+            row << savePicture(i, imagePath);
+            break;
+        case EAItem::ItemType::Document:
+            {
+                row << "Text";
+                QString fname = saveItemFilename(i, imagePath) + ".txt";
+                QFile saveFile(fname);
+                if (!saveFile.open(QIODevice::WriteOnly)) {
+                    emit getEaContainer()->error(tr("Error saving item to file")
+                                ,tr("Cannot save to file ") + fname
+                                ,"EAItemList::manual2StringLists"
+                                , Warning);
+                }
+                else
+                    saveFile.write(item->displayText().toUtf8());
+                row << fname;
+            }
+            break;
+        case EAItem::ItemType::Url:
+            row << "Url";
+            row << item->urlString();
+            break;
+        case EAItem::ItemType::Map:
+            row << "Map";
+            row << item->mapInfo()->maptype();
+            row << item->mapInfo()->accessToken();
+            row << item->mapInfo()->mapId();
+            row << QString::number(item->mapInfo()->latitude());
+            row << QString::number(item->mapInfo()->longitude());
+            row << QString::number(item->mapInfo()->zoomLevel());
+            row << (item->mapInfo()->useCurrent() ? "true" : "false");
+            break;
+        case EAItem::ItemType::Questions:
+            row << "Question";
+        default:
+            break;
+        }
+        rtv << row;
+    }
+
+    return rtv;
 }
 
 void EAItemList::amendField(int index
@@ -406,13 +559,13 @@ int EAItemList::insertListItem(int index
         return -1;
     }
     newItem->setEaItemList(this);   
-    m_eaItems.insert(index, newItem);
+    getEaItems().insert(index, newItem);
     emit eaItemListChanged();
 
     if ( index < 0 )
         return 0;
-    else if ( index >= m_eaItems.size())
-        return m_eaItems.size();
+    else if ( index >= getEaItems().size())
+        return getEaItems().size();
     else
         return index;
 }
@@ -424,7 +577,7 @@ int EAItemList::insertMapItem(int index, const QString &title
 {
     EAItem* newItem;
     newItem = new EAItem(EAItem::ItemType::Map, title);
-    m_eaItems.insert(index, newItem);
+    getEaItems().insert(index, newItem);
     EAMap* mapInfo = newItem->mapInfo();
     mapInfo->setMaptype(maptype);
     mapInfo->setAccessToken(token);
@@ -437,8 +590,8 @@ int EAItemList::insertMapItem(int index, const QString &title
     emit eaItemListChanged();
     if ( index < 0 )
         return 0;
-    else if ( index >= m_eaItems.size())
-        return m_eaItems.size();
+    else if ( index >= getEaItems().size())
+        return getEaItems().size();
     else
         return index;
 }

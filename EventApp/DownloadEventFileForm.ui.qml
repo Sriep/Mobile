@@ -24,7 +24,7 @@ Item {
                 id: label1
                 width: 105
                 height: 20
-                text: qsTr("Dwonload from url")
+                text: eaContainer.eaConstruction.strings.lfDownloadUrl
                 verticalAlignment: Text.AlignVCenter
                 font.pixelSize: 12
             }
@@ -32,8 +32,6 @@ Item {
             TextField {
                 id: urlText
                 height: 30; width: 400
-                //text: "https://www.dropbox.com/s/qvcmm683cq237ig/test2.json"
-                //text: "https://www.dropbox.com/s/oh1hwo4oz82jdhi/NewEvent.json"
                 text: "https://www.dropbox.com/s/y22jqfwuei1ew70/4455.json?raw=1"
                 horizontalAlignment: Text.AlignLeft
                 Layout.fillWidth: true
@@ -49,7 +47,7 @@ Item {
                 anchors.left: parent.left
                 Button {
                     id: downloadButton
-                    text: qsTr("Download from url")
+                    text: eaContainer.eaConstruction.strings.bDownlaod
                 }
             }
 
@@ -66,7 +64,7 @@ Item {
 
         Button {
             id: quitButton
-            text: qsTr("Exit")
+            text: eaContainer.eaConstruction.strings.bExit
         }
 
         Button {
@@ -82,7 +80,6 @@ Item {
             anchors.left: parent.left
             anchors.leftMargin: 0
             visible: false
-            //anchors.bottom: saveTitlesBut.top rowLayout1.top??
             Flickable {
                 anchors.fill: parent
                 TextArea.flickable: TextArea {

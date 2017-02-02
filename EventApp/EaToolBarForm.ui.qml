@@ -80,7 +80,8 @@ ToolBar {
             Connections {
                 target: eaContainer.user
                 onLoggedOnChanged: userLable.text =  eaContainer.user.loggedOn
-                            ? eaContainer.user.user : "logged off"
+                            ? eaContainer.user.user
+                            : eaContainer.eaConstruction.strings.tbLoggedOff
             }
         }
 

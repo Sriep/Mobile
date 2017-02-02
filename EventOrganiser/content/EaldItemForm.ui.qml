@@ -138,7 +138,6 @@ Item {
                         x: 10
                         //width: 110; height: 160
                         width: parent.width-20; height: parent.height
-                        scale: 0.01
                         highlightFollowsCurrentItem: true
                         highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
                         focus: true

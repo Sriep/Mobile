@@ -35,7 +35,10 @@ public:
     explicit EAItem(const QString& title, const QUrl url);
 
     Q_INVOKABLE void addTextQuestion(const QString& questionText, int index = -1);
-   // Q_INVOKABLE void saveAnswers();
+    Q_INVOKABLE void deleteQuestion(int index);
+    Q_INVOKABLE int moveQuestion(int index, bool directionUp);
+
+    // Q_INVOKABLE void saveAnswers();
 
     void read(const QJsonObject &json, EAItemList* eaitemList = NULL);
     void write(QJsonObject &json);

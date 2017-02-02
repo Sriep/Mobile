@@ -1,8 +1,38 @@
 import QtQuick 2.0
+import "qrc:///shared/dataList.js" as DLjs
 
 EaDisplayParaForm {
     width: parent.width; height: parent.height
     groupDispalyPara.title: title;
+
+    Component.onCompleted: {
+        //paraToolBarHovers();
+    }
+
+    function paraToolBarHovers() {
+        console.log("EaDisplayPara.onCompleted");
+        DLjs.addTT(paraToolBar.styleCombo, "Border width in pixels.");
+        DLjs.addTT(paraToolBar.styleColourBut, "Border width in pixels.");
+        DLjs.addTT(paraToolBar.dxTextSB, "Border width in pixels.");
+        DLjs.addTT(paraToolBar.dyTextSB, "Border width in pixels.");
+        DLjs.addTT(paraToolBar.hAlignCombo, "Border width in pixels.");
+        DLjs.addTT(paraToolBar.vAlignCombo, "Border width in pixels.");
+        DLjs.addTT(paraToolBar.bkColourBut, "Border width in pixels.");
+        DLjs.addTT(paraToolBar.xTF, "Border width in pixels.");
+        DLjs.addTT(paraToolBar.yTF, "Border width in pixels.");
+        DLjs.addTT(paraToolBar.heightTF, "Border width in pixels.");
+        DLjs.addTT(paraToolBar.radiusTF, "Border width in pixels.");
+        DLjs.addTT(paraToolBar.borderWidthSB, "Border width in pixels.");
+        DLjs.addTT(paraToolBar.whiteIconsCB, "Border width in pixels.");
+        DLjs.addTT(paraToolBar.applyBut, "Border width in pixels.");
+    }
+
+    Connections {
+        target: bkColourBut
+        onCompleted: {
+            DLjs.addTT(paraToolBar.bkColourBut, "Border width in pixels.");
+        }
+    }
 
     Connections {
         target: applyBut
@@ -74,19 +104,9 @@ EaDisplayParaForm {
             fontDlg.populateForm(featuredDisplay.font, featuredDisplay.fontColour);
         }
     }
-    /*
-        rectangle.x = featuredDisplay.x
-        rectangle.y = featuredDisplay.y
-        rectangle.color = featuredDisplay.colour
-        rectangle.border.color = featuredDisplay.borderColour
-        rectangle.border.width = featuredDisplay.borderWidth
-        rectangle.radius = featuredDisplay.radius
 
-        textBox.font = featuredDisplay.font
-        textBox.color = featuredDisplay.fontColour
-        textBox.style = featuredDisplay.textStyle
-        textBox.styleColor = featuredDisplay.styleColour
-        */
+
+
 }
 
 

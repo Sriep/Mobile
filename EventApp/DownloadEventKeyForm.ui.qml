@@ -22,7 +22,7 @@ Item {
 
             Label {
                 id: keyText
-                text: qsTr("Download from key")
+                text: eaContainer.eaConstruction.strings.lkDownlaodFKey
                 font.pixelSize: 12
             }
             TextField {
@@ -46,7 +46,7 @@ Item {
 
             Button {
                 id: downloadKeyBut
-                text: qsTr("Download from key")
+                text: eaContainer.eaConstruction.strings.bDownlaod
             }
         }
 
@@ -61,7 +61,7 @@ Item {
         }
         Button {
             id: quitButton
-            text: qsTr("Exit")
+            text: eaContainer.eaConstruction.strings.bExit
         }
 
         Rectangle {

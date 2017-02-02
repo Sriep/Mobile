@@ -30,9 +30,17 @@ EaldListForm {
       }
     }
 */
+    function loadCsvFile (filename) {
+         console.log("EAListDisplayPageForm about to load", filename);
+         if (featuredList.loadCSV(filename)) {
+            popItemList(featuredList);
+            ldpEventAppPage.needToRefershLists();
+         }
+    }
+
     function refreshFields() {
-        console.log("listName", featuredList.listName);
-        itemNameTA.text = featuredList.listName;
+        if (featuredList)
+            itemNameTA.text = featuredList.listName;
     }
 
     function popItemList (eventList) {
@@ -112,7 +120,7 @@ EaldListForm {
         popItemList(eaListDisplayPage.featuredList);
     }
 
-    mouseAreaLV.onClicked: {
+    mouseAreaLV.onClicked: {        
         var index = itmesEntered.indexAt(mouse.x, mouse.y);
         if (index >= 0)
         {

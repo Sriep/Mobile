@@ -5,6 +5,7 @@
 #include <QQuickItem>
 #include "eventappshared_global.h"
 #include "eaobjdisplay.h"
+#include "eastrings.h"
 
 class  EAConstruction : public QQuickItem
 {
@@ -17,6 +18,7 @@ class  EAConstruction : public QQuickItem
     Q_PROPERTY(EAObjDisplay* display READ display WRITE setDisplay NOTIFY displayChanged)
     Q_PROPERTY(EAObjDisplay* toolBarDisplay READ toolBarDisplay WRITE setToolBarDisplay NOTIFY toolBarDisplayChanged)
     Q_PROPERTY(EAObjDisplay* menuDisplay READ menuDisplay WRITE setMenuDisplay NOTIFY menuDisplayChanged)
+    Q_PROPERTY(EAStrings* strings READ strings WRITE setStrings NOTIFY stringsChanged)
 
     QColor m_backColour;
     QColor m_foreColour;
@@ -25,7 +27,8 @@ class  EAConstruction : public QQuickItem
     EAObjDisplay* m_display = NULL;    
     QString m_style = "Default";    
     EAObjDisplay* m_toolBarDisplay;
-    EAObjDisplay* m_menuDisplay;
+    EAObjDisplay* m_menuDisplay;    
+    EAStrings* m_strings;
 
 public:
     EAConstruction();
@@ -40,7 +43,8 @@ public:
     EAObjDisplay* display() const;    
     QString style() const;    
     EAObjDisplay* toolBarDisplay() const;
-    EAObjDisplay* menuDisplay() const;
+    EAObjDisplay* menuDisplay() const;    
+    EAStrings* strings() const;
 
 signals:
 
@@ -51,7 +55,8 @@ signals:
     void displayChanged(EAObjDisplay* display);    
     void styleChanged(QString style);    
     void toolBarDisplayChanged(EAObjDisplay* toolBarDisplay);
-    void menuDisplayChanged(EAObjDisplay* menuDisplay);
+    void menuDisplayChanged(EAObjDisplay* menuDisplay);    
+    void stringsChanged(EAStrings* strings);
 
 public slots:
     void setBackColour(QColor backColour);
@@ -62,6 +67,7 @@ public slots:
     void setStyle(QString style);
     void setToolBarDisplay(EAObjDisplay* toolBarDisplay);
     void setMenuDisplay(EAObjDisplay* menuDisplay);
+    void setStrings(EAStrings* strings);
 };
 
 #endif // EVENTAPPCONSTRUCTION_H

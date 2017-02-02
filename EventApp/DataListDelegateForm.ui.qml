@@ -111,14 +111,6 @@ Item {
         contentHeight: bottomText.height
         clip: true
         x:5
-
-   /*      Text {
-          id: bottomText;
-          wrapMode: Text.WordWrap;
-          width: details.width
-          //text: "Bob"
-         // text: displayText
-        }*/
        Text {
             id: bottomText
             font: eaContainer.eaConstruction.display.font

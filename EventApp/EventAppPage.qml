@@ -34,14 +34,13 @@ EventAppPageForm {
           messageDialog.informativeText = information
           messageDialog.icon = icon
           messageDialog.detailedText = details
-          //messageDialog.detailedText = "height " + eaContainer.screenHeight
           messageDialog.visible = true
       }
   }
 
   function refreshLists (stack, model) {
       model.clear();
-      //clearStack(stack)
+      clearStack(stack)
       var stackCount = stack.count;
       var countItemLists = eaContainer.eaItemLists.length;
       for (var i = 0; i < countItemLists; i++) {
@@ -52,13 +51,9 @@ EventAppPageForm {
           else
               component = "qrc:///shared/DataListImage.qml";
           var newList = Qt.createComponent(component, stack);
-          if (stackCount < 10) {
-              newList.createObject(stack
-                  , {"eaLVItemList": eaContainer.eaItemLists[i]});
-          } else {
-              newList.createObject(null
-                  , {"eaLVItemList": eaContainer.eaItemLists[i]});
-          }
+
+          newList.createObject(stack
+              , {"eaLVItemList": eaContainer.eaItemLists[i]});
 
           model.append({
               "title" : eaContainer.eaItemLists[i].listName,
@@ -66,10 +61,11 @@ EventAppPageForm {
           });
           console.log("refreshLists mount count", model.count);
       } //for
-      console.log("End refreshLists")
+      console.log("End refreshLists");
+      model.sync();
   }
 
-  function needToRefershLists(dataComponet) {
+  function needToRefershLists() {
       refreshLists(stackCtl, stackCtl.drawerModel);
   }
 

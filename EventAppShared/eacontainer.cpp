@@ -8,8 +8,8 @@
 #include <QCryptographicHash>
 #include <QDebug>
 
-#include <QApplication>
-#include <QScreen>
+//#include <QApplication>
+//#include <QScreen>
 
 #include "firebase.h"
 #include "eacontainer.h"
@@ -30,32 +30,6 @@ QList<EAItemList *> EAContainer::getEaItemLists() const
 void EAContainer::setEaItemLists(const QList<EAItemList *> &eaItemLists)
 {
     m_eaItemLists = eaItemLists;
-}
-
-int EAContainer::screenWidth() const
-{
-    QScreen *screen = QApplication::screens().at(0);
-    int width =screen->availableGeometry().width();
-    //int height  =screen->availableGeometry().height();
-    return width;
-    //return m_screenWidth;
-}
-
-int EAContainer::screenHeight() const
-{
-    QScreen *screen = QApplication::screens().at(0);
-    //int width =screen->availableGeometry().width();
-    int height  =screen->availableGeometry().height();
-    return height;
-    //return m_screenHeight;
-}
-
-qreal EAContainer::point2PixelH() const
-{
-    QScreen *screen = QApplication::screens().at(0);
-    qreal dotsInch = screen->logicalDotsPerInchY();
-
-    return dotsInch/72;
 }
 
 EAContainer::EAContainer()
@@ -378,33 +352,6 @@ void EAContainer::setIsEventStatic(bool isEventStatic)
 
     m_isEventStatic = isEventStatic;
     emit isEventStaticChanged(isEventStatic);
-}
-
-void EAContainer::setScreenWidth(int screenWidth)
-{
-    if (m_screenWidth == screenWidth)
-        return;
-
-    m_screenWidth = screenWidth;
-    emit screenWidthChanged(screenWidth);
-}
-
-void EAContainer::setScreenHeight(int screenHeight)
-{
-    if (m_screenHeight == screenHeight)
-        return;
-
-    m_screenHeight = screenHeight;
-    emit screenHeightChanged(screenHeight);
-}
-
-void EAContainer::setPoint2PixelH(qreal point2Pixel)
-{
-    if (m_point2PixelH == point2Pixel)
-        return;
-
-    m_point2PixelH = point2Pixel;
-    emit point2PixelHChanged(point2Pixel);
 }
 
 void EAContainer::onResponseReady(QByteArray data)

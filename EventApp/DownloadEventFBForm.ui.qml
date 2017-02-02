@@ -22,7 +22,7 @@ Item {
 
             Label {
                 id: lable3
-                text: qsTr("Firebase url")
+                text:  eaContainer.eaConstruction.strings.lfFirebaseUrl
                 font.pixelSize: 12
             }
             TextField {
@@ -40,7 +40,7 @@ Item {
             height: 30
             Label {
                 id: keyText
-                text: qsTr("Download key")
+                text: eaContainer.eaConstruction.strings.lkDownlaodFKey
                 font.pixelSize: 12
             }
             TextField {
@@ -63,7 +63,7 @@ Item {
 
             Button {
                 id: downloadKeyBut
-                text: qsTr("Download from key")
+                text: eaContainer.eaConstruction.strings.bDownlaod
             }
         }
 
@@ -78,7 +78,7 @@ Item {
         }
         Button {
             id: quitButton
-            text: qsTr("Exit")
+            text: eaContainer.eaConstruction.strings.bExit
         }
 
         Rectangle {

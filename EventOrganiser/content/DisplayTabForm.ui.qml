@@ -1,10 +1,11 @@
-import QtQuick 2.7
+                           import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QtQuick.Extras 1.4
 import "qrc:///shared"
 
 Item {
+    id: dispalyTabForm
     width: 600; height: 800;
         Column {
             width: parent.width; height: parent.height -100
@@ -27,6 +28,9 @@ Item {
                 }
                 TabButton {
                     text: qsTr("Drawer")
+                }
+                TabButton {
+                    text: qsTr("Strings")
                 }
             }
            // DataListImage {}
@@ -66,6 +70,10 @@ Item {
                         id: paraDrawer
                         property var featuredDisplay: eaContainer.eaConstruction.display
                         property string title: "Drawer display parameters"
+                    }
+
+                    EaStrings {
+                        id: eaStrings
                     }
 
                 } //StackLayout

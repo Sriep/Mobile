@@ -23,6 +23,10 @@ Item {
     property alias dxTextSB: dxTextSB
     property alias styleCombo: styleCombo
     property alias whiteIconsCB: whiteIconsCB
+    property alias bkColourBut: bkColourBut
+    property alias styleColourBut: styleColourBut
+    property alias colourBut: colourBut
+    property alias button: button
 
     GroupBox {
         id: groupDispalyPara
@@ -109,6 +113,7 @@ Item {
                         }
 
                         Button {
+                            id: button
                             text: bkHColorDialog.currentColor
                             flat: true
                             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
@@ -257,7 +262,7 @@ Item {
                         }
 
                         Button {
-                           // id: bkColourBut
+                            id: bkColourBut
                             // text: qsTr(colorDialog.currentColor.name);
                             text: bkColorDialog.currentColor
                             flat: true

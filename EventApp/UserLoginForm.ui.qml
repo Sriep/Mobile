@@ -30,7 +30,8 @@ Item {
 
             Label {
                 id: text4
-                text: qsTr("User id")
+                text: eaContainer.eaConstruction.strings.lUserId
+                //text: qsTr("User id")
                 font.pixelSize: 12
             }
 
@@ -72,7 +73,7 @@ Item {
 
             Label {
                 id: text3
-                text: qsTr("Password")
+                text: eaContainer.eaConstruction.strings.lPassword
                 font.pixelSize: 12
             }
         }
@@ -84,22 +85,22 @@ Item {
 
             Button {
                 id: registerBut
-                text: qsTr("Register")
+                text: eaContainer.eaConstruction.strings.bRegister
             }
 
             Button {
                 id: logonBut
-                text: qsTr("Logon")
+                text: eaContainer.eaConstruction.strings.bLogin
             }
 
             Button {
                 id: quitButton
-                text: qsTr("Exit")
+                text: eaContainer.eaConstruction.strings.bExit
             }
 
             Button {
                 id: logoffBut
-                text: qsTr("Logoff")
+                text: eaContainer.eaConstruction.strings.bLogoff
             }
         }
 

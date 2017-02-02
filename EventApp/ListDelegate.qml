@@ -6,7 +6,6 @@ import "qrc:///shared/dataList.js" as DataListJS
 import EventAppData 1.0
 
 
- //setDisplayParameters(displayData, rectangle, textBox)
 ListDelegateForm {
     width: parent.width
     property EAObjDisplay eaDisplay: eaContainer.eaConstruction.display

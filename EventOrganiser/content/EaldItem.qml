@@ -10,6 +10,12 @@ EaldItemForm {
 
     property int listIndex: eaListDisplayPage.featuredItemIndex
 
+    Connections {
+        onFeaturedItemChanged: {
+            popQuestionList (featuredItem, questionsListModel);
+        }
+    }
+
     Component.onCompleted: {
         popQuestionList (featuredItem, questionsListModel);
     }
@@ -29,8 +35,8 @@ EaldItemForm {
         {
             var eaQuestion = item.questions[i];
             var dic = {
-                "questionType" : eaQuestion.itemType
-                , "question" : eaQuestion.question
+               // "questionType" : eaQuestion.itemType ,
+                 "question" : eaQuestion.question
             };
             model.append(dic);
         }
@@ -57,10 +63,33 @@ EaldItemForm {
     }
 
     quMouseAreaLV.onClicked: {
-        var index = itmesEntered.indexAt(mouse.x, mouse.y);
+        popQuestionList(featuredItem, questionsListModel);
+        var index = questionsList.indexAt(mouse.x, mouse.y);
         if (index >= 0) {
             questionsList.currentIndex = index;
-        }
+        }       
+    }
+
+    deleteQuestionBut.onPressed: {
+        var index = questionsList.currentIndex;
+       featuredItem.deleteQuestion(index);
+       popQuestionList (featuredItem, questionsListModel);
+       questionsList.currentIndex = index-1;
+    }
+
+    upQuestionBut.onPressed: {
+        var v = questionsList.count;
+        var index = questionsList.currentIndex;
+        var newIndex = featuredItem.moveQuestion(index, true);
         popQuestionList (featuredItem, questionsListModel);
+        questionsList.currentIndex = newIndex;
+    }
+
+    downQuestionBut.onPressed: {
+        var index = questionsList.currentIndex;
+        var index = questionsList.currentIndex;
+        var newIndex = featuredItem.moveQuestion(index, false);
+        popQuestionList (featuredItem, questionsListModel);
+        questionsList.currentIndex = newIndex;
     }
 }

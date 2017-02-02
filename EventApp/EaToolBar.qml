@@ -5,15 +5,17 @@ EaToolBarForm {
     id: toolBar
     //titleLabel.text: eaContainer.eaInfo.eventName
     //userLable.text: eaContainer.user.loggodOn ? eaContainer.user.user : "logged off"
-    drawerButton.onClicked: {
-        drawer.open()
-    }
+    drawerButton.onClicked:   listsDrawer.open()
 
     userBut.onClicked: {
         stackCtl.currentIndex = stackCtl.userLoginId;
     }
 
-    menuButton.onClicked: optionsMenu.open()
+    //menuButton.onClicked: optionsMenu.open()
+    menuButton.onClicked: optionsDrawer.open()
+
+/*
+
     Menu {
         id: optionsMenu
         x: parent.width - width
@@ -47,89 +49,54 @@ EaToolBarForm {
             onTriggered: Qt.quit()
         }
     }
-
-    Drawer {
-        id: drawer
-        width: Math.min(eventAppMainPage.width, eventAppMainPage.height) / 3 * 2
-        height: eventAppMainPage.height
-        background: Rectangle {
-            color: eaContainer.eaConstruction.menuDisplay.backColour
-        }
-
-        Connections {
-            target: menuListView
-            onUpadeteDisplay: {
-                console.log("onUpadeteDisplay");
-            }
-        }
-        Connections {
-            target: eaContainer
-            onEaConstructionChanged: {
-                console.log("onEaConstructionChanged");
-            }
-        }
-
-        ListView {
-            id: menuListView
-            currentIndex: -1
-            anchors.fill: parent
-            signal upadeteDisplay()
-
-            delegate: MenuItemDelegate {
-                id: menuItemDelegate
-
-                Connections {
-                    target: eaContainer
-                    onEaConstructionChanged: {
-                        setMenuListDisplayParameters();
-                    }
-                }                
-                Connections {
-                    target: drawer
-                    onOpen: {
-                        setMenuListDisplayParameters();
-                    }
-                }
-                Connections {
-                    target: menuListView
-                    onUpadeteDisplay: {
-                        setMenuListDisplayParameters();
-                    }
-                }
-                
-            }
-            model: stackCtl.drawerModel
-
-            ScrollIndicator.vertical: ScrollIndicator { }
-        }
+*/
+    ListsDrawer {
+        id: listsDrawer
     }
 
-    function setToolBarDisplayParameters() {
-        console.log("setToolBarDisplayParameters");
-        var displayData = eaContainer.eaConstruction.display;
-        var rectangle = dataDelegate.itemBackground;
-        var itemTextv = dataDelegate.topText;
-
-        itemBackground.x = eaContainer.eaConstruction.toolBarDisplay.x
-        itemBackground.y = eaContainer.eaConstruction.toolBarDisplay.x
-        //itemBackground.width = parent.width - x*2;
-        //itemBackground.height = parent.height - y*2
-        itemBackground.color = eaContainer.eaConstruction.toolBarDisplay.colour
-        itemBackground.border.color = eaContainer.eaConstruction.toolBarDisplay.borderColour
-        itemBackground.border.width = eaContainer.eaConstruction.toolBarDisplay.borderWidth
-        itemBackground.radius = eaContainer.eaConstruction.toolBarDisplay.radius
-
-        titleLabel.font = eaContainer.eaConstruction.toolBarDisplay.font
-        titleLabel.color = eaContainer.eaConstruction.toolBarDisplay.fontColour
-        titleLabel.style = eaContainer.eaConstruction.toolBarDisplay.textStyle
-        titleLabel.styleColor = eaContainer.eaConstruction.toolBarDisplay.styleColour
-        titleLabel.x = eaContainer.eaConstruction.toolBarDisplay.xText
-        titleLabel.y = eaContainer.eaConstruction.toolBarDisplay.yText
-        titleLabel.verticalAlignment = eaContainer.eaConstruction.toolBarDisplay.vAlignment
-        titleLabel.horizontalAlignment = eaContainer.eaConstruction.toolBarDisplay.hAlignment
-
+    OptionsDrawer {
+        id: optionsDrawer
     }
 
+
+
+    function setToolBarDisplayDataParameters(rectangle
+                                          , textBox
+                                          , displayData
+                                          , delegate) {
+        setRectangleDisplayParameters(rectangle, displayData, delegate);
+        setTextBoxDisplayParameters(textBox , displayData, delegate);
+    }
+
+    function setRectangleDisplayParameters(rectangle
+                                           , displayData
+                                           , delegate)   {
+        rectangle.height = displayData.height
+
+        rectangle.x = displayData.x
+        rectangle.y = displayData.y
+        rectangle.color = displayData.colour
+        rectangle.color = delegate.highlighted
+                ? displayData.highlitedColour
+                : displayData.colour
+        rectangle.border.color = displayData.borderColour
+        rectangle.border.width = displayData.borderWidth
+        rectangle.radius = displayData.radius
+    }
+
+    function setTextBoxDisplayParameters(textBox
+                                         , displayData
+                                         , delegate) {
+        textBox.font = displayData.font
+        textBox.color = displayData.fontColour
+        textBox.style = displayData.textStyle
+        textBox.styleColor = displayData.styleColour
+
+        textBox.x = displayData.xText
+        textBox.y = displayData.yText
+        textBox.verticalAlignment = displayData.vAlignment
+        textBox.horizontalAlignment = displayData.hAlignment
+    }
 }
 
 

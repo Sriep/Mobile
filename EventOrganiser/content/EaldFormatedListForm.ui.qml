@@ -17,8 +17,8 @@ Item {
     property alias usePhotos: usePhotos
     property alias titlesModel: titlesModel
     property alias loadCsvBut: loadCsvBut
-    property alias switchManual: switchManual
-    property alias deleteList: deleteList
+    //property alias switchManual: switchManual
+    //property alias deleteList: deleteList
     //property alias listTypeCombo: listTypeCombo
     ColumnLayout {
         id: layout1
@@ -33,7 +33,6 @@ Item {
                 selectedNameFilter.index: 0
                 nameFilters: ["Csv files (*.csv)", "Other (*.* )" ]
                 folder: eaContainer.workingDirectory
-                //onAccepted: settingsData.dataFilename = file
                 Connections {
                     onAccepted: loadCsvFile(loadCsvDialog.file);
                 }
@@ -45,13 +44,25 @@ Item {
                 Connections {
                     onPressed: loadCsvDialog.open()
                 }
-                //enabled: csvFilename !== ""
             }
-          /*  TextField {
+            FileDialog {
+                id: saveCsvDialog
+                fileMode: FileDialog.SaveFile
+                selectedNameFilter.index: 0
+                nameFilters: ["Csv files (*.csv)", "Other (*.* )" ]
+                folder: eaContainer.workingDirectory
+                Connections {
+                    onAccepted: featuredList.saveCSV(saveCsvDialog.file);
+                }
+            }
+            Button {
                 height: 50
-                id: csvFilename
-                placeholderText: qsTr("Enter csv filename")
-            }*/
+                id: saveCsvBut
+                text: qsTr("Save csv file")
+                Connections {
+                    onPressed: saveCsvDialog.open()
+                }
+            }
         } // RowLayout
 
         RowLayout {
@@ -130,9 +141,8 @@ Item {
                         text: qsTr("Save chanages")
                         anchors.left: parent.left
                         anchors.leftMargin: 0
-                        //  anchors.bottom: parent.bottom
                     }
-
+/*
                     Button {
                         id: switchManual
                         text: qsTr("Manual")
@@ -142,7 +152,9 @@ Item {
                         id: deleteList
                         text: qsTr("Delete")
                     }
+*/
                 }
+
             } // ColumnLayout
         } // RowLayout
 

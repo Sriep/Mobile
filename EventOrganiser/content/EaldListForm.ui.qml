@@ -24,6 +24,8 @@ Item {
     property alias downItemBut: downItemBut
     property alias deleteItemBut: deleteItemBut
     property alias upItemBut: upItemBut
+    property alias loadCsvBut: loadCsvBut
+    property alias saveCsvBut: saveCsvBut
 
     ColumnLayout {
         id: columnLayout1
@@ -111,8 +113,8 @@ Item {
                             onPressed: loadDoc.open()
                         }
                     }
-
                 }
+
                 RowLayout {
                     id: rowLayout4
                     width: 100
@@ -139,26 +141,60 @@ Item {
                     id: rowLayout5
                     width: 100
                     height: 100
-
                     Button {
                         id: updateItem
                         text: qsTr("Update")
                         visible: false
                     }
-
                     Button {
                         id: addItem
                         text: qsTr("Add new")
                     }
-
-                    Button {
-                        id: clearBut
-                        text: qsTr("Clear")
-                    }
                 }
             }
         }
-
+        RowLayout {
+            Button {
+                id: clearBut
+                text: qsTr("Modify List")
+            }
+            FileDialog {
+                id: loadCsvDialog
+                fileMode: FileDialog.OpenFile
+                selectedNameFilter.index: 0
+                nameFilters: ["Csv files (*.csv)", "Other (*.* )" ]
+                folder: eaContainer.workingDirectory
+                Connections {
+                    onAccepted: loadCsvFile(loadCsvDialog.file);
+                }
+            }
+            Button {
+                height: 50
+                id: loadCsvBut
+                text: qsTr("Load csv file")
+                Connections {
+                    onPressed: loadCsvDialog.open()
+                }
+            }
+            FileDialog {
+                id: saveCsvDialog
+                fileMode: FileDialog.SaveFile
+                selectedNameFilter.index: 0
+                nameFilters: ["Csv files (*.csv)", "Other (*.* )" ]
+                folder: eaContainer.workingDirectory
+                Connections {
+                    onAccepted: featuredList.saveCSV(saveCsvDialog.file);
+                }
+            }
+            Button {
+                height: 50
+                id: saveCsvBut
+                text: qsTr("Save csv file")
+                Connections {
+                    onPressed: saveCsvDialog.open()
+                }
+            }
+        }
         GroupBox {
             width: parent.width; height: 300
             title: "Item lists"

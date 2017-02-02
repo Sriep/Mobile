@@ -10,14 +10,17 @@ EaldFormatedListForm {
         var whatis1
         var newHeader
         titlesModel.clear();
-        var titleFields = JSON.parse(eventList.titleFields);
-        for ( var i=0 ; i < titleFields["headerFields"].length ; i++ ) {
-            whatis1 = titleFields["headerFields"][i];
-            titlesModel.append(titleFields["headerFields"][i]);
-            newHeader = titlesModel.get(i);
+        if (eventList) {
+            var titleFields = JSON.parse(eventList.titleFields);
+            for ( var i=0 ; i < titleFields["headerFields"].length ; i++ ) {
+                whatis1 = titleFields["headerFields"][i];
+                titlesModel.append(titleFields["headerFields"][i]);
+                newHeader = titlesModel.get(i);
+            }
+            topTextArea.text = eventList.shortFormat;
+            bottomTextArea.text = eventList.longFormat;
         }
-        topTextArea.text = eventList.shortFormat;
-        bottomTextArea.text = eventList.longFormat;
+        titlesModel.sync();
     }
 
     function saveTitles(eventList) {
@@ -36,20 +39,18 @@ EaldFormatedListForm {
         eventList.saveTitleChanges();
     }
 
-    //loadCsvBut.onPressed: {
     function loadCsvFile (filename) {
          console.log("EAListDisplayPageForm about to load", filename);
-         if (featuredList.readCSV(filename)) {
+         if (featuredList.loadCSV(filename)) {
             popTitlesList(featuredList);
-            ldpEventAppPage.needToRefershLists("qrc:///shared/DataList.qml");
+            ldpEventAppPage.needToRefershLists();
          }
-    }
-    //}
+    }        
 
     saveTitlesBut.onPressed: {
         saveTitles(featuredList)
     }
-
+/*
     deleteList.onPressed: {
         var offset = ldpEventAppPage.stackCtl.startDrawerId;
         var index = ldpEventAppPage.stackCtl.currentIndex-offset
@@ -66,7 +67,7 @@ EaldFormatedListForm {
         //listItemEntryStack.currentIndex = 2;
         dataDisplayTab.currentIndex = 2;
     }
-
+*/
     loadPhotosBut.onClicked: {
         console.log("In loadPotos");
         if (eaListDisplayPage.featuredList !== undefined)   {

@@ -35,6 +35,28 @@ function fieldsObjToArr(titles, dataObj) {
     return formatArr;
 }
 
+function addTT(control, tipText) {
+
+    control.hoverEnabled = true;
+    var toolTipQml = "import QtQuick 2.7\n"
+                    + "import QtQuick.Controls 2.1\n"
+                    + "ToolTip {\n"
+                    + "\tdelay: 1000\n"
+                    + "\ttimeout: 5000\n"
+                    + "\tvisible: true\n"
+                    + "\ttext: qsTr(\"" + tipText + "\")\n"
+                    + "}\n";
+    console.log("toolTipQml",toolTipQml);
+    var newObject = Qt.createQmlObject(toolTipQml, control,"dynamicSnippet1");
+    console.log("newObject",newObject);
+    control.ToolTip = newObject;
+    /*
+    control.ToolTip.delay = 1000;
+    control.ToolTip.timeout = 5000;
+    control.ToolTip.visible = true;
+    control.ToolTip.text = qsTr(tipText);*/
+}
+
 
 
 

@@ -13,17 +13,17 @@ ListView {
 
     property EAItemList eaLVItemList: undefined
     property bool isExpanded: false
-    property alias dataModel: dataModel
+   // property alias dataImageModel: dataImageModel
 
     onEaLVItemListChanged: {
         console.log("dataListImage eaItemList chnaged");
-        resetDataImageListModel(dataModel
+        resetDataImageListModel(dataImageModel
                            , eaLVItemList.listName
                            , eaLVItemList.items
                            , eaLVItemList.getIndex())
     }
 
-    model: ListModel { id: dataModel }
+    model: ListModel { id: dataImageModel }
 
     delegate:    DLImageDelegate { id: thisDataDelgate
         onStateChanged: {
@@ -69,14 +69,14 @@ ListView {
     }
 
     function resetDataImageLM() {
-        resetDataImageListModel(dataModel
+        resetDataImageListModel(dataImageModel
                            , eaLVItemList.listName
                            , eaLVItemList.items
                            , eaLVItemList.getIndex());
     }
 
-    function resetDataImageListModel(dataModel, name, items, index) {
-        dataModel.clear();
+    function resetDataImageListModel(dataImageModel, name, items, index) {
+        dataImageModel.clear();
         console.log("items.length", items.length);
         for ( var i=0 ; i<items.length ; i++ )
         {
@@ -97,8 +97,9 @@ ListView {
             console.log("resetDataImageListModel i ", i);
             console.log("resetDataImageListModel dic", dic);
             console.log("Url", dic.showUrl);
-            dataModel.append(dic);
+            dataImageModel.append(dic);
         }
+        dataImageModel.sync();
     }
 }
 

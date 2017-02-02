@@ -2,7 +2,7 @@
 #define CSV_H
 
 #include <QStringList>
-
+//https://github.com/hnaohiro/qt-csv
 namespace CSV
 {
     QList<QStringList> parseFromString(const QString &string);

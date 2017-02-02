@@ -39,17 +39,17 @@ DLImageDelegateForm {
 
   function popQuestionList (item) {
       console.log("Start popItemList");
-      questionsListModel.clear();
+      questionsModel.clear();
       var questionCount = item.questions.length;
       for ( var i=0 ; i<questionCount ; i++ )
       {
           var eaQuestion = item.questions[i];
           var dic = {
-             // "questionType" : eaQuestion.itemType ,
-              "question" : eaQuestion.question
-             // , "answer" : eaQuestion.answer
+              "questionType" : eaQuestion.itemType
+              , "question" : eaQuestion.question
+              , "answer" : eaQuestion.answer
           };
-          questionsListModel.append(dic);
+          questionsModel.append(dic);
       }
   }
 

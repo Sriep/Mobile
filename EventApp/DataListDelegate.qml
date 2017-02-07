@@ -112,19 +112,6 @@ DataListDelegateForm {
         topText.style = displayData.textStyle
         topText.styleColor = displayData.styleColour
     }
-/*
-    Component.onCompleted: {
-        createDelegateBox(dataDelegate);
-    }
-
-    Component.onCompleted: {
-//        console.log("completed dataDelegate");
-    }
-
-    Component.onDestruction: {
-       // console.log("destroying dataDelegate");
-    }
-*/
 
 }
 

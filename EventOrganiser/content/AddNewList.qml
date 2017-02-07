@@ -12,6 +12,37 @@ AddNewListForm {
         popListsList(eaContainer.eaItemLists);
     }
 
+    Connections {
+        target: eaContainer
+        onEaItemListsChanged: {
+              popListsList(eaContainer.eaItemLists);
+        }
+    }
+
+    Connections {
+        target: loadIcon
+        onAccepted: {
+            eaContainer.addIcon(listsCreated.currentIndex, loadIcon.file);
+            iconImage.source = "image://listIcons/" + listsCreated.currentIndex
+        }
+    }
+
+    Connections {
+        target: eaContainer
+        onEventCleared: {
+            resetDisplay()
+        }
+    }
+    function resetDisplay() {
+        newListName.text = "";
+        updateListBut.visible = false;
+        //deleteListBut.visible = false;
+        //deleteItemListBut.visible = false;
+        newListBut.visible = false;
+        addListBut.visible = true;
+        popListsList(eaContainer.eaItemLists);
+    }
+
     Component.onCompleted: {
         console.log("AddNewListForm completed");
         popListsList(eaContainer.eaItemLists)
@@ -19,6 +50,7 @@ AddNewListForm {
 
     function popListsList (eaItemLists) {
         listsModel.clear();
+        //listsModel.sync();
         var listCount = eaItemLists.length;
         for ( var i=0 ; i<listCount ; i++ ) {
             var thisList  = eaItemLists[i];
@@ -28,6 +60,7 @@ AddNewListForm {
             }
             listsModel.append(dic);
         }
+        //listsModel.sync();
     }
 
     mouseAreaLC.onClicked: {
@@ -41,7 +74,7 @@ AddNewListForm {
             newListName.text = listsModel.get(index).listName;
 
             updateListBut.visible = true;
-            deleteListBut.visible = true;
+            //deleteListBut.visible = true;
             newListBut.visible = true;
             addListBut.visible = false;
         } else {
@@ -50,12 +83,15 @@ AddNewListForm {
     }
 
     newListBut.onPressed: {
+        resetDisplay();
+        /*
         newListName.text = "";
         updateListBut.visible = false;
         deleteListBut.visible = false;
         newListBut.visible = false;
         addListBut.visible = true;
         popListsList(eaContainer.eaItemLists);
+        */
     }
 
     updateListBut.onPressed: {
@@ -85,14 +121,4 @@ AddNewListForm {
         listsCreated.currentIndex = newIndex;
     }
 
-
-    //Component.onCompleted: {
-    //     console.log("completed AddNewListForm");
-    //     popListsList(eaContainer.eaItemLists);
-    //}
-
-
-    //listsCreated.onCreation: {
-    //    popListsList(eaContainer.eaItemLists);
-    //}
 }

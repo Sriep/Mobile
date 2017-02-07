@@ -13,10 +13,7 @@ Item {
 
     StackLayout {
         id: editItemEntryStack
-        //currentIndex: eaListDisplayPage.featuredList.listType
-        //currentIndex: eaContainer.eaItemLists[index].listType
         x:10; y: 10
-        //width: 500; height: 700
         width: parent.width; height: parent.height
         clip: true
 

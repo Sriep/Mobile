@@ -69,5 +69,7 @@
         <file>MenuItemDelegate.qml</file>
         <file>ListsDrawer.qml</file>
         <file>OptionsDrawer.qml</file>
+        <file>images/question-sign64.png</file>
+        <file>images/question-sign128.png</file>
     </qresource>
 </RCC>

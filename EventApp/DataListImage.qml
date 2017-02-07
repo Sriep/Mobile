@@ -18,9 +18,17 @@ ListView {
     onEaLVItemListChanged: {
         console.log("dataListImage eaItemList chnaged");
         resetDataImageListModel(dataImageModel
-                           , eaLVItemList.listName
                            , eaLVItemList.items
                            , eaLVItemList.getIndex())
+    }
+
+    Connections {
+        target: eaLVItemList
+        onEaItemListChanged: {
+            resetDataImageListModel(dataImageModel
+                               , eaLVItemList.items
+                               , eaLVItemList.getIndex())
+        }
     }
 
     model: ListModel { id: dataImageModel }
@@ -70,18 +78,17 @@ ListView {
 
     function resetDataImageLM() {
         resetDataImageListModel(dataImageModel
-                           , eaLVItemList.listName
                            , eaLVItemList.items
                            , eaLVItemList.getIndex());
     }
 
-    function resetDataImageListModel(dataImageModel, name, items, index) {
+    function resetDataImageListModel(dataImageModel, items, index) {
         dataImageModel.clear();
         console.log("items.length", items.length);
+        var ilen = items.length;
         for ( var i=0 ; i<items.length ; i++ )
         {
             var whatis = items[i];
-            //var picturePath =  "image://" + name + "/" +i.toString();
             var picturePath = "image://list_";
             picturePath += index.toString() + "/" +i.toString();
             var uu = items[i].url;
@@ -99,7 +106,6 @@ ListView {
             console.log("Url", dic.showUrl);
             dataImageModel.append(dic);
         }
-        dataImageModel.sync();
     }
 }
 

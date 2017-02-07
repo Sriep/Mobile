@@ -66,6 +66,7 @@ Item {
            // width: parent.width;  height: parent.height
             source: picture
             x:20; y:10
+            cache: false
         }
 
         Text {

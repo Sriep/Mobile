@@ -42,14 +42,6 @@ Item {
                 TabButton {
                     text: qsTr("ItemList")
                 }
- /*
-                TabButton {
-                    text: qsTr("Csv file")
-                }
-                TabButton {
-                    text: qsTr("Manual")
-                }
-                */
                 TabButton {
                     text: qsTr("Item")
                 }
@@ -81,14 +73,7 @@ Item {
                     EaItemListData {
                         id: thisItemListData
                     }
-/*
-                    EaldFormatedList {
-                        id: thisFormatedListPanel
-                    }
-                    EaldList {
-                        id: thisItemList
-                    }
- */
+
                     EaldItem {
                         id: thisItem
                     }

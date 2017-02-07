@@ -1,6 +1,6 @@
-import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
+import QtQuick 2.7
 import QtQuick.Extras 1.4
 import "qrc:///shared"
 Item {
@@ -137,10 +137,12 @@ Item {
                         y: 10
                         x: 10
                         //width: 110; height: 160
+
                         width: parent.width-20; height: parent.height
                         highlightFollowsCurrentItem: true
                         highlight: Rectangle { color: "lightsteelblue"; radius: 5 }
                         focus: true
+                        //keyNavigationEnabled: true
                         model: ListModel {
                             id: questionsListModel
                             // Same model as dataListImage.dataImageModel

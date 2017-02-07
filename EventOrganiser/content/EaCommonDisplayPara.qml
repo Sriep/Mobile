@@ -20,9 +20,7 @@ EaCommonDisplayParaForm {
     Connections {
         target: eaContainer
         onEaItemListsChanged: {
-            console.log("EaCommonDisplayParaForm onEaItemListsChanged");
             setStyleCombo();
-            console.log("EaCommonDisplayParaForm onEaItemListsChanged");
         }
     }
 

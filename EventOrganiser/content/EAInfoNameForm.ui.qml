@@ -22,6 +22,7 @@ Item {
                             placeholderText: qsTr("My event name")
                             cursorVisible: true
                             selectByMouse: true
+                            focus: true
                             //text: eventInfo.eventName;
                         }
 
@@ -30,7 +31,7 @@ Item {
                             text: qsTr("Save")
                         } //GroupBox
                     } // ColumnLayout
-                } //GroupBox
+                } //GroghdghupBox
 
               } // ColumnLayout
 

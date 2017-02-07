@@ -83,6 +83,13 @@ ToolBar {
                             ? eaContainer.user.user
                             : eaContainer.eaConstruction.strings.tbLoggedOff
             }
+            Connections {
+                target: eaContainer.eaConstruction.strings
+                onTbLoggedOffChanged: userLable.text =  eaContainer.user.loggedOn
+                                ? eaContainer.user.user
+                                : eaContainer.eaConstruction.strings.tbLoggedOff
+
+            }
         }
 
         ToolButton {

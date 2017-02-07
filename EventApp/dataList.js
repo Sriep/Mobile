@@ -49,7 +49,7 @@ function addTT(control, tipText) {
     console.log("toolTipQml",toolTipQml);
     var newObject = Qt.createQmlObject(toolTipQml, control,"dynamicSnippet1");
     console.log("newObject",newObject);
-    control.ToolTip = newObject;
+    //control.ToolTip = newObject;
     /*
     control.ToolTip.delay = 1000;
     control.ToolTip.timeout = 5000;

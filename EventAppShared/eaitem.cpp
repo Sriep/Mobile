@@ -297,6 +297,15 @@ void EAItem::setMapInfo(EAMap *mapInfo)
     emit mapInfoChanged(mapInfo);
 }
 
+void EAItem::setShowPicture(bool showPicture)
+{
+    if (m_showPicture == showPicture)
+        return;
+
+    m_showPicture = showPicture;
+    emit showPictureChanged(showPicture);
+}
+
 
 //typedef QQmlListProperty::AppendFunction
 //Synonym for void (*)(QQmlListProperty<T> *property, T *value).
@@ -352,6 +361,11 @@ void EAItem::setEaQuestions(const QList<EaQuestion *> &eaQuestions)
 EAMap *EAItem::mapInfo() const
 {
     return m_mapInfo;
+}
+
+bool EAItem::showPicture() const
+{
+    return m_showPicture;
 }
 
 EAItemList *EAItem::getEaItemList() const

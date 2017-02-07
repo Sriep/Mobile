@@ -34,6 +34,7 @@ class EAItemList :  public QQuickItem //public EAItemListBase
     Q_PROPERTY(bool formatedList READ formatedList WRITE setFormatedList NOTIFY formatedListChanged)
     Q_PROPERTY(int listType READ listType WRITE setListType NOTIFY listTypeChanged)
     Q_PROPERTY(QQmlListProperty<EAItem> items READ items)
+    Q_PROPERTY(bool showIcon READ showIcon WRITE setShowIcon NOTIFY showIconChanged)
 
 public:
     //enum ListType { High, Low, VeryHigh, VeryLow };
@@ -46,13 +47,12 @@ public:
     virtual ~EAItemList();
 
     virtual void read(const QJsonObject &json
-                      , QQmlEngine* engine
                       , EAContainer* eacontainer = NULL);
     //virtual void read(const QJsonObject &json, EAContainer* eacontainer);
     virtual void write(QJsonObject &json);
     //virtual void clear(QQmlEngine *engine);
     virtual void clear(EAContainer* eacontainer);
-
+//resetImageProvider(getEaContainer());
     Q_INVOKABLE void loadCSV(const QString filenameUrl);
     Q_INVOKABLE void saveCSV(const QString filenameUrl);
     Q_INVOKABLE void amendField(int index
@@ -95,14 +95,14 @@ public:
                                     , int zoomLevel
                                     , bool useCurrent);
 
-    Q_INVOKABLE void removeItem(int index);
+    //Q_INVOKABLE void removeItem(int index);
     Q_INVOKABLE void saveAnswers(int itemIndex);
     Q_INVOKABLE int getIndex();
     Q_INVOKABLE void deleteItem(int index);
     Q_INVOKABLE int moveItem(int index, bool directionUp);
     //Q_INVOKABLE int itemListLength();
 
-
+    void resetImageProvider(EAContainer* eacontainer = NULL);
     QString titleFields() const;
     QString dataList() const;
     QString listName() const;
@@ -117,7 +117,8 @@ public:
     void setEaContainer(EAContainer *value);
 
     QList<EAItem *> getEaItems() const;
-    void setEaItems(const QList<EAItem *> &eaItems);
+    void setEaItems(const QList<EAItem *> &eaItems);    
+    bool showIcon() const;
 
 signals:
     void titleFieldsChanged(QString titleFields);
@@ -129,7 +130,8 @@ signals:
     void eaItemListChanged();
     void formatedListChanged(bool formatedList);    
     void listTypeChanged(int listType);
-    void eaItemsChnged();
+    void eaItemsChnged();    
+    void showIconChanged(bool showIcon);
 
 public slots:
     void setTitleFields(QString titleFields);
@@ -141,7 +143,8 @@ public slots:
     void setShortFormat(QString shortFormat);
     void setLongFormat(QString longFormat);
     void setFormatedList(bool formatedList);    
-    void setListType(int listType);
+    void setListType(int listType);    
+    void setShowIcon(bool showIcon);
 
 private:
     void init();
@@ -150,15 +153,21 @@ private:
                             , const QStringList &header);
     QString getModelName(const QString& name) const;
     QString savePicture(int index, const QString &path);
+    void padOutPictures();
     QList<QStringList> formatted2StringLists(const QString &imagePath);
     QList<QStringList> manual2StringLists(const QString &imagePath);
     QString saveItemFilename(int index, const QString& path);
     QStringList headerList();
     void readFormatedList(QList<QStringList> csvListLines);
     void readMixedList(QList<QStringList> listlist);
+    void readNewImageItem(QStringList listlist);
+    void readNewTextItem(QStringList listlist);
+    void readNewUrlItem(QStringList listlist);
+    void readNewMapItem(QStringList listlist);
+    void readNewQuestionItem(QStringList listlist);
+
 
     //void unpackPhotos() const;
-    void resetImageProvider(EAContainer* eacontainer = NULL);
     void addPicture(int index, const QString& filename);
     int useNextItemId();
 
@@ -191,6 +200,7 @@ private:
     QList<EAItem*> m_eaItems;
     bool m_formatedList = true;
     int m_listType;
+    bool m_showIcon;
 };
 
 #endif // EAITEMLIST_H

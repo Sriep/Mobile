@@ -28,6 +28,17 @@ EventAppPageForm {
 
   Connections {
       target: eaContainer
+      onEventCleared: {
+          resetToTopDrawer();
+      }
+  }
+  function resetToTopDrawer () {
+      toolBar.titleLabel.text = eaContainer.eaInfo.eventName
+      stackCtl.currentIndex = stackCtl.topDrawerId;
+  }
+
+  Connections {
+      target: eaContainer
       onError: {
           messageDialog.title = "Error"
           messageDialog.text = message
@@ -62,7 +73,7 @@ EventAppPageForm {
           console.log("refreshLists mount count", model.count);
       } //for
       console.log("End refreshLists");
-      model.sync();
+      //model.sync();
   }
 
   function needToRefershLists() {
@@ -72,9 +83,7 @@ EventAppPageForm {
   Connections {
       target: eaContainer
       onEaItemListsChanged: {
-            console.log("Page onEaItemListsChanged");
             refreshLists(stackCtl, drawerModel)
-            console.log("Page onEaItemListsChanged");
       }
   }
 

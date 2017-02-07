@@ -3,6 +3,14 @@ import EventAppData 1.0
 
 EaldListForm {
 
+    Connections {
+        target: eaContainer
+        onEventCleared: {
+            clearDisplay();
+            refreshFields();
+        }
+    }
+
     Component.onCompleted: {
         refreshFields();
     }
@@ -10,9 +18,7 @@ EaldListForm {
     Connections {
       target: eaContainer
       onEaItemListsChanged: {
-          console.log("EaldListForm onEaItemListsChanged");
           refreshFields();
-          console.log("EaldListForm onEaItemListsChanged");
       }
     }
 
@@ -22,14 +28,6 @@ EaldListForm {
           refreshFields();
       }
     }
- /*
-    Connections {
-      target: updateTitleBut
-      onPressed: {
-          featuredList.listName = itemNameTA.text;
-      }
-    }
-*/
     function loadCsvFile (filename) {
          console.log("EAListDisplayPageForm about to load", filename);
          if (featuredList.loadCSV(filename)) {
@@ -46,26 +44,28 @@ EaldListForm {
     function popItemList (eventList) {
         console.log("Start popItemList");
         itemsModel.clear();
-        var itemCount = eventList.items.length;
-        for ( var i=0 ; i<itemCount ; i++ )
-        {
-            var eaItem = eventList.items[i];
-            /*
-            var name = eventList.listName;
-            var picturePath =  "image://" + name + "/" +i.toString();
-            var dic = {
-                "itemType" : eaItem.itemType
-                , "title" : eaItem.title
-                , "displayText" : eaItem.displayText
-                , "showUrl" : eaItem.url
-                , "urlString" : eaItem.urlString
-                , "picture" : picturePath
-            };
-            itemsModel.append(dic);*/
-            itemsModel.append({"title" : eaItem.title} );
-        }
-        var v = itmesEntered.count;
-        console.log("End popItemList");
+        if (eventList) {
+            var itemCount = eventList.items.length;
+            for ( var i=0 ; i<itemCount ; i++ )
+            {
+                var eaItem = eventList.items[i];
+                /*
+                var name = eventList.listName;
+                var picturePath =  "image://" + name + "/" +i.toString();
+                var dic = {
+                    "itemType" : eaItem.itemType
+                    , "title" : eaItem.title
+                    , "displayText" : eaItem.displayText
+                    , "showUrl" : eaItem.url
+                    , "urlString" : eaItem.urlString
+                    , "picture" : picturePath
+                };
+                itemsModel.append(dic);*/
+                itemsModel.append({"title" : eaItem.title} );
+            }
+            var v = itmesEntered.count;
+        } else
+            console.log("popItemList evnetList not defined", eventList);
     }
 
     addItem.onPressed: {
@@ -110,6 +110,19 @@ EaldListForm {
     }
 
     clearBut.onPressed: {
+        clearDisplay();
+        /*
+        itmesEntered.currentIndex = -1;
+        itemDataType.currentIndex = -1;
+        itemTitle.text = "";
+       // loadImage.file = "";
+        imageEditGroup.imageFileTF.text = "";
+        textFilename.text = "";
+        urlItem.text = "";
+        popItemList(eaListDisplayPage.featuredList);
+        */
+    }
+    function clearDisplay() {
         itmesEntered.currentIndex = -1;
         itemDataType.currentIndex = -1;
         itemTitle.text = "";
@@ -120,20 +133,13 @@ EaldListForm {
         popItemList(eaListDisplayPage.featuredList);
     }
 
-    mouseAreaLV.onClicked: {        
+    mouseAreaLV.onClicked: {
+        popItemList(eaListDisplayPage.featuredList);
         var index = itmesEntered.indexAt(mouse.x, mouse.y);
         if (index >= 0)
         {
             itmesEntered.currentIndex = index;
- /*
-            itemDataType.currentIndex = itemsModel.get(index).itemType;
-            itemTitle.text = itemsModel.get(index).title;
-            imageEditGroup.imageFileTF.text = itemsModel.get(index).picture;
-            textFilename.text = itemsModel.get(index).displayText;
-            urlItem.text = itemsModel.get(index).urlString;
-*/
         }
-        popItemList(eaListDisplayPage.featuredList);
     }
 
     deleteItemBut.onPressed: {

@@ -6,6 +6,11 @@ EAStrings::EAStrings()
 
 }
 
+void EAStrings::emitStringChangedSignal()
+{
+    emit stringsChanged();
+}
+
 void EAStrings::read(const QJsonObject &json)
 {
     setTbLoggedOff(json["tbLoggedOff"].toString());
@@ -58,4 +63,94 @@ void EAStrings::write(QJsonObject &json)
     json["bExit"] = bExit();
     json["bLogoff"] = bLogoff();
     json["bDownlaod"] = bDownlaod();
+}
+
+QString EAStrings::tbLoggedOff() const
+{
+    return m_tbLoggedOff;
+}
+
+QString EAStrings::mLogin() const
+{
+    return m_mLogin;
+}
+
+QString EAStrings::mLoadFKey() const
+{
+    return m_mLoadFKey;
+}
+
+QString EAStrings::mLoadFFile() const
+{
+    return m_mLoadFFile;
+}
+
+QString EAStrings::mLoadFFirebase() const
+{
+    return m_mLoadFFirebase;
+}
+
+QString EAStrings::mAbout() const
+{
+    return m_mAbout;
+}
+
+QString EAStrings::mExit() const
+{
+    return m_mExit;
+}
+
+QString EAStrings::lUserId() const
+{
+    return m_lUserId;
+}
+
+QString EAStrings::lPassword() const
+{
+    return m_lPassword;
+}
+
+QString EAStrings::lkDownlaodFKey() const
+{
+    return m_lkDownlaodFKey;
+}
+
+QString EAStrings::lfDownloadUrl() const
+{
+    return m_lfDownloadUrl;
+}
+
+QString EAStrings::lfFirebaseUrl() const
+{
+    return m_lfFirebaseUrl;
+}
+
+QString EAStrings::bRegister() const
+{
+    return m_bRegister;
+}
+
+QString EAStrings::bLogin() const
+{
+    return m_bLogin;
+}
+
+QString EAStrings::bExit() const
+{
+    return m_bExit;
+}
+
+QString EAStrings::bLogoff() const
+{
+    return m_bLogoff;
+}
+
+QString EAStrings::bDownlaod() const
+{
+    return m_bDownlaod;
+}
+
+QString EAStrings::aboutText() const
+{
+    return m_aboutText;
 }

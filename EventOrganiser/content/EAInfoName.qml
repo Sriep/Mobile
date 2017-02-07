@@ -6,16 +6,29 @@ import EventAppData 1.0
 EAInfoNameForm {
     textEventName.text: eaContainer.eaInfo.eventName;
 
+    Component.onCompleted: {
+        textEventName.activeFocus();
+    }
+
     saveInfo.onClicked: {
         eaContainer.eaInfo.eventName = textEventName.text;
+        ldpEventAppPage.resetToTopDrawer();
+        appwin.setTitle();
+    }
+
+    Connections {
+        target: eaContainer
+        onEventCleared: {
+            textEventName.text = eaContainer.eaInfo.eventName;
+            ldpEventAppPage.resetToTopDrawer();
+        }
     }
 
     Connections {
       target: eaContainer
       onEaItemListsChanged: {
-          console.log("EAInfoNameForm onEaItemListsChanged");
           textEventName.text = eaContainer.eaInfo.eventName;
-          console.log("EAInfoNameForm onEaItemListsChanged");
+          //ldpEventAppPage.resetToTopDrawer();
       }
     }
 }

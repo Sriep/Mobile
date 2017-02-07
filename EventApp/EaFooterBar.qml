@@ -12,8 +12,9 @@ EaFooterBarForm {
      Connections {
        target: backBut
        onClicked: {
-           toolBar.titleLabel.text = eaContainer.eaInfo.eventName
-           stackCtl.currentIndex = stackCtl.topDrawerId;
+           //toolBar.titleLabel.text = eaContainer.eaInfo.eventName
+           //stackCtl.currentIndex = stackCtl.topDrawerId;
+           eventAppMainPage.resetToTopDrawer();
        }
      }
 

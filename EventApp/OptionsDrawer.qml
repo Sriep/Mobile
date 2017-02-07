@@ -1,5 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
+import QtQuick.Dialogs 1.2
 
 Drawer {
   id: optionsDrawer
@@ -18,6 +19,14 @@ Drawer {
 
     Component.onCompleted: {
         popOptionsModel(opetionsModel);
+    }
+    Connections {
+        target: eaContainer.eaConstruction.strings
+        onStringsChanged: {
+            console.log("onStringsChanged");
+            var  vvv = optionsListView
+            optionsListView.popOptionsModel(opetionsModel)
+        }
     }
 
     delegate: MenuItemDelegate {
@@ -59,6 +68,8 @@ Drawer {
                        , optionsItemDelegate);
       }
 
+
+
       Connections {
           target: optionsItemDelegate
           onClicked: {
@@ -77,30 +88,10 @@ Drawer {
               optionsDrawer.close();
           }
       }
-
     }
 
     model: ListModel { id: opetionsModel }
-    //
-/*
-    model: ListModel {
-        ListElement { title: eaContainer.eaConstruction.strings.mLogin; index: 1 }
-        ListElement { title: eaContainer.eaConstruction.strings.mLoadFKey; index: 2 }
-        ListElement { title: eaContainer.eaConstruction.strings.mLoadFFile; index: 3 }
-        ListElement { title: eaContainer.eaConstruction.strings.mLoadFFirebase; index: 4 }
-        ListElement { title: eaContainer.eaConstruction.strings.mAbout; index: 98 }
-        ListElement { title: eaContainer.eaConstruction.strings.mExit; index: 99 }
-    }
 
-    model: ListModel {
-        ListElement { title: qsTr("Login"); index: 1 }
-        ListElement { title: qsTr("Load from Key"); index: 2 }
-        ListElement { title: qsTr("Load from file"); index: 3 }
-        ListElement { title: qsTr("Load from Firebase"); index: 4 }
-        ListElement { title: qsTr("About"); index: 98 }
-        ListElement { title: qsTr("Exit"); index: 99 }
-    }fruitModel.append({"cost": 5.95, "name":"Pizza"})
-  */
     function popOptionsModel(model) {
         model.clear();
         model.append({ "title" : eaContainer.eaConstruction.strings.mLogin,
@@ -115,10 +106,36 @@ Drawer {
                                "index" : 98 });
         model.append({ "title" : eaContainer.eaConstruction.strings.mExit,
                                "index" : 99 });
-        model.sync();
+        //model.sync();
     }
 
     ScrollIndicator.vertical: ScrollIndicator { }
+  }
+
+  Dialog {
+      id: aboutDialog
+      title:  eaContainer.eaConstruction.strings.mAbout
+
+      Column {
+          id: aboutColumn
+          spacing: 20
+
+          Label {
+              width: aboutDialog.availableWidth
+              text:  eaContainer.eaConstruction.strings.aboutText
+              wrapMode: Label.Wrap
+              font.pixelSize: 12
+          }
+
+          Label {
+              width: aboutDialog.availableWidth
+              text: "Easy event app \n"
+                    + "www.easyeventapp.co.uk\n"
+                    + "Make easy event apps.\n"
+              wrapMode: Label.Wrap
+              font.pixelSize: 12
+          }
+      }
   }
 }
 

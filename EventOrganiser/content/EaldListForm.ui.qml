@@ -197,7 +197,7 @@ Item {
         }
         GroupBox {
             width: parent.width; height: 300
-            title: "Item lists"
+            title: "Item list"
             visible: itemDataType.currentIndex === -1
             ColumnLayout {
                 Rectangle {

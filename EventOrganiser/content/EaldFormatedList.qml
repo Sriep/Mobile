@@ -5,11 +5,22 @@ import QtQuick.Extras 1.4
 import "qrc:///shared"
 
 EaldFormatedListForm {
+    Connections {
+        target: eaContainer
+        onEventCleared: {
+            if (eventList)
+                popTitlesList(eventList)
+            else
+                titlesModel.clear();
+        }
+    }
+
     function popTitlesList (eventList) {
         console.log("Start popTitlesList");
         var whatis1
         var newHeader
         titlesModel.clear();
+        //titlesModel.sync();
         if (eventList) {
             var titleFields = JSON.parse(eventList.titleFields);
             for ( var i=0 ; i < titleFields["headerFields"].length ; i++ ) {
@@ -20,7 +31,7 @@ EaldFormatedListForm {
             topTextArea.text = eventList.shortFormat;
             bottomTextArea.text = eventList.longFormat;
         }
-        titlesModel.sync();
+        //titlesModel.sync();
     }
 
     function saveTitles(eventList) {
@@ -50,24 +61,7 @@ EaldFormatedListForm {
     saveTitlesBut.onPressed: {
         saveTitles(featuredList)
     }
-/*
-    deleteList.onPressed: {
-        var offset = ldpEventAppPage.stackCtl.startDrawerId;
-        var index = ldpEventAppPage.stackCtl.currentIndex-offset
-        if (index >= 0) {
-            eaContainer.deleteItemList(index);
-            ldpEventAppPage.stackCtl.currentIndex = ldpEventAppPage.stackCtl.topDrawerId;
-            dataDisplayTab.currentIndex = 1;
-        }
-    }
 
-    switchManual.onPressed: {
-        if (eaListDisplayPage.featuredList !== undefined)
-            eaListDisplayPage.featuredList.formatedList = false;
-        //listItemEntryStack.currentIndex = 2;
-        dataDisplayTab.currentIndex = 2;
-    }
-*/
     loadPhotosBut.onClicked: {
         console.log("In loadPotos");
         if (eaListDisplayPage.featuredList !== undefined)   {
@@ -98,7 +92,4 @@ EaldFormatedListForm {
             return false;
     }
 
-    //usePhotos.checked: featuredList.showPhotos
-    //usePhotos.onCheckedChanged: featuredList.showPhotos = usePhotos.checked
-  
 }

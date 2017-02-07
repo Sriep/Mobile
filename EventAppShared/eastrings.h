@@ -48,141 +48,55 @@ class EAStrings : public QQuickItem
     QString m_bExit = "Exit";
     QString m_bLogoff = "Logoff";
     QString m_bDownlaod = "Downlaod";    
-    QString m_aboutText;
+    QString m_aboutText = "About text\nAbout text\nAbout text\n";
 
 public:
     EAStrings();
 
+    Q_INVOKABLE void emitStringChangedSignal();
+
     void read(const QJsonObject &json);
     void write(QJsonObject &json);
 
-    QString tbLoggedOff() const
-    {
-        return m_tbLoggedOff;
-    }
-
-    QString mLogin() const
-    {
-        return m_mLogin;
-    }
-
-    QString mLoadFKey() const
-    {
-        return m_mLoadFKey;
-    }
-
-    QString mLoadFFile() const
-    {
-        return m_mLoadFFile;
-    }
-
-    QString mLoadFFirebase() const
-    {
-        return m_mLoadFFirebase;
-    }
-
-    QString mAbout() const
-    {
-        return m_mAbout;
-    }
-
-    QString mExit() const
-    {
-        return m_mExit;
-    }
-
-    QString lUserId() const
-    {
-        return m_lUserId;
-    }
-
-    QString lPassword() const
-    {
-        return m_lPassword;
-    }
-
-    QString lkDownlaodFKey() const
-    {
-        return m_lkDownlaodFKey;
-    }
-
-    QString lfDownloadUrl() const
-    {
-        return m_lfDownloadUrl;
-    }
-
-    QString lfFirebaseUrl() const
-    {
-        return m_lfFirebaseUrl;
-    }
-
-    QString bRegister() const
-    {
-        return m_bRegister;
-    }
-
-    QString bLogin() const
-    {
-        return m_bLogin;
-    }
-
-    QString bExit() const
-    {
-        return m_bExit;
-    }
-
-    QString bLogoff() const
-    {
-        return m_bLogoff;
-    }
-
-    QString bDownlaod() const
-    {
-        return m_bDownlaod;
-    }
-
-    QString aboutText() const
-    {
-        return m_aboutText;
-    }
-
+    QString tbLoggedOff() const;
+    QString mLogin() const;
+    QString mLoadFKey() const;
+    QString mLoadFFile() const;
+    QString mLoadFFirebase() const;
+    QString mAbout() const;
+    QString mExit() const;
+    QString lUserId() const;
+    QString lPassword() const;
+    QString lkDownlaodFKey() const;
+    QString lfDownloadUrl() const;
+    QString lfFirebaseUrl() const;
+    QString bRegister() const;
+    QString bLogin() const;
+    QString bExit() const;
+    QString bLogoff() const;
+    QString bDownlaod() const;
+    QString aboutText() const;
 signals:
 
     void tbLoggedOffChanged(QString tbLoggedOff);
-
     void mLoginChanged(QString mLogin);
-
     void mLoadFKeyChanged(QString mLoadFKey);
-
     void mLoadFFileChanged(QString mLoadFFile);
-
     void mLoadFFirebaseChanged(QString mLoadFFirebase);
-
     void mAboutChanged(QString mAbout);
-
     void mExitChanged(QString mExit);
-
     void lUserIdChanged(QString lUserId);
-
     void lPasswordChanged(QString lPassword);
-
     void lkDownlaodFKeyChanged(QString lkDownlaodFKey);
-
     void lfDownloadUrlChanged(QString lfDownloadUrl);
-
     void lfFirebaseUrlChanged(QString lfFirebaseUrl);
-
     void bRegisterChanged(QString bRegister);
-
     void bLoginChanged(QString bLogin);
-
     void bExitChanged(QString bExit);
-
     void bLogoffChanged(QString bLogoff);
-
     void bDownlaodChanged(QString bDownlaod);
-
     void aboutTextChanged(QString aboutText);
+    void stringsChanged();
 
 public slots:
 void setTbLoggedOff(QString tbLoggedOff)

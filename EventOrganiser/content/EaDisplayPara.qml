@@ -26,14 +26,14 @@ EaDisplayParaForm {
         DLjs.addTT(paraToolBar.whiteIconsCB, "Border width in pixels.");
         DLjs.addTT(paraToolBar.applyBut, "Border width in pixels.");
     }
-
+/*
     Connections {
         target: bkColourBut
         onCompleted: {
             DLjs.addTT(paraToolBar.bkColourBut, "Border width in pixels.");
         }
     }
-
+*/
     Connections {
         target: applyBut
         onPressed: {

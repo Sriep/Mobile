@@ -12,6 +12,8 @@ Page{
     property alias drawerView: drawerView
     property alias drawerModel: drawerModel
     property alias messageDialog: messageDialog
+    property alias toolBar: toolBar
+    property alias footerBar: footerBar
     //property alias drawerDelegate: drawerDelegate
     clip: true
     Layout.alignment: Qt.AlignLeft | Qt.AlignTop

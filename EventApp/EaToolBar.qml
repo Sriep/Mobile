@@ -14,42 +14,6 @@ EaToolBarForm {
     //menuButton.onClicked: optionsMenu.open()
     menuButton.onClicked: optionsDrawer.open()
 
-/*
-
-    Menu {
-        id: optionsMenu
-        x: parent.width - width
-        transformOrigin: Menu.TopRight
-        MenuItem {
-            text: qsTr("Login")
-            onTriggered: stackCtl.currentIndex = stackCtl.userLoginId;
-            visible: !eaContainer.isEventStatic
-        }
-        MenuItem {
-            id: menuItemLoadEventKey
-            text: qsTr("Load from Key")
-            onTriggered: stackCtl.currentIndex = stackCtl.loadEventKey;
-        }
-        MenuItem {
-            id: menuItemLoadEventFile
-            text: qsTr("Load from file")
-            onTriggered: stackCtl.currentIndex = stackCtl.loadEventFile;
-        }
-        MenuItem {
-            id: menuItemLoadEventFB
-            text: qsTr("Load from Firebase")
-            onTriggered: stackCtl.currentIndex = stackCtl.loadEventFB;
-        }
-        MenuItem {
-            text: qsTr("About")
-            onTriggered: aboutDialog.open()
-        }
-        MenuItem {
-            text: qsTr("Exit")
-            onTriggered: Qt.quit()
-        }
-    }
-*/
     ListsDrawer {
         id: listsDrawer
     }

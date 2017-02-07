@@ -7,10 +7,13 @@
 #include <QDir>
 #include <QCryptographicHash>
 #include <QDebug>
+#include <QQmlEngine>
+#include <QtQml>
 
 //#include <QApplication>
 //#include <QScreen>
 
+#include "picturelistimageprovider.h"
 #include "firebase.h"
 #include "eacontainer.h"
 #include "eainfo.h"
@@ -30,6 +33,59 @@ QList<EAItemList *> EAContainer::getEaItemLists() const
 void EAContainer::setEaItemLists(const QList<EAItemList *> &eaItemLists)
 {
     m_eaItemLists = eaItemLists;
+}
+
+void EAContainer::resetImageProviders()
+{
+    setImageVersion(imageVersion() + 1);
+
+    for ( int i=0 ; i < m_eaItemLists.length() ; i++ )
+    {
+        m_eaItemLists[i]->resetImageProvider(this);
+    }
+
+    padOutIconst();
+    QQmlEngine* engine = qmlEngine(this);
+    if (engine)
+    {
+        QString providerId = "listIcons_" + QString::number(imageVersion()-1);
+        QQmlImageProviderBase* provider = engine->imageProvider(providerId);
+        if (provider)
+            engine->removeImageProvider(providerId);
+        PictureListImageProvider* newProvider;
+        newProvider = new PictureListImageProvider(jsonIcons);
+        engine->addImageProvider(providerId, newProvider);
+    }
+}
+
+int EAContainer::imageVersion() const
+{
+    return m_imageVersion;
+}
+
+void EAContainer::padOutIconst()
+{
+    QPixmap nullPix;
+    QJsonValue nullJson = jsonValFromPixmap(nullPix);
+
+    int numItems = m_eaItemLists.size();
+    for ( int i = jsonIcons.size() ; i<numItems ; i++ )
+    {
+        jsonIcons.append(nullJson);
+    }
+}
+
+void EAContainer::addIcon(int index,  const QString& filenameUrl)
+{
+    QString filename = QUrl(filenameUrl).toLocalFile();
+    QImage picImage(filename);
+    picImage.scaled(50,50);
+    QPixmap pix = QPixmap::fromImage(picImage);
+    QJsonValue jsonPic = jsonValFromPixmap(pix);
+
+    padOutIconst();
+    jsonIcons[index] = jsonPic;
+    resetImageProviders();
 }
 
 EAContainer::EAContainer()
@@ -58,6 +114,7 @@ void EAContainer::insertEmptyItemList(int index, QString name, int listType)
     newItemList->setListType(listType);
     newItemList->setEaContainer(this);
     m_eaItemLists.insert(index, newItemList);
+    resetImageProviders();
     emit eaItemListsChanged();
 }
 
@@ -66,6 +123,7 @@ void EAContainer::deleteItemList(int index)
     if (index >= 0 && index < m_eaItemLists.count())
     {
         m_eaItemLists.removeAt(index);
+        resetImageProviders();
         emit eaItemListsChanged();
     }
 }
@@ -87,6 +145,7 @@ int EAContainer::moveItemList(int index, bool directionUp)
             else
             {
                 m_eaItemLists.swap(index, index -1);
+                resetImageProviders();
                 emit eaItemListsChanged();
                 return index-1;
             }
@@ -104,6 +163,7 @@ int EAContainer::moveItemList(int index, bool directionUp)
             else
             {
                 m_eaItemLists.swap(index, index +1);
+                resetImageProviders();
                 emit eaItemListsChanged();
                 return index +1;
             }
@@ -354,6 +414,15 @@ void EAContainer::setIsEventStatic(bool isEventStatic)
     emit isEventStaticChanged(isEventStatic);
 }
 
+void EAContainer::setImageVersion(int imageVersion)
+{
+    if (m_imageVersion == imageVersion)
+        return;
+
+    m_imageVersion = imageVersion;
+    emit imageVersionChanged(imageVersion);
+}
+
 void EAContainer::onResponseReady(QByteArray data)
 {
     qDebug()<<"answer";
@@ -535,7 +604,15 @@ void EAContainer::setEventKey(QString eventKey)
 
 void EAContainer::read(const QJsonObject &json)
 {
-    m_eaInfo->read(json["event"].toObject());
+    QJsonObject eventInfoObj = json["event"].toObject();
+    m_eaInfo->read(eventInfoObj);
+
+    nextItemListId = eventInfoObj["version"].toInt();
+    setEventKey(eventInfoObj["eventKey"].toString());
+    setIsEventStatic(eventInfoObj["isEv:loentStatic"].toBool());
+    setEventSource((EventSource)eventInfoObj["eventSource"].toInt());
+    setVersion(eventInfoObj["version"].toInt());
+
     emit eaInfoChanged(m_eaInfo);
 
     if (json.contains("construction"))
@@ -544,22 +621,22 @@ void EAContainer::read(const QJsonObject &json)
         emit eaConstructionChanged(m_eaConstruction);
     }
 
-    QQmlEngine*  engine = qmlEngine(this);
+    jsonIcons = json["icons"].toArray();
     QJsonArray listsArray = json["itemLists"].toArray();
     for (int i = 0; i < listsArray.size(); ++i) {
         QJsonObject readJsonObject = listsArray[i].toObject();
         EAItemList* newList = new EAItemList();        
-        //newList->read(readJsonObject, this);
-        m_eaItemLists.append(newList);
-        newList->read(readJsonObject, engine, this);
-    }
 
+        m_eaItemLists.append(newList);
+        newList->read(readJsonObject, this);
+    }
+/*
     nextItemListId = json["version"].toInt();
     setEventKey(json["eventKey"].toString());
-    setIsEventStatic(json["isEventStatic"].toBool());
+    setIsEventStatic(json["isEv:loentStatic"].toBool());
     setEventSource((EventSource)json["eventSource"].toInt());
     setVersion(json["version"].toInt());
-
+*/
 }
 
 void EAContainer::clearEvent()
@@ -568,8 +645,9 @@ void EAContainer::clearEvent()
     m_user = new EAUser(this);
     m_dataFilename = "NewEvent";
     m_eaConstruction = new EAConstruction();
+    jsonIcons = QJsonArray();
     m_eaItemLists.clear();
-
+    emit eventCleared();
     emit eaItemListsChanged();
 }
 
@@ -608,7 +686,14 @@ void EAContainer::write(QJsonObject &json)
 
     QJsonObject eventInfoObject;
     m_eaInfo->write(eventInfoObject);
+    eventInfoObject["eventKey"] = eventKey();
+    eventInfoObject["nextItemListId"] = nextItemListId;
+    eventInfoObject["isEventStatic"] = isEventStatic();
+    eventInfoObject["version"] = ++m_Version;
+    eventInfoObject["link"] = false;
     json["event"] = eventInfoObject;
+
+    json["icons"] = jsonIcons;
 
     QJsonObject constructionDataObject;
     m_eaConstruction->write(constructionDataObject);
@@ -624,12 +709,15 @@ void EAContainer::write(QJsonObject &json)
         }
 
     }
-    json["eventKey"] = eventKey();
+
     json["itemLists"] = listsArray;
+    /*
+    json["eventKey"] = eventKey();    
     json["nextItemListId"] = nextItemListId;
     json["isEventStatic"] = isEventStatic();
     json["version"] = ++m_Version;
     json["link"] = false;
+    */
 }
 
 EAConstruction *EAContainer::eaConstruction() const

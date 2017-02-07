@@ -14,6 +14,16 @@ ApplicationWindow {
     width: 1280;    height: 1024
     title: qsTr("Event App designer:\t" + eaContainer.eaInfo.eventName)
 
+    Connections {
+        target: eaContainer.eaInfo
+        onEventNameChanged: appwin.title = qsTr("Event App designer:\t")
+                            + eaContainer.eaInfo.eventName
+    }
+
+    function setTitle() {
+        appwin.title = qsTr("Event App designer:\t") + eaContainer.eaInfo.eventName
+    }
+
     header: HeaderTabBarForm {
         id: headerTabBar
     }

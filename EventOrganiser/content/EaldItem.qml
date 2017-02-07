@@ -11,6 +11,13 @@ EaldItemForm {
     property int listIndex: eaListDisplayPage.featuredItemIndex
 
     Connections {
+        target: eaContainer
+        onEventCleared: {
+            console.log("EaldItemForm onEventCleared");
+        }
+    }
+
+    Connections {
         onFeaturedItemChanged: {
             popQuestionList (featuredItem, questionsListModel);
         }
@@ -50,14 +57,14 @@ EaldItemForm {
                                               , imageEditGroup.imageFileTF.text
                                               , textFilename.text
                                               , urlItem.text);
-            if (itemDataType.currentIndex == EAItem.Map)
+            if (itemDataType.currentIndex === EAItem.Map)
                 populateMapData(eaListDisplayPage.featuredList.mapInfo);
             popItemList(eaListDisplayPage.featuredList);
         }
     }
 
     deleteBut.onPressed: {
-        eaListDisplayPage.featuredList.removeItem(itmesEntered.currentIndex);
+        eaListDisplayPage.featuredList.deleteItem(itmesEntered.currentIndex);
         ldpEventAppPage.stackCtl.currentIndex = ldpEventAppPage.stackCtl.topDrawerId;
         popItemList(eaListDisplayPage.featuredList);
     }

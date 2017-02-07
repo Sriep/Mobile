@@ -13,14 +13,17 @@ ListView {
     property int temp: 54
 
     onEaLVItemListChanged: {
-        console.log("DataList eaItemList chnaged");
-        //resetDataListModel(dataModel
-        //                   , eaLVItemList.listName
-        //                   , JSON.parse(eaLVItemList.dataList))
         resetDataListModel();
     }
 
-    //property  alias dataModel: dataModel
+    Connections {
+        target: eaLVItemList
+        onEaItemListChanged: {
+            resetDataListModel()
+            refreshLists(stackCtl, drawerModel)
+        }
+    }
+
     model: ListModel { id: dataModel }
     delegate: DataListDelegate { id: thisDataDelgate
         onStateChanged: {
@@ -38,7 +41,9 @@ ListView {
         var name = eaLVItemList.listName;
         var dataList = JSON.parse(eaLVItemList.dataList);
         var mm = dataModel;
+        var dall = dataList["dataItems"].length;
         dataModel.clear();
+        //dataModel.sync();
         for ( var j=0 ; j < dataList["dataItems"].length ; j++ ) {
             var whatis = dataList["dataItems"][j];
             dataModel.append(dataList["dataItems"][j]);
@@ -47,7 +52,7 @@ ListView {
             dataModel.setProperty(j, "picture", picturePath);
             var newData = dataModel.get(j);
         }
-        dataModel.sync();
+        //dataModel.sync();
     }
 
 }

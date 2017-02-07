@@ -53,6 +53,8 @@ class  EAContainer : public QObject, public QQmlParserStatus
     Q_PROPERTY(QString answers READ answers WRITE setAnswers NOTIFY answersChanged)
     Q_PROPERTY(bool isEventStatic READ isEventStatic WRITE setIsEventStatic NOTIFY isEventStaticChanged)
 
+    Q_PROPERTY(int imageVersion READ imageVersion WRITE setImageVersion NOTIFY imageVersionChanged)
+
     EAInfo* m_eaInfo;
     QString m_dataFilename = "temp";
     EAConstruction* m_eaConstruction;
@@ -70,6 +72,7 @@ public:
     virtual void componentComplete();
     //Q_INVOKABLE void insertEmptyItemList(int index, QString name, bool formated = true);
     Q_INVOKABLE void insertEmptyItemList(int index, QString name, int listType);
+    Q_INVOKABLE void addIcon(int index, const QString& filenameUrl);
     Q_INVOKABLE void deleteItemList(int index);
     Q_INVOKABLE int moveItemList(int index, bool directionUp);
     Q_INVOKABLE void clearEvent();
@@ -123,8 +126,9 @@ public:
     void setEaItemLists(const QList<EAItemList *> &eaItemLists);    
     int screenWidth() const;
     int screenHeight() const;
-
-    qreal point2PixelH() const;
+    void resetImageProviders();
+    qreal point2PixelH() const;    
+    int imageVersion() const;
 
 signals:
     void eaInfoChanged(EAInfo* eaInfo);
@@ -150,8 +154,9 @@ signals:
     void displayParasChanged();    
     void screenWidthChanged(int screenWidth);
     void screenHeightChanged(int screenHeight);
-
-    void point2PixelHChanged(qreal point2PixelH);
+    void eventCleared();
+    void point2PixelHChanged(qreal point2PixelH);    
+    void imageVersionChanged(int imageVersion);
 
 public slots:
     void setEAInfo(EAInfo* eaInfo);
@@ -171,7 +176,8 @@ public slots:
     //void onFileDownloaded(QByteArray data);
     void onFileDownloadError(QString);
     void httpDownloadFinished();
-    void setIsEventStatic(bool isEventStatic);    
+    void setIsEventStatic(bool isEventStatic);
+    void setImageVersion(int imageVersion);
 
 private:
     QJsonObject jsonAnswers(EAItemList* eaItemList
@@ -179,7 +185,7 @@ private:
                             , QList<EaQuestion*> questionList);
     void setAnswers(QJsonObject jsonAnswers);
     QJsonObject getServiceAccountKey(const QString& filename);
-
+    void padOutIconst();
     static void append_eaItemLists(QQmlListProperty<EAItemList> *list
                                    , EAItemList *itemList);
     static int count_eaItemLists(QQmlListProperty<EAItemList> *list);
@@ -191,6 +197,7 @@ private:
     int m_Version = 0;
     int nextItemListId = 0;
     int useNextItemListId();
+    QJsonArray jsonIcons;
 
     QString m_firbaseUrl = "";
     QString m_eventKey = "";
@@ -201,8 +208,8 @@ private:
     QString debugLog;
     bool m_isEventStatic = true;
     EventSource m_eventSource = None;
-    bool indiretDownload = false;
-
+    bool indiretDownload = false;    
+    int m_imageVersion = 0;
 };
 
 #endif // EVENTCONTAINER_H

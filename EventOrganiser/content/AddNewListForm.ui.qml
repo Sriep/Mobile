@@ -19,7 +19,7 @@ Item {
     property alias downItemListBut: downItemListBut
     property alias upItemListBut: upItemListBut
     property alias loadIcon: loadIcon
-    property alias iconBut: iconBut
+    //property alias iconBut: iconBut
     property alias iconImage: iconImage
 
     ColumnLayout {
@@ -97,13 +97,13 @@ Item {
 
                     }
 
-                    Button {
+                  /*  Button {
                         id: iconBut
                         width: 40; height: 40
                         //text: qsTr("Button")
                         //flat: true
                         clip: true
-                       /* background: Rectangle {
+                        background: Rectangle {
                             //id: iconButBk
                             width: 40; height: 40
                             anchors.fill: parent
@@ -121,21 +121,32 @@ Item {
                             cache: false
                             clip: true
                             source: "qrc:///shared/images/question-sign128.png"
-                        }*/
+                        }
                         Connections {
                             onPressed: loadIcon.open()
                         }
-                    }
-
-                    Image {
-                        id: iconImage
-                        //width: parent.width; height: parent.height
+                    }*/
+                    Rectangle{
+                        id: iconRec
                         width: 40; height: 40
-                        //anchors.fill: parent
-                        fillMode: Image.PreserveAspectFit
-                        cache: false
-                        clip: true
-                        source: "qrc:///shared/images/question-sign128.png"
+                        border.color: "black"
+                        border.width: 1
+                        Image {
+                            id: iconImage
+                            //width: 40; height: 40
+                            anchors.fill: parent
+                            fillMode: Image.PreserveAspectFit
+                            cache: false
+                            clip: true
+                            //source: "qrc:///shared/images/question-sign128.png"
+                            MouseArea {
+                                id: iconMA
+                                anchors.fill: parent
+                                Connections {
+                                    onPressed: loadIcon.open()
+                                }
+                            }
+                        }
                     }
 
                     Button {

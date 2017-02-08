@@ -48,8 +48,11 @@ ListView {
             var whatis = dataList["dataItems"][j];
             dataModel.append(dataList["dataItems"][j]);
             var picturePath = "image://list_";
-            picturePath += eaLVItemList.getIndex().toString() + "/" +j.toString();
+            picturePath += eaLVItemList.getIndex().toString();
+            picturePath += "_" + eaContainer.imageVersion;
+            picturePath += "/" +j.toString();
             dataModel.setProperty(j, "picture", picturePath);
+            console.log("resetDataListModel picturePath", picturePath);
             var newData = dataModel.get(j);
         }
         //dataModel.sync();

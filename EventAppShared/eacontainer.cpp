@@ -48,13 +48,15 @@ void EAContainer::resetImageProviders()
     QQmlEngine* engine = qmlEngine(this);
     if (engine)
     {
-        QString providerId = "listIcons_" + QString::number(imageVersion()-1);
-        QQmlImageProviderBase* provider = engine->imageProvider(providerId);
+        QString oldId = "listIcons_" + QString::number(imageVersion()-1);
+        QQmlImageProviderBase* provider = engine->imageProvider(oldId);
         if (provider)
-            engine->removeImageProvider(providerId);
+            engine->removeImageProvider(oldId);
         PictureListImageProvider* newProvider;
         newProvider = new PictureListImageProvider(jsonIcons);
-        engine->addImageProvider(providerId, newProvider);
+        QString newId = "listIcons_" + QString::number(imageVersion());
+        qDebug() << "resetImageProvider: number icons: " << jsonIcons.size() << " id: " << newId;
+        engine->addImageProvider(newId, newProvider);
     }
 }
 
@@ -114,6 +116,10 @@ void EAContainer::insertEmptyItemList(int index, QString name, int listType)
     newItemList->setListType(listType);
     newItemList->setEaContainer(this);
     m_eaItemLists.insert(index, newItemList);
+
+    QPixmap nullPix;
+    QJsonValue nullJson = jsonValFromPixmap(nullPix);
+    jsonIcons.insert(index, nullJson);
     resetImageProviders();
     emit eaItemListsChanged();
 }
@@ -630,6 +636,8 @@ void EAContainer::read(const QJsonObject &json)
         m_eaItemLists.append(newList);
         newList->read(readJsonObject, this);
     }
+
+    resetImageProviders();
 /*
     nextItemListId = json["version"].toInt();
     setEventKey(json["eventKey"].toString());
@@ -667,6 +675,7 @@ QString EAContainer::listDisplayFormats()
 
 void EAContainer::downloadFromUrl(const QString &urlString)
 {
+    clearEvent();
     httpDownload = new HttpDownload;
     httpDownload->downloadFileData(urlString);
 
@@ -997,6 +1006,11 @@ void EAContainer::clear_eaItemLists(QQmlListProperty<EAItemList> *list)
 int EAContainer::useNextItemListId()
 {
     return nextItemListId++;
+}
+
+QJsonArray EAContainer::getJsonIcons() const
+{
+    return jsonIcons;
 }
 
 EAContainer::EventSource EAContainer::getEventSource() const

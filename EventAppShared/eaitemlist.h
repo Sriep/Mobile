@@ -113,12 +113,12 @@ public:
     bool formatedList() const;    
     int listType() const;
 
-    EAContainer *getEaContainer() const;
+    EAContainer *getEaContainer();
     void setEaContainer(EAContainer *value);
 
     QList<EAItem *> getEaItems() const;
     void setEaItems(const QList<EAItem *> &eaItems);    
-    bool showIcon() const;
+    bool showIcon();
 
 signals:
     void titleFieldsChanged(QString titleFields);

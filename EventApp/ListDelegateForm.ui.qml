@@ -44,22 +44,40 @@ Item {
         id: mouseArea
         anchors.fill: parent
     }
+    //Row {
 
-    Text {
-        id: itemText
-        width: parent.width-nextImage.sourceSize.width; height: parent.height
-        font: eaContainer.eaConstruction.display.font
-        color: eaContainer.eaConstruction.display.fontColour
-        style: eaContainer.eaConstruction.display.textStyle
-        styleColor: eaContainer.eaConstruction.display.styleColour
-        x: eaContainer.eaConstruction.display.xText
-        y: eaContainer.eaConstruction.display.yText
-        verticalAlignment: eaContainer.eaConstruction.display.vAlignment
-        horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
+        Image {
+             clip: true
+             id: iconImage
+             cache: false
+             y: eaContainer.eaConstruction.display.yText
+            // y: eaContainer.eaConstruction.display.borderWidth+5
+             x: eaContainer.eaConstruction.display.borderWidth + 5
+             height: eaContainer.eaConstruction.display.height
+                     - 2*eaContainer.eaConstruction.display.borderWidth-10
+             //height: eaContainer.eaConstruction.display.height
+             //        - 2*eaContainer.eaConstruction.display.borderWidth-10
+             fillMode: Image.PreserveAspectFit
+             source: icon
+             visible: showIcon
+         }
 
-        text: modelData
-    }
+        Text {
+            id: itemText
+            width: parent.width-nextImage.sourceSize.width; height: parent.height
+            font: eaContainer.eaConstruction.display.font
+            color: eaContainer.eaConstruction.display.fontColour
+            style: eaContainer.eaConstruction.display.textStyle
+            styleColor: eaContainer.eaConstruction.display.styleColour
+            x: eaContainer.eaConstruction.display.xText + iconImage.width
+            y: eaContainer.eaConstruction.display.yText
+            verticalAlignment: eaContainer.eaConstruction.display.vAlignment
+            horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
 
+             //text: icon
+           text: title//modelData
+        }
+   // }
     Image {
         id: nextImage
         anchors.right: parent.right

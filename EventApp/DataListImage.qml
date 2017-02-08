@@ -89,8 +89,9 @@ ListView {
         for ( var i=0 ; i<items.length ; i++ )
         {
             var whatis = items[i];
-            var picturePath = "image://list_";
-            picturePath += index.toString() + "/" +i.toString();
+            var picturePath = "image://list_" + index.toString();
+            picturePath += "_" + eaContainer.imageVersion;
+            picturePath += "/" +i.toString();
             var uu = items[i].url;
             var uuu = items[i].urlString;
             var dic = {
@@ -102,8 +103,7 @@ ListView {
                 ,"itemIndex" : i
             }
             console.log("resetDataImageListModel i ", i);
-            console.log("resetDataImageListModel dic", dic);
-            console.log("Url", dic.showUrl);
+            console.log("picturePath", picturePath);
             dataImageModel.append(dic);
         }
     }

@@ -7,7 +7,6 @@ import "qrc:///shared"
 AddNewListForm {
 
     addListBut.onClicked: {
-        //eaContainer.insertEmptyItemList(0, newListName.text, listType.currentIndex === 0);
         eaContainer.insertEmptyItemList(0, newListName.text, listType.currentIndex);
         popListsList(eaContainer.eaItemLists);
     }
@@ -23,8 +22,14 @@ AddNewListForm {
         target: loadIcon
         onAccepted: {
             eaContainer.addIcon(listsCreated.currentIndex, loadIcon.file);
-            iconImage.source = "image://listIcons/" + listsCreated.currentIndex
+            setIcon();
         }
+    }
+
+    function setIcon() {
+        var iconPath = "image://listIcons_" + eaContainer.imageVersion;
+        iconPath += "/" + listsCreated.currentIndex;
+        iconImage.source = iconPath;
     }
 
     Connections {
@@ -41,6 +46,7 @@ AddNewListForm {
         newListBut.visible = false;
         addListBut.visible = true;
         popListsList(eaContainer.eaItemLists);
+        setIcon();
     }
 
     Component.onCompleted: {
@@ -50,7 +56,6 @@ AddNewListForm {
 
     function popListsList (eaItemLists) {
         listsModel.clear();
-        //listsModel.sync();
         var listCount = eaItemLists.length;
         for ( var i=0 ; i<listCount ; i++ ) {
             var thisList  = eaItemLists[i];
@@ -60,7 +65,6 @@ AddNewListForm {
             }
             listsModel.append(dic);
         }
-        //listsModel.sync();
     }
 
     mouseAreaLC.onClicked: {
@@ -72,11 +76,10 @@ AddNewListForm {
             listsCreated.currentIndex = index;
             listType.currentIndex = listsModel.get(index).listType;
             newListName.text = listsModel.get(index).listName;
-
             updateListBut.visible = true;
-            //deleteListBut.visible = true;
             newListBut.visible = true;
             addListBut.visible = false;
+            setIcon();
         } else {
             addListBut.visible = true;
         }

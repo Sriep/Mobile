@@ -66,9 +66,14 @@ EventAppPageForm {
           newList.createObject(stack
               , {"eaLVItemList": eaContainer.eaItemLists[i]});
 
+          var iconPath = "image://listIcons_" + eaContainer.imageVersion;
+          iconPath += "/" + i;
+
           model.append({
               "title" : eaContainer.eaItemLists[i].listName,
-              "position" : i
+              "position" : i,
+              "icon" : iconPath,
+              "showIcon" : eaContainer.eaItemLists[i].showIcon
           });
           console.log("refreshLists mount count", model.count);
       } //for

@@ -54,28 +54,19 @@ void EAItemList::resetImageProvider(EAContainer* eacontainer)
 {
     padOutPictures();
     QQmlEngine* engine = qmlEngine(eacontainer);
-    /*if (engine)
-    {
-        QString picList = "list_" + QString::number(getIndex());
-        QQmlImageProviderBase* provider = engine->imageProvider(picList);
-        if (!provider)
-        {
-            PictureListImageProvider* provider
-                    = new PictureListImageProvider(jsonPictures);
-            engine->addImageProvider(picList, provider);
-        }
-    }
-    */
+
     if (engine)
     {
-        QString providerId = "list_" + QString::number(getIndex());
-        QQmlImageProviderBase* provider = engine->imageProvider(providerId);
+        QString providerId = "list_" + QString::number(getIndex())  + "_";
+        QString oldId = providerId + QString::number(eacontainer->imageVersion()-1);
+        QQmlImageProviderBase* provider = engine->imageProvider(oldId);
         if (provider)
-            engine->removeImageProvider(providerId);
+            engine->removeImageProvider(oldId);
         PictureListImageProvider* newProvider;
         newProvider = new PictureListImageProvider(jsonPictures);
-        qDebug() << "resetImageProvider: number images: " << jsonPictures.size() << " id: " << providerId;
-        engine->addImageProvider(providerId, newProvider);
+        QString newId = providerId + QString::number(eacontainer->imageVersion());
+        qDebug() << "resetImageProvider: number images: " << jsonPictures.size() << " id: " << newId;
+        engine->addImageProvider(newId, newProvider);
     }
 }
 
@@ -113,7 +104,7 @@ void EAItemList::read(const QJsonObject &json
         m_eaItems.append(newitem);
     }
 
-    resetImageProvider(getEaContainer());
+    //resetImageProvider(getEaContainer());
 }
 
 void EAItemList::write(QJsonObject &json)
@@ -291,13 +282,19 @@ void EAItemList::loadCSV(const QString filenameUrl)
     if (csvListLines.length() > 0 )
     {
         QStringList headerList = csvListLines[0];
-        if (headerList[1] == ListType::Formated)
+        //int listType = headerList[1].toInt();
+        //int formatted = ListType::Formated;
+        if (headerList[0] == "EventAppDrawer")
         {
             csvListLines.removeFirst();
-            readMixedList(csvListLines);
+            if (headerList[1].toInt() == (int) ListType::Formated)
+                readMixedList(csvListLines);
+            else
+                readFormatedList(csvListLines);
         }
         else
             readFormatedList(csvListLines);
+
     }
     else
     {
@@ -788,7 +785,7 @@ int EAItemList::useNextItemId()
     return nextItemId++;
 }
 
-EAContainer *EAItemList::getEaContainer() const
+EAContainer *EAItemList::getEaContainer()
 {
     return eaContainer;
 }
@@ -1065,8 +1062,13 @@ void EAItemList::setEaItems(const QList<EAItem *> &eaItems)
     m_eaItems = eaItems;
 }
 
-bool EAItemList::showIcon() const
+bool EAItemList::showIcon()
 {
+    //EAContainer* eacontianer = getEaContainer();
+    //QJsonArray array = getEaContainer()->getJsonIcons();
+    //QString icon = array[getIndex()].toString();
+    QString icon = getEaContainer()->getJsonIcons()[getIndex()].toString();
+    bool m_showIcon =  "" != icon;
     return m_showIcon;
 }
 

@@ -130,6 +130,8 @@ public:
     qreal point2PixelH() const;    
     int imageVersion() const;
 
+    QJsonArray getJsonIcons() const;
+
 signals:
     void eaInfoChanged(EAInfo* eaInfo);
     void dataFilenameChanged(QString dataFilename);

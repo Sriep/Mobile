@@ -49,7 +49,7 @@ Page{
             anchors.fill: parent
             delegate: ListDelegate {
                 id: drawerDelegate
-                text: title
+               // text: title
             }
             model: ListModel {
                 id: drawerModel

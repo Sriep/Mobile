@@ -50,7 +50,7 @@ import QtQuick.Controls 2.1
                     font.pixelSize: pixelSizeSpin.value
                     font.letterSpacing: letterSpacingSpin.value
                     font.wordSpacing: wordSpacingSpin.value
-                    font.weight: weightCombo.weightValue
+                    //font.weight: weightCombo.weightValue
                     font.capitalization: capitalizationCombo.currentIndex
                     color: tempColour
                     verticalAlignment: Text.AlignVCenter

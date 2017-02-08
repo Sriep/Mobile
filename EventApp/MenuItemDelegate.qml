@@ -25,6 +25,18 @@ ItemDelegate {
         border.width: eaContainer.eaConstruction.menuDisplay.borderWidth
         radius: eaContainer.eaConstruction.menuDisplay.radius
     }
+    Image {
+         clip: true
+         id: iconMenuImage
+         cache: false
+         y: eaContainer.eaConstruction.display.yText
+         x: eaContainer.eaConstruction.display.borderWidth + 5
+         height: eaContainer.eaConstruction.display.height
+                 - 2*eaContainer.eaConstruction.display.borderWidth-10
+         fillMode: Image.PreserveAspectFit
+         source: icon
+         visible: showIcon
+     }
 
     Text {
         id: itemText
@@ -33,7 +45,7 @@ ItemDelegate {
         color: eaContainer.eaConstruction.menuDisplay.fontColour
         style: eaContainer.eaConstruction.menuDisplay.textStyle
         styleColor: eaContainer.eaConstruction.menuDisplay.styleColour
-        x: eaContainer.eaConstruction.menuDisplay.xText
+        x: eaContainer.eaConstruction.menuDisplay.xText + iconMenuImage.width +40
         y: eaContainer.eaConstruction.menuDisplay.yText
         verticalAlignment: eaContainer.eaConstruction.menuDisplay.vAlignment
         horizontalAlignment: eaContainer.eaConstruction.menuDisplay.hAlignment

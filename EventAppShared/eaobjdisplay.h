@@ -16,14 +16,20 @@ static const int AlignVCenter = 128;
 class EAObjDisplay : public QQuickItem
 {
     Q_OBJECT
+
     Q_PROPERTY(int x READ x WRITE setX NOTIFY xChanged)
     Q_PROPERTY(int y READ y WRITE setY NOTIFY yChanged)
     Q_PROPERTY(int width READ width WRITE setWidth NOTIFY widthChanged)
     Q_PROPERTY(int height READ height WRITE setHeight NOTIFY heightChanged)
-    Q_PROPERTY(QColor colour READ colour WRITE setColour NOTIFY colourChanged)
+    Q_PROPERTY(QColor backColour READ backColour WRITE setBackColour NOTIFY backColourChanged)
+
+    Q_PROPERTY(int radius READ radius WRITE setRadius NOTIFY radiusChanged)
     Q_PROPERTY(QColor borderColour READ borderColour WRITE setBorderColour NOTIFY borderColourChanged)
     Q_PROPERTY(int borderWidth READ borderWidth WRITE setBorderWidth NOTIFY borderWidthChanged)
-    Q_PROPERTY(int radius READ radius WRITE setRadius NOTIFY radiusChanged)
+
+    Q_PROPERTY(int imageHeight READ imageHeight WRITE setImageHeight NOTIFY imageHeightChanged)
+    Q_PROPERTY(int xImage READ xImage WRITE setXImage NOTIFY xImageChanged)
+
     Q_PROPERTY(QFont font READ font WRITE setFont NOTIFY fontChanged)
     Q_PROPERTY(QColor fontColour READ fontColour WRITE setFontColour NOTIFY fontColourChanged)
     Q_PROPERTY(int textStyle READ textStyle WRITE setTextStyle NOTIFY textStyleChanged)
@@ -32,11 +38,13 @@ class EAObjDisplay : public QQuickItem
     Q_PROPERTY(int yText READ yText WRITE setYText NOTIFY yTextChanged)
     Q_PROPERTY(int vAlignment READ vAlignment WRITE setVAlignment NOTIFY vAlignmentChanged)
     Q_PROPERTY(int hAlignment READ hAlignment WRITE setHAlignment NOTIFY hAlignmentChanged)
-    Q_PROPERTY(QColor backColour READ backColour WRITE setBackColour NOTIFY backColourChanged)
+
+    Q_PROPERTY(QColor colour READ colour WRITE setColour NOTIFY colourChanged)
     Q_PROPERTY(QColor highlitedColour READ highlitedColour WRITE setHighlitedColour NOTIFY highlitedColourChanged)
 
     Q_PROPERTY(bool whiteIcons READ whiteIcons WRITE setWhiteIcons NOTIFY whiteIconsChanged)
     Q_PROPERTY(int displayType READ displayType WRITE setDisplayType NOTIFY displayTypeChanged)
+
 
     int m_x = 2;
     int m_y = 2;
@@ -57,8 +65,9 @@ class EAObjDisplay : public QQuickItem
     QColor m_backColour;    
     QColor m_highlitedColour;    
     int m_displayType;
-
-    bool m_whiteIcons;
+    bool m_whiteIcons;    
+    int m_imageHeight;
+    int m_xImage;
 
 public:
     enum DisplayType { Menu=0, Toolbar, Drawer };
@@ -90,8 +99,9 @@ public:
     QColor backColour() const;    
     QColor highlitedColour() const;    
     int displayType() const;
-
-    bool whiteIcons() const;
+    bool whiteIcons() const;    
+    int imageHeight() const;
+    int xImage() const;
 
 signals:
     void xChanged(int x);
@@ -114,8 +124,9 @@ signals:
     void backColourChanged(QColor backColour);    
     void highlitedColourChanged(QColor highlitedColour);    
     void displayTypeChanged(int displayType);
-
-    void whiteIconsChanged(bool whiteIcons);
+    void whiteIconsChanged(bool whiteIcons);    
+    void imageHeightChanged(int imageHeight);
+    void xImageChanged(int xImage);
 
 public slots:
     void setX(int x);
@@ -138,6 +149,8 @@ public slots:
     void setHighlitedColour(QColor highlitedColour);
     void setDisplayType(int displayType);
     void setWhiteIcons(bool whiteIcons);
+    void setImageHeight(int imageHeight);
+    void setXImage(int xImage);
 };
 
 #endif // EAOBJDISPLAY_H

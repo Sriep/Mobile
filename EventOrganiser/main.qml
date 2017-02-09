@@ -9,8 +9,6 @@ import EventAppData 1.0
 ApplicationWindow {
     id: appwin
     visible: true
-    //width: 600; height: 400
-    //width: 800; height: 600
     width: 1280;    height: 1024
     title: qsTr("Event App designer:\t" + eaContainer.eaInfo.eventName)
 
@@ -31,23 +29,12 @@ ApplicationWindow {
     EaContainerObj {
         id: eaContainer
     }
-/*
-    HttpDownload {
-        id: httpDownload
-        onFinishedDownload: {
-            console.log("Download finished");
-            var fileName = httpDownload.fileDownloaded;
-            console.log("About to call loadNewEventApp", fileName);
-            eaContainer.installNewEvent(fileName);
-        }
-    }
-*/
+
     RowLayout {
 
-        width: 1100; height: 870;
+        width: 1100; height: 900;
         Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
         spacing: 10
-        //x:10; y:10
 
         StackLayout {
             id: tabStack

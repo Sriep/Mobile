@@ -10,7 +10,9 @@ void EAObjDisplay::read(const QJsonObject &json)
     setX(json["x"].toInt());
     setY(json["y"].toInt());
     setWidth(json["width"].toInt());
-    setHeight(json["height"].toInt());
+    setHeight(json["height"].toInt());    
+    setImageHeight(json["imageHeigth"].toInt());
+    setXImage(json["xImage"].toInt());
     setColour(QColor(json["colour"].toString()));
     setBorderColour(QColor(json["borderColour"].toString()));
     setBorderWidth(json["borderWidth"].toInt());
@@ -35,7 +37,9 @@ void EAObjDisplay::write(QJsonObject &json)
     json["x"] = x();
     json["y"] = y();
     json["width"] = width();
-    json["height"] = height();
+    json["height"] = height();    
+    json["imageHeigth"] = imageHeight();
+    json["xImage"] = xImage();
     json["colour"] = QVariant(colour()).toString();
     json["borderColour"] = QVariant(borderColour()).toString();
     json["borderWidth"] = borderWidth();
@@ -141,6 +145,16 @@ int EAObjDisplay::displayType() const
 bool EAObjDisplay::whiteIcons() const
 {
     return m_whiteIcons;
+}
+
+int EAObjDisplay::imageHeight() const
+{
+    return m_imageHeight;
+}
+
+int EAObjDisplay::xImage() const
+{
+    return m_xImage;
 }
 
 QColor EAObjDisplay::fontColour() const
@@ -367,4 +381,22 @@ void EAObjDisplay::setWhiteIcons(bool whiteIcons)
 
     m_whiteIcons = whiteIcons;
     emit whiteIconsChanged(whiteIcons);
+}
+
+void EAObjDisplay::setImageHeight(int imageHeight)
+{
+    if (m_imageHeight == imageHeight)
+        return;
+
+    m_imageHeight = imageHeight;
+    emit imageHeightChanged(imageHeight);
+}
+
+void EAObjDisplay::setXImage(int xImage)
+{
+    if (m_xImage == xImage)
+        return;
+
+    m_xImage = xImage;
+    emit xImageChanged(xImage);
 }

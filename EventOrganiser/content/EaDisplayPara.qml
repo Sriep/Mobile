@@ -49,6 +49,9 @@ EaDisplayParaForm {
             featuredDisplay.yText = dyTextSB.value;
             featuredDisplay.whiteIcons = whiteIconsCB.checked;
 
+            featuredDisplay.imageHeight = heightImage.value;
+            featuredDisplay.xImage = xImage.value;
+
             console.log("hAlignment", hAlignCombo.currentIndex);
             console.log("vAlignment", vAlignCombo.currentIndex);
             console.log("pow hAlignment", Math.pow(2,hAlignCombo.currentIndex));
@@ -88,6 +91,8 @@ EaDisplayParaForm {
     Connections {
         target: eaContainer //(eaConstruction)
         onEaConstructionChanged: {
+            heightImage.value = featuredDisplay.imageHeight;
+            xImage.value = featuredDisplay.xImage;
             console.log("eaContainer onDisplayChanged");
             xTF.value = featuredDisplay.x;
             yTF.value = featuredDisplay.y;

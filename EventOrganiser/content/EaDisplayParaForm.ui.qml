@@ -45,7 +45,7 @@ Item {
                 ColumnLayout {
                     id: columnLayout3
                     width: 100
-                    height: 100
+                    height: 90
 
                     RowLayout {
                         Label {
@@ -140,7 +140,7 @@ Item {
                     RowLayout {
                         id: rowLayout2
                         width: 100
-                        height: 100
+                        height: 90
 
                         Label {
                             id: label3
@@ -185,7 +185,7 @@ Item {
                     RowLayout {
                         id: rowLayout3
                         width: 100
-                        height: 100
+                        height: 90
                         Label {
                             id: label12
                             text: qsTr("x")
@@ -209,7 +209,7 @@ Item {
                     RowLayout {
                         id: rowLayout4
                         width: 100
-                        height: 100
+                        height: 90
 
                         Label {
                             id: label10
@@ -252,7 +252,7 @@ Item {
                 ColumnLayout {
                     id: columnLayout2
                     width: 100
-                    height: 100
+                    height: 90
 
                     RowLayout {
                         Label {
@@ -268,7 +268,7 @@ Item {
                             flat: true
                             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                             background: Rectangle {
-                               // id: colourButBackgound
+                                // id: colourButBackgound
                                 implicitWidth: 100
                                 implicitHeight: 40
                                 opacity: enabled ? 1 : 0.3
@@ -284,6 +284,12 @@ Item {
                             Connections {
                                 onPressed: bkColorDialog.open();
                             }
+                        }
+
+                        CheckBox {
+                            id: whiteIconsCB
+                            checked: featuredDisplay.whiteIcons
+                            text: qsTr("Use White Icons")
                         }
 
                     }
@@ -405,18 +411,38 @@ Item {
                             ToolTip.text: qsTr("Border width in pixels.")
                         }
                     }
-
-                    CheckBox {
-                        id: whiteIconsCB
-                        checked: featuredDisplay.whiteIcons
-                        text: qsTr("Use White Icons")
-                    }
                 }
             }
+
+            GroupBox {
+                id: goupImage
+                width: parent.width;
+                title: qsTr("Image")
+                ColumnLayout {
+                RowLayout {
+                    id: rowLayout
+                    width: parent.width;
+                    height: 90
+                    Label {
+                        text: qsTr("width")
+                    }
+                    SpinBox {
+                        id: heightImage
+                    }
+                    Label {
+                        id: label
+                        text: qsTr("x")
+                    }
+                    SpinBox {
+                        id: xImage
+                    }
+                }}
+            }
+
             RowLayout {
                 id: rowLayout1
                 width: 100
-                height: 100
+                height: 90
 
                 Button {
                     id: applyBut
@@ -425,6 +451,8 @@ Item {
 
             }
         }
+
+
     }
 
 }

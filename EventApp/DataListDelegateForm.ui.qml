@@ -16,6 +16,7 @@ Item {
     width: dataList.width
     Layout.fillWidth: true
     height: eaContainer.eaConstruction.display.height
+    property alias photoImage: photoImage
     property alias maDataDelegate: maDataDelegate
     property alias itemBackground: itemBackground
     property alias bottomText: bottomText
@@ -69,11 +70,17 @@ Item {
        Image {
             clip: true
             id: photoImage
-            y:-eaContainer.eaConstruction.display.borderWidth-5
-            x: eaContainer.eaConstruction.display.borderWidth
+            //y:-eaContainer.eaConstruction.display.borderWidth-5
+            //x: eaContainer.eaConstruction.display.borderWidth
+            x : eaContainer.eaConstruction.display.xImage;
+            y : eaContainer.eaConstruction.display.yText;
+
             fillMode: Image.PreserveAspectFit
-            height: eaContainer.eaConstruction.display.height
-                    - 2*eaContainer.eaConstruction.display.borderWidth-10
+            //height: eaContainer.eaConstruction.display.height
+            //        - 2*eaContainer.eaConstruction.display.borderWidth-10
+
+            width : eaContainer.eaConstruction.display.imageWidth
+            height : eaContainer.eaConstruction.display.imageHeight
             source: picture
             cache: false
         }
@@ -84,8 +91,9 @@ Item {
             color: eaContainer.eaConstruction.display.fontColour
             style: eaContainer.eaConstruction.display.textStyle
             styleColor: eaContainer.eaConstruction.display.styleColour
-            x: eaContainer.eaConstruction.display.xText + photoImage.width
+            x: eaContainer.eaConstruction.display.xText
             y: eaContainer.eaConstruction.display.yText
+
             verticalAlignment: eaContainer.eaConstruction.display.vAlignment
             horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
             text: "hi"//modelData
@@ -107,23 +115,24 @@ Item {
         width: parent.width
         anchors { top: parent.top; bottom: parent.bottom }
         contentHeight: bottomText.height
+
         clip: true
         x:5
-       Text {
-            id: bottomText
-            font: eaContainer.eaConstruction.display.font
-            color: eaContainer.eaConstruction.display.fontColour
-            style: eaContainer.eaConstruction.display.textStyle
-            styleColor: eaContainer.eaConstruction.display.styleColour
-            //verticalAlignment: eaContainer.eaConstruction.display.vAlignment
-            //horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
-            text: modelData
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            y:10; x:10
-            wrapMode: Text.WordWrap;
-            width: details.width
-        }
+           Text {
+                id: bottomText
+                font: eaContainer.eaConstruction.display.font
+                color: eaContainer.eaConstruction.display.fontColour
+                style: eaContainer.eaConstruction.display.textStyle
+                styleColor: eaContainer.eaConstruction.display.styleColour
+                //verticalAlignment: eaContainer.eaConstruction.display.vAlignment
+                //horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
+                text: modelData
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                y:10; x:10
+                wrapMode: Text.WordWrap;
+                width: details.width
+            }
       }
 
       Image {
@@ -149,7 +158,10 @@ Item {
         id: closeBut
         y: 10
         //anchors { right: background.right; rightMargin: 10 }
-        anchors { right: dataDelegate.right; rightMargin: 10 }
+        anchors { right: dataDelegate.right;
+                    bottom: dataDelegate.bottom;
+                    rightMargin: 10
+        }
         opacity: dataDelegate.detailsOpacity
         text: "Close"
         checked: true
@@ -160,7 +172,7 @@ Item {
         id: dldStates
         name: "Details"
 
-        PropertyChanges { target: background; color: "white" }
+        //PropertyChanges { target: itemBackground; color: "white" }
 
         PropertyChanges {
             id: picSicePropCh;

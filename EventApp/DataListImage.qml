@@ -62,7 +62,7 @@ ListView {
         Connections {
             target: eaContainer
             onEaConstructionChanged: {
-                setDisplayParameters();
+                setIDisplayParameters();
             }
         }
 
@@ -73,6 +73,9 @@ ListView {
                   resetDataImageLM()
                   console.log("Page onEaItemsChnged");
             }
+        }
+        Component.onCompleted: {
+            setIDisplayParameters();
         }
     }
 
@@ -107,6 +110,7 @@ ListView {
             dataImageModel.append(dic);
         }
     }
+
 }
 
 

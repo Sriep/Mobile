@@ -4,6 +4,7 @@ import QtQuick.Controls 2.0
 ItemDelegate {
     property  alias itemBackground: itemBackground
     property  alias itemText: itemText
+    property  alias iconMenuImage: iconMenuImage
 
     width: parent.width
     highlighted: ListView.isCurrentItem

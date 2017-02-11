@@ -1,5 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
+import "qrc:///shared/dataList.js" as DataListJS
 
 EaToolBarForm {
     id: toolBar
@@ -22,17 +23,42 @@ EaToolBarForm {
         id: optionsDrawer
     }
 
-
-
-    function setToolBarDisplayDataParameters(rectangle
+    function setMenuDisplayDataParameters(rectangle
+                                          , image
                                           , textBox
                                           , displayData
                                           , delegate) {
-        setRectangleDisplayParameters(rectangle, displayData, delegate);
-        setTextBoxDisplayParameters(textBox , displayData, delegate);
+        DataListJS.setBackgroundDisplayParameters(rectangle, displayData, delegate);
+        DataListJS.setTextBoxDisplayParameters(textBox , displayData);
+        DataListJS.setImageDisplyaParameters(image, displayData)
     }
 
-    function setRectangleDisplayParameters(rectangle
+
+
+    function setToolBarDisplayDataParameters(rectangle
+                                          , image
+                                          , textBox
+                                          , displayData
+                                          , delegate) {
+        DataListJS.setBackgroundDisplayParameters(rectangle, displayData, delegate);     
+        DataListJS.setTextBoxDisplayParameters(textBox , displayData);
+        //DataListJS.setImageDisplyaParameters(image, displayData)
+    }
+
+    function setOptionsMenuDisplayParamters(rectangle
+                                            , image
+                                            , textBox
+                                            , displayData
+                                            , delegate) {
+        image.visible = false;
+        image.width = 0;
+        DataListJS.setBackgroundDisplayParameters(rectangle, displayData, delegate);
+        DataListJS.setTextBoxDisplayParameters(textBox , displayData);
+        textBox.x = 10
+    }
+}
+/*
+    function setBackgroundDisplayParameters(rectangle
                                            , displayData
                                            , delegate)   {
         rectangle.height = displayData.height
@@ -46,6 +72,13 @@ EaToolBarForm {
         rectangle.border.color = displayData.borderColour
         rectangle.border.width = displayData.borderWidth
         rectangle.radius = displayData.radius
+    }
+
+    function setImageDisplyaParameters(image, displayData, delegate) {
+        image.height = displayData.imageHeight;
+        image.width = displayData.imageWidth;
+        image.x = displayData.xImage;
+        image.y = displayData.yText;
     }
 
     function setTextBoxDisplayParameters(textBox
@@ -63,7 +96,7 @@ EaToolBarForm {
     }
 }
 
-
+*/
 
 
 

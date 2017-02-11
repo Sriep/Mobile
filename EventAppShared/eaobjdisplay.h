@@ -29,6 +29,7 @@ class EAObjDisplay : public QQuickItem
 
     Q_PROPERTY(int imageHeight READ imageHeight WRITE setImageHeight NOTIFY imageHeightChanged)
     Q_PROPERTY(int xImage READ xImage WRITE setXImage NOTIFY xImageChanged)
+    Q_PROPERTY(int yImage READ yImage WRITE setYImage NOTIFY yImageChanged)
 
     Q_PROPERTY(QFont font READ font WRITE setFont NOTIFY fontChanged)
     Q_PROPERTY(QColor fontColour READ fontColour WRITE setFontColour NOTIFY fontColourChanged)
@@ -67,7 +68,8 @@ class EAObjDisplay : public QQuickItem
     int m_displayType;
     bool m_whiteIcons;    
     int m_imageHeight;
-    int m_xImage;
+    int m_xImage;    
+    int m_yImage;
 
 public:
     enum DisplayType { Menu=0, Toolbar, Drawer };
@@ -77,7 +79,6 @@ public:
 
     void read(const QJsonObject &json);
     void write(QJsonObject &json);
-
     int x() const;
     int y() const;
     int width() const;
@@ -101,7 +102,8 @@ public:
     int displayType() const;
     bool whiteIcons() const;    
     int imageHeight() const;
-    int xImage() const;
+    int xImage() const;    
+    int yImage() const;
 
 signals:
     void xChanged(int x);
@@ -126,7 +128,8 @@ signals:
     void displayTypeChanged(int displayType);
     void whiteIconsChanged(bool whiteIcons);    
     void imageHeightChanged(int imageHeight);
-    void xImageChanged(int xImage);
+    void xImageChanged(int xImage);    
+    void yImageChanged(int yImage);
 
 public slots:
     void setX(int x);
@@ -151,6 +154,7 @@ public slots:
     void setWhiteIcons(bool whiteIcons);
     void setImageHeight(int imageHeight);
     void setXImage(int xImage);
+    void setYImage(int yImage);
 };
 
 #endif // EAOBJDISPLAY_H

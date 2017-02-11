@@ -35,6 +35,9 @@ ListView {
                 setDisplayParameters();
             }
         }
+        Component.onCompleted: {
+            setDisplayParameters();
+        }
     }
 
     function resetDataListModel() {

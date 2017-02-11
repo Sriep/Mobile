@@ -63,7 +63,7 @@ Item {
         Image {
             id: photoImage
             width: 50;  height: 50
-           // width: parent.width;  height: parent.height
+            //width: parent.width;  height: parent.height
             source: picture
             x:20; y:10
             cache: false
@@ -227,7 +227,11 @@ Item {
     Button {
         id: closeBut
         y: 10
-        anchors { right: background.right; rightMargin: 10 }
+        //anchors { right: background.right; rightMargin: 10 }
+        anchors { right: imageDelegate.right;
+                    bottom: imageDelegate.bottom;
+                    rightMargin: 10
+        }
         opacity: imageDelegate.detailsOpacity
         text: "Close"
         //text: dataDelegate.state === 'Details' ? "Close" : "Open"

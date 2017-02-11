@@ -17,8 +17,8 @@ Item {
     property alias styleColourDlg: styleColourDlg
     property alias button1: button1
     property alias borderWidthSB: borderWidthSB
-    property alias vAlignCombo: vAlignCombo
-    property alias hAlignCombo: hAlignCombo
+    //property alias vAlignCombo: vAlignCombo
+    //property alias hAlignCombo: hAlignCombo
     property alias dyTextSB: dyTextSB
     property alias dxTextSB: dxTextSB
     property alias styleCombo: styleCombo
@@ -26,7 +26,9 @@ Item {
     property alias bkColourBut: bkColourBut
     property alias styleColourBut: styleColourBut
     property alias colourBut: colourBut
-    property alias button: button
+    property alias heightImageSB: heightImageSB
+    property alias xImageSB: xImageSB
+    property alias yImageSB: yImageSB
 
     GroupBox {
         id: groupDispalyPara
@@ -205,7 +207,7 @@ Item {
                             value: featuredDisplay.yText
                         }
                     }
-
+                    /*
                     RowLayout {
                         id: rowLayout4
                         width: 100
@@ -213,11 +215,13 @@ Item {
 
                         Label {
                             id: label10
+                            visible: false
                             text: qsTr("Horizontal")
                         }
 
                         ComboBox {
                             id: hAlignCombo
+                            visible: false
                             model: ListModel {
                                 ListElement { alignName: "AlignLeft"; alignmetValue: 1 }
                                 ListElement { alignName: "AlignRight"; alignmetValue: 2 }
@@ -229,11 +233,13 @@ Item {
 
                         Label {
                             id: label11
+                            visible: false
                             text: qsTr("Vertical")
                         }
 
                         ComboBox {
                             id: vAlignCombo
+                            visible: false
                             model: ListModel {
                                 ListElement { alignName: "AlignTop"; alignmetValue: 32 }
                                 ListElement { alignName: "AlignBottom"; alignmetValue: 64 }
@@ -242,6 +248,7 @@ Item {
                             textRole: "alignName"
                         }
                     }
+                    */
                 }
             }
             GroupBox {
@@ -419,24 +426,35 @@ Item {
                 width: parent.width;
                 title: qsTr("Image")
                 ColumnLayout {
-                RowLayout {
-                    id: rowLayout
-                    width: parent.width;
-                    height: 90
-                    Label {
-                        text: qsTr("width")
+                    RowLayout {
+                        //width: parent.width;
+                        //height: 90
+                        Label {
+                            text: qsTr("width")
+                        }
+                        SpinBox {
+                            id: heightImageSB
+                            editable: true
+                        }
                     }
-                    SpinBox {
-                        id: heightImage
+                    RowLayout {
+                        Label {
+                            text: qsTr("x")
+                        }
+                        SpinBox {
+                            id: xImageSB
+                            editable: true
+                        }
+                        Label {
+                            text: qsTr("y")
+                        }
+                        SpinBox {
+                            id: yImageSB
+                            editable: true
+
+                        }
                     }
-                    Label {
-                        id: label
-                        text: qsTr("x")
-                    }
-                    SpinBox {
-                        id: xImage
-                    }
-                }}
+                }
             }
 
             RowLayout {

@@ -60,6 +60,13 @@ DLImageDelegateForm {
       //console.log("maDataDelegate listView.currentIndex",dataList.currentIndex);
   }
 
+  Connections {
+    target: footerBar.backBut
+    onClicked: {
+         imageDelegate.state = ""
+    }
+  }
+
   function popMapInfo(mapInfo) {
       if (undefined !== mapInfo && null !== mapInfo) {
           setMapPlugin(map, mapInfo.accessToken, mapInfo.mapId);
@@ -95,8 +102,16 @@ DLImageDelegateForm {
       onPositionChanged: {
       }
   }
-
+/*
   function setDisplayParameters() {
+      DataListJS.setBackgroundDisplayParameters(imageDelegate.itemBackground
+                                               ,eaContainer.eaConstruction.display
+                                               ,imageDelegate);
+      DataListJS.setImageDisplyaParameters(imageDelegate.photoImage
+                                           ,eaContainer.eaConstruction.display);
+      DataListJS.setTextBoxDisplayParameters(imageDelegate.topText
+                                             ,eaContainer.eaConstruction.display)
+
       var displayData = eaContainer.eaConstruction.display;
       var rectangle = imageDelegate.itemBackground;
       var itemTextv = imageDelegate.topText;
@@ -111,6 +126,16 @@ DLImageDelegateForm {
       topText.color = displayData.fontColour
       topText.style = displayData.textStyle
       topText.styleColor = displayData.styleColour
+  }
+  */
+  function setIDisplayParameters() {
+      DataListJS.setBackgroundDisplayParameters(imageDelegate.itemBackground
+                                               ,eaContainer.eaConstruction.display
+                                               ,imageDelegate);
+      DataListJS.setImageDisplyaParameters(imageDelegate.photoImage
+                                           ,eaContainer.eaConstruction.display);
+      DataListJS.setTextBoxDisplayParameters(imageDelegate.topText
+                                             ,eaContainer.eaConstruction.display)
   }
 
 }

@@ -35,7 +35,8 @@ DataListDelegateForm {
                                      , dataModel
                                      , false
                                      , eaLVItemList);
-        bottomText.text = t;
+        bottomText.text = t;       
+        //dataDelegate.itemBackground.color = eaContainer.eaConstruction.display.colour
     }
     Connections {
         target: eaLVItemList
@@ -62,6 +63,13 @@ DataListDelegateForm {
         dataDelegate.state = dataDelegate.state == 'Details' ? "" : "Details";
         console.log("maDataDelegate index",index);
         console.log("maDataDelegate listView.currentIndex",dataList.currentIndex);
+    }
+
+    Connections {
+      target: footerBar.backBut
+      onClicked: {
+           dataDelegate.state = ""
+      }
     }
 
     //photoImage.width: eaLVItemList.showPhotos ? 50 : 0
@@ -95,22 +103,26 @@ DataListDelegateForm {
         console.log("DataListDelegateForm completed");
     }
 
-    //function setDisplayParameters(displayData, rectangle, textBox) {
     function setDisplayParameters() {
-        var displayData = eaContainer.eaConstruction.display;
-        var rectangle = dataDelegate.itemBackground;
-        var itemTextv = dataDelegate.topText;
-        itemBackground.x = displayData.x
-        itemBackground.y = displayData.y
-        itemBackground.color = displayData.colour
-        itemBackground.border.color = displayData.borderColour
-        itemBackground.border.width = displayData.borderWidth
-        itemBackground.radius = displayData.radius
-
-        topText.font = displayData.font
-        topText.color = displayData.fontColour
-        topText.style = displayData.textStyle
-        topText.styleColor = displayData.styleColour
+        DataListJS.setBackgroundDisplayParameters(dataDelegate.itemBackground
+                                                  , eaContainer.eaConstruction.display
+                                                  , dataDelegate)
+        DataListJS.setTextBoxDisplayParameters(dataDelegate.topText
+                                            , eaContainer.eaConstruction.display)
+        bottomText.font = eaContainer.eaConstruction.display.font
+        bottomText.color = eaContainer.eaConstruction.display.fontColour
+        bottomText.style = eaContainer.eaConstruction.display.textStyle
+        bottomText.styleColor = eaContainer.eaConstruction.display.styleColour
+        background.height = parent.height - y*2
+        if (dataDelegate.state == 'Details') {
+            image.height = eaLVItemList.showPhotos ? 130 : 50;
+            image.width = eaLVItemList.showPhotos ? 130 : 0;
+            image.x = displayData.xImage;
+            image.y = displayData.yImage;
+        } else {
+            DataListJS.setImageDisplyaParameters(dataDelegate.photoImage
+                           , eaContainer.eaConstruction.display)
+        }
     }
 
 }

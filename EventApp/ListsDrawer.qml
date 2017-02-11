@@ -33,7 +33,8 @@ Drawer {
       Connections {
         target: eaContainer
         onEaConstructionChanged: {
-          setToolBarDisplayDataParameters(menuItemDelegate.itemBackground
+          setMenuDisplayDataParameters(menuItemDelegate.itemBackground
+                                         , menuItemDelegate.iconMenuImage
                                          , menuItemDelegate.itemText
                                          , eaContainer.eaConstruction.menuDisplay
                                          , menuItemDelegate);
@@ -42,7 +43,8 @@ Drawer {
       Connections {
         target: listsDrawer
         onOpen: {
-          setToolBarDisplayDataParameters(menuItemDelegate.itemBackground
+          setMenuDisplayDataParameters(menuItemDelegate.itemBackground
+                                         , menuItemDelegate.iconMenuImage
                                          , menuItemDelegate.itemText
                                          , eaContainer.eaConstruction.menuDisplay
                                          , menuItemDelegate);
@@ -51,7 +53,7 @@ Drawer {
       Connections {
         target: menuListView
         onUpadeteDisplay: {
-          setToolBarDisplayDataParameters(menuItemDelegate.itemBackground
+          setMenuDisplayDataParameters(menuItemDelegate.itemBackground
                                          , menuItemDelegate.itemText
                                          , eaContainer.eaConstruction.menuDisplay
                                          , menuItemDelegate);
@@ -59,7 +61,8 @@ Drawer {
       }
 */
       Component.onCompleted: {
-          setToolBarDisplayDataParameters(menuItemDelegate.itemBackground
+          setMenuDisplayDataParameters(menuItemDelegate.itemBackground
+                       , menuItemDelegate.iconMenuImage
                        , menuItemDelegate.itemText
                        , eaContainer.eaConstruction.menuDisplay
                        , menuItemDelegate);

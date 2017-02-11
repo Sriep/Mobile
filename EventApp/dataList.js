@@ -57,6 +57,40 @@ function addTT(control, tipText) {
     control.ToolTip.text = qsTr(tipText);*/
 }
 
+function setBackgroundDisplayParameters(background
+                                       , displayData
+                                       , delegate)   {
+    //background.height = displayData.height
+
+    background.x = displayData.x
+    background.y = displayData.y
+    background.color = displayData.colour
+    background.color = delegate.highlighted
+            ? displayData.highlitedColour
+            : displayData.colour
+    background.border.color = displayData.borderColour
+    background.border.width = displayData.borderWidth
+    background.radius = displayData.radius
+}
+
+function setImageDisplyaParameters(image, displayData) {
+    image.height = displayData.imageHeight;
+    image.width = displayData.imageWidth;
+    image.x = displayData.xImage;
+    image.y = displayData.yImage;
+}
+
+function setTextBoxDisplayParameters(textBox, displayData) {
+    textBox.font = displayData.font
+    textBox.color = displayData.fontColour
+    textBox.style = displayData.textStyle
+    textBox.styleColor = displayData.styleColour
+
+    textBox.x = displayData.xText
+    textBox.y = displayData.yText
+    textBox.verticalAlignment = displayData.vAlignment
+    textBox.horizontalAlignment = displayData.hAlignment
+}
 
 
 

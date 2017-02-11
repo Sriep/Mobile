@@ -49,16 +49,12 @@ EaDisplayParaForm {
             featuredDisplay.yText = dyTextSB.value;
             featuredDisplay.whiteIcons = whiteIconsCB.checked;
 
-            featuredDisplay.imageHeight = heightImage.value;
-            featuredDisplay.xImage = xImage.value;
+            featuredDisplay.imageHeight = heightImageSB.value;
+            featuredDisplay.xImage = xImageSB.value;
+            featuredDisplay.yImage = yImageSB.value;
 
-            console.log("hAlignment", hAlignCombo.currentIndex);
-            console.log("vAlignment", vAlignCombo.currentIndex);
-            console.log("pow hAlignment", Math.pow(2,hAlignCombo.currentIndex));
-            console.log("pow vAlignment", Math.pow(2,vAlignCombo.currentIndex+5));
-
-            featuredDisplay.hAlignment = Math.pow(2,hAlignCombo.currentIndex);
-            featuredDisplay.vAlignment = Math.pow(2,vAlignCombo.currentIndex+5);
+            //featuredDisplay.hAlignment = Math.pow(2,hAlignCombo.currentIndex);
+            //featuredDisplay.vAlignment = Math.pow(2,vAlignCombo.currentIndex+5);
 
             console.log("after hAlignment", featuredDisplay.hAlignment);
             console.log("after vAlignment", featuredDisplay.vAlignment);
@@ -70,8 +66,8 @@ EaDisplayParaForm {
         }
     }
 
-    hAlignCombo.currentIndex: Math.round(Math.log(featuredDisplay.hAlignment)/Math.LN2);
-    vAlignCombo.currentIndex: Math.round(Math.log(featuredDisplay.vAlignment)/Math.LN2 - 5);
+    //hAlignCombo.currentIndex: Math.round(Math.log(featuredDisplay.hAlignment)/Math.LN2);
+    //vAlignCombo.currentIndex: Math.round(Math.log(featuredDisplay.vAlignment)/Math.LN2 - 5);
 
     Connections {
         target: fontDlg
@@ -91,8 +87,9 @@ EaDisplayParaForm {
     Connections {
         target: eaContainer //(eaConstruction)
         onEaConstructionChanged: {
-            heightImage.value = featuredDisplay.imageHeight;
-            xImage.value = featuredDisplay.xImage;
+            heightImageSB.value = featuredDisplay.imageHeight;
+            xImageSB.value = featuredDisplay.xImage;
+            yImageSB.value = featuredDisplay.yImage;
             console.log("eaContainer onDisplayChanged");
             xTF.value = featuredDisplay.x;
             yTF.value = featuredDisplay.y;
@@ -104,8 +101,8 @@ EaDisplayParaForm {
             dxTextSB.value = featuredDisplay.xText;
             dyTextSB.value = featuredDisplay.yText;
             whiteIconsCB.checked = featuredDisplay.whiteIcons;
-            hAlignCombo.currentIndex = Math.round(Math.log(featuredDisplay.hAlignment)/Math.LN2);
-            vAlignCombo.currentIndex = Math.round(Math.log(featuredDisplay.vAlignment)/Math.LN2 - 5);
+            //hAlignCombo.currentIndex = Math.round(Math.log(featuredDisplay.hAlignment)/Math.LN2);
+            //vAlignCombo.currentIndex = Math.round(Math.log(featuredDisplay.vAlignment)/Math.LN2 - 5);
             fontDlg.populateForm(featuredDisplay.font, featuredDisplay.fontColour);
         }
     }

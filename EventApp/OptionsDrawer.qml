@@ -45,7 +45,8 @@ Drawer {
       Connections {
         target: eaContainer
         onEaConstructionChanged: {
-          setToolBarDisplayDataParameters(optionsItemDelegate.itemBackground
+          setOptionsMenuDisplayParamters(optionsItemDelegate.itemBackground
+                                         , optionsItemDelegate.iconMenuImage
                                          , optionsItemDelegate.itemText
                                          , eaContainer.eaConstruction.menuDisplay
                                          , optionsItemDelegate);
@@ -54,7 +55,8 @@ Drawer {
       Connections {
         target: optionsDrawer
         onOpen: {
-          setToolBarDisplayDataParameters(optionsItemDelegate.itemBackground
+          setOptionsMenuDisplayParamters(optionsItemDelegate.itemBackground
+                                         , optionsItemDelegate.iconMenuImage
                                          , optionsItemDelegate.itemText
                                          , eaContainer.eaConstruction.menuDisplay
                                          , optionsItemDelegate);
@@ -62,7 +64,8 @@ Drawer {
       }
 
       Component.onCompleted: {
-          setToolBarDisplayDataParameters(optionsItemDelegate.itemBackground
+          setOptionsMenuDisplayParamters(optionsItemDelegate.itemBackground
+                        , optionsItemDelegate.iconMenuImage
                        , optionsItemDelegate.itemText
                        , eaContainer.eaConstruction.menuDisplay
                        , optionsItemDelegate);

@@ -18,6 +18,7 @@ Page{
     clip: true
     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
     Rectangle {
+        id: mainPageBkg
         anchors.fill: parent
         color: eaContainer.eaConstruction.display.backColour
     }

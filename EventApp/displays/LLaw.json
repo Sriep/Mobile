@@ -31,10 +31,10 @@
         "whiteIcons": false,
         "width": 4,
         "x": 2,
-        "xImage": 0,
+        "xImage": -3,
         "xText": 55,
         "y": 2,
-        "yImage": -3,
+        "yImage": 3,
         "yText": 10
     },
     "fontColour": "#000000",
@@ -70,11 +70,11 @@
         "whiteIcons": false,
         "width": 4,
         "x": 2,
-        "xImage": 0,
+        "xImage": 2,
         "xText": 10,
         "y": 5,
-        "yImage": 7629941,
-        "yText": 10
+        "yImage": 10,
+        "yText": 30
     },
     "strings": {
         "aboutText": "About text\nAbout text\nAbout text\n",
@@ -128,10 +128,10 @@
         "whiteIcons": false,
         "width": 4,
         "x": 2,
-        "xImage": 2,
+        "xImage": 29163520,
         "xText": 30,
         "y": 2,
-        "yImage": 29163520,
+        "yImage": 27394048,
         "yText": 11
     }
 }

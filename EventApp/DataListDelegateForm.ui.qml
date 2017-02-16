@@ -27,14 +27,13 @@ Item {
     Rectangle {
         id: itemBackground
         x: eaContainer.eaConstruction.display.x
-        y: eaContainer.eaConstruction.display.x
+        y: eaContainer.eaConstruction.display.y
         width: parent.width - x*2;
         height: parent.height - y*2
-        //color: eaContainer.eaConstruction.display.colour
+        color: eaContainer.eaConstruction.display.colour
         border.color: eaContainer.eaConstruction.display.borderColour
         border.width: eaContainer.eaConstruction.display.borderWidth
         radius: eaContainer.eaConstruction.display.radius
-        color: eaContainer.eaConstruction.display.colour
         /*
         color: backmouse.pressed ? eaContainer.eaConstruction.display.highlitedColour
                  : eaContainer.eaConstruction.display.colour

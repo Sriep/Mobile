@@ -43,24 +43,23 @@ ApplicationWindow {
     }
 
     RowLayout {
-
         width: 1100; height: 900;
         Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
         spacing: 10
-
         StackLayout {
             id: tabStack
-            currentIndex: headerTabBar.currentIndex
+            currentIndex: headerTabBar.currentIndex + 1
             //currentIndex: headerItem.headerTabBar.currentIndex
             anchors.fill: parent
-/*
+
             EAConstructionPage {
+                visible: false
                 id: constructionPage
                 property alias eaConstruction: eaContainer.eaConstruction
                 property alias dataFilename: eaContainer.dataFilename
                 property alias firbaseUrl: eaContainer.firbaseUrl
             }
-*/
+
             EAListDisplayPage {
                 id: eaListDisplayPage
                 property alias dataFilename: eaContainer.dataFilename

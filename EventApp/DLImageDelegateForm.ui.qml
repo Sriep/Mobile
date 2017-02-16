@@ -34,7 +34,7 @@ Item {
     Rectangle {
         id: background
         x: eaContainer.eaConstruction.display.x
-        y: eaContainer.eaConstruction.display.x
+        y: eaContainer.eaConstruction.display.y
         width: parent.width - x*2;
         height: parent.height - y*2
         color: eaContainer.eaConstruction.display.colour
@@ -62,10 +62,13 @@ Item {
         clip: true
         Image {
             id: photoImage
-            width: 50;  height: 50
             //width: parent.width;  height: parent.height
+            x : eaContainer.eaConstruction.display.xImage;
+            y : eaContainer.eaConstruction.display.yText;
+            fillMode: Image.PreserveAspectFit
+            width : eaContainer.eaConstruction.display.imageWidth
+            height : eaContainer.eaConstruction.display.imageHeight
             source: picture
-            x:20; y:10
             cache: false
         }
 
@@ -79,7 +82,8 @@ Item {
             y: eaContainer.eaConstruction.display.yText
             verticalAlignment: eaContainer.eaConstruction.display.vAlignment
             horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
-
+            anchors.leftMargin: 10
+            height : eaContainer.eaConstruction.display.imageHeight
             text:  eaLVItemList.items[itemIndex].title;
         }
     }

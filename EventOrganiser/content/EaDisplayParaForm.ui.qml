@@ -110,12 +110,14 @@ Item {
                         }
 
                         Label {
+                            visible: false
                             text: qsTr("Highlight back colour")
                             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                         }
 
                         Button {
                             id: button
+                            visible: false
                             text: bkHColorDialog.currentColor
                             flat: true
                             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline

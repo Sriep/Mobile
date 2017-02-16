@@ -62,8 +62,8 @@ Item {
   Row {
         id: topLayout
         x: 10; y: 10;
-       // x: eaContainer.eaConstruction.display.borderWidth
-       // y: -eaContainer.eaConstruction.display.borderWidth
+        //x: eaContainer.eaConstruction.display.borderWidth
+        //y: -eaContainer.eaConstruction.display.borderWidth
         height: photoImage.height; width: parent.width
         spacing: 10
         clip: true
@@ -98,10 +98,10 @@ Item {
             horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
             text: "hi"//modelData
             anchors.leftMargin: 10
+            height : eaContainer.eaConstruction.display.imageHeight
             //opacity: 0.0
             //y:10; x:10
         }
-
    }
 
     Item {

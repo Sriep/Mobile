@@ -1,4 +1,5 @@
-import QtQuick 2.0
+import QtQuick 2.7
+import EventAppData 1.0
 
 EaldItemForm {
     id: ealdItemForm
@@ -20,11 +21,13 @@ EaldItemForm {
     Connections {
         onFeaturedItemChanged: {
             popQuestionList (featuredItem, questionsListModel);
+            popMapInfo();
         }
     }
 
     Component.onCompleted: {
         popQuestionList (featuredItem, questionsListModel);
+        popMapInfo();
     }
 
     addItem.onPressed: {
@@ -35,7 +38,7 @@ EaldItemForm {
     }
 
     function popQuestionList (item, model) { // model=questionsModel
-        console.log("Start popItemList");
+        console.log("Start popQuestionList");
         model.clear();
         var questionCount = item.questions.length;
         for ( var i=0 ; i<questionCount ; i++ )
@@ -49,24 +52,56 @@ EaldItemForm {
         }
     }
 
+    function popMapInfo() {
+        var meg = mapEditGroup;
+        var fi = featuredItem;
+        if (featuredItem.mapInfo) {
+            mapEditGroup.accessTokenTF.text = featuredItem.mapInfo.accessToken;
+            mapEditGroup.mapIDTF.text = featuredItem.mapInfo.mapId;
+            mapEditGroup.userMap.checked = featuredItem.mapInfo.accessToken !== "";
+            mapEditGroup.latitudeTF.text = featuredItem.mapInfo.latitude;
+            mapEditGroup.longitudeTF.text = featuredItem.mapInfo.longitude;
+            mapEditGroup.zoomLevelSB.value = featuredItem.mapInfo.zoomLevel;
+            mapEditGroup.useDevicePosition.checked = featuredItem.mapInfo.useCurrent;
+        }
+    }
+
     updateItem.onPressed: {
-        if (itmesEntered.currentIndex >= 0 && itemDataType.currentIndex >= 0) {
-            eaListDisplayPage.featuredList.updateListItem(itmesEntered.currentIndex
-                                              , itemDataType.currentIndex
-                                              , itemTitle.text
-                                              , imageEditGroup.imageFileTF.text
-                                              , textFilename.text
-                                              , urlItem.text);
-            if (itemDataType.currentIndex === EAItem.Map)
-                populateMapData(eaListDisplayPage.featuredList.mapInfo);
-            popItemList(eaListDisplayPage.featuredList);
+        if (listIndex >= 0 && itemDataType.currentIndex >= 0) {
+            if (itemDataType.currentIndex == EAItem.Map) {
+                var token = "";
+                if (mapEditGroup.userMap.checked)
+                    token = mapEditGroup.accessTokenTF.text;
+                eaListDisplayPage.featuredList.updateMapItem(
+                            listIndex
+                             , itemTitle.text
+                             , "mapbox"
+                             , token
+                             , mapEditGroup.mapIDTF.text
+                             , mapEditGroup.latitudeTF.text
+                             , mapEditGroup.longitudeTF.text
+                             , mapEditGroup.zoomLevelSB.value
+                             , mapEditGroup.useDevicePosition.checked
+                            );
+                //populateMapData(eaListDisplayPage.featuredList.mapInfo);
+                popMapInfo();
+            } else {
+                eaListDisplayPage.featuredList.updateListItem(
+                            listIndex
+                          , itemDataType.currentIndex
+                          , itemTitle.text
+                          , imageIEditGroup.imageFileTF.text
+                          , textFilename.text
+                          , urlItem.text);
+                //popItemList(eaListDisplayPage.featuredList);
+            }
         }
     }
 
     deleteBut.onPressed: {
-        eaListDisplayPage.featuredList.deleteItem(itmesEntered.currentIndex);
+        eaListDisplayPage.featuredList.deleteItem(listIndex);
         ldpEventAppPage.stackCtl.currentIndex = ldpEventAppPage.stackCtl.topDrawerId;
-        popItemList(eaListDisplayPage.featuredList);
+        //popItemList(eaListDisplayPage.featuredList);
     }
 
     quMouseAreaLV.onClicked: {

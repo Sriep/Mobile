@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QFontDatabase>
 //#include <qtwebengineglobal.h>
 //#include <QtWebEngine>
 #include <QtWebView>
@@ -37,6 +38,10 @@ int main(int argc, char *argv[])
     QmlAdMobBanner::DeclareQML();           // <== Call it before loading qml
     QmlAdMobInterstitial::DeclareQML();     // <== Call it before loading qml
 
+    QFontDatabase fontDatabase;
+    if (fontDatabase.addApplicationFont(":/fonts/fontello.ttf") == -1)
+        qWarning() << "Failed to load fontello.ttf";
+
     app.setOrganizationName("Pierses");
     app.setOrganizationDomain("eventapps.com");
     app.setApplicationName("PiersesEventAppDesigner");
@@ -51,6 +56,8 @@ int main(int argc, char *argv[])
     qmlRegisterType<EaQuestion>("EventAppData", 1,0, "EaQuestion");
     qmlRegisterType<EAObjDisplay>("EventAppData", 1,0, "EAObjDisplay");
     qmlRegisterType<EAMap>("EventAppData", 1,0, "EAMap");
+
+   // qmlRegisterType<EAItem>("EventAppData", 1, 0, "ItemType");
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("applicationPath", "file://"+qApp->applicationDirPath()+ "/");

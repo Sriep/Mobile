@@ -31,5 +31,7 @@ EAInfoNameForm {
           //ldpEventAppPage.resetToTopDrawer();
       }
     }
+
+    newEventButIF.onClicked: eaContainer.clearEvent();
 }
 

@@ -14,7 +14,7 @@ Item {
     //property alias rectangle4: rectangle4
     //property alias rectangle1: rectangle1
     //property alias mouseArea2: mouseArea2
-    property alias pumpkin: pumpkin
+    //property alias pumpkin: pumpkin
     property alias styleBox: styleBox
     property alias applyBut: applyBut
     property alias loadBut: loadBut
@@ -26,7 +26,7 @@ Item {
 
     ColumnLayout {
         FileDialog {
-            id: loadFileDialog
+            id: loadDisplayDialog
             fileMode: FileDialog.OpenFile
             selectedNameFilter.index: 0
             nameFilters: ["Json files (*.json)" ]
@@ -34,11 +34,11 @@ Item {
             //onAccepted: settingsData.dataFilename = file
             Connections {
                 //console.log("loadFileDialog", loadFileDialog.file);
-                onAccepted: eaContainer.loadDisplayFormat(loadFileDialog.file);
+                onAccepted: eaContainer.loadDisplayFormat(loadDisplayDialog.file);
             }
         }
         FileDialog {
-            id: saveFileDialog
+            id: saveDispalyDialog
             fileMode: FileDialog.SaveFile
             selectedNameFilter.index: 0
             nameFilters: ["Json files (*.json)" ]
@@ -46,7 +46,7 @@ Item {
             //onAccepted: settingsData.dataFilename = file
             Connections {
                 //console.log("loadFileDialog", saveFileDialog.file);
-                onAccepted: eaContainer.saveDisplayFormat(saveFileDialog.file);
+                onAccepted: eaContainer.saveDisplayFormat(saveDispalyDialog.file);
             }
         }
         RowLayout {
@@ -77,21 +77,15 @@ Item {
                 id: loadBut
                 text: qsTr("Load")
                 Connections {
-                    onPressed: loadFileDialog.open()
+                    onPressed: loadDisplayDialog.open()
                 }
-            }
-
-            Button {
-                id: pumpkin
-               // visible: false
-                text: qsTr("Load pumkin")
             }
 
             Button {
                 id: saveAsBut
                 text: qsTr("Save as")
                 Connections {
-                    onPressed: saveFileDialog.open()
+                    onPressed: saveDispalyDialog.open()
                 }
             }
         }
@@ -115,7 +109,6 @@ Item {
                         focus: true
                         model: ListModel {
                             id: displaysModel
-                            // Same model as dataListImage.dataImageModel
                         }
                         delegate: Text {
                             y:10

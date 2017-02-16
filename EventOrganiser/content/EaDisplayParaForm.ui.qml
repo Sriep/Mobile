@@ -207,6 +207,16 @@ Item {
                             value: featuredDisplay.yText
                         }
                     }
+                    RowLayout {
+                        Label {
+                            text: qsTr("height")
+                        }
+                        SpinBox {
+                            id: heightImageSB
+                            editable: true
+                        }
+                    }
+
                     /*
                     RowLayout {
                         id: rowLayout4
@@ -426,23 +436,24 @@ Item {
                 width: parent.width;
                 title: qsTr("Image")
                 ColumnLayout {
-                    RowLayout {
+                    /*RowLayout {
                         //width: parent.width;
                         //height: 90
                         Label {
-                            text: qsTr("width")
+                            text: qsTr("height")
                         }
                         SpinBox {
                             id: heightImageSB
                             editable: true
                         }
-                    }
+                    }*/
                     RowLayout {
                         Label {
                             text: qsTr("x")
                         }
                         SpinBox {
                             id: xImageSB
+                            from: -99;
                             editable: true
                         }
                         Label {
@@ -450,6 +461,7 @@ Item {
                         }
                         SpinBox {
                             id: yImageSB
+                            from: -99;
                             editable: true
 
                         }

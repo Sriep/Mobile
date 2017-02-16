@@ -85,7 +85,6 @@ public:
                                     , const QString& textFilenameUrl = ""
                                     , const QString &url = "");
     Q_INVOKABLE int updateMapItem(int index
-                                    , int itemType
                                     , const QString& title
                                     , const QString& maptype
                                     , const QString& token

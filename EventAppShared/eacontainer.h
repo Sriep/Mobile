@@ -17,6 +17,7 @@ class EAUser;
 class EaQuestion;
 class EAItem;
 class HttpDownload;
+class Assistant;
 //enum SaveFormat {Json, Binary }
 
 static const QString ENCODE_FIREBASE_URL = "AwLFcODje2DJs+8HlZsBC7zBxnG8+iQvzvWiS5CSDAa91cBitrJwfMqu5w==";
@@ -96,6 +97,7 @@ public:
                                      , QDate to
                                      , QDate from = QDate::currentDate());
     Q_INVOKABLE QString getDebugLog() const;
+    Q_INVOKABLE void startAssistant();
 
     void  eventAppToSettings(QJsonDocument eventDoc);
     QJsonDocument  eventAppFromSettings();
@@ -205,6 +207,7 @@ private:
     QString m_eventKey = "";
     QString m_answers;
     QJsonObject answersObj;
+    Assistant *assistant;
 
     HttpDownload* httpDownload;
     QString debugLog;

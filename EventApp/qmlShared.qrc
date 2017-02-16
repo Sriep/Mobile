@@ -71,5 +71,18 @@
         <file>OptionsDrawer.qml</file>
         <file>images/question-sign64.png</file>
         <file>images/question-sign128.png</file>
+        <file>displays/grey.json</file>
+        <file>displays/grey-white.json</file>
+        <file>displays/LLaw.json</file>
+        <file>displays/pumpkin.json</file>
+        <file>images/categories.png</file>
+        <file>images/Expand Arrow-48.png</file>
+        <file>images/left.png</file>
+        <file>images/marker.png</file>
+        <file>images/right.png</file>
+        <file>images/scale.png</file>
+        <file>images/scale_end.png</file>
+        <file>images/search.png</file>
+        <file>images/star.png</file>
     </qresource>
 </RCC>

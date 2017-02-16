@@ -19,6 +19,12 @@ Item {
     property alias linkBut: linkBut
     property alias toCalander: toCalander
     property alias text1: text1
+    property alias downloadUrlBtn: downloadUrlBtn
+    property alias urlTF: urlTF
+
+    property alias loadFileDialog: loadFileDialog
+    property alias saveFileDialog: saveFileDialog
+
     Flickable {
         Pane {
             id: eventNamePane
@@ -34,13 +40,6 @@ Item {
                     title: qsTr("Data file")
                     ColumnLayout {
                         RowLayout {
-                            /*
-                            TextField {
-                                id: loadFilename
-                                text: settingsData.dataFilename
-                                onEditingFinished: settingsData.dataFilename = text;
-                            }
-                            */
                             FileDialog {
                                 id: loadFileDialog
                                 fileMode: FileDialog.OpenFile
@@ -65,12 +64,35 @@ Item {
                                     onAccepted: eaContainer.saveEventApp(saveFileDialog.file);
                                 }
                             }
-
                         }
                         Button {
                             id: newEventBut
                             text: qsTr("New event")
                         }
+                        RowLayout {
+                            id: rowLayout
+                            width: 100
+                            height: 100
+                            Label {
+                                id: label
+                                text: qsTr("Download from url")
+                            }
+                            TextField {
+                                id: urlTF
+                                placeholderText: "Url"
+                                //text: qsTr("Text Field")
+                                Layout.fillWidth: true
+                                cursorVisible: true
+                                selectByMouse: true
+                            }
+                            Button {
+                                id: downloadUrlBtn
+                                text: qsTr("Downlaod")
+                                Connections {
+                                    onPressed: eaContainer.downloadFromUrl(urlTF.text);
+                                }
+                            }
+                        } //RowLayout
                         RowLayout {
                             height: implicitHeight
                             Button {
@@ -93,14 +115,17 @@ Item {
                             id: rowLayout1
                             width: 100
                             height: 100
+                            visible: !downloadFileOnly
 
                             TextField {
                                 id: downloadKey
                                 //text: qsTr("Text Field")
                                 text: settingsData.databaseKey
                                 onEditingFinished: settingsData.databaseKey = text;
+                                Layout.fillWidth: true
+                                cursorVisible: true
+                                selectByMouse: true
                             }
-
                             Text {
                                 id: text1
                                 text: qsTr("Key")
@@ -114,7 +139,7 @@ Item {
                             id: rowLayout2
                             width: 100
                             height: 100
-
+                            visible: !downloadFileOnly
                             Button {
                                 id: uploadBut
                                 text: qsTr("Upload")
@@ -130,7 +155,7 @@ Item {
                             id: rowLayout3
                             width: 300
                             height: 100
-
+                            visible: !downloadFileOnly
                             ColumnLayout {
                                 id: columnLayout1
                                 width: 300
@@ -140,7 +165,6 @@ Item {
                                     id: firbaseUrlBut
                                     text: qsTr("Save firebase url")
                                 }
-
                                 TextField {
                                     id: firebaseUrlTB
                                     width: 300; height: 30
@@ -157,9 +181,10 @@ Item {
                                     id: linkBut
                                     text: qsTr("Link to url")
                                 }
-
                             }
-                        } //RowLayout
+                        }
+
+
 
                     } //ColumnLayout
                 } //GroupBox

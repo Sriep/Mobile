@@ -38,16 +38,6 @@ EaCommonDisplayParaForm {
             eaContainer.eaConstruction.style = styleBox.displayText;
         }
     }
-    Connections {
-        target: pumpkin
-        onPressed: {
-            //console.log("style box text", styleBox.displayText);
-            //eaContainer.eaConstruction.style = styleBox.displayText;
-            //eaContainer.loadDisplayFormat("qrc:/content/displays/pumpkin.json");
-            var displays = eaContainer.listDisplayFormats();
-            eaContainer.loadDisplayResource(":/content/displays/pumpkin.json");
-        }
-    }
 
     Connections {
         target: newFormat
@@ -75,7 +65,7 @@ EaCommonDisplayParaForm {
     }
 
     function loadStoredDispaly (index) {
-        var filename = ":/content/displays/";
+        var filename = ":/shared/displays/";
         filename += displaysModel.get(index).displayName;
         filename += ".json";
         eaContainer.loadDisplayResource(filename);
@@ -85,8 +75,6 @@ EaCommonDisplayParaForm {
         var index = displayList.indexAt(mouse.x, mouse.y);
         if (index >= 0) {
             displayList.currentIndex = index;
-            //itemTitle.text = displaysModel.get(index).title;
-            //var displayName = displaysModel.get(index).title;
         }
     }
 

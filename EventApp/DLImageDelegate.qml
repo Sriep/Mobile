@@ -38,7 +38,7 @@ DLImageDelegateForm {
   photoImage.width: eaLVItemList.showPhotos ? 50 : 0
 
   function popQuestionList (item) {
-      console.log("Start popItemList");
+      console.log("Start popQuestionList");
       questionsModel.clear();
       var questionCount = item.questions.length;
       for ( var i=0 ; i<questionCount ; i++ )
@@ -57,7 +57,6 @@ DLImageDelegateForm {
       dataListImage.currentIndex = index;
       imageDelegate.state = imageDelegate.state == 'Details' ? "" : "Details";
       console.log("maDataDelegate index",index);
-      //console.log("maDataDelegate listView.currentIndex",dataList.currentIndex);
   }
 
   Connections {
@@ -102,32 +101,7 @@ DLImageDelegateForm {
       onPositionChanged: {
       }
   }
-/*
-  function setDisplayParameters() {
-      DataListJS.setBackgroundDisplayParameters(imageDelegate.itemBackground
-                                               ,eaContainer.eaConstruction.display
-                                               ,imageDelegate);
-      DataListJS.setImageDisplyaParameters(imageDelegate.photoImage
-                                           ,eaContainer.eaConstruction.display);
-      DataListJS.setTextBoxDisplayParameters(imageDelegate.topText
-                                             ,eaContainer.eaConstruction.display)
 
-      var displayData = eaContainer.eaConstruction.display;
-      var rectangle = imageDelegate.itemBackground;
-      var itemTextv = imageDelegate.topText;
-      background.x = displayData.x
-      background.y = displayData.y
-      background.color = displayData.colour
-      background.border.color = displayData.borderColour
-      background.border.width = displayData.borderWidth
-      background.radius = displayData.radius
-
-      topText.font = displayData.font
-      topText.color = displayData.fontColour
-      topText.style = displayData.textStyle
-      topText.styleColor = displayData.styleColour
-  }
-  */
   function setIDisplayParameters() {
       DataListJS.setBackgroundDisplayParameters(imageDelegate.itemBackground
                                                ,eaContainer.eaConstruction.display

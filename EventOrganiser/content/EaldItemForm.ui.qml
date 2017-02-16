@@ -6,7 +6,6 @@ import "qrc:///shared"
 Item {
     property alias itemDataType: itemDataType
     property alias itemTitle: itemTitle
-    property alias imageItemEditGroup: imageIEditGroup
     property alias addItem: addItem
     property alias textFilename: textFilename
     property alias urlItem: urlItem
@@ -18,6 +17,8 @@ Item {
     property alias quMouseAreaLV: quMouseAreaLV
     property alias questionsList: questionsList
     property alias questionsListModel: questionsListModel
+    property alias imageIEditGroup: imageIEditGroup
+    property alias mapEditGroup: mapEditGroup
 
     ColumnLayout {
         id: columnLayout1

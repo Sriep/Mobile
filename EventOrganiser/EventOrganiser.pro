@@ -25,7 +25,8 @@ SOURCES += main.cpp \
     ../EventAppShared/eaobjdisplay.cpp \
     ../EventAppShared/simplecrypt.cpp \
     ../EventAppShared/eamap.cpp \
-    ../EventAppShared/eastrings.cpp
+    ../EventAppShared/eastrings.cpp \
+    ../EventAppShared/assistant.cpp
 
 HEADERS += \
     ../EventAppShared/eainfo.h \
@@ -43,7 +44,9 @@ HEADERS += \
     ../EventAppShared/eaobjdisplay.h \
     ../EventAppShared/simplecrypt.h \
     ../EventAppShared/eamap.h \
-    ../EventAppShared/eastrings.h
+    ../EventAppShared/eastrings.h \
+    assistant.h \
+    ../EventAppShared/assistant.h
 
 RESOURCES += qml.qrc \
     ../EventApp/qmlShared.qrc
@@ -100,7 +103,19 @@ DISTFILES += \
     content/EaCommonDisplayParaForm.ui.qml \
     content/EaItemListDataForm.ui.qml \
     content/Strings.ui.qml \
-    content/EaStrings.ui.qml
+    content/EaStrings.ui.qml \
+    content/DlgDownloadEvnetUrl.ui.qml \
+    ../EventAppShared/Documents/eventApp.qhcp \
+    ../EventAppShared/Documents/eventApp.qhp \
+    ../EventAppShared/Documents/html/index.html \
+    ../EventAppShared/displays/grey.json \
+    ../EventAppShared/displays/grey-white.json \
+    ../EventAppShared/displays/LLaw.json \
+    ../EventAppShared/displays/pumpkin.json \
+    ../EventApp/displays/grey.json \
+    ../EventApp/displays/grey-white.json \
+    ../EventApp/displays/LLaw.json \
+    ../EventApp/displays/pumpkin.json
 
 FORMS +=
 

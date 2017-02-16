@@ -200,10 +200,25 @@ Item {
                     //width: 300; height: 499
                     anchors.fill: parent
                     center {
-                        latitude: 52.665329
-                        longitude: 1.346240
+                        latitude:  eaLVItemList.items[itemIndex].mapInfo.latitude;
+                        longitude:  eaLVItemList.items[itemIndex].mapInfo.longitude;
                     }
-                    zoomLevel: 6
+                    zoomLevel: eaLVItemList.items[itemIndex].mapInfo.zoomLevel;
+                    MapQuickItem {
+                        id: marker
+                        //anchorPoint.x: image.width/4
+                        //anchorPoint.y: image.height/4
+                        //sourceItem:
+                        zoomLevel: eaLVItemList.items[itemIndex].mapInfo.zoomLevel;
+                        coordinate {
+                            latitude:  eaLVItemList.items[itemIndex].mapInfo.latitude;
+                            longitude:  eaLVItemList.items[itemIndex].mapInfo.longitude;
+                        }
+                        sourceItem: Image {
+                            id: image
+                             source: "qrc:/shared/images/marker.png"
+                        }
+                    }
                 }
             }
 

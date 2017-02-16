@@ -34,11 +34,15 @@
         <file>content/EaItemListDataForm.ui.qml</file>
         <file>content/EditMapGroup.qml</file>
         <file>content/EditImageGroup.qml</file>
-        <file>content/displays/pumpkin.json</file>
-        <file>content/displays/grey.json</file>
-        <file>content/displays/grey-white.json</file>
-        <file>content/displays/LLaw.json</file>
         <file>content/EaStringsForm.ui.qml</file>
         <file>content/EaStrings.qml</file>
+        <file>content/DlgDownloadEventUrl.qml</file>
+        <file>MenuBarEO.qml</file>
+        <file>Documents/eventApp.qch</file>
+        <file>Documents/eventApp.qhc</file>
+        <file>Documents/eventApp.qhcp</file>
+        <file>Documents/eventApp.qhp</file>
+        <file>Documents/help.sh</file>
+        <file>Documents/html/index.html</file>
     </qresource>
 </RCC>

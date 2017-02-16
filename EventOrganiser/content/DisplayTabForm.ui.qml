@@ -7,6 +7,8 @@ import "qrc:///shared"
 Item {
     id: dispalyTabForm
     width: 600; height: 800;
+    property alias eaCommonDisplayPara: eaCommonDisplayPara
+
         Column {
             width: parent.width; height: parent.height -100
             spacing: 10
@@ -51,7 +53,7 @@ Item {
                     property int manualListItem: 2
 
                     EaCommonDisplayPara {
-
+                        id: eaCommonDisplayPara
                     }
 
                     EaDisplayPara {

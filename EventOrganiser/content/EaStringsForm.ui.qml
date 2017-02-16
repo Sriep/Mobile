@@ -31,6 +31,10 @@ Item {
     ColumnLayout {
         id: columnLayout
         width: parent.width; height: parent.height
+        Button {
+            id: applyStringsBut
+            text: qsTr("Apply")
+        }
         RowLayout {
             ComboBox {
                 id: stringPageCB
@@ -44,10 +48,7 @@ Item {
                     qsTr("About dialog"),
                 ]
             }
-            Button {
-                id: applyStringsBut
-                text: qsTr("Apply")
-            }
+
         }
 
         StackLayout {

@@ -716,12 +716,31 @@ int EAItemList::updateListItem(int index
     return index;
 }
 
-int EAItemList::updateMapItem(int index, int itemType, const QString &title
-                              , const QString &maptype, const QString &token
-                              , const QString &mapID, double latitude
-                              , double longitude, int zoomLevel, bool useCurrent)
+int EAItemList::updateMapItem(int index
+                              , const QString &title
+                              , const QString &maptype
+                              , const QString &token
+                              , const QString &mapID
+                              , double latitude
+                              , double longitude
+                              , int zoomLevel
+                              , bool useCurrent)
 {
-    return 0;
+    EAItem*  item = m_eaItems[index];
+    item->setTitle(title);
+    item->setItemType(EAItem::ItemType::Map);
+    //item = new EAItem(EAItem::ItemType::Map, title);
+    //m_eaItems.insert(index, item);
+    EAMap* mapInfo = item->mapInfo();
+    mapInfo->setMaptype(maptype);
+    mapInfo->setAccessToken(token);
+    mapInfo->setMapId(mapID);
+    mapInfo->setLatitude(latitude);
+    mapInfo->setLongitude(longitude);
+    mapInfo->setZoomLevel(zoomLevel);
+    mapInfo->setUseCurrent(useCurrent);
+    resetImageProvider(getEaContainer());
+    return index;
 }
 
 void EAItemList::saveAnswers(int itemIndex)

@@ -90,6 +90,8 @@ function setTextBoxDisplayParameters(textBox, displayData) {
     textBox.y = displayData.yText
     textBox.verticalAlignment = displayData.vAlignment
     textBox.horizontalAlignment = displayData.hAlignment
+
+    textBox.height = displayData.imageHeight
 }
 
 

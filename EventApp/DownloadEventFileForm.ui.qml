@@ -32,7 +32,7 @@ Item {
             TextField {
                 id: urlText
                 height: 30; width: 400
-                //text: "https://www.dropbox.com/s/y22jqfwuei1ew70/4455.json?raw=1"
+                //text: "https://www.dropbox.com/s/inpkybii096m5qh/EA%20test1.json?dl=0"
                 text: "https://www.dropbox.com/s/inpkybii096m5qh/EA%20test1.json?raw=1"
                 horizontalAlignment: Text.AlignLeft
                 Layout.fillWidth: true

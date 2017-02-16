@@ -24,6 +24,7 @@
 #include "eaquestion.h"
 #include "simplecrypt.h"
 #include "httpdownload.h"
+#include "assistant.h"
 
 QList<EAItemList *> EAContainer::getEaItemLists() const
 {
@@ -94,6 +95,7 @@ EAContainer::EAContainer()
 {
     m_eaConstruction = new EAConstruction;
     m_eaInfo = new EAInfo;
+    assistant = new Assistant;
 }
 
 void EAContainer::classBegin()
@@ -663,7 +665,9 @@ QString EAContainer::listDisplayFormats()
 {
     //QDirIterator it(":/content/displays/", QDirIterator:: Subdirectories);
     QString formats;
-    QDirIterator it(":/content/displays/", QDirIterator::NoIteratorFlags);
+    //QDirIterator it(":/displays/", QDirIterator::NoIteratorFlags);
+    QDirIterator it(":/shared/displays/", QDirIterator::NoIteratorFlags);
+    //QDirIterator it("../EventApp/displays/", QDirIterator::NoIteratorFlags);
     while (it.hasNext()) {
         qDebug() << it.next();
         formats += it.fileName();
@@ -1026,6 +1030,11 @@ void EAContainer::setEventSource(const EventSource &eventSource)
 QString EAContainer::getDebugLog() const
 {
     return debugLog;
+}
+
+void EAContainer::startAssistant()
+{
+    assistant->showDocumentation("index.html");
 }
 
 bool EAContainer::isEventStatic() const

@@ -71,8 +71,8 @@ Item {
             styleColor: eaContainer.eaConstruction.display.styleColour
             x: eaContainer.eaConstruction.display.xText + iconImage.width
             y: eaContainer.eaConstruction.display.yText
-            verticalAlignment: eaContainer.eaConstruction.display.vAlignment
-            horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
+            //verticalAlignment: eaContainer.eaConstruction.display.vAlignment
+            //horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
 
              //text: icon
            text: title//modelData

@@ -27,7 +27,7 @@ ListView {
     model: ListModel { id: dataModel }
     delegate: DataListDelegate { id: thisDataDelgate
         onStateChanged: {
-            dataList.isExpanded = state === "Details";
+            dataList.isEzxpanded = state === "Details";
         }
         Connections {
             target: eaContainer

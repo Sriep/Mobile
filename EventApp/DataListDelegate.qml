@@ -30,13 +30,11 @@ DataListDelegateForm {
     function setBottomText() {
         var one = JSON.parse(eaLVItemList.titleFields);
         var two = dataModel;
-        //return DataListJS.displayText(JSON.parse(eaLVItemList.titleFields)
         var t = displayText(JSON.parse(eaLVItemList.titleFields)
                                      , dataModel
                                      , false
                                      , eaLVItemList);
         bottomText.text = t;       
-        //dataDelegate.itemBackground.color = eaContainer.eaConstruction.display.colour
     }
     Connections {
         target: eaLVItemList

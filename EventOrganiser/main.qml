@@ -1,7 +1,10 @@
-import QtQuick 2.7
+import QtQuick 2.8
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.1
 import Qt.labs.settings 1.0
+import Qt.labs.platform 1.0
+import QtQuick.Dialogs 1.2
+
 import "content"
 import "qrc:/shared"
 import EventAppData 1.0
@@ -11,6 +14,7 @@ ApplicationWindow {
     visible: true
     width: 1280;    height: 1024
     title: qsTr("Event App designer:\t" + eaContainer.eaInfo.eventName)
+    property bool downloadFileOnly: true
 
     Connections {
         target: eaContainer.eaInfo
@@ -20,6 +24,14 @@ ApplicationWindow {
 
     function setTitle() {
         appwin.title = qsTr("Event App designer:\t") + eaContainer.eaInfo.eventName
+    }
+
+    DlgDownloadEventUrl {
+        id: dlgDownloadEventUrl
+    }
+
+    MenuBarEO {
+        id: menuBarEO
     }
 
     header: HeaderTabBarForm {
@@ -39,14 +51,16 @@ ApplicationWindow {
         StackLayout {
             id: tabStack
             currentIndex: headerTabBar.currentIndex
+            //currentIndex: headerItem.headerTabBar.currentIndex
             anchors.fill: parent
-
+/*
             EAConstructionPage {
+                id: constructionPage
                 property alias eaConstruction: eaContainer.eaConstruction
                 property alias dataFilename: eaContainer.dataFilename
                 property alias firbaseUrl: eaContainer.firbaseUrl
             }
-
+*/
             EAListDisplayPage {
                 id: eaListDisplayPage
                 property alias dataFilename: eaContainer.dataFilename
@@ -54,6 +68,7 @@ ApplicationWindow {
             }
 
             DisplayTab {
+                id: dispalyTab
             }
 
             Item {
@@ -93,7 +108,7 @@ ApplicationWindow {
             border.width : 0.5; border.color : "black"
             clip: true
             visible: tabStack.currentIndex === 1
-                     || tabStack.currentIndex === 2
+                     || tabStack.currentIndex === 2 || tabStack.currentIndex === 0
             EventAppPage {
                 x:10; y:10
                 width: parent.width-20; height: parent.height-20
@@ -123,6 +138,32 @@ ApplicationWindow {
         console.log("onDestruction.style", eaContainer.eaConstruction.style);
         settingsData.style = eaContainer.eaConstruction.style;
         console.log("onDestruction.style", settingsData.style);
+    }
+
+    Dialog {
+        id: aboutDialogEO
+        title:  eaContainer.eaConstruction.strings.mAbout
+
+        Column {
+            id: aboutColumn
+            spacing: 20
+
+            Label {
+                width: aboutDialog.availableWidth
+                text:  eaContainer.eaConstruction.strings.aboutText
+                wrapMode: Label.Wrap
+                font.pixelSize: 12
+            }
+
+            Label {
+                width: aboutDialog.availableWidth
+                text: "Easy event app \n"
+                      + "www.easyeventapp.co.uk\n"
+                      + "Make easy event apps.\n"
+                wrapMode: Label.Wrap
+                font.pixelSize: 12
+            }
+        }
     }
 }
 

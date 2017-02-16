@@ -39,6 +39,7 @@ EaDisplayParaForm {
         onPressed: {
             featuredDisplay.x = xTF.value;
             featuredDisplay.y = yTF.value;
+            //heightSB.value;
             //featuredDisplay.width = widthTF.text
             featuredDisplay.height = heightTF.value;
             featuredDisplay.borderWidth = borderWidthSB.value;

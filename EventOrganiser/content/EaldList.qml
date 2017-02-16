@@ -41,7 +41,7 @@ EaldListForm {
             itemNameTA.text = featuredList.listName;
     }
 
-    function popItemList (eventList) {
+    function popItemList(eventList) {
         console.log("Start popItemList");
         itemsModel.clear();
         if (eventList) {
@@ -104,29 +104,16 @@ EaldListForm {
         var listView = ldpEventAppPage.stackCtl.children[index];
         var tp = listView.temp;
         listView.resetDataImageLM();
-        //listView.resetDataListModel();
-        //ldpEventAppPage.needToRefershLists("qrc:///shared/DataList.qml");
         popItemList(eaListDisplayPage.featuredList);
     }
 
     clearBut.onPressed: {
         clearDisplay();
-        /*
-        itmesEntered.currentIndex = -1;
-        itemDataType.currentIndex = -1;
-        itemTitle.text = "";
-       // loadImage.file = "";
-        imageEditGroup.imageFileTF.text = "";
-        textFilename.text = "";
-        urlItem.text = "";
-        popItemList(eaListDisplayPage.featuredList);
-        */
     }
     function clearDisplay() {
         itmesEntered.currentIndex = -1;
         itemDataType.currentIndex = -1;
         itemTitle.text = "";
-       // loadImage.file = "";
         imageEditGroup.imageFileTF.text = "";
         textFilename.text = "";
         urlItem.text = "";

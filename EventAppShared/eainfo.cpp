@@ -4,7 +4,7 @@
 
 EAInfo::EAInfo()
 {
-
+    setEventName("");
 }
 
 void EAInfo::read(const QJsonObject &json)

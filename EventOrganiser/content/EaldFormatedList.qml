@@ -51,11 +51,12 @@ EaldFormatedListForm {
     }
 
     function loadCsvFile (filename) {
-         console.log("EAListDisplayPageForm about to load", filename);
-         if (featuredList.loadCSV(filename)) {
-            popTitlesList(featuredList);
-            ldpEventAppPage.needToRefershLists();
-         }
+        console.log("EAListDisplayPageForm about to load", filename);
+        featuredList.loadCSV(filename)
+        popTitlesList(featuredList);
+        ldpEventAppPage.needToRefershLists();
+        setTopTextArea();
+        setBottomTextArea();
     }        
 
     saveTitlesBut.onPressed: {
@@ -76,6 +77,12 @@ EaldFormatedListForm {
             return eaListDisplayPage.featuredList.shortFormat;
         else
             return "";
+    }    
+    function setTopTextArea() {
+        if (eaListDisplayPage.featuredList !== undefined)
+            topTextArea.text = eaListDisplayPage.featuredList.shortFormat;
+        else
+            topTextArea.text = "";
     }
 
     bottomTextArea.text: {
@@ -83,6 +90,12 @@ EaldFormatedListForm {
             return eaListDisplayPage.featuredList.longFormat;
         else
             return "";
+    }    
+    function setBottomTextArea() {
+        if (eaListDisplayPage.featuredList !== undefined)
+            bottomTextArea.text = eaListDisplayPage.featuredList.longFormat;
+        else
+            bottomTextArea.text = "";
     }
 
     usePhotos.checked: {

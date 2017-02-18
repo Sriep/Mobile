@@ -64,12 +64,12 @@ class EAObjDisplay : public QQuickItem
     int m_vAlignment = AlignRight;
     int m_hAlignment = AlignVCenter;    
     QColor m_backColour;    
-    QColor m_highlitedColour;    
-    int m_displayType;
-    bool m_whiteIcons;    
-    int m_imageHeight;
-    int m_xImage;    
-    int m_yImage;
+    QColor m_highlitedColour;
+    int m_displayType = 0;
+    bool m_whiteIcons = false;
+    int m_imageHeight = 0;
+    int m_xImage = 0;
+    int m_yImage = 0;
 
 public:
     enum DisplayType { Menu=0, Toolbar, Drawer };

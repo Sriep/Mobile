@@ -11,7 +11,7 @@ class  EAInfo : public QQuickItem
     Q_PROPERTY(QString organiserName READ organiserName WRITE setOrganiserName NOTIFY organiserNameChanged)
     Q_PROPERTY(QString organiserDescription READ organiserDescription WRITE setOrganiserDescription NOTIFY organiserDescriptionChanged)
 
-    QString m_eventName;
+    QString m_eventName = "New event";
     QString m_eventDescription;
     QString m_organiserName;
     QString m_organiserDescription;

@@ -65,9 +65,11 @@ function setBackgroundDisplayParameters(background
     background.x = displayData.x
     background.y = displayData.y
     background.color = displayData.colour
-    background.color = delegate.highlighted
-            ? displayData.highlitedColour
-            : displayData.colour
+    if (delegate) {
+        background.color = delegate.highlighted
+                ? displayData.highlitedColour
+                : displayData.colour
+    }
     background.border.color = displayData.borderColour
     background.border.width = displayData.borderWidth
     background.radius = displayData.radius

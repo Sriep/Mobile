@@ -15,13 +15,30 @@ EaToolBarForm {
     //menuButton.onClicked: optionsMenu.open()
     menuButton.onClicked: optionsDrawer.open()
 
+    Connections {
+        target: eaContainer //(eaConstruction)
+        onEaConstructionChanged: {
+            setToolBarDisplayDataParameters(
+                        toolBar.itemBackground
+                        , toolBar.titleLabel
+                        , toolBar);
+        }
+    }
+/*
+    Component.onCompleted: {
+        setToolBarDisplayDataParameters(
+                    toolBar.itemBackground
+                    , toolBar.titleLabel
+                    , toolBar)
+    }
+*/
     ListsDrawer {
         id: listsDrawer
     }
 
     OptionsDrawer {
         id: optionsDrawer
-    }
+    }     
 
     function setMenuDisplayDataParameters(rectangle
                                           , image
@@ -33,16 +50,19 @@ EaToolBarForm {
         DataListJS.setImageDisplyaParameters(image, displayData)
     }
 
-
-
     function setToolBarDisplayDataParameters(rectangle
-                                          , image
                                           , textBox
                                           , displayData
                                           , delegate) {
         DataListJS.setBackgroundDisplayParameters(rectangle, displayData, delegate);     
         DataListJS.setTextBoxDisplayParameters(textBox , displayData);
         //DataListJS.setImageDisplyaParameters(image, displayData)
+        toolBar.drawerButton.source = eaContainer.eaConstruction.toolBarDisplay.whiteIcons
+                ? "qrc:///shared/images/drawerW@4x.png"
+                : "qrc:///shared/images/drawer@4x.png";
+        toolBar.userBut.source = eaContainer.eaConstruction.toolBarDisplay.whiteIcons
+                ? "qrc:///shared/images/user-shape_32White.png"
+                : "qrc:///shared/images/user-shape_32.png";
     }
 
     function setOptionsMenuDisplayParamters(rectangle

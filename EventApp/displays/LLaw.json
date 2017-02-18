@@ -31,9 +31,9 @@
         "whiteIcons": false,
         "width": 4,
         "x": 2,
-        "xImage": -3,
+        "xImage": 0,
         "xText": 55,
-        "y": 2,
+        "y": 1,
         "yImage": 3,
         "yText": 10
     },
@@ -128,10 +128,10 @@
         "whiteIcons": false,
         "width": 4,
         "x": 2,
-        "xImage": 29163520,
+        "xImage": 1,
         "xText": 30,
-        "y": 2,
-        "yImage": 27394048,
+        "y": 1,
+        "yImage": 1,
         "yText": 11
     }
 }

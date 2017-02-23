@@ -31,14 +31,10 @@ Item {
     ColumnLayout {
         id: columnLayout
         width: parent.width; height: parent.height
-        Button {
-            id: applyStringsBut
-            text: qsTr("Apply")
-        }
         RowLayout {
             ComboBox {
                 id: stringPageCB
-                width: 100
+                width: 200
                 currentIndex: 0
                 model: [
                     qsTr("ToolBar"),
@@ -48,8 +44,12 @@ Item {
                     qsTr("About dialog"),
                 ]
             }
-
         }
+        Button {
+            id: applyStringsBut
+            text: qsTr("Apply")
+        }
+
 
         StackLayout {
             id: stackLayout
@@ -187,6 +187,15 @@ Item {
                     TextField {
                         id: textLogoff
                         text: eaContainer.eaConstruction.strings.bLogoff
+                        selectByMouse: true
+                    }
+
+                    Label {
+                        text: qsTr("Copy from clipboard")
+                    }
+                    TextField {
+                        id: textCopyClipboard
+                        text: eaContainer.eaConstruction.strings.copyClipbord
                         selectByMouse: true
                     }
                 }

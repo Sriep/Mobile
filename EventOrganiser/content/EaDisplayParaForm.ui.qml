@@ -29,6 +29,7 @@ Item {
     property alias heightImageSB: heightImageSB
     property alias xImageSB: xImageSB
     property alias yImageSB: yImageSB
+    property alias widthImageSB: widthImageSB
 
     GroupBox {
         id: groupDispalyPara
@@ -110,14 +111,14 @@ Item {
                         }
 
                         Label {
-                            visible: false
+                           // visible: false
                             text: qsTr("Highlight back colour")
                             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                         }
 
                         Button {
                             id: button
-                            visible: false
+                            //visible: false
                             text: bkHColorDialog.currentColor
                             flat: true
                             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
@@ -465,7 +466,16 @@ Item {
                             id: yImageSB
                             from: -99;
                             editable: true
-
+                        }
+                    }
+                    RowLayout {
+                        Label {
+                            text: qsTr("width")
+                        }
+                        SpinBox {
+                            id: widthImageSB
+                            from: -99;
+                            editable: true
                         }
                     }
                 }

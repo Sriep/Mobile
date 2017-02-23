@@ -102,6 +102,7 @@ AddNewListForm {
         eaContainer.eaItemLists[index].listType = listType.currentIndex;
         eaContainer.eaItemLists[index].listName = newListName.text;
         popListsList(eaContainer.eaItemLists);
+        listsCreated.currentIndex = index;
     }
 
     deleteItemListBut.onPressed: {

@@ -7,9 +7,9 @@
 EAConstruction::EAConstruction()
     : m_backColour (QColor("white"))
 {
-    m_display = new EAObjDisplay;
-    m_toolBarDisplay = new EAObjDisplay;
-    m_menuDisplay = new EAObjDisplay;
+    m_display = new EAObjDisplay(EAObjDisplay::DisplayType::Drawer);
+    m_toolBarDisplay = new EAObjDisplay(EAObjDisplay::DisplayType::Toolbar);
+    m_menuDisplay = new EAObjDisplay(EAObjDisplay::DisplayType::Menu);
     m_strings = new EAStrings;
 
 }
@@ -19,6 +19,7 @@ void EAConstruction::read(const QJsonObject &json)
     setBackColour(QColor(json["backColour"].toString()));
     setForeColour(QColor(json["foreColour"].toString()));
     setFontColour(QColor(json["fontColour"].toString()));
+    setDisplayName(json["displayName"].toString());
     setStyle(json["style"].toString());
     if (json.contains("display"))
     {
@@ -50,6 +51,8 @@ void EAConstruction::write(QJsonObject &json) const
     json["backColour"] = QVariant(m_backColour).toString();
     json["foreColour"] = QVariant(m_foreColour).toString();
     json["fontColour"] = QVariant(m_fontColour).toString();
+
+    json["displayName"] = QVariant(displayName()).toString();
     json["style"] = style();
 
     QJsonObject displayObject;
@@ -67,6 +70,7 @@ void EAConstruction::write(QJsonObject &json) const
     QJsonObject stringsObject;
     strings()->write(stringsObject);
     json["strings"] = stringsObject;
+
 }
 
 QColor EAConstruction::backColour() const
@@ -112,6 +116,11 @@ EAObjDisplay* EAConstruction::menuDisplay() const
 EAStrings *EAConstruction::strings() const
 {
     return m_strings;
+}
+
+QString EAConstruction::displayName() const
+{
+    return m_displayName;
 }
 
 void EAConstruction::setBackColour(QColor backColour)
@@ -193,4 +202,13 @@ void EAConstruction::setStrings(EAStrings *strings)
 
     m_strings = strings;
     emit stringsChanged(strings);
+}
+
+void EAConstruction::setDisplayName(QString displayName)
+{
+    if (m_displayName == displayName)
+        return;
+
+    m_displayName = displayName;
+    emit displayNameChanged(displayName);
 }

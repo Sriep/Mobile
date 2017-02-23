@@ -19,6 +19,7 @@ class  EAConstruction : public QQuickItem
     Q_PROPERTY(EAObjDisplay* toolBarDisplay READ toolBarDisplay WRITE setToolBarDisplay NOTIFY toolBarDisplayChanged)
     Q_PROPERTY(EAObjDisplay* menuDisplay READ menuDisplay WRITE setMenuDisplay NOTIFY menuDisplayChanged)
     Q_PROPERTY(EAStrings* strings READ strings WRITE setStrings NOTIFY stringsChanged)
+    Q_PROPERTY(QString displayName READ displayName WRITE setDisplayName NOTIFY displayNameChanged)
 
     QColor m_backColour;
     QColor m_foreColour;
@@ -29,6 +30,8 @@ class  EAConstruction : public QQuickItem
     EAObjDisplay* m_toolBarDisplay;
     EAObjDisplay* m_menuDisplay;    
     EAStrings* m_strings;
+
+    QString m_displayName;
 
 public:
     EAConstruction();
@@ -44,7 +47,8 @@ public:
     QString style() const;    
     EAObjDisplay* toolBarDisplay() const;
     EAObjDisplay* menuDisplay() const;    
-    EAStrings* strings() const;
+    EAStrings* strings() const;    
+    QString displayName() const;
 
 signals:
 
@@ -56,7 +60,8 @@ signals:
     void styleChanged(QString style);    
     void toolBarDisplayChanged(EAObjDisplay* toolBarDisplay);
     void menuDisplayChanged(EAObjDisplay* menuDisplay);    
-    void stringsChanged(EAStrings* strings);
+    void stringsChanged(EAStrings* strings);    
+    void displayNameChanged(QString displayName);
 
 public slots:
     void setBackColour(QColor backColour);
@@ -68,6 +73,7 @@ public slots:
     void setToolBarDisplay(EAObjDisplay* toolBarDisplay);
     void setMenuDisplay(EAObjDisplay* menuDisplay);
     void setStrings(EAStrings* strings);
+    void setDisplayName(QString displayName);
 };
 
 #endif // EVENTAPPCONSTRUCTION_H

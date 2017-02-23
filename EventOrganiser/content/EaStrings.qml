@@ -23,6 +23,7 @@ EaStringsForm {
             eaContainer.eaConstruction.strings.bRegister = textRegister.text
             eaContainer.eaConstruction.strings.bLogin = textLogon.text
             eaContainer.eaConstruction.strings.bLogoff = textLogoff.text
+            eaContainer.eaConstruction.strings.copyClipbord = textCopyClipboard.text
 
             eaContainer.eaConstruction.strings.lkDownlaodFKey = textDownloadfKey.text
             eaContainer.eaConstruction.strings.lfDownloadUrl = textDownliadFIUrl.text

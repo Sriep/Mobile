@@ -154,3 +154,179 @@ QString EAStrings::aboutText() const
 {
     return m_aboutText;
 }
+
+QString EAStrings::copyClipbord() const
+{
+    return m_copyClipbord;
+}
+
+void EAStrings::setTbLoggedOff(QString tbLoggedOff)
+{
+    if (m_tbLoggedOff == tbLoggedOff)
+        return;
+
+    m_tbLoggedOff = tbLoggedOff;
+    emit tbLoggedOffChanged(tbLoggedOff);
+}
+
+void EAStrings::setMLogin(QString mLogin)
+{
+    if (m_mLogin == mLogin)
+        return;
+
+    m_mLogin = mLogin;
+    emit mLoginChanged(mLogin);
+}
+
+void EAStrings::setMLoadFKey(QString mLoadFKey)
+{
+    if (m_mLoadFKey == mLoadFKey)
+        return;
+
+    m_mLoadFKey = mLoadFKey;
+    emit mLoadFKeyChanged(mLoadFKey);
+}
+
+void EAStrings::setMnLoadFFile(QString mLoadFFile)
+{
+    if (m_mLoadFFile == mLoadFFile)
+        return;
+
+    m_mLoadFFile = mLoadFFile;
+    emit mLoadFFileChanged(mLoadFFile);
+}
+
+void EAStrings::setMLoadFFirebase(QString mLoadFFirebase)
+{
+    if (m_mLoadFFirebase == mLoadFFirebase)
+        return;
+
+    m_mLoadFFirebase = mLoadFFirebase;
+    emit mLoadFFirebaseChanged(mLoadFFirebase);
+}
+
+void EAStrings::setMAbout(QString mAbout)
+{
+    if (m_mAbout == mAbout)
+        return;
+
+    m_mAbout = mAbout;
+    emit mAboutChanged(mAbout);
+}
+
+void EAStrings::setMExit(QString mExit)
+{
+    if (m_mExit == mExit)
+        return;
+
+    m_mExit = mExit;
+    emit mExitChanged(mExit);
+}
+
+void EAStrings::setLUserId(QString lUserId)
+{
+    if (m_lUserId == lUserId)
+        return;
+
+    m_lUserId = lUserId;
+    emit lUserIdChanged(lUserId);
+}
+
+void EAStrings::setLPassword(QString lPassword)
+{
+    if (m_lPassword == lPassword)
+        return;
+
+    m_lPassword = lPassword;
+    emit lPasswordChanged(lPassword);
+}
+
+void EAStrings::setLkDownlaodFKey(QString lkDownlaodFKey)
+{
+    if (m_lkDownlaodFKey == lkDownlaodFKey)
+        return;
+
+    m_lkDownlaodFKey = lkDownlaodFKey;
+    emit lkDownlaodFKeyChanged(lkDownlaodFKey);
+}
+
+void EAStrings::setLfDownloadUrl(QString lfDownloadUrl)
+{
+    if (m_lfDownloadUrl == lfDownloadUrl)
+        return;
+
+    m_lfDownloadUrl = lfDownloadUrl;
+    emit lfDownloadUrlChanged(lfDownloadUrl);
+}
+
+void EAStrings::setLfFirebaseUrl(QString lfFirebaseUrl)
+{
+    if (m_lfFirebaseUrl == lfFirebaseUrl)
+        return;
+
+    m_lfFirebaseUrl = lfFirebaseUrl;
+    emit lfFirebaseUrlChanged(lfFirebaseUrl);
+}
+
+void EAStrings::setBRegister(QString bRegister)
+{
+    if (m_bRegister == bRegister)
+        return;
+
+    m_bRegister = bRegister;
+    emit bRegisterChanged(bRegister);
+}
+
+void EAStrings::setBLogin(QString bLogin)
+{
+    if (m_bLogin == bLogin)
+        return;
+
+    m_bLogin = bLogin;
+    emit bLoginChanged(bLogin);
+}
+
+void EAStrings::setBExit(QString bExit)
+{
+    if (m_bExit == bExit)
+        return;
+
+    m_bExit = bExit;
+    emit bExitChanged(bExit);
+}
+
+void EAStrings::setBLogoff(QString bLogoff)
+{
+    if (m_bLogoff == bLogoff)
+        return;
+
+    m_bLogoff = bLogoff;
+    emit bLogoffChanged(bLogoff);
+}
+
+void EAStrings::setBDownlaod(QString bDownlaod)
+{
+    if (m_bDownlaod == bDownlaod)
+        return;
+
+    m_bDownlaod = bDownlaod;
+    emit bDownlaodChanged(bDownlaod);
+}
+
+void EAStrings::setAboutText(QString aboutText)
+{
+    if (m_aboutText == aboutText)
+        return;
+
+    m_aboutText = aboutText;
+    emit aboutTextChanged(aboutText);
+}
+
+void EAStrings::setCopyClipbord(QString copyClipbord)
+{
+    if (m_copyClipbord == copyClipbord)
+        return;
+
+    m_copyClipbord = copyClipbord;
+    emit copyClipbordChanged(copyClipbord);
+}

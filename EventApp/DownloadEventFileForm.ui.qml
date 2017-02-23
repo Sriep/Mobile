@@ -9,6 +9,7 @@ Item {
     property alias quitButton: quitButton
     property alias debugLog: debugLog
     property alias getDebugLog: getDebugLog
+    property alias copyClipBut: copyClipBut
 
     ColumnLayout {
         id: columnLayout2
@@ -31,7 +32,7 @@ Item {
 
             TextField {
                 id: urlText
-                height: 30; width: 400
+                height: 30; width: parent.width
                 //text: "https://www.dropbox.com/s/inpkybii096m5qh/EA%20test1.json?dl=0"
                 text: "https://www.dropbox.com/s/inpkybii096m5qh/EA%20test1.json?raw=1"
                 horizontalAlignment: Text.AlignLeft
@@ -50,6 +51,10 @@ Item {
                     id: downloadButton
                     text: eaContainer.eaConstruction.strings.bDownlaod
                 }
+                Button {
+                    id: copyClipBut
+                    text: qsTr("Copy from clipboard")
+                } //Rectangle
             }
 
             ProgressBar {
@@ -90,7 +95,9 @@ Item {
                 }
                 ScrollBar.vertical: ScrollBar { }
             }
-        } //Rectangle
+        }
+
 
     }
+
 }

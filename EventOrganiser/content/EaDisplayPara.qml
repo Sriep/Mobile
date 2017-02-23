@@ -50,6 +50,7 @@ EaDisplayParaForm {
             featuredDisplay.yText = dyTextSB.value;
             featuredDisplay.whiteIcons = whiteIconsCB.checked;
 
+            featuredDisplay.imageWidth = widthImageSB.value;
             featuredDisplay.imageHeight = heightImageSB.value;
             featuredDisplay.xImage = xImageSB.value;
             featuredDisplay.yImage = yImageSB.value;
@@ -89,6 +90,7 @@ EaDisplayParaForm {
         target: eaContainer //(eaConstruction)
         onEaConstructionChanged: {
             heightImageSB.value = featuredDisplay.imageHeight;
+            widthImageSB.value = featuredDisplay.imageWidth;
             xImageSB.value = featuredDisplay.xImage;
             yImageSB.value = featuredDisplay.yImage;
             console.log("eaContainer onDisplayChanged");

@@ -98,6 +98,8 @@ public:
                                      , QDate from = QDate::currentDate());
     Q_INVOKABLE QString getDebugLog() const;
     Q_INVOKABLE void startAssistant();
+    Q_INVOKABLE QString copyFromClipboard();
+    Q_INVOKABLE void refreshData();
 
     void  eventAppToSettings(QJsonDocument eventDoc);
     QJsonDocument  eventAppFromSettings();

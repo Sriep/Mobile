@@ -36,6 +36,7 @@ Drawer {
           target: optionsListView
           onCurrentItemChanged: {
               console.log("optionsListView onCurrentItemChanged");
+              //eaContainer.eaConstruction.menuDisplay.colour
               itemBackground.color = menuItemDelegate.highlighted
                       ? eaContainer.eaConstruction.menuDisplay.highlitedColour
                       : eaContainer.eaConstruction.menuDisplay.colour

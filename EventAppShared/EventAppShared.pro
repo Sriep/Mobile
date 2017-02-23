@@ -28,7 +28,8 @@ SOURCES += eventappshared.cpp \
     eaobjdisplay.cpp \
     simplecrypt.cpp \
     eamap.cpp \
-    eastrings.cpp
+    eastrings.cpp \
+    eaicons.cpp
 
 HEADERS += eventappshared.h\
     eventappshared_global.h \
@@ -48,7 +49,8 @@ HEADERS += eventappshared.h\
     eaobjdisplay.h \
     simplecrypt.h \
     eamap.h \
-    eastrings.h
+    eastrings.h \
+    eaicons.h
 
 unix {
     target.path = /usr/lib

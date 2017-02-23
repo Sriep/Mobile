@@ -15,9 +15,7 @@ MenuBar {
       selectedNameFilter.index: 0
       nameFilters: ["Json files (*.json)" ]
       folder: eaContainer.workingDirectory
-      //onAccepted: settingsData.dataFilename = file
       Connections {
-          //console.log("loadFileDialog", loadFileDialog.file);
           onAccepted: eaContainer.loadDisplayFormat(loadDisplayDialog2.file);
       }
   }
@@ -27,9 +25,7 @@ MenuBar {
       selectedNameFilter.index: 0
       nameFilters: ["Json files (*.json)" ]
       folder: eaContainer.workingDirectory
-      //onAccepted: settingsData.dataFilename = file
       Connections {
-          //console.log("loadFileDialog", saveFileDialog.file);
           onAccepted: eaContainer.saveDisplayFormat(saveDispalyDialog2.file);
       }
   }
@@ -51,6 +47,10 @@ MenuBar {
     MenuItem {
       text: qsTr("&Save As...")
       onTriggered: constructionPage.saveFileDialog.open()
+    }
+    MenuItem {
+      text: qsTr("&Refresh")
+      onTriggered: eaContainer.refreshData()
     }
     MenuItem {
       text: qsTr("&Quit")

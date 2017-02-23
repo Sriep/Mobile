@@ -28,6 +28,7 @@ class EAObjDisplay : public QQuickItem
     Q_PROPERTY(int borderWidth READ borderWidth WRITE setBorderWidth NOTIFY borderWidthChanged)
 
     Q_PROPERTY(int imageHeight READ imageHeight WRITE setImageHeight NOTIFY imageHeightChanged)
+    Q_PROPERTY(int imageWidth READ imageWidth WRITE setImageWidth NOTIFY imageWidthChanged)
     Q_PROPERTY(int xImage READ xImage WRITE setXImage NOTIFY xImageChanged)
     Q_PROPERTY(int yImage READ yImage WRITE setYImage NOTIFY yImageChanged)
 
@@ -69,13 +70,15 @@ class EAObjDisplay : public QQuickItem
     bool m_whiteIcons = false;
     int m_imageHeight = 0;
     int m_xImage = 0;
-    int m_yImage = 0;
+    int m_yImage = 0;    
+    int m_imageWidth;
 
 public:
     enum DisplayType { Menu=0, Toolbar, Drawer };
     Q_ENUM(DisplayType)
 
     EAObjDisplay();
+    EAObjDisplay(DisplayType disType);
 
     void read(const QJsonObject &json);
     void write(QJsonObject &json);
@@ -103,7 +106,8 @@ public:
     bool whiteIcons() const;    
     int imageHeight() const;
     int xImage() const;    
-    int yImage() const;
+    int yImage() const;    
+    int imageWidth() const;
 
 signals:
     void xChanged(int x);
@@ -129,7 +133,8 @@ signals:
     void whiteIconsChanged(bool whiteIcons);    
     void imageHeightChanged(int imageHeight);
     void xImageChanged(int xImage);    
-    void yImageChanged(int yImage);
+    void yImageChanged(int yImage);    
+    void imageWidthChanged(int imageWidth);
 
 public slots:
     void setX(int x);
@@ -155,6 +160,7 @@ public slots:
     void setImageHeight(int imageHeight);
     void setXImage(int xImage);
     void setYImage(int yImage);
+    void setImageWidth(int imageWidth);
 };
 
 #endif // EAOBJDISPLAY_H

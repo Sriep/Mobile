@@ -28,4 +28,11 @@ DownloadEventFileForm {
         debugLog.text = eaContainer.getDebugLog()
     }
 
+    Connections {
+        target: copyClipBut;
+        onPressed: {
+            urlText.text = eaContainer.copyFromClipboard();
+        }
+    }
+
 }

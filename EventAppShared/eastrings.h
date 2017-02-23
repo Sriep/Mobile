@@ -22,6 +22,7 @@ class EAStrings : public QQuickItem
     Q_PROPERTY(QString lkDownlaodFKey READ lkDownlaodFKey WRITE setLkDownlaodFKey NOTIFY lkDownlaodFKeyChanged)
     Q_PROPERTY(QString lfDownloadUrl READ lfDownloadUrl WRITE setLfDownloadUrl NOTIFY lfDownloadUrlChanged)
     Q_PROPERTY(QString lfFirebaseUrl READ lfFirebaseUrl WRITE setLfFirebaseUrl NOTIFY lfFirebaseUrlChanged)
+    Q_PROPERTY(QString copyClipbord READ copyClipbord WRITE setCopyClipbord NOTIFY copyClipbordChanged)
 
     Q_PROPERTY(QString aboutText READ aboutText WRITE setAboutText NOTIFY aboutTextChanged)
 
@@ -50,6 +51,8 @@ class EAStrings : public QQuickItem
     QString m_bDownlaod = "Downlaod";    
     QString m_aboutText = "About text\nAbout text\nAbout text\n";
 
+    QString m_copyClipbord;
+
 public:
     EAStrings();
 
@@ -76,8 +79,9 @@ public:
     QString bLogoff() const;
     QString bDownlaod() const;
     QString aboutText() const;
-signals:
+    QString copyClipbord() const;
 
+signals:
     void tbLoggedOffChanged(QString tbLoggedOff);
     void mLoginChanged(QString mLogin);
     void mLoadFKeyChanged(QString mLoadFKey);
@@ -97,152 +101,28 @@ signals:
     void bDownlaodChanged(QString bDownlaod);
     void aboutTextChanged(QString aboutText);
     void stringsChanged();
+    void copyClipbordChanged(QString copyClipbord);
 
-public slots:
-void setTbLoggedOff(QString tbLoggedOff)
-{
-    if (m_tbLoggedOff == tbLoggedOff)
-        return;
-
-    m_tbLoggedOff = tbLoggedOff;
-    emit tbLoggedOffChanged(tbLoggedOff);
-}
-void setMLogin(QString mLogin)
-{
-    if (m_mLogin == mLogin)
-        return;
-
-    m_mLogin = mLogin;
-    emit mLoginChanged(mLogin);
-}
-void setMLoadFKey(QString mLoadFKey)
-{
-    if (m_mLoadFKey == mLoadFKey)
-        return;
-
-    m_mLoadFKey = mLoadFKey;
-    emit mLoadFKeyChanged(mLoadFKey);
-}
-void setMnLoadFFile(QString mLoadFFile)
-{
-    if (m_mLoadFFile == mLoadFFile)
-        return;
-
-    m_mLoadFFile = mLoadFFile;
-    emit mLoadFFileChanged(mLoadFFile);
-}
-void setMLoadFFirebase(QString mLoadFFirebase)
-{
-    if (m_mLoadFFirebase == mLoadFFirebase)
-        return;
-
-    m_mLoadFFirebase = mLoadFFirebase;
-    emit mLoadFFirebaseChanged(mLoadFFirebase);
-}
-void setMAbout(QString mAbout)
-{
-    if (m_mAbout == mAbout)
-        return;
-
-    m_mAbout = mAbout;
-    emit mAboutChanged(mAbout);
-}
-void setMExit(QString mExit)
-{
-    if (m_mExit == mExit)
-        return;
-
-    m_mExit = mExit;
-    emit mExitChanged(mExit);
-}
-void setLUserId(QString lUserId)
-{
-    if (m_lUserId == lUserId)
-        return;
-
-    m_lUserId = lUserId;
-    emit lUserIdChanged(lUserId);
-}
-void setLPassword(QString lPassword)
-{
-    if (m_lPassword == lPassword)
-        return;
-
-    m_lPassword = lPassword;
-    emit lPasswordChanged(lPassword);
-}
-void setLkDownlaodFKey(QString lkDownlaodFKey)
-{
-    if (m_lkDownlaodFKey == lkDownlaodFKey)
-        return;
-
-    m_lkDownlaodFKey = lkDownlaodFKey;
-    emit lkDownlaodFKeyChanged(lkDownlaodFKey);
-}
-void setLfDownloadUrl(QString lfDownloadUrl)
-{
-    if (m_lfDownloadUrl == lfDownloadUrl)
-        return;
-
-    m_lfDownloadUrl = lfDownloadUrl;
-    emit lfDownloadUrlChanged(lfDownloadUrl);
-}
-void setLfFirebaseUrl(QString lfFirebaseUrl)
-{
-    if (m_lfFirebaseUrl == lfFirebaseUrl)
-        return;
-
-    m_lfFirebaseUrl = lfFirebaseUrl;
-    emit lfFirebaseUrlChanged(lfFirebaseUrl);
-}
-void setBRegister(QString bRegister)
-{
-    if (m_bRegister == bRegister)
-        return;
-
-    m_bRegister = bRegister;
-    emit bRegisterChanged(bRegister);
-}
-void setBLogin(QString bLogin)
-{
-    if (m_bLogin == bLogin)
-        return;
-
-    m_bLogin = bLogin;
-    emit bLoginChanged(bLogin);
-}
-void setBExit(QString bExit)
-{
-    if (m_bExit == bExit)
-        return;
-
-    m_bExit = bExit;
-    emit bExitChanged(bExit);
-}
-void setBLogoff(QString bLogoff)
-{
-    if (m_bLogoff == bLogoff)
-        return;
-
-    m_bLogoff = bLogoff;
-    emit bLogoffChanged(bLogoff);
-}
-void setBDownlaod(QString bDownlaod)
-{
-    if (m_bDownlaod == bDownlaod)
-        return;
-
-    m_bDownlaod = bDownlaod;
-    emit bDownlaodChanged(bDownlaod);
-}
-void setAboutText(QString aboutText)
-{
-    if (m_aboutText == aboutText)
-        return;
-
-    m_aboutText = aboutText;
-    emit aboutTextChanged(aboutText);
-}
+    public slots:
+        void setTbLoggedOff(QString tbLoggedOff);
+        void setMLogin(QString mLogin);
+        void setMLoadFKey(QString mLoadFKey);
+        void setMnLoadFFile(QString mLoadFFile);
+        void setMLoadFFirebase(QString mLoadFFirebase);
+        void setMAbout(QString mAbout);
+        void setMExit(QString mExit);
+        void setLUserId(QString lUserId);
+        void setLPassword(QString lPassword);
+        void setLkDownlaodFKey(QString lkDownlaodFKey);
+        void setLfDownloadUrl(QString lfDownloadUrl);
+        void setLfFirebaseUrl(QString lfFirebaseUrl);
+        void setBRegister(QString bRegister);
+        void setBLogin(QString bLogin);
+        void setBExit(QString bExit);
+        void setBLogoff(QString bLogoff);
+        void setBDownlaod(QString bDownlaod);
+        void setAboutText(QString aboutText);
+        void setCopyClipbord(QString copyClipbord);
 };
 
 #endif // EASTRINGS_H

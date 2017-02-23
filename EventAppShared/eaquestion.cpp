@@ -9,7 +9,6 @@
 
 EaQuestion::EaQuestion()
 {
-
 }
 
 int EaQuestion::questionType() const

@@ -26,24 +26,15 @@ Item {
     // A simple rounded rectangle for the background
     Rectangle {
         id: itemBackground
+
+        color: eaContainer.eaConstruction.display.colour
         x: eaContainer.eaConstruction.display.x
         y: eaContainer.eaConstruction.display.y
-        width: parent.width - x*2;
-        height: parent.height - y*2
-        color: eaContainer.eaConstruction.display.colour
         border.color: eaContainer.eaConstruction.display.borderColour
         border.width: eaContainer.eaConstruction.display.borderWidth
         radius: eaContainer.eaConstruction.display.radius
-        /*
-        color: backmouse.pressed ? eaContainer.eaConstruction.display.highlitedColour
-                 : eaContainer.eaConstruction.display.colour
-       MouseArea {
-            id: backmouse
-            anchors.fill: parent
-            //anchors.margins: -10
-            //onClicked: stackView.pop()
-            onPressed: topText.text = "!!!!!!!!!!!!!!!!!!!!11";
-        }*/
+        width: parent.width - x*2
+        height: parent.height - y*2
     }
 
     // This mouse region covers the entire delegate.
@@ -58,30 +49,28 @@ Item {
     // Lay out the page: picture, title and ingredients at the top, and method at the
     // bottom.  Note that elements that should not be visible in the list
     // mode have their opacity set to recipe.detailsOpacity.
-  Row {
+  Item {
         id: topLayout
         x: 10; y: 10;
         //x: eaContainer.eaConstruction.display.borderWidth
         //y: -eaContainer.eaConstruction.display.borderWidth
         height: photoImage.height; width: parent.width
-        spacing: 10
+        //spacing: 10
         clip: true
+        //RowLayout {
        Image {
             clip: true
             id: photoImage
-            //y:-eaContainer.eaConstruction.display.borderWidth-5
-            //x: eaContainer.eaConstruction.display.borderWidth
-            x : eaContainer.eaConstruction.display.xImage;
-            y : eaContainer.eaConstruction.display.yText;
+            cache: false
 
-            fillMode: Image.PreserveAspectFit
-            //height: eaContainer.eaConstruction.display.height
-            //        - 2*eaContainer.eaConstruction.display.borderWidth-10
-
+            x : eaContainer.eaConstruction.display.xImage
+            y : eaContainer.eaConstruction.display.yText
             width : eaContainer.eaConstruction.display.imageWidth
             height : eaContainer.eaConstruction.display.imageHeight
+
+            fillMode: Image.PreserveAspectFit
             source: picture
-            cache: false
+
         }
 
         Text {
@@ -93,11 +82,15 @@ Item {
             x: eaContainer.eaConstruction.display.xText
             y: eaContainer.eaConstruction.display.yText
 
-            verticalAlignment: eaContainer.eaConstruction.display.vAlignment
-            horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
-            text: "hi"//modelData
-            anchors.leftMargin: 10
+            //x: xText < 140 ? 140 :
+
+
             height : eaContainer.eaConstruction.display.imageHeight
+
+            //verticalAlignment: eaContainer.eaConstruction.display.vAlignment
+            //horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
+            text: "hi"//modelData
+            anchors.leftMargin: 10            
             //opacity: 0.0
             //y:10; x:10
         }
@@ -171,7 +164,11 @@ Item {
         id: dldStates
         name: "Details"
 
-        //PropertyChanges { target: itemBackground; color: "white" }
+        PropertyChanges {
+            target: topText;
+            x: eaContainer.eaConstruction.display.xText + 130
+               - eaContainer.eaConstruction.display.imageWidth
+        }
 
         PropertyChanges {
             id: picSicePropCh;

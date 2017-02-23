@@ -22,6 +22,16 @@ ListDelegateForm {
     }
 
     Connections {
+        target: eaContainer
+        onEaConstructionChanged: {
+            setListDisplayParameters();
+        }
+    }
+    Component.onCompleted: {
+        setListDisplayParameters();
+    }
+
+    Connections {
         target: eaDisplay
         onXChanged: {
             itemBackground.x = eaDisplay.x
@@ -47,4 +57,35 @@ ListDelegateForm {
         }
     }
 
+    function setListDisplayParameters() {
+        DataListJS.setBackgroundDisplayParameters(drawerDelegate.itemBackground
+                                                  , eaContainer.eaConstruction.display
+                                                  , drawerDelegate)
+        DataListJS.setTextBoxDisplayParameters(drawerDelegate.itemText
+                                            , eaContainer.eaConstruction.display)
+        DataListJS.setImageDisplyaParameters(drawerDelegate.iconImage
+                       , eaContainer.eaConstruction.display)
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

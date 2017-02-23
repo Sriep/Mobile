@@ -80,8 +80,8 @@ Item {
             styleColor: eaContainer.eaConstruction.display.styleColour
             x: eaContainer.eaConstruction.display.xText
             y: eaContainer.eaConstruction.display.yText
-            verticalAlignment: eaContainer.eaConstruction.display.vAlignment
-            horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
+            //verticalAlignment: eaContainer.eaConstruction.display.vAlignment
+            //horizontalAlignment: eaContainer.eaConstruction.display.hAlignment
             anchors.leftMargin: 10
             height : eaContainer.eaConstruction.display.imageHeight
             text:  eaLVItemList.items[itemIndex].title;

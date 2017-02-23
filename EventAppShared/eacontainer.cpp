@@ -9,6 +9,8 @@
 #include <QDebug>
 #include <QQmlEngine>
 #include <QtQml>
+#include <QClipboard>
+#include <QGuiApplication>
 
 //#include <QApplication>
 //#include <QScreen>
@@ -411,6 +413,28 @@ void EAContainer::httpDownloadFinished()
     QByteArray data = httpDownload->downloadData();
     httpDownload = NULL;
     onResponseReady(data);
+}
+
+QString EAContainer::copyFromClipboard()
+{
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    //QString originalText = clipboard->text();
+    //QClipboard clipboard;
+    qDebug() << clipboard->text();
+    return clipboard->text();
+}
+
+void EAContainer::refreshData()
+{
+    QJsonObject containerObject;
+    write(containerObject);
+    QJsonDocument saveDoc(containerObject);
+    eventAppToSettings(saveDoc);
+
+    clearEvent();
+
+    read(saveDoc.object());
+    emit eaItemListsChanged();
 }
 
 void EAContainer::setIsEventStatic(bool isEventStatic)

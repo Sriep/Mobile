@@ -130,6 +130,7 @@ ApplicationWindow {
         property alias firebaseUrl: eaContainer.firbaseUrl
         property alias databaseKey: eaContainer.eventKey
         property string style:  "default"
+       // property alias displayName: eaContainer.eaConstruction.displayName
         //property alias style: eaContainer.eaConstruction.style
     }
 

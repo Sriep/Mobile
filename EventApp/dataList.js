@@ -87,11 +87,13 @@ function setTextBoxDisplayParameters(textBox, displayData) {
     textBox.color = displayData.fontColour
     textBox.style = displayData.textStyle
     textBox.styleColor = displayData.styleColour
-
+    var tt = textBox.text;
+    var xx = textBox.x; var xtt = displayData.xText;
     textBox.x = displayData.xText
     textBox.y = displayData.yText
-    textBox.verticalAlignment = displayData.vAlignment
-    textBox.horizontalAlignment = displayData.hAlignment
+    tt = textBox.text; xx = textBox.x; xtt = displayData.xText;
+    //textBox.verticalAlignment = displayData.vAlignment
+    //textBox.horizontalAlignment = displayData.hAlignment
 
     textBox.height = displayData.imageHeight
 }

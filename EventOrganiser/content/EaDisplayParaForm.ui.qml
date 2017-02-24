@@ -218,6 +218,32 @@ Item {
                             id: heightImageSB
                             editable: true
                         }
+                        Label {
+                            text: qsTr("width")
+                        }
+                        SpinBox {
+                            id: widthImageSB
+                            from: -99;
+                            editable: true
+                        }
+                    }
+                    RowLayout {
+                        Label {
+                            text: qsTr("x image")
+                        }
+                        SpinBox {
+                            id: xImageSB
+                            from: -99;
+                            editable: true
+                        }
+                        Label {
+                            text: qsTr("y image")
+                        }
+                        SpinBox {
+                            id: yImageSB
+                            from: -99;
+                            editable: true
+                        }
                     }
 
                     /*
@@ -264,6 +290,27 @@ Item {
                     */
                 }
             }
+
+            //GroupBox {
+                //id: goupImage
+                //width: parent.width;
+                //title: qsTr("Image")
+               // ColumnLayout {
+                    /*RowLayout {
+                        //width: parent.width;
+                        //height: 90
+                        Label {
+                            text: qsTr("height")
+                        }
+                        SpinBox {
+                            id: heightImageSB
+                            editable: true
+                        }
+                    }*/
+
+               // }
+            //}
+
             GroupBox {
                 id: groupBoxBackgound
                 width: parent.width; //height: parent.height/3
@@ -429,53 +476,6 @@ Item {
                             ToolTip.timeout: 5000
                             ToolTip.visible: hovered
                             ToolTip.text: qsTr("Border width in pixels.")
-                        }
-                    }
-                }
-            }
-
-            GroupBox {
-                id: goupImage
-                width: parent.width;
-                title: qsTr("Image")
-                ColumnLayout {
-                    /*RowLayout {
-                        //width: parent.width;
-                        //height: 90
-                        Label {
-                            text: qsTr("height")
-                        }
-                        SpinBox {
-                            id: heightImageSB
-                            editable: true
-                        }
-                    }*/
-                    RowLayout {
-                        Label {
-                            text: qsTr("x")
-                        }
-                        SpinBox {
-                            id: xImageSB
-                            from: -99;
-                            editable: true
-                        }
-                        Label {
-                            text: qsTr("y")
-                        }
-                        SpinBox {
-                            id: yImageSB
-                            from: -99;
-                            editable: true
-                        }
-                    }
-                    RowLayout {
-                        Label {
-                            text: qsTr("width")
-                        }
-                        SpinBox {
-                            id: widthImageSB
-                            from: -99;
-                            editable: true
                         }
                     }
                 }

@@ -50,8 +50,7 @@ class EAStrings : public QQuickItem
     QString m_bLogoff = "Logoff";
     QString m_bDownlaod = "Downlaod";    
     QString m_aboutText = "About text\nAbout text\nAbout text\n";
-
-    QString m_copyClipbord;
+    QString m_copyClipbord = "Copy from clipboard";
 
 public:
     EAStrings();

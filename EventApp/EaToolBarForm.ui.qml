@@ -11,6 +11,9 @@ ToolBar {
     property alias titleLabel: titleLabel
     property alias userBut: userBut
     property alias userLable: userLable
+    property alias eventIconButton: eventIconButton
+    property alias evnetIconImage: evnetIconImage
+    property alias itemBackground: itemBackground
     Rectangle {
         id: itemBackground
         x: eaContainer.eaConstruction.toolBarDisplay.x
@@ -26,7 +29,7 @@ ToolBar {
     RowLayout {
         spacing: 20
         anchors.fill: parent
-
+        clip: true
         ToolButton {
             id: drawerButton
             contentItem: Image {
@@ -39,9 +42,31 @@ ToolBar {
             }
         }
 
+        ToolButton {
+            id: eventIconButton
+            //visible: eaContainer.showEventIcon
+            //z:5
+            contentItem: Image {
+                id: evnetIconImage
+                //z:5
+                //fillMode: Image.Pad
+                horizontalAlignment: Image.AlignHCenter
+                verticalAlignment: Image.AlignVCenter
+                //downloadFileOnly
+                //fillMode: Image.PreserveAspectFit
+                fillMode: Image.Pad
+                source:  "image://listIcons_" + eaContainer.imageVersion + "/-1"
+                //source:  "qrc:///shared/images/user-shape_32White.png"
+                //source: "qrc:///shared/images/user-shape_32.png"
+            }
+        }
+
         Label {
             id: titleLabel
+
             text: eaContainer.eaInfo.eventName
+            //text: evnetIconImage.height
+
             elide: Label.ElideRight
             Layout.fillWidth: true
 
@@ -58,6 +83,8 @@ ToolBar {
         ToolButton {
             id: userBut
             contentItem: Image {
+                width: 20
+                height: 20
                 fillMode: Image.Pad
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter

@@ -7,6 +7,14 @@ PictureListImageProvider::PictureListImageProvider(const QJsonArray &pictures)
 {   
 }
 
+PictureListImageProvider::PictureListImageProvider(const QJsonArray &pictures
+                                                   , QJsonValue eventIcon)
+    : QQuickImageProvider(QQuickImageProvider::Image)
+    , pictures(pictures)
+    , eventIcon(eventIcon)
+{
+}
+
 PictureListImageProvider::~PictureListImageProvider()
 {
 }
@@ -16,9 +24,17 @@ QImage PictureListImageProvider::requestImage(const QString &id
                                               , const QSize &requestedSize)
 {
     int index = id.toInt();
-    if (index < pictures.size())
+    if (0 <= index &&index < pictures.size())
     {
         QPixmap pix = pixmapFrom(pictures[index]);
+        QImage image = pix.toImage();
+        image.scaled(requestedSize,  Qt::KeepAspectRatio);
+        *size = image.size();
+        return image;
+    }
+    else if (-1 == index)
+    {
+        QPixmap pix = pixmapFrom(eventIcon);
         QImage image = pix.toImage();
         image.scaled(requestedSize,  Qt::KeepAspectRatio);
         *size = image.size();
@@ -31,9 +47,8 @@ QImage PictureListImageProvider::requestImage(const QString &id
         QPixmap pix(s);
         pix.fill("Yellow");
         return pix.toImage();
-        // return QQuickImageProvider::requestImage(id, size, requestedSize);
+        // return QQ uickImageProvider::requestImage(id, size, requestedSize);
     }
-
 }
 
 QPixmap PictureListImageProvider::requestPixmap(const QString &id

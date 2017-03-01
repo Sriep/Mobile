@@ -107,7 +107,8 @@ ApplicationWindow {
             border.width : 0.5; border.color : "black"
             clip: true
             visible: tabStack.currentIndex === 1
-                     || tabStack.currentIndex === 2 || tabStack.currentIndex === 0
+                     || tabStack.currentIndex === 2
+                     || tabStack.currentIndex === 0
             EventAppPage {
                 x:10; y:10
                 width: parent.width-20; height: parent.height-20

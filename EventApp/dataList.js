@@ -65,7 +65,7 @@ function setBackgroundDisplayParameters(background
     background.x = displayData.x
     background.y = displayData.y
     background.color = displayData.colour
-    if (delegate) {
+    if (delegate && delegate.highlitedColour) {
         background.color = delegate.highlighted
                 ? displayData.highlitedColour
                 : displayData.colour

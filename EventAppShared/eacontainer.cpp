@@ -56,7 +56,14 @@ void EAContainer::resetImageProviders()
         if (provider)
             engine->removeImageProvider(oldId);
         PictureListImageProvider* newProvider;
-        newProvider = new PictureListImageProvider(jsonIcons);
+
+        QJsonValue eventIcon = getEventIcon();
+        if (!showEventIcon())
+        {
+            QPixmap nullPix;
+            eventIcon = jsonValFromPixmap(nullPix);
+        }
+        newProvider = new PictureListImageProvider(jsonIcons, eventIcon);
         QString newId = "listIcons_" + QString::number(imageVersion());
         qDebug() << "resetImageProvider: number icons: " << jsonIcons.size() << " id: " << newId;
         engine->addImageProvider(newId, newProvider);
@@ -89,8 +96,27 @@ void EAContainer::addIcon(int index,  const QString& filenameUrl)
     QJsonValue jsonPic = jsonValFromPixmap(pix);
 
     padOutIconst();
-    jsonIcons[index] = jsonPic;
+    if (0 <= index)
+        jsonIcons[index] = jsonPic;
+    else
+        setEventIcon(jsonPic);
     resetImageProviders();
+    refreshData();
+}
+
+void EAContainer::addEventIcon(const QString &filenameUrl, int height)
+{
+    QString filename = QUrl(filenameUrl).toLocalFile();
+    QImage picImage(filename);
+    picImage.scaled(height,height);
+    QPixmap pix = QPixmap::fromImage(picImage);
+    QJsonValue jsonPic = jsonValFromPixmap(pix);
+    setShowEventIcon(true);
+
+    padOutIconst();
+    setEventIcon(jsonPic);
+    resetImageProviders();
+    refreshData();
 }
 
 EAContainer::EAContainer()
@@ -455,6 +481,15 @@ void EAContainer::setImageVersion(int imageVersion)
     emit imageVersionChanged(imageVersion);
 }
 
+void EAContainer::setShowEventIcon(bool showEventIcon)
+{
+    if (m_showEventIcon == showEventIcon)
+        return;
+
+    m_showEventIcon = showEventIcon;
+    emit showEventIconChanged(showEventIcon);
+}
+
 void EAContainer::onResponseReady(QByteArray data)
 {
     qDebug()<<"answer";
@@ -653,7 +688,9 @@ void EAContainer::read(const QJsonObject &json)
         emit eaConstructionChanged(m_eaConstruction);
     }
 
+    setEventIcon(json["eventIcon"]);
     jsonIcons = json["icons"].toArray();
+    setShowEventIcon(json["showEventIcon"].toBool());
     QJsonArray listsArray = json["itemLists"].toArray();
     for (int i = 0; i < listsArray.size(); ++i) {
         QJsonObject readJsonObject = listsArray[i].toObject();
@@ -678,6 +715,7 @@ void EAContainer::clearEvent()
     m_eaInfo  = new EAInfo();
     m_user = new EAUser(this);
     m_dataFilename = "NewEvent";
+    setEventIcon(QJsonValue());
     m_eaConstruction = new EAConstruction();
     jsonIcons = QJsonArray();
     m_eaItemLists.clear();
@@ -731,6 +769,8 @@ void EAContainer::write(QJsonObject &json)
     json["event"] = eventInfoObject;
 
     json["icons"] = jsonIcons;
+    json["showEventIcon"] = showEventIcon();
+    json["eventIcon"] = getEventIcon();
 
     QJsonObject constructionDataObject;
     m_eaConstruction->write(constructionDataObject);
@@ -744,7 +784,6 @@ void EAContainer::write(QJsonObject &json)
             itemList->write(itemListObject);
             listsArray.append(itemListObject);
         }
-
     }
 
     json["itemLists"] = listsArray;
@@ -1034,6 +1073,21 @@ void EAContainer::clear_eaItemLists(QQmlListProperty<EAItemList> *list)
 int EAContainer::useNextItemListId()
 {
     return nextItemListId++;
+}
+
+QJsonValue EAContainer::getEventIcon() const
+{
+    return eventIcon;
+}
+
+void EAContainer::setEventIcon(const QJsonValue &value)
+{
+    eventIcon = value;
+}
+
+bool EAContainer::showEventIcon() const
+{
+    return m_showEventIcon;
 }
 
 QJsonArray EAContainer::getJsonIcons() const

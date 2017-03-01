@@ -26,6 +26,7 @@ ItemDelegate {
         border.width: eaContainer.eaConstruction.menuDisplay.borderWidth
         radius: eaContainer.eaConstruction.menuDisplay.radius
     }
+
     Image {
          clip: true
          id: iconMenuImage
@@ -37,7 +38,7 @@ ItemDelegate {
          fillMode: Image.PreserveAspectFit
          source: icon
          visible: showIcon
-     }
+    }
 
     Text {
         id: itemText

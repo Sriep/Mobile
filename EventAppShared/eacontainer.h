@@ -53,6 +53,7 @@ class  EAContainer : public QObject, public QQmlParserStatus
     Q_PROPERTY(QString firbaseUrl READ firbaseUrl WRITE setFirbaseUrl NOTIFY firbaseUrlChanged)
     Q_PROPERTY(QString answers READ answers WRITE setAnswers NOTIFY answersChanged)
     Q_PROPERTY(bool isEventStatic READ isEventStatic WRITE setIsEventStatic NOTIFY isEventStaticChanged)
+    Q_PROPERTY(bool showEventIcon READ showEventIcon WRITE setShowEventIcon NOTIFY showEventIconChanged)
 
     Q_PROPERTY(int imageVersion READ imageVersion WRITE setImageVersion NOTIFY imageVersionChanged)
 
@@ -74,6 +75,7 @@ public:
     //Q_INVOKABLE void insertEmptyItemList(int index, QString name, bool formated = true);
     Q_INVOKABLE void insertEmptyItemList(int index, QString name, int listType);
     Q_INVOKABLE void addIcon(int index, const QString& filenameUrl);
+    Q_INVOKABLE void addEventIcon(const QString& filenameUrl, int height);
     Q_INVOKABLE void deleteItemList(int index);
     Q_INVOKABLE int moveItemList(int index, bool directionUp);
     Q_INVOKABLE void clearEvent();
@@ -133,8 +135,10 @@ public:
     void resetImageProviders();
     qreal point2PixelH() const;    
     int imageVersion() const;
-
     QJsonArray getJsonIcons() const;
+    QJsonValue getEventIcon() const;
+    void setEventIcon(const QJsonValue &value);    
+    bool showEventIcon() const;
 
 signals:
     void eaInfoChanged(EAInfo* eaInfo);
@@ -164,6 +168,8 @@ signals:
     void point2PixelHChanged(qreal point2PixelH);    
     void imageVersionChanged(int imageVersion);
 
+    void showEventIconChanged(bool showEventIcon);
+
 public slots:
     void setEAInfo(EAInfo* eaInfo);
     void setDataFilename(const QString &dataFilename);
@@ -183,7 +189,8 @@ public slots:
     void onFileDownloadError(QString);
     void httpDownloadFinished();
     void setIsEventStatic(bool isEventStatic);
-    void setImageVersion(int imageVersion);
+    void setImageVersion(int imageVersion);    
+    void setShowEventIcon(bool showEventIcon);
 
 private:
     QJsonObject jsonAnswers(EAItemList* eaItemList
@@ -204,6 +211,7 @@ private:
     int nextItemListId = 0;
     int useNextItemListId();
     QJsonArray jsonIcons;
+    QJsonValue eventIcon;
 
     QString m_firbaseUrl = "";
     QString m_eventKey = "";
@@ -217,6 +225,7 @@ private:
     EventSource m_eventSource = None;
     bool indiretDownload = false;    
     int m_imageVersion = 0;
+    bool m_showEventIcon = false;
 };
 
 #endif // EVENTCONTAINER_H

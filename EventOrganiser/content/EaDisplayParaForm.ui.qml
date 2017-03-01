@@ -78,14 +78,17 @@ Item {
                                 onPressed: fontDlg.open();
                             }
                         }
-                    }
-                    RowLayout {
+                    } // RowLayout
+                    GridLayout {
+                        width: parent.width; height: parent.height
+                        columns: 4
+                        rows: 2
+                   // RowLayout {
                         Label {
                             id: label6
                             text: qsTr("Text back colour")
                             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                         }
-
                         Button {
                             id: colourBut
                             text: colorDialog.currentColor
@@ -109,16 +112,14 @@ Item {
                                 onPressed: colorDialog.open();
                             }
                         }
-
                         Label {
-                           // visible: false
-                            text: qsTr("Highlight back colour")
+                            visible: featuredDisplay.displayType === 0
+                            text: qsTr("Highlight colour")
                             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                         }
-
                         Button {
                             id: button
-                            //visible: false
+                            visible: featuredDisplay.displayType === 0
                             text: bkHColorDialog.currentColor
                             flat: true
                             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
@@ -140,18 +141,17 @@ Item {
                             }
                         }
 
-                    }
+                    //}
 
-                    RowLayout {
-                        id: rowLayout2
-                        width: 100
-                        height: 90
+                   // RowLayout {
+                        //id: rowLayout2
+                        //width: 100
+                        //height: 90
 
                         Label {
                             id: label3
                             text: qsTr("Style")
                         }
-
                         ComboBox {
                             id: styleCombo
                             model: [
@@ -161,12 +161,10 @@ Item {
                                 ,"Sunken"
                             ]
                         }
-
                         Label {
                             id: label9
                             text: qsTr("Style Colour")
                         }
-
                         Button {
                             id: styleColourBut
                             text: styleColourDlg.currentColor
@@ -185,15 +183,21 @@ Item {
                                 onPressed: styleColourDlg.open();
                             }
                         }
-                    }
+                    } //GridLayout
 
-                    RowLayout {
-                        id: rowLayout3
-                        width: 100
-                        height: 90
+                    GridLayout {
+                        id: gridLayout1
+                        width: parent.width; height: parent.height
+                        columns: 4
+                        rows: 3
+
+                    //RowLayout {
+                        //id: rowLayout3
+                       // width: 100
+                       // height: 90
                         Label {
                             id: label12
-                            text: qsTr("x")
+                            text: qsTr("x text")
                         }
                         SpinBox {
                             id: dxTextSB
@@ -202,15 +206,15 @@ Item {
                         }
                         Label {
                             id: label13
-                            text: qsTr("y")
+                            text: qsTr("y text")
                         }
                         SpinBox {
                             id: dyTextSB
                             from: -99;
                             value: featuredDisplay.yText
                         }
-                    }
-                    RowLayout {
+                    //}
+                    //RowLayout {
                         Label {
                             text: qsTr("height")
                         }
@@ -226,8 +230,8 @@ Item {
                             from: -99;
                             editable: true
                         }
-                    }
-                    RowLayout {
+                    //}
+                    //RowLayout {
                         Label {
                             text: qsTr("x image")
                         }
@@ -244,6 +248,7 @@ Item {
                             from: -99;
                             editable: true
                         }
+                    //}
                     }
 
                     /*
@@ -327,7 +332,6 @@ Item {
                             text: qsTr("Back colour")
                             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                         }
-
                         Button {
                             id: bkColourBut
                             // text: qsTr(colorDialog.currentColor.name);
@@ -352,17 +356,15 @@ Item {
                                 onPressed: bkColorDialog.open();
                             }
                         }
-
                         CheckBox {
                             id: whiteIconsCB
                             checked: featuredDisplay.whiteIcons
                             text: qsTr("Use White Icons")
                         }
-
                     }
 
                     GridLayout {
-                        id: gridLayout1
+                        id: gridLayout2
                         width: parent.width; height: parent.height
                         columns: 4
                         rows: 8
@@ -372,7 +374,6 @@ Item {
                             text: qsTr("x")
                             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                         }
-
                         SpinBox {
                             id: xTF
                             KeyNavigation.tab: yTF
@@ -383,13 +384,11 @@ Item {
                             ToolTip.visible: hovered
                             ToolTip.text: qsTr("Indentation distance in pixels.")
                         }
-
                         Label {
                             id: label2
                             text: qsTr("y")
                             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                         }
-
                         SpinBox {
                             id: yTF
                             KeyNavigation.tab: yTF
@@ -406,7 +405,6 @@ Item {
                             text: qsTr("height")
                             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                         }
-
                         SpinBox {
                             id: heightTF
                             KeyNavigation.tab: yTF
@@ -417,13 +415,11 @@ Item {
                             ToolTip.visible: hovered
                             ToolTip.text: qsTr("Height of drawers.")
                         }
-
                         Label {
                             id: label5
                             text: qsTr("radius")
                             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                         }
-
                         SpinBox {
                             id: radiusTF
                             KeyNavigation.tab: yTF
@@ -433,15 +429,14 @@ Item {
                             ToolTip.visible: hovered
                             ToolTip.text: qsTr("Radious of courner curve.")
                         }
-                    }
+                    //}
 
-                    RowLayout {
+                   // RowLayout {
                         Label {
                             id: labelBorderColour
                             text: qsTr("Border colour")
                             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                         }
-
                         Button {
                             text: bdColourDlg.currentColor
                             flat: true
@@ -463,12 +458,10 @@ Item {
                                 onPressed: bdColourDlg.open();
                             }
                         }
-
                         Label {
-                            text: qsTr("Border width")
+                            text: qsTr("width")
                             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                         }
-
                         SpinBox {
                             id: borderWidthSB
                             value: featuredDisplay.borderWidth
@@ -477,9 +470,10 @@ Item {
                             ToolTip.visible: hovered
                             ToolTip.text: qsTr("Border width in pixels.")
                         }
-                    }
-                }
-            }
+                    //} //RowLayout
+                    } //GridLayout
+                } //ColumnLayout
+            } //GroupBox
 
             RowLayout {
                 id: rowLayout1

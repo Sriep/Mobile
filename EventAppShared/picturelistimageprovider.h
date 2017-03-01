@@ -10,6 +10,7 @@ class PictureListImageProvider :  public QQuickImageProvider
 {
 public:
     PictureListImageProvider(const QJsonArray& pictures);
+    PictureListImageProvider(const QJsonArray& pictures, QJsonValue eventIcon);
 
     virtual ~PictureListImageProvider();
 
@@ -27,6 +28,8 @@ public:
 
 private:
     const QJsonArray& pictures;
+    const QJsonValue eventIcon;
+    bool hasEvnetIcon;
 };
 
 #endif // PICTURELISTIMAGEPROVIDER_H

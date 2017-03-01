@@ -77,7 +77,6 @@ public:
                                     , double longitude
                                     , int zoomLevel
                                     , bool useCurrent);
-
     Q_INVOKABLE int updateListItem(int index
                                     , int itemType
                                     , const QString& title
@@ -93,13 +92,10 @@ public:
                                     , double longitude
                                     , int zoomLevel
                                     , bool useCurrent);
-
-    //Q_INVOKABLE void removeItem(int index);
     Q_INVOKABLE void saveAnswers(int itemIndex);
     Q_INVOKABLE int getIndex();
     Q_INVOKABLE void deleteItem(int index);
     Q_INVOKABLE int moveItem(int index, bool directionUp);
-    //Q_INVOKABLE int itemListLength();
 
     void resetImageProvider(EAContainer* eacontainer = NULL);
     QString titleFields() const;

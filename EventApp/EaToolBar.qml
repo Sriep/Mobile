@@ -18,20 +18,26 @@ EaToolBarForm {
     Connections {
         target: eaContainer //(eaConstruction)
         onEaConstructionChanged: {
+            var tb = toolBar;
+            var tbib = toolBar.titleLabell;
             setToolBarDisplayDataParameters(
                         toolBar.itemBackground
+                        , toolBar.evnetIconImage
                         , toolBar.titleLabel
+                        , eaContainer.eaConstruction.toolBarDisplay
                         , toolBar);
         }
     }
-/*
+
     Component.onCompleted: {
         setToolBarDisplayDataParameters(
                     toolBar.itemBackground
+                    , toolBar.evnetIconImage
                     , toolBar.titleLabel
+                    , eaContainer.eaConstruction.toolBarDisplay
                     , toolBar)
     }
-*/
+
     ListsDrawer {
         id: listsDrawer
     }
@@ -51,12 +57,18 @@ EaToolBarForm {
     }
 
     function setToolBarDisplayDataParameters(rectangle
-                                          , textBox
-                                          , displayData
-                                          , delegate) {
+                                              , iconButImage
+                                              , textBox
+                                              , displayData
+                                              , delegate) {
         DataListJS.setBackgroundDisplayParameters(rectangle, displayData, delegate);     
         DataListJS.setTextBoxDisplayParameters(textBox , displayData);
         //DataListJS.setImageDisplyaParameters(image, displayData)
+        var sn = "image://listIcons_" + eaContainer.imageVersion + "/-1";
+        toolBar.evnetIconImage.source =  "image://listIcons_" + eaContainer.imageVersion + "/-1";
+        //toolBar.evnetIconImage.source =  "image://listIcons_0/1"
+        //iconBut.height = displayData.imageHeight
+        //iconBut.width = displayData.imageWidth
         toolBar.drawerButton.source = eaContainer.eaConstruction.toolBarDisplay.whiteIcons
                 ? "qrc:///shared/images/drawerW@4x.png"
                 : "qrc:///shared/images/drawer@4x.png";

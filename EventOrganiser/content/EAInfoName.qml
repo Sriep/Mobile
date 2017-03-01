@@ -4,10 +4,12 @@ import QtQuick.Layouts 1.3
 import EventAppData 1.0
 
 EAInfoNameForm {
+    id: eventNamePane
     textEventName.text: eaContainer.eaInfo.eventName;
 
     Component.onCompleted: {
         textEventName.activeFocus();
+        setEventIcon();
     }
 
     saveInfo.onClicked: {
@@ -21,6 +23,7 @@ EAInfoNameForm {
         onEventCleared: {
             textEventName.text = eaContainer.eaInfo.eventName;
             ldpEventAppPage.resetToTopDrawer();
+            setEventIcon()
         }
     }
 
@@ -28,10 +31,63 @@ EAInfoNameForm {
       target: eaContainer
       onEaItemListsChanged: {
           textEventName.text = eaContainer.eaInfo.eventName;
-          //ldpEventAppPage.resetToTopDrawer();
+          setEventIcon();
+          ldpEventAppPage.resetToTopDrawer();
       }
     }
 
     newEventButIF.onClicked: eaContainer.clearEvent();
+
+    Connections {
+        target: loadIcon
+        onAccepted: {
+            eaContainer.addEventIcon(loadIcon.file, ldpEventAppPage.toolBar.height);
+            setEventIcon();
+            ldpEventAppPage.resetToTopDrawer();
+        }
+    }
+
+    Connections {
+        target: cleraIconBut
+        onPressed: {
+            eaContainer.showEventIcon = false;
+            setEventIcon();
+            ldpEventAppPage.resetToTopDrawer();
+        }
+    }
+
+    function setEventIcon() {
+        var iconPath = "image://listIcons_" + eaContainer.imageVersion;
+        iconPath += "/-1";
+        iconImage.source = iconPath;
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

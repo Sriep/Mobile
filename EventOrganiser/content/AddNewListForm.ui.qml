@@ -93,39 +93,9 @@ Item {
                         selectedNameFilter.index: 0
                         nameFilters: [ "Image files (*.png *.bmp *.jpg *.jpeg *.pbm *.pgm *.ppm *.xbm *.xpm)"]
                         folder: eaContainer.workingDirectory
-                        //onAccepted: settingsData.dataFilename = file
+                        //onAccepted: settingsData.dataFilename = filez
 
                     }
-
-                  /*  Button {
-                        id: iconBut
-                        width: 40; height: 40
-                        //text: qsTr("Button")
-                        //flat: true
-                        clip: true
-                        background: Rectangle {
-                            //id: iconButBk
-                            width: 40; height: 40
-                            anchors.fill: parent
-                            border.color: "black"
-                            color: "yellow"
-                            border.width: 1
-                            clip: true
-                        }
-                        contentItem: Image {
-                            id: iconImage
-                            //width: parent.width; height: parent.height
-                            width: 40; height: 40
-                            //anchors.fill: parent
-                            fillMode: Image.PreserveAspectFit
-                            cache: false
-                            clip: true
-                            source: "qrc:///shared/images/question-sign128.png"
-                        }
-                        Connections {
-                            onPressed: loadIcon.open()
-                        }
-                    }*/
                     Rectangle{
                         id: iconRec
                         width: 40; height: 40

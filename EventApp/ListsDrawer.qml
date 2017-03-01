@@ -71,7 +71,6 @@ Drawer {
       Connections {
           target: menuItemDelegate
           onClicked: {
-              var mmo = model;
               if (menuListView.currentIndex != index) {
                   menuListView.currentIndex = index;
                   stackCtl.currentIndex = position + stackCtl.startDrawerId

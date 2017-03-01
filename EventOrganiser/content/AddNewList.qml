@@ -30,6 +30,7 @@ AddNewListForm {
         var iconPath = "image://listIcons_" + eaContainer.imageVersion;
         iconPath += "/" + listsCreated.currentIndex;
         iconImage.source = iconPath;
+
     }
 
     Connections {

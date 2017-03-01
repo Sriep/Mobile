@@ -588,6 +588,7 @@ void EAItemList::loadPhotos(const QString &format)
             jsonPictures.append(jsonPic);
     }
     resetImageProvider(getEaContainer());
+    getEaContainer()->refreshData();
     qDebug() << "photos read " << jsonPictures.count();
 }
 

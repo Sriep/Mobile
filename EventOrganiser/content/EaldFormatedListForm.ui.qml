@@ -192,7 +192,7 @@ Item {
                     //Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
                     enabled: imageFilenameFormat !== ""
                 }
-            } //ColumnLayout
+            } // ColumnLayout
         } // GroupBox
     }
 }

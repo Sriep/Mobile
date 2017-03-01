@@ -23,19 +23,19 @@ Item {
                     text: qsTr("Common")
                 }
                 TabButton {
-                    text: qsTr("Toolbar")
+                    text: qsTr("Drawer")
                 }
                 TabButton {
                     text: qsTr("Menu")
                 }
                 TabButton {
-                    text: qsTr("Drawer")
+                    text: qsTr("Toolbar")
                 }
                 TabButton {
                     text: qsTr("Strings")
                 }
             }
-           // DataListImage {}
+            //DataListImage {}
 
             clip: true
             Rectangle {
@@ -57,9 +57,9 @@ Item {
                     }
 
                     EaDisplayPara {
-                        id: paraToolBar
-                        property var featuredDisplay: eaContainer.eaConstruction.toolBarDisplay
-                        property string title: "Tool bar display parameters"
+                        id: paraDrawer
+                        property var featuredDisplay: eaContainer.eaConstruction.display
+                        property string title: "Drawer display parameters"
                     }
 
                     EaDisplayPara {
@@ -69,9 +69,9 @@ Item {
                     }
 
                     EaDisplayPara {
-                        id: paraDrawer
-                        property var featuredDisplay: eaContainer.eaConstruction.display
-                        property string title: "Drawer display parameters"
+                        id: paraToolBar
+                        property var featuredDisplay: eaContainer.eaConstruction.toolBarDisplay
+                        property string title: "Tool bar display parameters"
                     }
 
                     EaStrings {

@@ -16,7 +16,7 @@ ApplicationWindow {
     //width: 720; height: 1280
     width: settingsGeometry.width
     height: settingsGeometry.height
-
+    property bool downloadFileOnly: true
     title: eaContainer.eaInfo.eventName
 
     EaContainerObj {

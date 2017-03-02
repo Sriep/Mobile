@@ -84,5 +84,7 @@
         <file>images/scale_end.png</file>
         <file>images/search.png</file>
         <file>images/star.png</file>
+        <file>images/user-shape_19white.png</file>
+        <file>images/user-shape_24white.png</file>
     </qresource>
 </RCC>

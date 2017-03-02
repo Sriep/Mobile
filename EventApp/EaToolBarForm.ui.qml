@@ -12,7 +12,7 @@ ToolBar {
     property alias userBut: userBut
     property alias userLable: userLable
     property alias eventIconButton: eventIconButton
-    property alias evnetIconImage: evnetIconImage
+    property alias eventIconImage: eventIconImage
     property alias itemBackground: itemBackground
     Rectangle {
         id: itemBackground
@@ -27,6 +27,10 @@ ToolBar {
     }
 
     RowLayout {
+        anchors.rightMargin: 0
+        anchors.bottomMargin: 0
+        anchors.leftMargin: 0
+        anchors.topMargin: 0
         spacing: 20
         anchors.fill: parent
         clip: true
@@ -44,15 +48,13 @@ ToolBar {
 
         ToolButton {
             id: eventIconButton
-            //visible: eaContainer.showEventIcon
-            //z:5
+            y:0
             contentItem: Image {
-                id: evnetIconImage
-                //z:5
-                //fillMode: Image.Pad
-                horizontalAlignment: Image.AlignHCenter
-                verticalAlignment: Image.AlignVCenter
-                //downloadFileOnly
+                id: eventIconImage
+                //horizontalAlignment: Image.AlignHCenter
+                //verticalAlignment: Image.AlignVCenter
+                //y: eaContainer.eaConstruction.toolBarDisplay.yImage
+                //y:0
                 //fillMode: Image.PreserveAspectFit
                 fillMode: Image.Pad
                 source:  "image://listIcons_" + eaContainer.imageVersion + "/-1"
@@ -65,7 +67,7 @@ ToolBar {
             id: titleLabel
 
             text: eaContainer.eaInfo.eventName
-            //text: evnetIconImage.height
+            //text: eventIconImage.height
 
             elide: Label.ElideRight
             Layout.fillWidth: true
@@ -81,6 +83,7 @@ ToolBar {
         }
 
         ToolButton {
+            visible: !downloadFileOnly
             id: userBut
             contentItem: Image {
                 width: 20
@@ -89,12 +92,13 @@ ToolBar {
                 horizontalAlignment: Image.AlignHCenter
                 verticalAlignment: Image.AlignVCenter
                 source:  eaContainer.eaConstruction.toolBarDisplay.whiteIcons
-                           ? "qrc:///shared/images/user-shape_32White.png"
-                           : "qrc:///shared/images/user-shape_32.png"
+                           ? "qrc:///shared/images/user-shape_24white.png"
+                           : "qrc:///shared/images/user-shape_24.png"
             }
         }
 
         Label {
+            visible: !downloadFileOnly
             id: userLable
             //text: "logged off"
             text:  eaContainer.user.loggedOn ? eaContainer.user.user : "logged off"

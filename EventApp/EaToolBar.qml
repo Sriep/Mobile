@@ -22,7 +22,7 @@ EaToolBarForm {
             var tbib = toolBar.titleLabell;
             setToolBarDisplayDataParameters(
                         toolBar.itemBackground
-                        , toolBar.evnetIconImage
+                        , toolBar.eventIconImage
                         , toolBar.titleLabel
                         , eaContainer.eaConstruction.toolBarDisplay
                         , toolBar);
@@ -32,7 +32,7 @@ EaToolBarForm {
     Component.onCompleted: {
         setToolBarDisplayDataParameters(
                     toolBar.itemBackground
-                    , toolBar.evnetIconImage
+                    , toolBar.eventIconImage
                     , toolBar.titleLabel
                     , eaContainer.eaConstruction.toolBarDisplay
                     , toolBar)
@@ -64,11 +64,15 @@ EaToolBarForm {
         DataListJS.setBackgroundDisplayParameters(rectangle, displayData, delegate);     
         DataListJS.setTextBoxDisplayParameters(textBox , displayData);
         //DataListJS.setImageDisplyaParameters(image, displayData)
-        var sn = "image://listIcons_" + eaContainer.imageVersion + "/-1";
-        toolBar.evnetIconImage.source =  "image://listIcons_" + eaContainer.imageVersion + "/-1";
-        //toolBar.evnetIconImage.source =  "image://listIcons_0/1"
-        //iconBut.height = displayData.imageHeight
-        //iconBut.width = displayData.imageWidth
+        toolBar.eventIconImage.source =  "image://listIcons_" + eaContainer.imageVersion + "/-1";
+        //toolBar.eventIconImage.y = displayData.yImage
+        toolBar.eventIconImage.y = displayData.yImage
+        toolBar.eventIconImage.y =0;
+        toolBar.eventIconButton.visible =  eaContainer.showEventIcon;
+        //toolBar.eventIconImage.source =  "image://listIcons_0/1"
+        //toolBar.eventIconButton.height = displayData.imageHeight
+        //toolBar.eventIconButton.width = displayData.imageWidth
+
         toolBar.drawerButton.source = eaContainer.eaConstruction.toolBarDisplay.whiteIcons
                 ? "qrc:///shared/images/drawerW@4x.png"
                 : "qrc:///shared/images/drawer@4x.png";

@@ -202,7 +202,8 @@ Item {
                         SpinBox {
                             id: dxTextSB
                             value: featuredDisplay.xText
-                            from: -99;
+                            from: -99; to: 500
+                            editable: true
                         }
                         Label {
                             id: label13
@@ -210,7 +211,8 @@ Item {
                         }
                         SpinBox {
                             id: dyTextSB
-                            from: -99;
+                            from: -99; to: 500
+                            editable: true
                             value: featuredDisplay.yText
                         }
                     //}
@@ -220,6 +222,7 @@ Item {
                         }
                         SpinBox {
                             id: heightImageSB
+                            from: -99; to: 500
                             editable: true
                         }
                         Label {
@@ -227,7 +230,7 @@ Item {
                         }
                         SpinBox {
                             id: widthImageSB
-                            from: -99;
+                            from: -99; to: 500
                             editable: true
                         }
                     //}
@@ -237,7 +240,7 @@ Item {
                         }
                         SpinBox {
                             id: xImageSB
-                            from: -99;
+                            from: -99; to: 500
                             editable: true
                         }
                         Label {
@@ -245,7 +248,7 @@ Item {
                         }
                         SpinBox {
                             id: yImageSB
-                            from: -99;
+                            from: -99; to: 500
                             editable: true
                         }
                     //}
@@ -378,7 +381,8 @@ Item {
                             id: xTF
                             KeyNavigation.tab: yTF
                             value: featuredDisplay.x
-                            from: -99;
+                            from: -99; to: 500
+                            editable: true
                             ToolTip.delay: 1000
                             ToolTip.timeout: 5000
                             ToolTip.visible: hovered
@@ -393,7 +397,8 @@ Item {
                             id: yTF
                             KeyNavigation.tab: yTF
                             value: featuredDisplay.y
-                            from: -99
+                            from: -99; to: 500
+                            editable: true
                             ToolTip.delay: 1000
                             ToolTip.timeout: 5000
                             ToolTip.visible: hovered
@@ -409,7 +414,7 @@ Item {
                             id: heightTF
                             KeyNavigation.tab: yTF
                             value: featuredDisplay.height
-                            from: 10; to: 200
+                            from: 0; to: 200
                             ToolTip.delay: 1000
                             ToolTip.timeout: 5000
                             ToolTip.visible: hovered
@@ -424,6 +429,8 @@ Item {
                             id: radiusTF
                             KeyNavigation.tab: yTF
                             value: featuredDisplay.radius
+                            from: -99; to: 500
+                            editable: true
                             ToolTip.delay: 1000
                             ToolTip.timeout: 5000
                             ToolTip.visible: hovered
@@ -465,6 +472,8 @@ Item {
                         SpinBox {
                             id: borderWidthSB
                             value: featuredDisplay.borderWidth
+                            from: -99; to: 500
+                            editable: true
                             ToolTip.delay: 1000
                             ToolTip.timeout: 5000
                             ToolTip.visible: hovered

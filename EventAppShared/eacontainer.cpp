@@ -91,7 +91,7 @@ void EAContainer::addIcon(int index,  const QString& filenameUrl)
 {
     QString filename = QUrl(filenameUrl).toLocalFile();
     QImage picImage(filename);
-    picImage.scaled(50,50);
+    //picImage = picImage.scaled(50,50, Qt::KeepAspectRatio);
     QPixmap pix = QPixmap::fromImage(picImage);
     QJsonValue jsonPic = jsonValFromPixmap(pix);
 
@@ -108,7 +108,7 @@ void EAContainer::addEventIcon(const QString &filenameUrl, int height)
 {
     QString filename = QUrl(filenameUrl).toLocalFile();
     QImage picImage(filename);
-    picImage.scaled(height,height);
+    picImage = picImage.scaled(height,height, Qt::KeepAspectRatio);
     QPixmap pix = QPixmap::fromImage(picImage);
     QJsonValue jsonPic = jsonValFromPixmap(pix);
     setShowEventIcon(true);
@@ -277,6 +277,7 @@ bool EAContainer::loadEventApp()
     }
     qDebug() << "EAContainer::loadEventApp finished";
     emit eaItemListsChanged();
+    emit eaConstructionChanged(m_eaConstruction);
     //emit displayParasChanged();
     return true;
 }
@@ -682,12 +683,6 @@ void EAContainer::read(const QJsonObject &json)
 
     emit eaInfoChanged(m_eaInfo);
 
-    if (json.contains("construction"))
-    {
-        m_eaConstruction->read(json["construction"].toObject());
-        emit eaConstructionChanged(m_eaConstruction);
-    }
-
     setEventIcon(json["eventIcon"]);
     jsonIcons = json["icons"].toArray();
     setShowEventIcon(json["showEventIcon"].toBool());
@@ -699,7 +694,11 @@ void EAContainer::read(const QJsonObject &json)
         m_eaItemLists.append(newList);
         newList->read(readJsonObject, this);
     }
-
+    if (json.contains("construction"))
+    {
+        m_eaConstruction->read(json["construction"].toObject());
+        emit eaConstructionChanged(m_eaConstruction);
+    }
     resetImageProviders();
 /*
     nextItemListId = json["version"].toInt();

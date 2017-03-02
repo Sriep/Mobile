@@ -132,10 +132,10 @@
         "whiteIcons": true,
         "width": 4,
         "x": 2,
-        "xImage": 0,
+        "xImage": 10,
         "xText": 30,
         "y": 2,
-        "yImage": 18,
+        "yImage": 0,
         "yText": 11
     }
 }

@@ -42,6 +42,7 @@ EAInfoNameForm {
         target: loadIcon
         onAccepted: {
             eaContainer.addEventIcon(loadIcon.file, ldpEventAppPage.toolBar.height);
+            eaContainer.showEventIcon = true;
             setEventIcon();
             ldpEventAppPage.resetToTopDrawer();
         }
@@ -53,6 +54,7 @@ EAInfoNameForm {
             eaContainer.showEventIcon = false;
             setEventIcon();
             ldpEventAppPage.resetToTopDrawer();
+            eaContainer.eaConstructionChanged(eaContainer.eaConstruction);
         }
     }
 

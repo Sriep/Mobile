@@ -21,6 +21,7 @@ Item {
     width: dataListImage.width
     Layout.fillWidth: true
     height: eaContainer.eaConstruction.display.height
+    property alias background: background
     property alias map: map
     property alias largePhotoImage: largePhotoImage
     property alias maDataDelegate: maDataDelegate

@@ -103,7 +103,8 @@ DLImageDelegateForm {
   }
 
   function setIDisplayParameters() {
-      DataListJS.setBackgroundDisplayParameters(imageDelegate.itemBackground
+      //DataListJS.setBackgroundDisplayParameters(imageDelegate.itemBackground
+      DataListJS.setBackgroundDisplayParameters(imageDelegate.background
                                                ,eaContainer.eaConstruction.display
                                                ,imageDelegate);
       DataListJS.setImageDisplyaParameters(imageDelegate.photoImage

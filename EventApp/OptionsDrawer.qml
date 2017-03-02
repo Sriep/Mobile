@@ -98,13 +98,16 @@ Drawer {
 
     function popOptionsModel(model) {
         model.clear();
-        model.append({ "title" : eaContainer.eaConstruction.strings.mLogin,
+        if (!downloadFileOnly)
+            model.append({ "title" : eaContainer.eaConstruction.strings.mLogin,
                                "index" : stackCtl.userLoginId });
-        model.append({ "title" : eaContainer.eaConstruction.strings.mLoadFKey,
+        if (!downloadFileOnly)
+            model.append({ "title" : eaContainer.eaConstruction.strings.mLoadFKey,
                                "index" : stackCtl.loadEventKey });
         model.append({ "title" : eaContainer.eaConstruction.strings.mLoadFFile,
                                "index" : stackCtl.loadEventFile });
-        model.append({ "title" : eaContainer.eaConstruction.strings.mLoadFFirebase,
+        if (!downloadFileOnly)
+            model.append({ "title" : eaContainer.eaConstruction.strings.mLoadFFirebase,
                                "index" : stackCtl.loadEventFB });
         model.append({ "title" : eaContainer.eaConstruction.strings.mAbout,
                                "index" : 98 });

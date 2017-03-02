@@ -70,7 +70,7 @@ Item {
                                 border.width: 1
                                 Image {
                                     id: iconImage
-                                    //visible: eaContainer.setShowEventIcon
+                                    visible: eaContainer.showEventIcon
                                     anchors.fill: parent
                                     fillMode: Image.PreserveAspectFit
                                     cache: false
@@ -79,7 +79,7 @@ Item {
                                         id: iconMA
                                         anchors.fill: parent
                                         Connections {
-                                          onPressed: loadIcon.open()
+                                            onPressed: loadIcon.open()
                                         }
                                     }
                                 }

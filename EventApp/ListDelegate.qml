@@ -63,8 +63,9 @@ ListDelegateForm {
                                                   , drawerDelegate)
         DataListJS.setTextBoxDisplayParameters(drawerDelegate.itemText
                                             , eaContainer.eaConstruction.display)
-        DataListJS.setImageDisplyaParameters(drawerDelegate.iconImage
-                       , eaContainer.eaConstruction.display)
+        if (drawerDelegate.iconImage)
+            DataListJS.setImageDisplyaParameters(drawerDelegate.iconImage
+                             , eaContainer.eaConstruction.display)
     }
 }
 

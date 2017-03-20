@@ -137,8 +137,8 @@ Drawer {
           Label {
               width: aboutDialog.availableWidth
               text: "Easy event app \n"
-                    + "www.easyeventapp.co.uk\n"
-                    + "Make easy event apps.\n"
+                    + "http://www.easyeventapps.com\n"
+                    + "Version " + eaContainer.appVersion() + "\n"
               wrapMode: Label.Wrap
               font.pixelSize: 12
           }

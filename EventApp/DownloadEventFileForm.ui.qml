@@ -18,9 +18,9 @@ Item {
 
         ColumnLayout {
             id: columnLayout1
-            width: 445
+            width: parent.width
             height: 139
-
+/*
             Label {
                 id: label1
                 width: 105
@@ -29,7 +29,7 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 font.pixelSize: 12
             }
-
+*/
             TextField {
                 id: urlText
                 height: 30; width: parent.width
@@ -37,9 +37,13 @@ Item {
                 text: "https://www.dropbox.com/s/inpkybii096m5qh/EA%20test1.json?raw=1"
                 horizontalAlignment: Text.AlignLeft
                 Layout.fillWidth: true
-                placeholderText: qsTr("Text Field")
+                placeholderText: qsTr("https://")
                 cursorVisible: true
                 selectByMouse: true
+                ToolTip.delay: 1000
+                ToolTip.timeout: 5000
+                ToolTip.visible: hovered
+                ToolTip.text:  eaContainer.eaConstruction.strings.lfDownloadUrl
             }
 
             RowLayout {
@@ -53,7 +57,8 @@ Item {
                 }
                 Button {
                     id: copyClipBut
-                    text: qsTr("Copy from clipboard")
+                    //text: qsTr("Copy from clipboard")
+                    text: eaContainer.eaConstruction.strings.copyClipbord
                 } //Rectangle
             }
 

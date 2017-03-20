@@ -464,6 +464,11 @@ void EAContainer::refreshData()
     emit eaItemListsChanged();
 }
 
+QString EAContainer::appVersion()
+{
+    return GIT_VERSION;
+}
+
 void EAContainer::setIsEventStatic(bool isEventStatic)
 {
     if (m_isEventStatic == isEventStatic)

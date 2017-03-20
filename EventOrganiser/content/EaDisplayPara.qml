@@ -6,8 +6,13 @@ EaDisplayParaForm {
     groupDispalyPara.title: title;
 
     Component.onCompleted: {
+        //var aa= featuredDisplay.displayType;
+        //console.log("featuredDisplay.displayType". aa);
         //paraToolBarHovers();
     }
+
+    //enum DisplayType { Menu=0, Toolbar, Drawer };
+    //featuredDisplay.displayType
 
     function paraToolBarHovers() {
         console.log("EaDisplayPara.onCompleted");

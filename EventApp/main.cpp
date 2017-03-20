@@ -37,9 +37,11 @@ int main(int argc, char *argv[])
     QmlAdMobBanner::DeclareQML();           // <== Call it before loading qml
     QmlAdMobInterstitial::DeclareQML();     // <== Call it before loading qml
 
-    app.setOrganizationName("Pierses");
-    app.setOrganizationDomain("eventapps.com");
+    app.setOrganizationName("Piers");
+    app.setOrganizationDomain("http://www.easyeventapps.com");
     app.setApplicationName("Event App");
+    QString version = GIT_VERSION;
+    app.setApplicationVersion(GIT_VERSION);
 
     qmlRegisterType<EAContainer>("EventAppData", 1,0, "EAContainer");
     qmlRegisterType<EAConstruction>("EventAppData", 1,0, "EAConstruction");

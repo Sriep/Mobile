@@ -9,6 +9,11 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 DEFINES += QTADMOB_QML
 include(../QtAdMob/QtAdMob.pri)
 
+#VERSION=1.0.0.0
+#DEFINES += APP_VERSION=\\\”$$VERSION\\\”
+#GIT_VERSION = $$system(git --git-dir $$PWD/.git --work-tree $$PWD describe --always --tags)
+GIT_VERSION = $$system(git describe --always --tags)
+DEFINES += GIT_VERSION=\\\"$$GIT_VERSION\\\"
 
 SOURCES += main.cpp \
     ../EventAppShared/eacontainer.cpp \
@@ -64,14 +69,6 @@ QML_IMPORT_PATH =
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-#unix:!macx: LIBS += -L$$PWD/../build-EventAppShared-Desktop_Qt_5_7_0_GCC_64bit-Debug/ -lEventAppShared
-
-#android  {
-#  unix:!macx: LIBS += -L$$PWD/../build-EventAppShared-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/ -lEventAppShared
-#}
-
-#/media/piers/h/Mobile/Mobile/build-EventApp-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/android-build/src/org/dreamdev/QtAdMob
 
 android: {
     DISTFILES += \

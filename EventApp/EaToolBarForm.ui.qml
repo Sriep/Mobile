@@ -78,8 +78,8 @@ ToolBar {
             styleColor: eaContainer.eaConstruction.toolBarDisplay.styleColour
             x: eaContainer.eaConstruction.toolBarDisplay.xText
             y: eaContainer.eaConstruction.toolBarDisplay.yText
-            verticalAlignment: eaContainer.eaConstruction.toolBarDisplay.vAlignment
-            horizontalAlignment: eaContainer.eaConstruction.toolBarDisplay.hAlignment
+            //verticalAlignment: eaContainer.eaConstruction.toolBarDisplay.vAlignment
+            //horizontalAlignment: eaContainer.eaConstruction.toolBarDisplay.hAlignment
         }
 
         ToolButton {
@@ -89,8 +89,8 @@ ToolBar {
                 width: 20
                 height: 20
                 fillMode: Image.Pad
-                horizontalAlignment: Image.AlignHCenter
-                verticalAlignment: Image.AlignVCenter
+                //horizontalAlignment: Image.AlignHCenter
+                //verticalAlignment: Image.AlignVCenter
                 source:  eaContainer.eaConstruction.toolBarDisplay.whiteIcons
                            ? "qrc:///shared/images/user-shape_24white.png"
                            : "qrc:///shared/images/user-shape_24.png"
@@ -127,8 +127,8 @@ ToolBar {
             id: menuButton
             contentItem: Image {
                 fillMode: Image.Pad
-                horizontalAlignment: Image.AlignHCenter
-                verticalAlignment: Image.AlignVCenter
+                //horizontalAlignment: Image.AlignHCenter
+                //verticalAlignment: Image.AlignVCenter
                 source:  eaContainer.eaConstruction.toolBarDisplay.whiteIcons
                             ? "qrc:///shared/images/menuW@4x.png"
                             : "qrc:///shared/images/menu@4x.png"

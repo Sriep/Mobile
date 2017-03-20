@@ -35,7 +35,7 @@ void EAObjDisplay::read(const QJsonObject &json)
     setBackColour(QColor(json["backColour"].toString()));
     setHighlitedColour(QColor(json["highlitedColour"].toString()));
     setWhiteIcons(json["whiteIcons"].toBool());
-    setDisplayType(json["displayType"].toInt());
+    //setDisplayType(json["displayType"].toInt());
     emit displayParamtersChanged();
 }
 
@@ -64,7 +64,7 @@ void EAObjDisplay::write(QJsonObject &json)
     json["backColour"] = QVariant(backColour()).toString();
     json["highlitedColour"] = QVariant(backColour()).toString();
     json["whiteIcons"] = whiteIcons();
-    json["displayType"] = displayType();
+    //json["displayType"] = displayType();
 }
 
 QFont EAObjDisplay::json2Font(const QJsonObject& json)

@@ -36,7 +36,7 @@ Item {
 
         RowLayout {
             id: rowLayout2
-            width: 100
+            width: parent.width
             height: 30
             Label {
                 id: keyText

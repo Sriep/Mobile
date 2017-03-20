@@ -102,6 +102,7 @@ public:
     Q_INVOKABLE void startAssistant();
     Q_INVOKABLE QString copyFromClipboard();
     Q_INVOKABLE void refreshData();
+    Q_INVOKABLE QString appVersion();
 
     void  eventAppToSettings(QJsonDocument eventDoc);
     QJsonDocument  eventAppFromSettings();

@@ -150,6 +150,8 @@ Item {
 
                         Label {
                             id: label3
+                            Layout.row:2
+                            Layout.column:0
                             text: qsTr("Style")
                         }
                         ComboBox {
@@ -160,7 +162,7 @@ Item {
                                 ,"Raised"
                                 ,"Sunken"
                             ]
-                        }
+                        }//featuredDisplay.displayType
                         Label {
                             id: label9
                             text: qsTr("Style Colour")
@@ -197,20 +199,24 @@ Item {
                        // height: 90
                         Label {
                             id: label12
+                            //visible: featuredDisplay.displayType !== 1
                             text: qsTr("x text")
                         }
                         SpinBox {
                             id: dxTextSB
+                            //visible: featuredDisplay.displayType !== 1
                             value: featuredDisplay.xText
                             from: -99; to: 500
                             editable: true
                         }
                         Label {
                             id: label13
+                            //visible: featuredDisplay.displayType === 1
                             text: qsTr("y text")
                         }
                         SpinBox {
                             id: dyTextSB
+                            //visible: featuredDisplay.displayType === 1
                             from: -99; to: 500
                             editable: true
                             value: featuredDisplay.yText
@@ -361,6 +367,7 @@ Item {
                         }
                         CheckBox {
                             id: whiteIconsCB
+                            visible: featuredDisplay.displayType === 1
                             checked: featuredDisplay.whiteIcons
                             text: qsTr("Use White Icons")
                         }

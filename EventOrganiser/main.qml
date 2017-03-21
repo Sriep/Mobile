@@ -150,14 +150,14 @@ ApplicationWindow {
             spacing: 20
 
             Label {
-                width: aboutDialog.availableWidth
+                width: aboutDialogEO.availableWidth
                 text:  eaContainer.eaConstruction.strings.aboutText
                 wrapMode: Label.Wrap
                 font.pixelSize: 12
             }
 
             Label {
-                width: aboutDialog.availableWidth
+                width: aboutDialogEO.availableWidth
                 text: "Event app orginser\n"
                       + "http://www.easyeventapps.com\n"
                       + "Version " + eaContainer.appVersion() + "\n"

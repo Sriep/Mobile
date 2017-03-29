@@ -26,7 +26,14 @@ EAInfoNameForm {
             setEventIcon()
         }
     }
-
+/*
+    Connections {
+        target: iconMA
+        onPressed: {
+            loadIcon.open();
+        }
+    }
+*/
     Connections {
       target: eaContainer
       onEaItemListsChanged: {

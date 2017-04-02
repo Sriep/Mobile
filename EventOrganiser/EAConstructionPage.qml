@@ -12,7 +12,9 @@ EAConstructionPageForm {
     //loadEventButton.onClicked: eaContainer.loadEventApp(loadFilename.text);
     //saveEventButton.onClicked: eaContainer.saveEventApp(loadFilename.text);
 
-    newEventBut.onClicked: eaContainer.clearEvent();
+    newEventBut.onClicked: {
+        eaContainer.clearEvent();
+    }
 
     uploadBut.onClicked: eaContainer.uploadApp(downloadKey.text);
     downloadBut.onClicked:{

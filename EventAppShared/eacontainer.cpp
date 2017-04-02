@@ -119,6 +119,21 @@ void EAContainer::addEventIcon(const QString &filenameUrl, int height)
     refreshData();
 }
 
+void EAContainer::clearEventIcon()
+{
+    setShowEventIcon(false);
+
+    padOutIconst();
+
+    //QPixmap nullPix;
+    //QJsonValue jsonPic = jsonValFromPixmap(nullPix);
+    //setEventIcon(jsonPic);
+    setEventIcon(QJsonValue());
+
+    resetImageProviders();
+    refreshData();
+}
+
 EAContainer::EAContainer()
 {
     m_eaConstruction = new EAConstruction;
@@ -719,6 +734,9 @@ void EAContainer::clearEvent()
     m_eaInfo  = new EAInfo();
     m_user = new EAUser(this);
     m_dataFilename = "NewEvent";
+    //clearEventIcon();
+    //setEventIcon(QJsonValue());
+    setShowEventIcon(false);
     setEventIcon(QJsonValue());
     m_eaConstruction = new EAConstruction();
     jsonIcons = QJsonArray();

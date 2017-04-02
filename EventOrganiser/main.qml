@@ -18,7 +18,7 @@ ApplicationWindow {
 
     Connections {
         target: eaContainer.eaInfo
-        onEventNameChanged: appwin.title = qsTr("Event App designer:\t")
+        onEventNameChanged: appwin.title = qsTr(" Event App designer: \t")
                             + eaContainer.eaInfo.eventName
     }
 
@@ -48,12 +48,12 @@ ApplicationWindow {
         spacing: 10
         StackLayout {
             id: tabStack
-            currentIndex: headerTabBar.currentIndex + 1
+            currentIndex: headerTabBar.currentIndex //+ 1
             //currentIndex: headerItem.headerTabBar.currentIndex
             anchors.fill: parent
 
             EAConstructionPage {
-                visible: false
+                visible: true
                 id: constructionPage
                 property alias eaConstruction: eaContainer.eaConstruction
                 property alias dataFilename: eaContainer.dataFilename
@@ -106,6 +106,7 @@ ApplicationWindow {
             width: 520; height: 720
             border.width : 0.5; border.color : "black"
             clip: true
+            y: -100
             visible: tabStack.currentIndex === 1
                      || tabStack.currentIndex === 2
                      || tabStack.currentIndex === 0

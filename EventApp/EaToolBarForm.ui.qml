@@ -1,6 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.1
 import QtQuick.Extras 1.4
 
 
@@ -51,15 +51,9 @@ ToolBar {
             y:0
             contentItem: Image {
                 id: eventIconImage
-                //horizontalAlignment: Image.AlignHCenter
-                //verticalAlignment: Image.AlignVCenter
-                //y: eaContainer.eaConstruction.toolBarDisplay.yImage
-                //y:0
-                //fillMode: Image.PreserveAspectFit
                 fillMode: Image.Pad
                 source:  "image://listIcons_" + eaContainer.imageVersion + "/-1"
-                //source:  "qrc:///shared/images/user-shape_32White.png"
-                //source: "qrc:///shared/images/user-shape_32.png"
+                visible: eaContainer.showEventIcon
             }
         }
 

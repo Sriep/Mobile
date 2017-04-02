@@ -24,7 +24,13 @@ Item {
 
     ColumnLayout {
         id: columnLayout2
-        //width: 200; height: 200
+         width: parent.width
+         ColumnLayout {
+             EAInfoName {
+                 width: parent.width; height: 125
+                 id: eaInfoNameGB
+             }
+         }
 
         GroupBox {
             id: groupBox1
@@ -79,7 +85,7 @@ Item {
                 }
 
                 RowLayout {
-                    id: rowLayout
+                    //id: rowLayout
                     //width: 1000
                     height: 40
                     visible: updateListBut.visible
@@ -97,7 +103,7 @@ Item {
 
                     }
                     Rectangle{
-                        id: iconRec
+                        //id: iconRec
                         width: 40; height: 40
                         border.color: "black"
                         border.width: 1
@@ -185,7 +191,7 @@ Item {
             }
         }
     }
-
+//} // ColumnLayout
 }
 
 

@@ -26,14 +26,7 @@ EAInfoNameForm {
             setEventIcon()
         }
     }
-/*
-    Connections {
-        target: iconMA
-        onPressed: {
-            loadIcon.open();
-        }
-    }
-*/
+
     Connections {
       target: eaContainer
       onEaItemListsChanged: {
@@ -42,13 +35,16 @@ EAInfoNameForm {
           ldpEventAppPage.resetToTopDrawer();
       }
     }
-
-    newEventButIF.onClicked: eaContainer.clearEvent();
-
+/*
+    newEventButIF.onClicked: {
+        eaContainer.clearEvent();
+        clearIconButton();
+    }
+*/
     Connections {
-        target: loadIcon
+        target: loadToolbarIcon
         onAccepted: {
-            eaContainer.addEventIcon(loadIcon.file, ldpEventAppPage.toolBar.height);
+            eaContainer.addEventIcon(loadToolbarIcon.file, ldpEventAppPage.toolBar.height);
             eaContainer.showEventIcon = true;
             setEventIcon();
             ldpEventAppPage.resetToTopDrawer();
@@ -56,19 +52,24 @@ EAInfoNameForm {
     }
 
     Connections {
-        target: cleraIconBut
+        target: clearToolbarIconBut
         onPressed: {
-            eaContainer.showEventIcon = false;
-            setEventIcon();
-            ldpEventAppPage.resetToTopDrawer();
-            eaContainer.eaConstructionChanged(eaContainer.eaConstruction);
+            eaContainer.clearEventIcon();
+            clearIconButton();
         }
+    }
+
+    function clearIconButton() {
+        eaContainer.showEventIcon = false;
+        setEventIcon();
+        ldpEventAppPage.resetToTopDrawer();
+        eaContainer.eaConstructionChanged(eaContainer.eaConstruction);
     }
 
     function setEventIcon() {
         var iconPath = "image://listIcons_" + eaContainer.imageVersion;
         iconPath += "/-1";
-        iconImage.source = iconPath;
+        iconToolbarImage.source = iconPath;
     }
 
 }

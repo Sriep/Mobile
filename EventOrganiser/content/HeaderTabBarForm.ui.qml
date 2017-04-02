@@ -9,10 +9,10 @@ TabBar {
     Layout.minimumHeight: 360
     Layout.preferredWidth: 480
     Layout.preferredHeight: 640
-/*
+
     TabButton {
-        text: qsTr("Construction")
-    }*/
+        text: qsTr("File")
+    }
     TabButton {
         text: qsTr("Data")
     }

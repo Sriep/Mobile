@@ -70,7 +70,7 @@ AddNewListForm {
 
     mouseAreaLC.onClicked: {
         //if (0 === listsModel.count)
-            popListsList(eaContainer.eaItemLists);
+        popListsList(eaContainer.eaItemLists);
 
         var index = listsCreated.indexAt(mouse.x, mouse.y);
         if (index >= 0) {

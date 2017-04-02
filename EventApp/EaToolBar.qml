@@ -65,7 +65,6 @@ EaToolBarForm {
         DataListJS.setTextBoxDisplayParameters(textBox , displayData);
         toolBar.eventIconImage.source =  "image://listIcons_" + eaContainer.imageVersion + "/-1";
         toolBar.eventIconImage.y = displayData.yImage
-        //toolBar.eventIconImage.y = 0;
         toolBar.eventIconButton.visible =  eaContainer.showEventIcon;
         toolBar.drawerButton.source = eaContainer.eaConstruction.toolBarDisplay.whiteIcons
                 ? "qrc:///shared/images/drawerW@4x.png"

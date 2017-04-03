@@ -32,11 +32,11 @@ EAListDisplayPageForm {
             if (eaListDisplayPage.featuredList.formatedList) {
                 thisItemListData.thisFormatedListPanel.popTitlesList(eaListDisplayPage.featuredList);
                 listItemEntryStack.currentIndex = 2;
-                dataDisplayTab.currentIndex = 2;
+                //dataDisplayTab.currentIndex = 2;
             } else {
                 thisItemListData.thisItemList.popItemList(eaListDisplayPage.featuredList);
                 listItemEntryStack.currentIndex = 2;
-                dataDisplayTab.currentIndex = 2;
+                //dataDisplayTab.currentIndex = 2;
             }
             console.log("current listName"
                         , eaListDisplayPage.featuredList.listName);
@@ -44,7 +44,7 @@ EAListDisplayPageForm {
         else
         {
             listItemEntryStack.currentIndex = 1;
-            dataDisplayTab.currentIndex = 1;
+            //dataDisplayTab.currentIndex = 1;
             console.log("add new list");
         }
     }
@@ -70,7 +70,7 @@ EAListDisplayPageForm {
             var drawerIndex = ldpEventAppPage.stackCtl.currentIndex-offset;
             if (isExpanded && drawerIndex>=0) {
                 listItemEntryStack.currentIndex = 3;
-                dataDisplayTab.currentIndex = 3;
+                //dataDisplayTab.currentIndex = 3;
                 var itemIndex = listCtl.currentIndex;
                 var itemList = listCtl.eaLVItemList;
                 var fe = featuredList;

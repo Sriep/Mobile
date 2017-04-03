@@ -21,8 +21,20 @@ AddNewListForm {
     Connections {
         target: loadIcon
         onAccepted: {
-            eaContainer.addIcon(listsCreated.currentIndex, loadIcon.file);
+            var index = listsCreated.currentIndex
+            eaContainer.addIcon(index, loadIcon.file);
             setIcon();
+            listsCreated.currentIndex = index;
+        }
+    }
+
+    Connections {
+        target: cleraIconBut
+        onPressed: {
+            ldpEventAppPage.resetToTopDrawer();
+            var index = listsCreated.currentIndex
+            eaContainer.clearIcon(index);
+            listsCreated.currentIndex = index;
         }
     }
 
@@ -30,7 +42,6 @@ AddNewListForm {
         var iconPath = "image://listIcons_" + eaContainer.imageVersion;
         iconPath += "/" + listsCreated.currentIndex;
         iconImage.source = iconPath;
-
     }
 
     Connections {
@@ -42,8 +53,6 @@ AddNewListForm {
     function resetDisplay() {
         newListName.text = "";
         updateListBut.visible = false;
-        //deleteListBut.visible = false;
-        //deleteItemListBut.visible = false;
         newListBut.visible = false;
         addListBut.visible = true;
         popListsList(eaContainer.eaItemLists);
@@ -71,7 +80,6 @@ AddNewListForm {
     mouseAreaLC.onClicked: {
         //if (0 === listsModel.count)
         popListsList(eaContainer.eaItemLists);
-
         var index = listsCreated.indexAt(mouse.x, mouse.y);
         if (index >= 0) {
             listsCreated.currentIndex = index;

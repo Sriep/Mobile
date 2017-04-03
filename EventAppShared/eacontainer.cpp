@@ -104,6 +104,17 @@ void EAContainer::addIcon(int index,  const QString& filenameUrl)
     refreshData();
 }
 
+void EAContainer::clearIcon(int index)
+{
+    padOutIconst();
+    if (0 <= index)
+        jsonIcons[index] = QJsonValue();
+    else
+        setEventIcon(QJsonValue());
+    resetImageProviders();
+    refreshData();
+}
+
 void EAContainer::addEventIcon(const QString &filenameUrl, int height)
 {
     QString filename = QUrl(filenameUrl).toLocalFile();

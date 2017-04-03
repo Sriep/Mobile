@@ -43,8 +43,10 @@ ApplicationWindow {
     }
 
     RowLayout {
+        y: 30
         width: 1100; height: 900;
-        Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
+        //Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
+        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
         spacing: 10
         StackLayout {
             id: tabStack
@@ -101,12 +103,15 @@ ApplicationWindow {
             }
 
         }
+
         Rectangle {
             id: dataBox
             width: 520; height: 720
+            //width: 520; height: 900
             border.width : 0.5; border.color : "black"
             clip: true
-            y: -100
+            Layout.alignment: Qt.AlignTop
+            //y: 20
             visible: tabStack.currentIndex === 1
                      || tabStack.currentIndex === 2
                      || tabStack.currentIndex === 0
@@ -115,8 +120,9 @@ ApplicationWindow {
                 width: parent.width-20; height: parent.height-20
                 id: ldpEventAppPage
             }
+
         } //Rectangle
-    }
+    } // RowLayout
     Settings {
         category: "geometry"
         property alias x: appwin.x

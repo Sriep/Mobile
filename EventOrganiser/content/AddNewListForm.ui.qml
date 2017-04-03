@@ -19,7 +19,7 @@ Item {
     property alias downItemListBut: downItemListBut
     property alias upItemListBut: upItemListBut
     property alias loadIcon: loadIcon
-    //property alias iconBut: iconBut
+    property alias cleraIconBut: cleraIconBut
     property alias iconImage: iconImage
 
     ColumnLayout {
@@ -85,12 +85,9 @@ Item {
                 }
 
                 RowLayout {
-                    //id: rowLayout
-                    //width: 1000
                     height: 40
                     visible: updateListBut.visible
                     Label {
-                        id: label
                         text: qsTr("Icon")
                     }
                     FileDialog {
@@ -99,8 +96,6 @@ Item {
                         selectedNameFilter.index: 0
                         nameFilters: [ "Image files (*.png *.bmp *.jpg *.jpeg *.pbm *.pgm *.ppm *.xbm *.xpm)"]
                         folder: eaContainer.workingDirectory
-                        //onAccepted: settingsData.dataFilename = filez
-
                     }
                     Rectangle{
                         //id: iconRec
@@ -109,26 +104,24 @@ Item {
                         border.width: 1
                         Image {
                             id: iconImage
-                            //width: 40; height: 40
+
                             anchors.fill: parent
                             fillMode: Image.PreserveAspectFit
                             cache: false
                             clip: true
-                            //source: "qrc:///shared/images/question-sign128.png"
                             MouseArea {
-                                id: iconMA
+                                //id: iconMA
                                 anchors.fill: parent
                                 Connections {
                                     onPressed: loadIcon.open()
+
                                 }
                             }
                         }
                     }
-
                     Button {
                         id: cleraIconBut
                         text: qsTr("Clear icon")
-                        //visible: false
                     }
                 }
             }

@@ -11,7 +11,7 @@ Item {
     property alias textEventName: textEventName
     property alias saveInfo: saveInfo
     //property alias newEventButIF: newEventButIF
-    property alias evnetIconSelect: evnetIconSelect
+    //property alias evnetIconSelect: evnetIconSelect
     property alias iconToolbarImage: iconToolbarImage
     property alias loadToolbarIcon: loadToolbarIcon
     property alias clearToolbarIconBut: clearToolbarIconBut
@@ -38,15 +38,9 @@ Item {
                         }
                     }
                     RowLayout {
-                        id: evnetIconSelect
-                        property string lableText: qsTr("Icon")
-                        property string directory: eaContainer.workingDirectory
-                        //width: 1000
                         height: 40
-                       // visible: updateListBut.visible
                         Label {
-                            id: label
-                            text: lableText// qsTr("Icon")
+                            text: qsTr("Icon")
                         }
                         FileDialog {
                             id: loadToolbarIcon
@@ -56,7 +50,7 @@ Item {
                             folder: eaContainer.workingDirectory
                         }
                         Rectangle {
-                            id: iconRec
+                            //id: iconRec
                             width: 40; height: 40
                             border.color: "black"
                             border.width: 1
@@ -68,12 +62,18 @@ Item {
                                 cache: false
                                 clip: true
                                 MouseArea {
-                                    id: iconToolbarMA
+                                    //id: iconToolbarMA
                                     anchors.fill: parent
-                                    Connections {
-                                        onPressed: loadIcon.open()
+                                    Connections {                                        
+                                        onPressed: loadToolbarIcon.open()
                                     }
                                 }
+                            }
+                        }
+                        Button {
+                            text: qsTr("Change icon")
+                            Connections {
+                                onPressed: loadToolbarIcon.open()
                             }
                         }
                         Button {

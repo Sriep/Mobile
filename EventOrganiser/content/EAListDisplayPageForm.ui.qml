@@ -10,15 +10,16 @@ Item {
     width: 600; height: 800;
     property alias thisItemListData: thisItemListData
     property alias listItemEntryStack: listItemEntryStack
-    property alias dataDisplayTab: dataDisplayTab
+    //property alias dataDisplayTab: dataDisplayTab
     Column {
         width: parent.width; height: parent.height -100
         spacing: 10
-        x:10; y:10
-        TabBar {
+        x:10//; y:10
+        /*TabBar {
             //width: parent.width; //height: parent.height
             width: 520
             id: dataDisplayTab
+            visible: false
             Layout.minimumWidth: 360
             Layout.preferredWidth: 480
             TabButton {
@@ -34,7 +35,7 @@ Item {
                 text: qsTr("Item")
             }
         }
-
+        */
         clip: true
         Rectangle {
             id: rectSL

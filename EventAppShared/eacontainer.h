@@ -75,6 +75,7 @@ public:
     //Q_INVOKABLE void insertEmptyItemList(int index, QString name, bool formated = true);
     Q_INVOKABLE void insertEmptyItemList(int index, QString name, int listType);
     Q_INVOKABLE void addIcon(int index, const QString& filenameUrl);
+    Q_INVOKABLE void clearIcon(int index);
     Q_INVOKABLE void addEventIcon(const QString& filenameUrl, int height);
     Q_INVOKABLE void clearEventIcon();
     Q_INVOKABLE void deleteItemList(int index);

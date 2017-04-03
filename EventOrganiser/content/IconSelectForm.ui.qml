@@ -36,7 +36,7 @@ RowLayout {
             cache: false
             clip: true
             MouseArea {
-                id: iconMA
+                //id: iconSelectMA
                 anchors.fill: parent
                 Connections {
                   onPressed: loadIcon.open()

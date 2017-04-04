@@ -82,6 +82,8 @@ contains(ANDROID_TARGET_ARCH, armeabi-v7a) {
 
 INCLUDEPATH += $$PWD/../EventAppShared
 DEPENDPATH += $$PWD/../EventAppShared
+INCLUDEPATH += $$PWD/../QtAddMob
+DEPENDPATH += $$PWD/../QtAddMob
 
 DISTFILES += \
     qml/main.qml \

@@ -29,7 +29,7 @@ public:
 private:
     const QJsonArray& pictures;
     const QJsonValue eventIcon;
-    bool hasEvnetIcon;
+    //bool hasEvnetIcon;
 };
 
 #endif // PICTURELISTIMAGEPROVIDER_H

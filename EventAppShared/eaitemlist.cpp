@@ -46,7 +46,7 @@ EAItemList::~EAItemList()
 
 void EAItemList::clear(EAContainer* eacontainer)
 {
-    EAItemList::clear(eacontainer);
+    //EAItemList::clear(eacontainer);
 }
 
 

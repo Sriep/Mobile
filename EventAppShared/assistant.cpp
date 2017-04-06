@@ -54,10 +54,10 @@ Assistant::Assistant()
 
 Assistant::~Assistant()
 {
-    if (proc && proc->state() == QProcess::Running) {
-        proc->terminate();
-        proc->waitForFinished(3000);
-    }
+   // if (proc && proc->state() == QProcess::Running) {
+   //     proc->terminate();
+   //     proc->waitForFinished(3000);
+   // }
     delete proc;
 }
 

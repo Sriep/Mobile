@@ -106,6 +106,10 @@ contains(ANDROID_TARGET_ARCH,x86) {
     ANDROID_EXTRA_LIBS =
 }
 
+ios {
+    QMAKE_INFO_PLIST = ios/Info.plist
+}
+
 
 
 

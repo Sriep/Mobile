@@ -9,8 +9,31 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/../build-EventOrganiser-Android_for_armeabi_v
 DEFINES += QTADMOB_QML
 include(../QtAdMob/QtAdMob.pri)
 
-GIT_VERSION = $$system(git describe --always --tags)
-DEFINES += GIT_VERSION=\\\"$$GIT_VERSION\\\"
+
+#ios {
+#    QMAKE_INFO_PLIST = ios/Info.plist
+#}
+
+win32 {
+    DEFINES += "GIT_EXE=\"\\\"C:\\\Program Files\\\Git\\\bin\\\git.exe\\\"\""
+}
+win64 {
+    DEFINES += "GIT_EXE=\"\\\"C:\\\Program Files\\\Git\\\bin\\\git.exe\\\"\""
+}
+macx {
+    message(macx)
+}
+unix:!macx{
+    message(unix)
+}
+
+#https://www.everythingfrontend.com/posts/app-version-from-git-tag-in-qt-qml.html
+#GIT_VERSION = $$system(git --git-dir $$PWD/.git --work-tree $$PWD describe --always --tags)
+#GIT_VERSION = $system(git --git-dir $PWD/.git --work-tree $PWD describe --always --tags)
+#GIT_VERSION = $$system(git describe --always --tags)
+#DEFINES += GIT_VERSION=\\\"$$GIT_VERSION\\\"
+#DEFINES += GIT_VERSION=\\\"$GIT_VERSION\\\"
+#DEFINES+="GIT_VERSION=\\\"v0.0.2\\\""
 
 SOURCES += main.cpp \
     ../EventAppShared/eacontainer.cpp \
@@ -47,7 +70,7 @@ HEADERS += \
     ../EventAppShared/simplecrypt.h \
     ../EventAppShared/eamap.h \
     ../EventAppShared/eastrings.h \
-    assistant.h \
+    ../EventAppShared/assistant.h \
     ../EventAppShared/assistant.h
 
 RESOURCES += qml.qrc \
@@ -61,15 +84,11 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-#unix:!macx: LIBS += -L$$PWD/../build-EventAppShared-Desktop_Qt_5_7_0_GCC_64bit-Debug/ -lEventAppShared
 
 INCLUDEPATH += $$PWD/../EventAppShared
 DEPENDPATH += $$PWD/../EventAppShared
 INCLUDEPATH += $$PWD/../QtAddMob
 DEPENDPATH += $$PWD/../QtAddMob
-
-#LIBS += -L/usr/lib/crypto++ -lcrypto++
-#INCS += -I/usr/include/crypto++
 
 DISTFILES += \
     EventOrganiser.pro.user \
@@ -121,9 +140,3 @@ DISTFILES += \
 
 FORMS +=
 
-
-
-#unix:!macx: LIBS += -L$$PWD/../cryptopp/ -lcryptopp
-#INCLUDEPATH += $$PWD/../cryptopp
-#DEPENDPATH += $$PWD/../cryptopp
-#unix:!macx: PRE_TARGETDEPS += $$PWD/../cryptopp/libcryptopp.a

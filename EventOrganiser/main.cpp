@@ -1,4 +1,5 @@
 #include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QFontDatabase>
@@ -7,6 +8,7 @@
 #include <QtWebView>
 #include <QSettings>
 #include <QQuickStyle>
+
 #include "../QtAdMob/QtAdMobBanner.h"
 #include "../QtAdMob/QtAdMobInterstitial.h"
 #include "eainfo.h"
@@ -23,7 +25,8 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QGuiApplication app(argc, argv);
+    //QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
     QtWebView::initialize();
     //QtWebEngine::initialize();
 

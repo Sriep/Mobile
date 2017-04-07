@@ -90,7 +90,7 @@ bool Assistant::startAssistant()
 
         QStringList args;
         args << QLatin1String("-collectionFile")
-            << QLatin1String("../EventAppShared/Documents/pipewrap.qhc")
+            << QLatin1String("../EventOrganiser/Documents/eventApp.qhc")
             << QLatin1String("-enableRemoteControl");
 
         proc->start(app, args);

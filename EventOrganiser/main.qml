@@ -34,6 +34,70 @@ ApplicationWindow {
         id: menuBarEO
     }
 
+    MouseArea {
+        id: appMouseArea
+        anchors.fill: parent
+        acceptedButtons: Qt.RightButton
+        onClicked: mainContextMenu.open()
+    }
+
+    Menu {
+          id: mainContextMenu
+                MenuItem {
+                  text: qsTr("&New")
+                  onTriggered: eaContainer.clearEvent();
+                }
+                MenuItem {
+                  text: qsTr("&Load")
+                  onTriggered: constructionPage.loadFileDialog.open()
+                }
+                MenuItem {
+                  text: qsTr("&Downlaod from url")
+                  onTriggered: dlgDownloadEventUrl.open()
+                }
+                MenuItem {
+                  text: qsTr("&Save As...")
+                  onTriggered: constructionPage.saveFileDialog.open()
+                }
+                MenuItem {
+                  text: qsTr("&Refresh")
+                  onTriggered: eaContainer.refreshData()
+                }
+                MenuItem {
+                  text: qsTr("&Quit")
+                  onTriggered: Qt.quit()
+                }
+
+                MenuSeparator {}
+
+                MenuItem {
+                  text: qsTr("&Load display")
+                  onTriggered: loadDisplayDialog2.open()
+                }
+                MenuItem {
+                  text: qsTr("&Save display As...")
+                  onTriggered: saveDispalyDialog2.open()
+                }
+
+                MenuSeparator {}
+
+                MenuItem {
+                  text: qsTr("&Assistant")
+                  onTriggered: eaContainer.startAssistant();
+                }
+                MenuItem {
+                  text: qsTr("&About")
+                  onTriggered: aboutDialogEO.open()
+                }
+    }
+
+    /*Component.onCompleted: {
+        console.log("onCompleted");
+        mainContextMenu.addMenu(menuBarEO.fileMenu);
+        mainContextMenu.addMenu(menuBarEO.dispalyMenu);
+        mainContextMenu.addMenu(menuBarEO.helpMenu);
+    }*/
+
     header: HeaderTabBarForm {
         id: headerTabBar
     }

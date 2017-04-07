@@ -14,6 +14,8 @@
 
 //#include <QApplication>
 //#include <QScreen>
+#include <cstdlib>
+#include <QProcess>
 
 #include "picturelistimageprovider.h"
 #include "firebase.h"
@@ -506,8 +508,13 @@ void EAContainer::refreshData()
 }
 
 QString EAContainer::appVersion()
-{
-    return GIT_VERSION;
+{ 
+    QProcess* process = new QProcess(this);;
+    QStringList args;
+    args << "describe" << "--always" << "--tags";
+    process->start(GIT_EXE, args);
+    process->waitForFinished(-1);
+    return QString(process->readAllStandardOutput());
 }
 
 void EAContainer::setIsEventStatic(bool isEventStatic)

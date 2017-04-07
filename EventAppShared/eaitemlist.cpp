@@ -76,6 +76,17 @@ void EAItemList::read(const QJsonObject &json
 {
     setEaContainer(eacontainer);
 
+    QJsonObject propertiesObject = json["properties"].toObject();
+    setShortFormat(propertiesObject["shortFormat"].toString());
+    setLongFormat(propertiesObject["longFormat"].toString());
+    setFormatedList(propertiesObject["formatedList"].toBool());
+    setListType(propertiesObject["listType"].toInt());
+    nextItemId = propertiesObject["nextItemId"].toInt();
+    id = propertiesObject["id"].toInt();
+    version = propertiesObject["version"].toInt();
+    setListName(propertiesObject["listName"].toString());
+    setShowPhotos(propertiesObject["showPhotos"].toBool());
+
     jsonFields = json["headerFields"].toArray();
     setTitleFields(jsonFields);
     emit titleFieldsChanged(titleFields());
@@ -83,16 +94,6 @@ void EAItemList::read(const QJsonObject &json
     jsonData = json["dataList"].toArray();
     setDataList(jsonData);
     emit dataListChanged(dataList());
-
-    setShortFormat(json["shortFormat"].toString());
-    setLongFormat(json["longFormat"].toString());
-    setFormatedList(json["formatedList"].toBool());
-    setListType(json["listType"].toInt());
-    nextItemId = json["nextItemId"].toInt();
-    id = json["id"].toInt();
-    version = json["version"].toInt();
-    setListName(json["listName"].toString());
-    setShowPhotos(json["showPhotos"].toBool());
 
     jsonPictures = json["pictures"].toArray();
 
@@ -109,19 +110,20 @@ void EAItemList::read(const QJsonObject &json
 
 void EAItemList::write(QJsonObject &json)
 {
+    QJsonObject propertiesObject;
+    propertiesObject["formatedList"] = formatedList();
+    propertiesObject["id"] = id;
+    propertiesObject["listName"] = listName();
+    propertiesObject["listType"] = listType();
+    propertiesObject["shortFormat"] = shortFormat();
+    propertiesObject["longFormat"] = longFormat();
+    propertiesObject["nextItemId"] = nextItemId;
+    propertiesObject["showPhotos"] = m_showPhotos;
+    propertiesObject["version"] = ++version;
+    json["properties"] = propertiesObject;
+
     json["headerFields"] = jsonFields;
     json["dataList"] = jsonData;
-    json["listName"] = listName();
-    json["listType"] = listType();
-    json["nextItemId"] = nextItemId;
-    json["showPhotos"] = m_showPhotos;
-
-    json["formatedList"] = formatedList();
-    json["shortFormat"] = shortFormat();
-    json["longFormat"] = longFormat();
-    json["id"] = id;
-    json["version"] = ++version;
-
     json["pictures"] = jsonPictures;
     QJsonArray itemsArray;
     foreach (EAItem* item, m_eaItems)

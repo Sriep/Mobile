@@ -16,9 +16,9 @@ EAConstruction::EAConstruction()
 
 void EAConstruction::read(const QJsonObject &json)
 {   
-    setBackColour(QColor(json["backColour"].toString()));
-    setForeColour(QColor(json["foreColour"].toString()));
-    setFontColour(QColor(json["fontColour"].toString()));
+    //setBackColour(QColor(json["backColour"].toString()));
+    //setForeColour(QColor(json["foreColour"].toString()));
+    //setFontColour(QColor(json["fontColour"].toString()));
     setDisplayName(json["displayName"].toString());
     setStyle(json["style"].toString());
     if (json.contains("display"))
@@ -45,9 +45,9 @@ void EAConstruction::read(const QJsonObject &json)
 
 void EAConstruction::write(QJsonObject &json) const
 {   
-    json["backColour"] = QVariant(m_backColour).toString();
-    json["foreColour"] = QVariant(m_foreColour).toString();
-    json["fontColour"] = QVariant(m_fontColour).toString();
+    //json["backColour"] = QVariant(m_backColour).toString();
+    //json["foreColour"] = QVariant(m_foreColour).toString();
+    //json["fontColour"] = QVariant(m_fontColour).toString();
 
     json["displayName"] = QVariant(displayName()).toString();
     json["style"] = style();

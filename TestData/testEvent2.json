@@ -1,0 +1,269 @@
+{
+    "construction": {
+        "display": {
+            "backColour": "#eeeeec",
+            "borderColour": "#babdb6",
+            "borderWidth": 4,
+            "colour": "#d3d7cf",
+            "font": {
+                "capitalization": 0,
+                "family": "Waree",
+                "italic": false,
+                "letterSpacing": 0,
+                "overline": false,
+                "pixelSize": 14,
+                "pointSize": -1,
+                "strikeout": false,
+                "underline": false,
+                "weight": 50,
+                "wordSpacing": 0
+            },
+            "fontColour": "#000000",
+            "hAlignment": 4,
+            "height": 60,
+            "highlitedColour": "#eeeeec",
+            "imageHeigth": 40,
+            "imageWidth": 40,
+            "radius": 5,
+            "styleColour": "#ffffff",
+            "textStyle": 2,
+            "vAlignmet": 128,
+            "whiteIcons": false,
+            "width": 4,
+            "x": 1,
+            "xImage": 6,
+            "xText": 62,
+            "y": 1,
+            "yImage": 8,
+            "yText": 14
+        },
+        "displayName": "",
+        "menuDisplay": {
+            "backColour": "#eeeeec",
+            "borderColour": "#babdb6",
+            "borderWidth": 4,
+            "colour": "#d3d7cf",
+            "font": {
+                "capitalization": 0,
+                "family": "Sans",
+                "italic": false,
+                "letterSpacing": 0,
+                "overline": false,
+                "pixelSize": 14,
+                "pointSize": -1,
+                "strikeout": false,
+                "underline": false,
+                "weight": 50,
+                "wordSpacing": 0
+            },
+            "fontColour": "#000000",
+            "hAlignment": 4,
+            "height": 40,
+            "highlitedColour": "#eeeeec",
+            "imageHeigth": 25,
+            "imageWidth": 25,
+            "radius": 2,
+            "styleColour": "#babdb6",
+            "textStyle": 2,
+            "vAlignmet": 64,
+            "whiteIcons": false,
+            "width": 4,
+            "x": 6,
+            "xImage": 10,
+            "xText": 50,
+            "y": 5,
+            "yImage": 13,
+            "yText": 10
+        },
+        "strings": {
+            "aboutText": "About text\nAbout text\nAbout text\n",
+            "bDownlaod": "Downlaod",
+            "bExit": "Exit",
+            "bLogin": "Login",
+            "bLogoff": "Logoff",
+            "bRegister": "Register",
+            "lPassword": "Password",
+            "lUserId": "User id",
+            "lfDownloadUrl": "Download url",
+            "lfFirebaseUrl": "Firebase url",
+            "lkDownlaodFKey": "Download key",
+            "mAbout": "About",
+            "mExit": "Exit",
+            "mLoadFFile": "Load from file",
+            "mLoadFFirebase": "Load from firebase",
+            "mLoadFKey": "Load from key",
+            "mLogin": "Login",
+            "tbLoggedOff": "Logged off"
+        },
+        "style": "Default",
+        "toolBarDisplay": {
+            "backColour": "#eeeeec",
+            "borderColour": "#babdb6",
+            "borderWidth": 4,
+            "colour": "#d3d7cf",
+            "font": {
+                "capitalization": 0,
+                "family": "Roboto Condensed",
+                "italic": false,
+                "letterSpacing": 0,
+                "overline": false,
+                "pixelSize": 14,
+                "pointSize": -1,
+                "strikeout": false,
+                "underline": false,
+                "weight": 50,
+                "wordSpacing": 0
+            },
+            "fontColour": "#000000",
+            "hAlignment": 4,
+            "height": 20,
+            "highlitedColour": "#eeeeec",
+            "imageHeigth": 0,
+            "imageWidth": 0,
+            "radius": 5,
+            "styleColour": "#73d216",
+            "textStyle": 0,
+            "vAlignmet": 64,
+            "whiteIcons": false,
+            "width": 4,
+            "x": 2,
+            "xImage": 0,
+            "xText": 5,
+            "y": 2,
+            "yImage": 0,
+            "yText": 11
+        }
+    },
+    "event": {
+        "description": "",
+        "eventIcon": "iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAEH0lEQVRYhc2YT2gcdRTHP++3u+2SmKpbko2pgmJbk400tmg2WpFqsRQUitpLRZCAJ/HiwVOhKF7Egyi22F7EQ08evBTPiSAma6soNJtgUGgv7hAV+y/q7s48DzuT/WUyu5nNTNEHy8z85ve+7zO/v++38D83SUtoeXn39vrvN34wQiGbk4f3HKitpKFr0hABaP5x/ZAIDykMNhp6Wj8nk4ZuaoAq8imtHhHg+NL9xbfS0E0NEOUeQP2fqHIyDdlUAJe/Hx4MFQnQl4Z2YkBVTKOh52lPONe/ymJl6PGk+okBL18c2QUc8B8VaLbfyomk+okBM9o8D+ykBWeAPME4hNeS6icCVEVADnZ6DeSX5ws7ksRIBDg7S6aDhudfpa65Q0liJAIc7hs6SXvts3clodWCiOFcxCy//YALC+PbFHOsS5VgNu+sN70jW42zZUC5ufIu6IT/qBG6Gb88KyofbjkOQLVSvAyMkqzLoxKPMHgv5qrrjWX9h1KHAHFMu/gGS09cHdsyGPNUANgAcliD27du0HFax4vQ6OQnoatipGL8ok+Aegdn9QOF30XN3rBlQ/WEVova9yakHSQcP49P1hbWiVcrxTmgvO4rUkxqu1gQR4FrKG+XppyPiAq+MD88bUTfUxhkfZffDlBbuwlcKJWdF+0KGwZwqVz7zDPeUazcLiSWJlzQ1SrKqVxhYENy0bFVLl0i198sTqtwtgNkklkf+CvgZQ179z7m/BJVuWsQVWTx2+HvQB8hne4Ow62i8kFpqnaqk0OsQIuV4TcUfQe42xLvFdJufU/gq7Gyc3gzp56CVCvFOq2lo2dfLEBd9XaMP71yM45T7K2tlfutwW3F2i3Yl90f1yk2YPVi8Rn/NlgSejUXH9LgfTwzE+9jYwMK+gLtbv2nZ7zWVurROgo8ODIwsjuOUyzApfmhfai8ahXlO1QN1s5u8RTod133bGqAnpgzQL8FEO6eKDCllYRExRPgidQAQcdCgcMgQVDbgknlEm1Zf+J1tbhjsBDyCYLa25VnVA438gwA16x34WxlzZYqQ88mBrSOjXZqFaTzAaSCnBudqs1MTDi3VL3ngR8hci9f25E8Iy8lBmxK7n3rUQmNNxX5gqZ5oFSuvR6UjU+tfF0qO/tFOIZ1BA2DivJydW4k+Fdia4AKr1jia62oMIth3/hk7Xjp4K9XonzHJp0LzqqzXZBp2kmvDdqPcc90i7/pIK1Wii7tcRR0z/VGnl0TE86tzfwtnS+BI7Dhj80/S2WnEOECxJsk9kesCpwulZ27eoEDKJWd58YmnW3AnKUrwJ3d/Ho5cal6nBi94rzZC5htIqhpuEeBVdpj+e9uPpvuh25G9xjP5P8ytZ8eLW9YeHu20Sd/uwHcsfDNvQXN1O/z6vmrSTX/U/sXcAhQxzGYSEsAAAAASUVORK5CYII=",
+        "eventKey": "",
+        "isEventStatic": false,
+        "link": false,
+        "name": "my new eevent",
+        "nextItemListId": 106,
+        "organizer_description": "",
+        "organizer_name": "",
+        "showEventIcon": true,
+        "version": 107
+    },
+    "icons": [
+        ""
+    ],
+    "itemLists": [
+        {
+            "dataList": [
+                {
+                    "biography": "Sam Madge-Wyld is a barrister practising from Arden Chambers. His areas of specialism include housing, local government and landlord and tenant and he acts for landlords and tenants in a variety of disputes throughout the country. Sam also lectures, teaches and writes extensively in housing law, having co-authored the 6th Edition of the Housing Law Casebook and the 7th edition of Quiet Enjoyment.  He will be giving a general update talk at the Conference on the legal developements during the past year.",
+                    "company": "Arden Chambers",
+                    "id": 0,
+                    "name": "Sam Madge-Wyld",
+                    "qualifiation": "Barrister",
+                    "talk": "The Year in Review"
+                },
+                {
+                    "biography": "Tessa is the creator of the Landlord Law information service for which the Conference is named, and a director of Easy Law Training.  She qualified as a solicitor in 1990 and ran her own legal practice between 1994 and 2013.  At that stage she closed down her law firm to concentrate on her other services.  Tessa is an acknowleged expert and writing on residential landlord & tenant law and her blog, the Landlord Law Blog is widely respected.  She is also on the council of the Property Redress Scheme.  Tessa will be talking about tenancy agreements.",
+                    "company": "Landlord Law / Easy Law Training",
+                    "id": 1,
+                    "name": "Tessa Shepperson",
+                    "qualifiation": "Lawyer",
+                    "talk": "Tenancy Agreement Clauses"
+                },
+                {
+                    "biography": "David is a solicitor and partner in the Legal 500 firm Anthony Gold in London.  He is also the director of policy at the Residential Landlords Association.  David is an acknolwedged expert on HMOs in particular and an experienced trainer and speaker.\nHe will be taking two talks at the Conference, these are likely to be an update on HMO law and practice and a talk on the little known but increasingly important area of consumer law as it affects landlords and letting agents.",
+                    "company": "Anthony Gold Solicitors",
+                    "id": 2,
+                    "name": "David Smith",
+                    "qualifiation": "Solicitor",
+                    "talk": "(1) Consumer Law for Landlords & Agents (2) HMO Update"
+                },
+                {
+                    "biography": "David Cox is the Managing Director of ARLA.  David Cox joined the Association of Residential Letting Agents (ARLA) as Managing Director in June 2014. He has a strong policy and stakeholder engagement background, having held previous senior policy roles at the National Landlords Association (NLA) and the International Union of Property Owners (UIPI). A trained barrister, David has also acted as Parliamentary Advisor to a well-known backbench MP.  David will be talking about letting agent regulation.",
+                    "company": "ARLA",
+                    "id": 3,
+                    "name": "David Cox",
+                    "qualifiation": "Barrister",
+                    "talk": "Leltting Agent Regulation"
+                },
+                {
+                    "biography": "Peter is a specialist housing barrister from Zenith Chambers in Leeds. He advises and appears in court for both public and private landlords in a wide variety of housing related cases. Peter came to the Bar following a career in campaigning and public housing, having worked in Manchesterâ€™s Hulme Redevelopment, for Camden LBC and for the Joseph Rowntree Foundation. Peter will be speaking on defended possession proceedings and court procedures.",
+                    "company": "Zenith Chambers",
+                    "id": 4,
+                    "name": "Peter Marcus",
+                    "qualifiation": "Barrister",
+                    "talk": "(1) Defended Possession Proceedings (2) Court Procedures"
+                },
+                {
+                    "biography": "Sue Lukes is a well-known specialist in migration, equalities and service provision especially local services, advice and community development, utilising the knowledge and contacts gained through careers in refugee resettlement, housing aid and freelancing (since 1996). She is the author of many academic and more practical publications in these fields. In her talk at the 2017 conference she will be updating us on the law and the new Immigration Act .",
+                    "company": "",
+                    "id": 5,
+                    "name": "Sue Lukes",
+                    "qualifiation": "Trainer",
+                    "talk": "Right to Rent Update"
+                },
+                {
+                    "biography": "Robert is a barrister at Arden Chambers, a specialist housing law set. He advises and represents both landlords and tenants,' in the county courts and in the First-tier Tribunal (Property Chamber) (formerly the Leasehold Valuation Tribunal). He has lectured and provided training on a wide range of landlord and tenant topics and is an editor of the Housing Law Reports.  Robert will be speaking at the Conference about ''leaseholder landlords'' ie the law that applies to landlords who are themselves tenants under long leases.'",
+                    "company": "Arden Chambers",
+                    "id": 6,
+                    "name": "Robert Brown",
+                    "qualifiation": "Barrister",
+                    "talk": "The Leaseholder Landlord"
+                }
+            ],
+            "headerFields": [
+                {
+                    "field": "Name",
+                    "format": "<html>{0}: {1}<br></html>\n",
+                    "inListView": true,
+                    "modelName": "name"
+                },
+                {
+                    "field": "Qualifiation",
+                    "format": "<html>{0}: {1}<br></html>\n",
+                    "inListView": false,
+                    "modelName": "qualifiation"
+                },
+                {
+                    "field": "Company",
+                    "format": "<html>{0}: {1}<br></html>\n",
+                    "inListView": false,
+                    "modelName": "company"
+                },
+                {
+                    "field": "Biography",
+                    "format": "<html>{0}: {1}<br></html>\n",
+                    "inListView": false,
+                    "modelName": "biography"
+                },
+                {
+                    "field": "Talk",
+                    "format": "<html>{0}: {1}<br></html>\n",
+                    "inListView": false,
+                    "modelName": "talk"
+                }
+            ],
+            "itemsList": [
+            ],
+            "pictures": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "properties": {
+                "formatedList": true,
+                "id": 0,
+                "listName": "speakers",
+                "listType": 0,
+                "longFormat": "<html>{1}<br></html>\n<html>{2}<br></html>\n<html>{3}<br></html>\n<html>{4}<br></html>\n<html>{5}<br></html>\n",
+                "nextItemId": 7,
+                "shortFormat": "<html>{0}<br></html>\n",
+                "showPhotos": true,
+                "version": 2
+            }
+        }
+    ]
+}

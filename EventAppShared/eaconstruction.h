@@ -11,7 +11,7 @@ class  EAConstruction : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(QColor backColour READ backColour WRITE setBackColour NOTIFY backColourChanged)
-    Q_PROPERTY(QColor foreColour READ foreColour WRITE setForeColour NOTIFY foreColourChanged)
+    Q_PROPERTY(QColor c READ foreColour WRITE setForeColour NOTIFY foreColourChanged)
     Q_PROPERTY(QFont font READ font WRITE setFont NOTIFY mainChanged)
     Q_PROPERTY(QColor fontColour READ fontColour WRITE setFontColour NOTIFY fontColourChanged)    
     Q_PROPERTY(QString style READ style WRITE setStyle NOTIFY styleChanged)

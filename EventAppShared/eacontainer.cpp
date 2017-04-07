@@ -204,13 +204,16 @@ int EAContainer::moveItemList(int index, bool directionUp)
                             , Warning);
                 return index;
             }
-            else
+            /*else
             {
                 m_eaItemLists.swap(index, index -1);
+                QJsonValue temp = jsonIcons[index];
+                jsonIcons[index] = jsonIcons[index-1];
+                jsonIcons[index-1] = temp;
                 resetImageProviders();
                 emit eaItemListsChanged();
                 return index-1;
-            }
+            }*/
         }
         else
         {
@@ -222,14 +225,26 @@ int EAContainer::moveItemList(int index, bool directionUp)
                             , Warning);
                 return index;
             }
-            else
+            /*else
             {
+
                 m_eaItemLists.swap(index, index +1);
+                QJsonValue temp = jsonIcons[index];
+                jsonIcons[index] = jsonIcons[index+1];
+                jsonIcons[index+1] = temp;
                 resetImageProviders();
                 emit eaItemListsChanged();
                 return index +1;
-            }
+            }*/
         }
+        int delta = directionUp ? -1 : +1;
+        m_eaItemLists.swap(index, index + delta);
+        QJsonValue temp = jsonIcons[index];
+        jsonIcons[index] = jsonIcons[index+delta];
+        jsonIcons[index+delta] = temp;
+        resetImageProviders();
+        emit eaItemListsChanged();
+        return index + delta;
 
 
     }
@@ -711,12 +726,11 @@ void EAContainer::read(const QJsonObject &json)
     setIsEventStatic(eventInfoObj["isEv:loentStatic"].toBool());
     setEventSource((EventSource)eventInfoObj["eventSource"].toInt());
     setVersion(eventInfoObj["version"].toInt());
-
+    setEventIcon(eventInfoObj["eventIcon"]);
+    setShowEventIcon(eventInfoObj["showEventIcon"].toBool());
     emit eaInfoChanged(m_eaInfo);
 
-    setEventIcon(json["eventIcon"]);
-    jsonIcons = json["icons"].toArray();
-    setShowEventIcon(json["showEventIcon"].toBool());
+    jsonIcons = json["icons"].toArray();    
     QJsonArray listsArray = json["itemLists"].toArray();
     for (int i = 0; i < listsArray.size(); ++i) {
         QJsonObject readJsonObject = listsArray[i].toObject();
@@ -799,12 +813,11 @@ void EAContainer::write(QJsonObject &json)
     eventInfoObject["isEventStatic"] = isEventStatic();
     eventInfoObject["version"] = ++m_Version;
     eventInfoObject["link"] = false;
+    eventInfoObject["showEventIcon"] = showEventIcon();
+    eventInfoObject["eventIcon"] = getEventIcon();
     json["event"] = eventInfoObject;
 
     json["icons"] = jsonIcons;
-    json["showEventIcon"] = showEventIcon();
-    json["eventIcon"] = getEventIcon();
-
     QJsonObject constructionDataObject;
     m_eaConstruction->write(constructionDataObject);
     json["construction"] = constructionDataObject;
@@ -818,15 +831,7 @@ void EAContainer::write(QJsonObject &json)
             listsArray.append(itemListObject);
         }
     }
-
     json["itemLists"] = listsArray;
-    /*
-    json["eventKey"] = eventKey();    
-    json["nextItemListId"] = nextItemListId;
-    json["isEventStatic"] = isEventStatic();
-    json["version"] = ++m_Version;
-    json["link"] = false;
-    */
 }
 
 EAConstruction *EAContainer::eaConstruction() const

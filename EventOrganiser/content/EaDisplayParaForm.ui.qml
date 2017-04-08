@@ -30,7 +30,8 @@ Item {
     property alias xImageSB: xImageSB
     property alias yImageSB: yImageSB
     property alias widthImageSB: widthImageSB
-
+    // featuredDisplay.displayType
+    //enum DisplayType { Menu=0, Toolbar, Drawer };
     GroupBox {
         id: groupDispalyPara
         width: parent.width; //height: parent.height
@@ -224,18 +225,22 @@ Item {
                     //}
                     //RowLayout {
                         Label {
+                            visible: featuredDisplay.displayType !== 1
                             text: qsTr("height")
                         }
                         SpinBox {
                             id: heightImageSB
+                            visible: featuredDisplay.displayType !== 1
                             from: -99; to: 500
                             editable: true
                         }
                         Label {
                             text: qsTr("width")
+                            visible: featuredDisplay.displayType !== 1
                         }
                         SpinBox {
                             id: widthImageSB
+                            visible: featuredDisplay.displayType !== 1
                             from: -99; to: 500
                             editable: true
                         }
@@ -414,11 +419,13 @@ Item {
 
                         Label {
                             id: label4
+                            visible: featuredDisplay.displayType !== 1
                             text: qsTr("height")
                             Layout.alignment: Qt.AlignLeft | Qt.AlignBaseline
                         }
                         SpinBox {
                             id: heightTF
+                            visible: featuredDisplay.displayType !== 1
                             KeyNavigation.tab: yTF
                             value: featuredDisplay.height
                             from: 0; to: 200
@@ -426,6 +433,7 @@ Item {
                             ToolTip.timeout: 5000
                             ToolTip.visible: hovered
                             ToolTip.text: qsTr("Height of drawers.")
+                            editable: true
                         }
                         Label {
                             id: label5

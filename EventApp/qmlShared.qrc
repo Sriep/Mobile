@@ -86,5 +86,6 @@
         <file>images/star.png</file>
         <file>images/user-shape_19white.png</file>
         <file>images/user-shape_24white.png</file>
+        <file>displays/blue-white.json</file>
     </qresource>
 </RCC>

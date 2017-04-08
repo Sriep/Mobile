@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QtQuick.Extras 1.4
 import "qrc:///shared"
-
 Item {
     id: dispalyTabForm
     width: 600; height: 800;

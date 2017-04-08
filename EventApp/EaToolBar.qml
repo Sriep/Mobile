@@ -4,22 +4,20 @@ import "qrc:///shared/dataList.js" as DataListJS
 
 EaToolBarForm {
     id: toolBar
-    //titleLabel.text: eaContainer.eaInfo.eventName
-    //userLable.text: eaContainer.user.loggodOn ? eaContainer.user.user : "logged off"
     drawerButton.onClicked:   listsDrawer.open()
 
     userBut.onClicked: {
         stackCtl.currentIndex = stackCtl.userLoginId;
     }
 
-    //menuButton.onClicked: optionsMenu.open()
+
     menuButton.onClicked: optionsDrawer.open()
 
     Connections {
         target: eaContainer //(eaConstruction)
         onEaConstructionChanged: {
             var tb = toolBar;
-            var tbib = toolBar.titleLabell;
+            var tbib = toolBar.titleLabel;
             setToolBarDisplayDataParameters(
                         toolBar.itemBackground
                         , toolBar.eventIconImage

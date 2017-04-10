@@ -70,9 +70,32 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+win32 {
+    DEFINES += "GIT_EXE=\"\\\"C:\\\Program Files\\\Git\\\bin\\\git.exe\\\"\""
+}
+
+win64 {
+    DEFINES += "GIT_EXE=\"\\\"C:\\\Program Files\\\Git\\\bin\\\git.exe\\\"\""
+}
+
+macx {
+    message(macx)
+}
+
+unix:!macx{
+    DEFINES += "GIT_EXE=\"\\\"/usr/bin/git\\\"\""
+    message(unix)
+    GIT_VERSION = $$system(git describe --always --tags)
+    DEFINES += "GIT_VERSION=\"\\\"$$GIT_VERSION\\\"\""
+}
+
 android: {
     DISTFILES += \
                 $$ANDROID_PACKAGE_SOURCE_DIR/src/org/dreamdev/QtAdMob/QtAdMobActivity.java \
+}
+
+ios {
+    QMAKE_INFO_PLIST = ios/Info.plist
 }
 
 contains(ANDROID_TARGET_ARCH, armeabi-v7a) {
@@ -106,9 +129,6 @@ contains(ANDROID_TARGET_ARCH,x86) {
     ANDROID_EXTRA_LIBS =
 }
 
-ios {
-    QMAKE_INFO_PLIST = ios/Info.plist
-}
 
 
 

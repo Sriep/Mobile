@@ -24,7 +24,15 @@ macx {
     message(macx)
 }
 unix:!macx{
+    DEFINES += "GIT_EXE=\"\\\"/usr/bin/git\\\"\""
     message(unix)
+    GIT_VERSION = $$system(git describe --always --tags)
+    DEFINES += "GIT_VERSION=\"\\\"$$GIT_VERSION\\\"\""
+}
+
+android: {
+}
+ios {
 }
 
 #https://www.everythingfrontend.com/posts/app-version-from-git-tag-in-qt-qml.html

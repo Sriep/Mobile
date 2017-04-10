@@ -509,12 +509,16 @@ void EAContainer::refreshData()
 
 QString EAContainer::appVersion()
 { 
-    QProcess* process = new QProcess(this);;
+    /*QProcess* process = new QProcess(this);;
     QStringList args;
     args << "describe" << "--always" << "--tags";
     process->start(GIT_EXE, args);
     process->waitForFinished(-1);
-    return QString(process->readAllStandardOutput());
+    QString version = GIT_VERSION;
+    qDebug()<<version;
+    return QString(process->readAllStandardOutput());*/
+    return GIT_VERSION;
+
 }
 
 void EAContainer::setIsEventStatic(bool isEventStatic)

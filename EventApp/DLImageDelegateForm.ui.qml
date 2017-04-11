@@ -57,9 +57,13 @@ Item {
     // mode have their opacity set to recipe.detailsOpacity.
     Row {
         id: topLayout
-        x: 10; y: 10; height: photoImage.height; width: parent.width
+        x: 10; y: 10;
+        height: photoImage.height;
+        //height: imageDelegate.detailsOpacity === 0 ? photoImage.heigh : 0
+        width: parent.width
         spacing: 10
         opacity: !imageDelegate.detailsOpacity
+        //visible:  imageDelegate.detailsOpacity !== 1
         clip: true
         Image {
             id: photoImage
@@ -94,6 +98,7 @@ Item {
       width: parent.width - 20
       anchors { top: topLayout.bottom; topMargin: 10; bottom: parent.bottom; bottomMargin: 10 }
       opacity: imageDelegate.detailsOpacity
+      clip: true
 
       Flickable {
         id: flick
@@ -108,12 +113,8 @@ Item {
             id: itemStackCtl
             currentIndex: itemType
             clip: true
-            x: 20
-            Item{
-                //Text {
-                //    text: picture
-                //}
-
+            x: 10
+            Item {
                 Image {
                     id: largePhotoImage
                     width: parent.width//400//eventAppMainPage.width
@@ -132,15 +133,24 @@ Item {
             }
 
             Item {
-                width: background.width-10; height: background.height-10
+                //width: background.width-10; height: background.height-10
                 opacity: imageDelegate.detailsOpacity
                 visible: imageDelegate.detailsOpacity === 1 && itemType === 2
+                //width: 300; height: 300
+                //width: eventAppMainPage.width -10; height: eventAppMainPage.height - 50
                 clip: true
+                //y:-100
+
                 WebView {
                     clip: true
+                    visible: imageDelegate.detailsOpacity === 1 && itemType === 2
                     opacity: imageDelegate.detailsOpacity
-                    width: background.width-10; height: background.height-10
-                    y: 5; x:5
+                    //width: background.width-10; height: background.height-10
+                    width: eventAppMainPage.width -20;
+                    height: eventAppMainPage.height -10
+                    //width: 300; height: 300
+                    //anchors.fill: parent
+                    y: -100//-topLayout.height-100 //; x:5
                     url: eaLVItemList.items[itemIndex].url;
                 }
             }
@@ -246,6 +256,7 @@ Item {
     // A button to close the detailed view, i.e. set the state back to default ('').
     Button {
         id: closeBut
+        z: 0
         y: 10
         //anchors { right: background.right; rightMargin: 10 }
         anchors { right: imageDelegate.right;
@@ -268,6 +279,8 @@ Item {
 
         PropertyChanges { target: imageDelegate; detailsOpacity: 1; x: 0 } // Make details visible
         PropertyChanges { target: imageDelegate; height: dataListImage.height } // Fill the entire list area with the detailed view
+
+        PropertyChanges { target: topLayout; height: 0 }
 
         // Move the list so that this item is at the top.
         PropertyChanges { target: imageDelegate.ListView.view; explicit: true; contentY: imageDelegate.y }

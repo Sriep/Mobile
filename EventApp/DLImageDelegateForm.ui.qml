@@ -150,7 +150,7 @@ Item {
                     height: eventAppMainPage.height -10
                     //width: 300; height: 300
                     //anchors.fill: parent
-                    y: -100//-topLayout.height-100 //; x:5
+                    //y: -100//-topLayout.height-100 //; x:5
                     url: eaLVItemList.items[itemIndex].url;
                 }
             }

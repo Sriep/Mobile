@@ -14,18 +14,21 @@ include(../QtAdMob/QtAdMob.pri)
 #    QMAKE_INFO_PLIST = ios/Info.plist
 #}
 
-win32 {
-    DEFINES += "GIT_EXE=\"\\\"C:\\\Program Files\\\Git\\\bin\\\git.exe\\\"\""
+win32 {    
+    #DEFINES += "GIT_EXE=\"\\\"C:\\\Program Files\\\Git\\\bin\\\git.exe\\\"\""
+    GIT_VERSION = $$system(git describe --always --tags)
+    DEFINES += "GIT_VERSION=\"\\\"$$GIT_VERSION\\\"\""
 }
 win64 {
-    DEFINES += "GIT_EXE=\"\\\"C:\\\Program Files\\\Git\\\bin\\\git.exe\\\"\""
+    #DEFINES += "GIT_EXE=\"\\\"C:\\\Program Files\\\Git\\\bin\\\git.exe\\\"\""
+    GIT_VERSION = $$system(git describe --always --tags)
+    DEFINES += "GIT_VERSION=\"\\\"$$GIT_VERSION\\\"\""
 }
 macx {
     message(macx)
 }
 unix:!macx{
-    DEFINES += "GIT_EXE=\"\\\"/usr/bin/git\\\"\""
-    message(unix)
+    #DEFINES += "GIT_EXE=\"\\\"/usr/bin/git\\\"\""
     GIT_VERSION = $$system(git describe --always --tags)
     DEFINES += "GIT_VERSION=\"\\\"$$GIT_VERSION\\\"\""
 }

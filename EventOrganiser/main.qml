@@ -83,7 +83,7 @@ ApplicationWindow {
 
                 MenuItem {
                   text: qsTr("&Assistant")
-                  onTriggered: eaContainer.startAssistant();
+                  onTriggered: eaAssistant.startAssistant();
                 }
                 MenuItem {
                   text: qsTr("&About")
@@ -105,6 +105,8 @@ ApplicationWindow {
     EaContainerObj {
         id: eaContainer
     }
+
+    Assistant { id: eaAssistant }
 
     RowLayout {
         y: 30

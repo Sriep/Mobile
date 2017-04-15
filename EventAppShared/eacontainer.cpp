@@ -28,7 +28,7 @@
 #include "eaquestion.h"
 #include "simplecrypt.h"
 #include "httpdownload.h"
-#include "assistant.h"
+//#include "assistant.h"
 
 QList<EAItemList *> EAContainer::getEaItemLists() const
 {
@@ -151,7 +151,7 @@ EAContainer::EAContainer()
 {
     m_eaConstruction = new EAConstruction;
     m_eaInfo = new EAInfo;
-    assistant = new Assistant;
+    //assistant = new Assistant;
 }
 
 void EAContainer::classBegin()
@@ -1158,12 +1158,12 @@ QString EAContainer::getDebugLog() const
 {
     return debugLog;
 }
-
+/*
 void EAContainer::startAssistant()
 {
     assistant->showDocumentation("index.html");
 }
-
+*/
 bool EAContainer::isEventStatic() const
 {
     return m_isEventStatic;

@@ -40,22 +40,25 @@
 
 #ifndef ASSISTANT_H
 #define ASSISTANT_H
-
+#include <QQuickItem>
 #include <QtCore/QString>
 
 QT_BEGIN_NAMESPACE
 class QProcess;
 QT_END_NAMESPACE
 
-class Assistant
+class Assistant : public QQuickItem
 {
+    Q_OBJECT
 public:
     Assistant();
     ~Assistant();
     void showDocumentation(const QString &file);
 
+    Q_INVOKABLE void startAssistant();
+
 private:
-    bool startAssistant();
+    bool initAssistant();
     QProcess *proc;
 };
 

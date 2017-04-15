@@ -63,7 +63,7 @@ Assistant::~Assistant()
 
 void Assistant::showDocumentation(const QString &page)
 {
-    if (!startAssistant())
+    if (!initAssistant())
         return;
 
     QByteArray ba("SetSource ");
@@ -73,7 +73,7 @@ void Assistant::showDocumentation(const QString &page)
     //proc->write(ba + page.toLocal8Bit() + '\n');
 }
 
-bool Assistant::startAssistant()
+bool Assistant::initAssistant()
 {
     if (!proc)
         proc = new QProcess();
@@ -103,6 +103,11 @@ bool Assistant::startAssistant()
         }
     }
     return true;
+}
+
+void Assistant::startAssistant()
+{
+    showDocumentation("index.html");
 }
 
 

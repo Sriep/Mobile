@@ -21,11 +21,6 @@ ApplicationWindow {
 
     EaContainerObj {
         id: eaContainer
-       // Component.onCompleted: {
-            //appwin.height = eaContainer.screenHeight
-            //appwin.width = eaContainer.screenWidth
-            //heightData();
-        //}
     }
 
     Rectangle {
@@ -35,21 +30,36 @@ ApplicationWindow {
         anchors.fill: parent
     }
 
-   // onHeightChanged: {
-        //heightData();
-        //banner.y = eaContainer.screenHeight - banner.height;
-        //eventAppPage.width = appwin.height;
-        //banner.y = eventAppPage.height;
-   // }
-
     EventAppPage {
         id: eventAppPage
         width: appwin.width
-        height: appwin.height - 50
-        //height: parent.height - 60
-        //anchors.fill: parent
+        //height: appwin.height - 50
+        height: Qt.platform.os === "android" ? (appwin.height - 50) : appwin.height
     }
-
+/*
+    Component.onCompleted: {
+        if (Qt.platform.os === "android" ) {
+            var qmlString = "import QtQuick 2.7\n"
+                    + "import QtQuick 2.7\n"
+                    + "import com.dreamdev.QtAdMobBanner 1.0\n"
+                    + "import com.dreamdev.QtAdMobInterstitial 1.0\n"
+                    +"AdMobBanner {\n"
+                        + "\tid: banner\n"
+                        + "\ty:  Screen.devicePixelRatio * appwin.height -50\n"
+                            + "\t\tComponent.onCompleted: {\n"
+                            + "\t\tbanner.unitId = \"ca-app-pub-1142520693748162/7246793937\"\n"
+                            + "\t\tappwin.height = eaContainer.screenHeight\n"
+                            + "\t\tappwin.width = eaContainer.screenWidth\n"
+                            + "\t}"
+                            + "}\n";
+             var newObject = Qt.createQmlObject(
+                               qmlString
+                              ,appwin
+                              ,"dynamicSnippet1");
+        }
+    }
+*/
+/*
     AdMobBanner {
         id: banner
         y:  Screen.devicePixelRatio * appwin.height -50
@@ -61,23 +71,7 @@ ApplicationWindow {
             //heightData();
         }
     }
-
-    function heightData() {
-        var b = banner;
-        var eap = eventAppPage;
-        var aw = appwin;
-        var ec = eaContainer;
-        console.log("Screen.devicePixelRatio ", Screen.devicePixelRatio);
-        console.log("banner.y",banner.y);
-        console.log("eventAppPage.height", eventAppPage.height);
-        console.log("appwin.height",appwin.height);
-        console.log("eaContainer.screenHeight", eaContainer.screenHeight);
-        console.log("");
-        //hightText.text = " banner.y " + banner.y + " appwin.height " + appwin.height
-        //        + "\neaC " + eaContainer.screenHeight
-        //         + " pt2PxlH " + eaContainer.point2PixelH + " this y " + y;
-    }
-
+*/
     Settings {
         id: settingsGeometry
         category: "geometry"

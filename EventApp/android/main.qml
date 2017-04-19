@@ -33,9 +33,8 @@ ApplicationWindow {
     EventAppPage {
         id: eventAppPage
         width: appwin.width
-        //height: appwin.height
-        //height: appwin.height
-        height: Qt.platform.os === "android" ? (appwin.height - 50) : appwin.height
+        height: appwin.height - 50
+        //height: Qt.platform.os === "android" ? (appwin.height - 50) : appwin.height
     }
 /*
     Component.onCompleted: {

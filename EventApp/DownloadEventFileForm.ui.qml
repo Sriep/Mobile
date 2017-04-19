@@ -34,7 +34,7 @@ Item {
                 width: eventAppMainPage.width - 20
                 //text: "https://www.dropbox.com/s/inpkybii096m5qh/EA%20test1.json?dl=0"
                 //text: "https://www.dropbox.com/s/inpkybii096m5qh/EA%20test1.json?raw=1"
-                text: urlText.width
+                text: "http://www."
                 horizontalAlignment: Text.AlignLeft
                 Layout.fillWidth: true
                 placeholderText: qsTr("https://")

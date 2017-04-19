@@ -9,9 +9,6 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 DEFINES += QTADMOB_QML
 include(../QtAdMob/QtAdMob.pri)
 
-#VERSION=1.0.0.0
-#DEFINES += APP_VERSION=\\\”$$VERSION\\\”
-#GIT_VERSION = $$system(git --git-dir $$PWD/.git --work-tree $$PWD describe --always --tags)
 GIT_VERSION = $$system(git describe --always --tags)
 DEFINES += GIT_VERSION=\\\"$$GIT_VERSION\\\"
 
@@ -57,7 +54,7 @@ HEADERS += \
 
 RESOURCES += qml.qrc \
    qmlShared.qrc
-#  ../EventAppShared/qmlShared.qrc
+#RESOURCES += qmlShared.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -114,7 +111,8 @@ DISTFILES += \
     android/res/values/libs.xml \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew.bat
+    android/gradlew.bat \
+    android/main.qml
 
 FORMS +=
 

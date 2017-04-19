@@ -55,7 +55,7 @@ public:
     ~Assistant();
     void showDocumentation(const QString &file);
 
-    Q_INVOKABLE void startAssistant();
+    Q_INVOKABLE void startAssistant(QString startFile);
 
 private:
     bool initAssistant();

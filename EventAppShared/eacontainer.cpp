@@ -772,6 +772,8 @@ void EAContainer::clearEvent()
     m_dataFilename = "NewEvent";
     //clearEventIcon();
     //setEventIcon(QJsonValue());
+    setVersion(0);
+    nextItemListId = 1;
     setShowEventIcon(false);
     setEventIcon(QJsonValue());
     m_eaConstruction = new EAConstruction();
@@ -1158,12 +1160,7 @@ QString EAContainer::getDebugLog() const
 {
     return debugLog;
 }
-/*
-void EAContainer::startAssistant()
-{
-    assistant->showDocumentation("index.html");
-}
-*/
+
 bool EAContainer::isEventStatic() const
 {
     return m_isEventStatic;

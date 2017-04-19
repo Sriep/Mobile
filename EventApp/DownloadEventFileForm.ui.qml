@@ -13,17 +13,15 @@ Item {
 
     ColumnLayout {
         id: columnLayout2
-        //width: 445;  height: 100
-        x:10
+        width: eventAppMainPage.width
+        x:5
 
         ColumnLayout {
             id: columnLayout1
-            width: parent.width
+            width: eventAppMainPage.width
             height: 139
 /*
             Label {
-                id: label1
-                width: 105
                 height: 20
                 text: eaContainer.eaConstruction.strings.lfDownloadUrl
                 verticalAlignment: Text.AlignVCenter
@@ -32,9 +30,11 @@ Item {
 */
             TextField {
                 id: urlText
-                height: 30; width: parent.width
+                height: 30
+                width: eventAppMainPage.width - 20
                 //text: "https://www.dropbox.com/s/inpkybii096m5qh/EA%20test1.json?dl=0"
-                text: "https://www.dropbox.com/s/inpkybii096m5qh/EA%20test1.json?raw=1"
+                //text: "https://www.dropbox.com/s/inpkybii096m5qh/EA%20test1.json?raw=1"
+                text: urlText.width
                 horizontalAlignment: Text.AlignLeft
                 Layout.fillWidth: true
                 placeholderText: qsTr("https://")

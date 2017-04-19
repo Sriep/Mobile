@@ -68,6 +68,10 @@ Item {
                         Button {
                             id: newEventBut
                             text: qsTr("New event")
+                            ToolTip.delay: 1000
+                            ToolTip.timeout: 5000
+                            ToolTip.visible: hovered
+                            ToolTip.text: qsTr("Clears current event data, ready to work on a new event.")
                         }
                         RowLayout {
                             id: rowLayout
@@ -80,10 +84,15 @@ Item {
                             TextField {
                                 id: urlTF
                                 placeholderText: "Url"
-                                //text: qsTr("Text Field")
                                 Layout.fillWidth: true
                                 cursorVisible: true
                                 selectByMouse: true
+                                ToolTip.delay: 1000
+                                ToolTip.timeout: 5000
+                                ToolTip.visible: hovered
+                                ToolTip.text: qsTr("Download event data from the internet.\n"
+                                    +  " Assumes we have a suitable raw JSON file at the entered URL.")
+
                             }
                             Button {
                                 id: downloadUrlBtn
@@ -184,8 +193,12 @@ Item {
                             }
                         }
 
-
-
+                        Button {
+                            text: qsTr("Help")
+                            Connections {
+                                onPressed: eaAssistant.startAssistant("file.html");
+                            }
+                        }
                     } //ColumnLayout
                 } //GroupBox
 

@@ -84,46 +84,7 @@ EaToolBarForm {
         textBox.x = 10
     }
 }
-/*
-    function setBackgroundDisplayParameters(rectangle
-                                           , displayData
-                                           , delegate)   {
-        rectangle.height = displayData.height
 
-        rectangle.x = displayData.x
-        rectangle.y = displayData.y
-        rectangle.color = displayData.colour
-        rectangle.color = delegate.highlighted
-                ? displayData.highlitedColour
-                : displayData.colour
-        rectangle.border.color = displayData.borderColour
-        rectangle.border.width = displayData.borderWidth
-        rectangle.radius = displayData.radius
-    }
-
-    function setImageDisplyaParameters(image, displayData, delegate) {
-        image.height = displayData.imageHeight;
-        image.width = displayData.imageWidth;
-        image.x = displayData.xImage;
-        image.y = displayData.yText;
-    }
-
-    function setTextBoxDisplayParameters(textBox
-                                         , displayData
-                                         , delegate) {
-        textBox.font = displayData.font
-        textBox.color = displayData.fontColour
-        textBox.style = displayData.textStyle
-        textBox.styleColor = displayData.styleColour
-
-        textBox.x = displayData.xText
-        textBox.y = displayData.yText
-        textBox.verticalAlignment = displayData.vAlignment
-        textBox.horizontalAlignment = displayData.hAlignment
-    }
-}
-
-*/
 
 
 

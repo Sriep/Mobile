@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <QHelpCollectionProject version="1.0">
+    <assistant>
+        <startPage>qthelp://easyeventapps.com.eventorganiser/doc/index.html</startPage>
+    </assistant>
   <docFiles>
         <generate>
         <file>

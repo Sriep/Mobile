@@ -46,5 +46,13 @@
         <file>Documents/html/index.html</file>
         <file>content/IconSelect.qml</file>
         <file>content/IconSelectForm.ui.qml</file>
+        <file>Documents/index.html</file>
+        <file>Documents/help.bat</file>
+        <file>Documents/appwindow.html</file>
+        <file>Documents/data.html</file>
+        <file>Documents/display.html</file>
+        <file>Documents/file.html</file>
+        <file>Documents/images/EventOrgaiser.png</file>
+        <file>Documents/images/FileTab.png</file>
     </qresource>
 </RCC>

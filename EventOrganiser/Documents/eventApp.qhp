@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QtHelpProject version="1.0">
-    <namespace>mycompany.com.myapplication.1.0</namespace>
+    <namespace>easyeventapps.com.eventorganiser</namespace>
     <virtualFolder>doc</virtualFolder>
-    <customFilter name="My Application 1.0">
+    <customFilter name="Event Orgaiser 0.0.1">
         <filterAttribute>myapp</filterAttribute>
         <filterAttribute>1.0</filterAttribute>
     </customFilter>
@@ -10,10 +10,11 @@
         <filterAttribute>myapp</filterAttribute>
         <filterAttribute>1.0</filterAttribute>
         <toc>
-            <section title="My Application Manual" ref="index.html">
-                <section title="Chapter 1" ref="doc.html#chapter1"/>
-                <section title="Chapter 2" ref="doc.html#chapter2"/>
-                <section title="Chapter 3" ref="doc.html#chapter3"/>
+            <section title="Event Orgaiser" ref="index.html">
+                <section title="File tab" ref="file.html"/>
+                <section title="Data tab" ref="Data.html"/>
+                <section title="Display tab" ref="Display.html"/>
+                <section title="Event App panel" ref="appwindow.html"/>
             </section>
         </toc>
         <keywords>
@@ -24,6 +25,7 @@
         <files>
             <file>classic.css</file>
             <file>*.html</file>
+            <file>images/*.png</file>
         </files>
     </filterSection>
 </QtHelpProject>

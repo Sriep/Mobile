@@ -42,6 +42,8 @@
 #include <QtCore/QDir>
 #include <QtCore/QLibraryInfo>
 #include <QtCore/QProcess>
+#include <QDebug>
+#include <QDir>
 
 #include <QtWidgets/QMessageBox>
 
@@ -54,10 +56,10 @@ Assistant::Assistant()
 
 Assistant::~Assistant()
 {
-   // if (proc && proc->state() == QProcess::Running) {
-   //     proc->terminate();
-   //     proc->waitForFinished(3000);
-   // }
+    if (proc && proc->state() == QProcess::Running) {
+        proc->terminate();
+        proc->waitForFinished(3000);
+    }
     delete proc;
 }
 
@@ -67,10 +69,21 @@ void Assistant::showDocumentation(const QString &page)
         return;
 
     QByteArray ba("SetSource ");
-    //ba.append("file:///media/sdb2/Projects/Source/Dissertation/c++App/Pipewrap/Documents/html/");
-    ba.append("../EventAppShared/Documents/html/");
-    //Bproc->write(ba + page + "\n");
+    ba.append("qthelp://easyeventapps.com.eventorganiser/doc/"
+              + page.toLocal8Bit()
+              + '\n');
+    proc->write(ba);
+    qDebug() << "help page: " << ba;
+    /*ba.append("../EventOrganiser/Documents/html/"
+    ba.append("E:/Mobile/Mobile/EventOrganiser/Documents/html/"
+              + page.toLocal8Bit()
+              + '\n');
+    proc->write(ba);
+    qDebug() << "help page: " << ba;
+    qDebug() << "current dir" << QDir::currentPath();
+*/
     //proc->write(ba + page.toLocal8Bit() + '\n');
+    //current dir "E:/Mobile/Mobile/build-EventOrganiser-Desktop_Qt_5_8_0_MSVC2015_64bit-Debug"
 }
 
 bool Assistant::initAssistant()
@@ -105,9 +118,9 @@ bool Assistant::initAssistant()
     return true;
 }
 
-void Assistant::startAssistant()
+void Assistant::startAssistant(QString startFile)
 {
-    showDocumentation("index.html");
+    showDocumentation(startFile);//"index.html");
 }
 
 

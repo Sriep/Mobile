@@ -42,53 +42,53 @@ ApplicationWindow {
     }
 
     Menu {
-          id: mainContextMenu
-                MenuItem {
-                  text: qsTr("&New")
-                  onTriggered: eaContainer.clearEvent();
-                }
-                MenuItem {
-                  text: qsTr("&Load")
-                  onTriggered: constructionPage.loadFileDialog.open()
-                }
-                MenuItem {
-                  text: qsTr("&Downlaod from url")
-                  onTriggered: dlgDownloadEventUrl.open()
-                }
-                MenuItem {
-                  text: qsTr("&Save As...")
-                  onTriggered: constructionPage.saveFileDialog.open()
-                }
-                MenuItem {
-                  text: qsTr("&Refresh")
-                  onTriggered: eaContainer.refreshData()
-                }
-                MenuItem {
-                  text: qsTr("&Quit")
-                  onTriggered: Qt.quit()
-                }
+        id: mainContextMenu
+        MenuItem {
+          text: qsTr("&New")
+          onTriggered: eaContainer.clearEvent();
+        }
+        MenuItem {
+          text: qsTr("&Load")
+          onTriggered: constructionPage.loadFileDialog.open()
+        }
+        MenuItem {
+          text: qsTr("&Downlaod from url")
+          onTriggered: dlgDownloadEventUrl.open()
+        }
+        MenuItem {
+          text: qsTr("&Save As...")
+          onTriggered: constructionPage.saveFileDialog.open()
+        }
+        MenuItem {
+          text: qsTr("&Refresh")
+          onTriggered: eaContainer.refreshData()
+        }
+        MenuItem {
+          text: qsTr("&Quit")
+          onTriggered: Qt.quit()
+        }
 
-                MenuSeparator {}
+        MenuSeparator {}
 
-                MenuItem {
-                  text: qsTr("&Load display")
-                  onTriggered: loadDisplayDialog2.open()
-                }
-                MenuItem {
-                  text: qsTr("&Save display As...")
-                  onTriggered: saveDispalyDialog2.open()
-                }
+        MenuItem {
+          text: qsTr("&Load display")
+          onTriggered: loadDisplayDialog2.open()
+        }
+        MenuItem {
+          text: qsTr("&Save display As...")
+          onTriggered: saveDispalyDialog2.open()
+        }
 
-                MenuSeparator {}
+        MenuSeparator {}
 
-                MenuItem {
-                  text: qsTr("&Assistant")
-                  onTriggered: eaAssistant.startAssistant();
-                }
-                MenuItem {
-                  text: qsTr("&About")
-                  onTriggered: aboutDialogEO.open()
-                }
+        MenuItem {
+          text: qsTr("&Assistant")
+          onTriggered: eaAssistant.startAssistant("index.html");
+        }
+        MenuItem {
+          text: qsTr("&About")
+          onTriggered: aboutDialogEO.open()
+        }
     }
 
     /*Component.onCompleted: {
@@ -221,19 +221,19 @@ ApplicationWindow {
         Column {
             id: aboutColumn
             spacing: 20
-
+/*
             Label {
                 width: aboutDialogEO.availableWidth
                 text:  eaContainer.eaConstruction.strings.aboutText
                 wrapMode: Label.Wrap
                 font.pixelSize: 12
             }
-
+*/
             Label {
                 width: aboutDialogEO.availableWidth
-                text: "Event app orginser\n"
-                      + "http://www.easyeventapps.com\n"
-                      + "Version " + eaContainer.appVersion() + "\n"
+                text: "<html><h2>Event App Orginser</h2><br>"
+                      + "<a href=\"http://www.easyeventapps.com\">www.easyeventapps.com</a><br>"
+                      + "Version " + eaContainer.appVersion() + "</html>\n"
                 wrapMode: Label.Wrap
                 font.pixelSize: 12
             }

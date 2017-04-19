@@ -36,7 +36,6 @@ Drawer {
           target: optionsListView
           onCurrentItemChanged: {
               console.log("optionsListView onCurrentItemChanged");
-              //eaContainer.eaConstruction.menuDisplay.colour
               itemBackground.color = menuItemDelegate.highlighted
                       ? eaContainer.eaConstruction.menuDisplay.highlitedColour
                       : eaContainer.eaConstruction.menuDisplay.colour
@@ -113,7 +112,6 @@ Drawer {
                                "index" : 98 });
         model.append({ "title" : eaContainer.eaConstruction.strings.mExit,
                                "index" : 99 });
-        //model.sync();
     }
 
     ScrollIndicator.vertical: ScrollIndicator { }

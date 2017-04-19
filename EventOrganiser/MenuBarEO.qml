@@ -79,7 +79,7 @@ MenuBar {
         title: qsTr("&Help")
         MenuItem {
           text: qsTr("&Assistant")
-          onTriggered: eaAssistant.startAssistant();
+          onTriggered: eaAssistant.startAssistant("index.html");
         }
         MenuItem {
           text: qsTr("&About")

@@ -166,15 +166,14 @@ Item {
 
         PropertyChanges {
             target: topText;
-            x: eaContainer.eaConstruction.display.xText + 130
-               - eaContainer.eaConstruction.display.imageWidth
+            x: showPhoto ? eaContainer.eaConstruction.display.xText + 130
+               - eaContainer.eaConstruction.display.imageWidth :  eaContainer.eaConstruction.display.xText
         }
 
         PropertyChanges {
-            id: picSicePropCh;
             target: photoImage;
-            width: eaLVItemList.showPhotos ? 130 : 0;
-            height: eaLVItemList.showPhotos ? 130 : 50;
+            width: showPhoto ? 130 : 0;
+            height: showPhoto ? 130 : 50;
         } // Make picture bigger
 
         PropertyChanges { target: dataDelegate; detailsOpacity: 1; x: 0 } // Make details visible

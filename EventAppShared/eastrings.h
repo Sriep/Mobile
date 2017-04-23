@@ -9,6 +9,10 @@ class EAStrings : public QQuickItem
     Q_OBJECT
     Q_PROPERTY(QString tbLoggedOff READ tbLoggedOff WRITE setTbLoggedOff NOTIFY tbLoggedOffChanged)
 
+    Q_PROPERTY(QString splashTitle READ splashTitle WRITE setSplashTitle NOTIFY splashTitleChanged)
+    Q_PROPERTY(QString splashText READ splashText WRITE setSplashText NOTIFY splashTextChanged)
+    Q_PROPERTY(QString splashInfo READ splashInfo WRITE setSplashInfo NOTIFY splashInfoChanged)
+
     Q_PROPERTY(QString mLogin READ mLogin WRITE setMLogin NOTIFY mLoginChanged)
     Q_PROPERTY(QString mLoadFKey READ mLoadFKey WRITE setMLoadFKey NOTIFY mLoadFKeyChanged)
     Q_PROPERTY(QString mLoadFFile READ mLoadFFile WRITE setMnLoadFFile NOTIFY mLoadFFileChanged)
@@ -22,6 +26,11 @@ class EAStrings : public QQuickItem
     Q_PROPERTY(QString lkDownlaodFKey READ lkDownlaodFKey WRITE setLkDownlaodFKey NOTIFY lkDownlaodFKeyChanged)
     Q_PROPERTY(QString lfDownloadUrl READ lfDownloadUrl WRITE setLfDownloadUrl NOTIFY lfDownloadUrlChanged)
     Q_PROPERTY(QString lfFirebaseUrl READ lfFirebaseUrl WRITE setLfFirebaseUrl NOTIFY lfFirebaseUrlChanged)
+
+    Q_PROPERTY(QString dlKeyExplain READ dlKeyExplain WRITE setDlKeyExplain NOTIFY dlKeyExplainChanged)
+    Q_PROPERTY(QString dlUrlExpalin READ dlUrlExpalin WRITE setDlUrlExpalin NOTIFY dlUrlExpalinChanged)
+    Q_PROPERTY(QString dlFbUrlExplain READ dlFbUrlExplain WRITE setDlFbUrlExplain NOTIFY dlFbUrlExplainChanged)
+
     Q_PROPERTY(QString copyClipbord READ copyClipbord WRITE setCopyClipbord NOTIFY copyClipbordChanged)
 
     Q_PROPERTY(QString aboutText READ aboutText WRITE setAboutText NOTIFY aboutTextChanged)
@@ -50,7 +59,14 @@ class EAStrings : public QQuickItem
     QString m_bLogoff = "Logoff";
     QString m_bDownlaod = "Downlaod";    
     QString m_aboutText = "About text\nAbout text\nAbout text\n";
-    QString m_copyClipbord = "Copy from clipboard";
+    QString m_copyClipbord = "Copy from clipboard";    
+    QString m_dlKeyExplain = "<html><h2>Download from key</h2>Enter the key given by your event organiser and hit the download button.<br></html>";
+    QString m_dlUrlExpalin = "<html><h2>Download from URL</h2>Enter the url given to you by your event organiser and hit the download button.<br></html>";
+    QString m_dlFbUrlExplain = "<html><h2>Download from URL</h2>Entere the Firebase url and the event key in below and hit the download button.<br></html>";
+
+    QString m_splashTitle = "Event Reload";
+    QString m_splashText = "Load Existing event?";
+    QString m_splashInfo = "You have an existing event avaliable. Do you want to use that one (Yes), or load a new event (No)?";
 
 public:
     EAStrings();
@@ -78,7 +94,13 @@ public:
     QString bLogoff() const;
     QString bDownlaod() const;
     QString aboutText() const;
-    QString copyClipbord() const;
+    QString copyClipbord() const;    
+    QString dlKeyExplain() const;
+    QString dlUrlExpalin() const;
+    QString dlFbUrlExplain() const;
+    QString splashTitle() const;
+    QString splashText() const;
+    QString splashInfo() const;
 
 signals:
     void tbLoggedOffChanged(QString tbLoggedOff);
@@ -100,9 +122,15 @@ signals:
     void bDownlaodChanged(QString bDownlaod);
     void aboutTextChanged(QString aboutText);
     void stringsChanged();
-    void copyClipbordChanged(QString copyClipbord);
+    void copyClipbordChanged(QString copyClipbord);    
+    void dlKeyExplainChanged(QString dlKeyExplain);
+    void dlUrlExpalinChanged(QString dlUrlExpalin);
+    void dlFbUrlExplainChanged(QString dlFbUrlExplain);
+    void splashTitleChanged(QString splashTitle);
+    void splashTextChanged(QString splashText);
+    void splashInfoChanged(QString splashInfo);
 
-    public slots:
+public slots:
         void setTbLoggedOff(QString tbLoggedOff);
         void setMLogin(QString mLogin);
         void setMLoadFKey(QString mLoadFKey);
@@ -122,6 +150,12 @@ signals:
         void setBDownlaod(QString bDownlaod);
         void setAboutText(QString aboutText);
         void setCopyClipbord(QString copyClipbord);
+        void setDlKeyExplain(QString dlKeyExplain);
+        void setDlUrlExpalin(QString dlUrlExpalin);
+        void setDlFbUrlExplain(QString dlFbUrlExplain);
+        void setSplashTitle(QString splashTitle);
+        void setSplashText(QString splashText);
+        void setSplashInfo(QString splashInfo);
 };
 
 #endif // EASTRINGS_H

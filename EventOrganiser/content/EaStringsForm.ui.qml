@@ -37,6 +37,7 @@ Item {
                 width: 200
                 currentIndex: 0
                 model: [
+                    qsTr("Login Messages"),
                     qsTr("ToolBar"),
                     qsTr("Options Menu"),
                     qsTr("User dialog"),
@@ -55,6 +56,46 @@ Item {
             id: stackLayout
             currentIndex: stringPageCB.currentIndex
             width: parent.width; height: parent.height
+
+            GroupBox {
+                title: qsTr("Login Messages")
+
+                GridLayout {
+                    columns: 2
+                    rows: 3
+                    width: parent.width; height: 100
+                    Label {
+                        text: qsTr("Welcome title")
+                    }
+
+                    TextField {
+                        id: textSpalshTitle
+                        text: eaContainer.eaConstruction.strings.splashTitle
+                        selectByMouse: true
+                    }
+
+                    Label {
+                        text: qsTr("Welcome text")
+                    }
+
+                    TextField {
+                        id: textSpalshText
+                        text: eaContainer.eaConstruction.strings.splashText
+                        selectByMouse: true
+                    }
+
+                    Label {
+                        text: qsTr("Welcome information")
+                    }
+
+                    TextField {
+                        id: textSpalshInfo
+                        text: eaContainer.eaConstruction.strings.splashInfo
+                        selectByMouse: true
+                    }
+
+                }
+            }
 
             GroupBox {
                 //width: 200; height: 200
@@ -223,6 +264,33 @@ Item {
                     TextField {
                         id: textDownliadFIUrl
                         text: eaContainer.eaConstruction.strings.lfDownloadUrl
+                        selectByMouse: true
+                    }
+
+                    Label {
+                        text: qsTr("Expalin download from Firebase url")
+                    }
+                    TextField {
+                        id: textUrlExpalin
+                        text: eaContainer.eaConstruction.strings.dlFbUrlExplain
+                        selectByMouse: true
+                    }
+
+                    Label {
+                        text: qsTr("Explain download from key")
+                    }
+                    TextField {
+                        id: textKeyExplain
+                        text: eaContainer.eaConstruction.strings.dlKeyExplain
+                        selectByMouse: true
+                    }
+
+                    Label {
+                        text: qsTr("Expalin download from url")
+                    }
+                    TextField {
+                        id: textFbUrlExplain
+                        text: eaContainer.eaConstruction.strings.dlUrlExpalin
                         selectByMouse: true
                     }
 

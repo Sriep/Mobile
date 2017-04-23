@@ -21,7 +21,8 @@ bool EAUser::registerUser(const QString& userId
 {
     if (getEaContainer()->isEventStatic())
     {
-        emit getEaContainer()->error(tr("Error registering user")
+        emit getEaContainer()->error(tr("Error")
+                                     ,tr("Error registering user")
                     ,tr("Event does not support users")
                     ,"EAUser::registerUser\nisEventStatic==true"
                     , Warning);
@@ -73,7 +74,8 @@ bool EAUser::login(const QString &userId, const QString &password)
 {
     if (getEaContainer()->isEventStatic())
     {
-        emit getEaContainer()->error(tr("Error loging on")
+        emit getEaContainer()->error(tr("Error")
+                                     ,tr("Error loging on")
                     ,tr("Event does not support users")
                     ,"EAUser::login\nisEventStatic==true"
                     , Warning);

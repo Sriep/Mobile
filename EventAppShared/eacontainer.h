@@ -58,7 +58,7 @@ class  EAContainer : public QObject, public QQmlParserStatus
     Q_PROPERTY(int imageVersion READ imageVersion WRITE setImageVersion NOTIFY imageVersionChanged)
 
     EAInfo* m_eaInfo;
-    QString m_dataFilename = "temp";
+    QString m_dataFilename = "";
     EAConstruction* m_eaConstruction;
     bool m_isSaveJson = true;
     QString m_workingDirectory = QCoreApplication::applicationDirPath();    
@@ -158,11 +158,11 @@ signals:
     void eventKeyChanged(QString eventKey);    
     void answersChanged(QString answers);
     void eaAnswersDownloaded();
-    void error(const QString& message
+    void error(const QString& title
+            , const QString& message
             , const QString& information
             , const QString& details
             , int icon);
-            //, int icon);
     void isEventStaticChanged(bool isEventStatic);
     void displayParasChanged();    
     void screenWidthChanged(int screenWidth);

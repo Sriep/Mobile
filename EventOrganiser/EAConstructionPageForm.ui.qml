@@ -25,6 +25,8 @@ Item {
     property alias loadFileDialog: loadFileDialog
     property alias saveFileDialog: saveFileDialog
 
+
+
     Flickable {
         Pane {
             id: eventNamePane
@@ -34,7 +36,6 @@ Item {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.right: parent.right
-
                 GroupBox {
                     width: parent.width
                     title: qsTr("Data file")
@@ -205,4 +206,5 @@ Item {
             } // GridLayout
         } // Pane
     } // Flickable
+
 }

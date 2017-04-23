@@ -8,6 +8,10 @@ EaStringsForm {
     Connections {
         target: applyStringsBut
         onPressed: {
+            eaContainer.eaConstruction.strings.spalshTitle = textSpalshTitle.text
+            eaContainer.eaConstruction.strings.spalshText = textSpalshText.text
+            eaContainer.eaConstruction.strings.spalshInfo = textSpalshInfo.text
+
             eaContainer.eaConstruction.strings.tbLoggedOff = textLoggedOff.text;
 
             eaContainer.eaConstruction.strings.mLogin = textLogin.text
@@ -28,8 +32,15 @@ EaStringsForm {
             eaContainer.eaConstruction.strings.lkDownlaodFKey = textDownloadfKey.text
             eaContainer.eaConstruction.strings.lfDownloadUrl = textDownliadFIUrl.text
             eaContainer.eaConstruction.strings.lfFirebaseUrl = textFirebaseUrl.text
+
+            eaContainer.eaConstruction.strings.dlKeyExplain = textKeyExplain.text
+            eaContainer.eaConstruction.strings.dlUrlExpalin = textUrlExpalin.text
+            eaContainer.eaConstruction.strings.dlFbUrlExplain = textFbUrlExplain.text
+
             eaContainer.eaConstruction.strings.bDownlaod = textDownload.text
             eaContainer.eaConstruction.strings.bExit = textExitBut.text
+
+
 
             eaContainer.eaConstruction.strings.aboutText = textAreaAbout.text
             eaContainer.eaConstruction.strings.emitStringChangedSignal()

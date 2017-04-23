@@ -300,7 +300,8 @@ void EAItemList::loadCSV(const QString filenameUrl)
     }
     else
     {
-        emit getEaContainer()->error(tr("Error loading csv file")
+        emit getEaContainer()->error(tr("Error")
+                                     ,tr("Error loading csv file")
                     ,tr("No data found ")
                     ,"EAItemList::loadCSV csvListLines.length() <= 0"
                     , Warning);
@@ -317,7 +318,8 @@ void EAItemList::readFormatedList(QList<QStringList> csvListLines)
     QStringList headerModels = addHeaderFields(headerList);
     if (headerModels.length() == 0)
     {
-        emit getEaContainer()->error(tr("Error loading csv file")
+        emit getEaContainer()->error(tr("Error")
+                                     ,tr("Error loading csv file")
                     ,tr("No header fields found ")
                     ,"headerModels.length() == 0"
                     , Warning);
@@ -365,7 +367,8 @@ void EAItemList::readNewTextItem(QStringList list)
 {
     QFile loadFile(list[2]);
     if (!loadFile.open(QIODevice::ReadOnly)) {
-        emit getEaContainer()->error(tr("Error inserting text item")
+        emit getEaContainer()->error(tr("Error")
+                                     ,tr("Error inserting text item")
                     ,tr("Can not load file ") + list[2]
                     ,"EAItemList::readNewTextItem"
                     , Warning);
@@ -507,7 +510,8 @@ QList<QStringList> EAItemList::manual2StringLists(const QString& imagePath)
                 QString fname = saveItemFilename(i, imagePath) + ".txt";
                 QFile saveFile(fname);
                 if (!saveFile.open(QIODevice::WriteOnly)) {
-                    emit getEaContainer()->error(tr("Error saving item to file")
+                    emit getEaContainer()->error(tr("Error")
+                                                 ,tr("Error saving item to file")
                                 ,tr("Cannot save to file ") + fname
                                 ,"EAItemList::manual2StringLists"
                                 , Warning);
@@ -849,7 +853,8 @@ void EAItemList::deleteItem(int index)
     }
     else
     {
-        emit getEaContainer()->error(tr("Error deleting itme")
+        emit getEaContainer()->error(tr("Error")
+                                     ,tr("Error deleting itme")
                     ,tr("Invalid index ") + QString::number(index)
                     ,"EAItemList::deleteItem"
                     , Warning);
@@ -864,7 +869,8 @@ int EAItemList::moveItem(int index, bool directionUp)
         {
             if (0 == index)
             {
-                emit getEaContainer()->error(tr("Error moving item")
+                emit getEaContainer()->error(tr("Error")
+                                             ,tr("Error moving item")
                             ,tr("Item already at top of list")
                             ,"EAItemList::moveItem"
                             , Warning);
@@ -882,7 +888,8 @@ int EAItemList::moveItem(int index, bool directionUp)
         {
             if (m_eaItems.count()-1 == index)
             {
-                emit getEaContainer()->error(tr("Error moving itme")
+                emit getEaContainer()->error(tr("Error")
+                                             ,tr("Error moving itme")
                             ,tr("Item already at bottom of list")
                             ,"EAItemList::moveItem"
                             , Warning);
@@ -899,19 +906,14 @@ int EAItemList::moveItem(int index, bool directionUp)
     }
     else
     {
-        emit getEaContainer()->error(tr("Error moving item")
+        emit getEaContainer()->error(tr("Error")
+                                     ,tr("Error moving item")
                     ,tr("Invalid index ") + QString::number(index)
                     ,"EAItemList::moveItem"
                     , Warning);
         return -1;
     }
 }
-
-/*
-int EAItemList::itemListLength()
-{
-    return m_eaItems.length();
-}*/
 
 QStringList EAItemList::addHeaderFields(const QStringList& fields)
 {
@@ -935,12 +937,16 @@ QStringList EAItemList::addHeaderFields(const QStringList& fields)
             };
             jsonFields.append(newField);
             fieldsSet.insert(modelName);
-            QString nexDefaultText = "<html>{"
-                    + QString::number(jsonFields.size())
-                    + "}<br></html>\n";
-            m_longFormat = m_longFormat + QString(nexDefaultText);
-            emit longFormatChanged(m_longFormat);
-        }
+            if (jsonFields.size() > 1)
+            {
+                QString nextDefaultText = "<html>{"
+                        + QString::number(jsonFields.size()-1)
+                        + "}<br></html>\n";
+                setLongFormat(m_longFormat + nextDefaultText);
+                //m_longFormat = m_longFormat + QString(nexDefaultText)
+            }
+
+        }   
     }
     setTitleFields(jsonFields);
     return models;

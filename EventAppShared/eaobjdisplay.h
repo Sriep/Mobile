@@ -64,7 +64,7 @@ class EAObjDisplay : public QQuickItem
     int m_yText = 5;
     int m_vAlignment = AlignRight;
     int m_hAlignment = AlignVCenter;    
-    QColor m_backColour;    
+    QColor m_backColour = "white";
     QColor m_highlitedColour;
     int m_displayType = 0;
     bool m_whiteIcons = false;

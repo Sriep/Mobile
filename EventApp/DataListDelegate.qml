@@ -9,8 +9,8 @@ DataListDelegateForm {
 
     topText.text: setTopText()
     function setTopText() {
-        var one = JSON.parse(eaLVItemList.titleFields);
-        var two = dataModel;
+        //var one = JSON.parse(eaLVItemList.titleFields);
+        //var two = dataModel;
         var t = displayText(JSON.parse(eaLVItemList.titleFields)
                                      , dataModel
                                      , true
@@ -28,8 +28,8 @@ DataListDelegateForm {
 
     bottomText.text: setBottomText()
     function setBottomText() {
-        var one = JSON.parse(eaLVItemList.titleFields);
-        var two = dataModel;
+        //var one = JSON.parse(eaLVItemList.titleFields);
+        //var two = dataModel;
         var t = displayText(JSON.parse(eaLVItemList.titleFields)
                                      , dataModel
                                      , false
@@ -76,12 +76,23 @@ DataListDelegateForm {
         DataListJS.addStringFormat();
         var text = "";
         var myArr = DataListJS.fieldsObjToArr(titleFields["headerFields"], dataModel.get(index));
+        if (header) {
+            var topFormat = eaItemList.shortFormat;
+            text = topFormat.format(myArr);
+        } else {
+            var bottomFormat = eaItemList.longFormat;
+            text = bottomFormat.format(myArr);
+        }
+        return text;
+/*
         var topFormat = eaItemList.shortFormat;
         var t1 = topFormat.format(myArr);
         var bottomFormat = eaItemList.longFormat;
         var t2 = bottomFormat.format(myArr);
         text = header ? t1 : t2;
-        return text;
+*/
+
+
     }
 
     function createDelegateBox(parent) {
@@ -112,15 +123,20 @@ DataListDelegateForm {
         bottomText.style = eaContainer.eaConstruction.display.textStyle
         bottomText.styleColor = eaContainer.eaConstruction.display.styleColour
         background.height = parent.height - y*2
+        var spp = showPhoto;
         if (dataDelegate.state == 'Details') {
-            image.height = eaLVItemList.showPhotos ? 130 : 50;
-            image.width = eaLVItemList.showPhotos ? 130 : 0;
-            image.x = displayData.xImage;
-            image.y = displayData.yImage;
+           //dataDelegate.photoImage.height = showPhoto ? 130 : 50;
+          dataDelegate.photoImage.width = showPhoto ? 130 : 0;
+           dataDelegate.photoImage.x = displayData.xImage;
+           dataDelegate.photoImage.y = displayData.yImage;
         } else {
             DataListJS.setImageDisplyaParameters(dataDelegate.photoImage
                            , eaContainer.eaConstruction.display)
+            if (!showPhoto)
+                 dataDelegate.photoImage.width = 0;
         }
+
+
     }
 
 }

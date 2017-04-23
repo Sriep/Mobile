@@ -5,7 +5,7 @@ DownloadEventFileForm {
     property bool isExpanded: false
     downloadButton.onClicked: {
         console.log("Button Pressed. Entered text: ", urlText.text);
-        progressBar.visible = true;
+        //progressBar.visible = true;
         eaContainer.downloadFromUrl(urlText.text);
         //httpDownload.downloadFile(urlText.text);
     }
@@ -32,11 +32,11 @@ DownloadEventFileForm {
     quitButton.onClicked: {
         stackCtl.currentIndex = stackCtl.topDrawerId;
     }
-
+/*
     getDebugLog.onClicked: {
         debugLog.text = eaContainer.getDebugLog()
     }
-
+*/
     Connections {
         target: copyClipBut;
         onPressed: {

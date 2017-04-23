@@ -17,7 +17,7 @@ Item {
         //width: 442;  height: 100
         RowLayout {
             id: rowLayout1
-            width: 100
+            width: eventAppMainPage.width - 20
             height: 30
 
             Label {
@@ -27,6 +27,7 @@ Item {
             }
             TextField {
                 id: firebaseUrlTF
+                Layout.fillWidth: true
                 //text: "https://????.firebaseio.com/"
                 text: "https://mytestproject-be3ee.firebaseio.com/"
                 cursorVisible: true
@@ -45,7 +46,7 @@ Item {
             }
             TextField {
                 id: downloadFromKey
-                text: qsTr("4455")
+                //text: qsTr("4455")
                 cursorVisible: true
                 selectByMouse: true
             }

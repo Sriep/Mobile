@@ -28,7 +28,12 @@
 #include "eaquestion.h"
 #include "simplecrypt.h"
 #include "httpdownload.h"
-//#include "assistant.h"
+
+EAContainer::EAContainer()
+{
+    m_eaConstruction = new EAConstruction;
+    m_eaInfo = new EAInfo;
+}
 
 QList<EAItemList *> EAContainer::getEaItemLists() const
 {
@@ -137,22 +142,13 @@ void EAContainer::clearEventIcon()
     setShowEventIcon(false);
 
     padOutIconst();
-
-    //QPixmap nullPix;
-    //QJsonValue jsonPic = jsonValFromPixmap(nullPix);
-    //setEventIcon(jsonPic);
     setEventIcon(QJsonValue());
 
     resetImageProviders();
     refreshData();
 }
 
-EAContainer::EAContainer()
-{
-    m_eaConstruction = new EAConstruction;
-    m_eaInfo = new EAInfo;
-    //assistant = new Assistant;
-}
+
 
 void EAContainer::classBegin()
 {
@@ -187,6 +183,7 @@ void EAContainer::deleteItemList(int index)
     if (index >= 0 && index < m_eaItemLists.count())
     {
         m_eaItemLists.removeAt(index);
+        jsonIcons.removeAt(index);
         resetImageProviders();
         emit eaItemListsChanged();
     }
@@ -200,44 +197,25 @@ int EAContainer::moveItemList(int index, bool directionUp)
         {
             if (0 == index)
             {
-                emit error(tr("Error moving item list")
+                emit error(tr("Error")
+                            ,tr("Error moving item list")
                             ,tr("Item already at top of list")
                             ,"EAContainer::moveItemList"
                             , Warning);
                 return index;
             }
-            /*else
-            {
-                m_eaItemLists.swap(index, index -1);
-                QJsonValue temp = jsonIcons[index];
-                jsonIcons[index] = jsonIcons[index-1];
-                jsonIcons[index-1] = temp;
-                resetImageProviders();
-                emit eaItemListsChanged();
-                return index-1;
-            }*/
         }
         else
         {
             if (m_eaItemLists.count()-1 == index)
             {
-                emit error(tr("Error moving itme list")
+                emit error(tr("Error")
+                            ,tr("Error moving itme list")
                             ,tr("Item already at bottom of list")
                             ,"EAContainer::moveItemList"
                             , Warning);
                 return index;
             }
-            /*else
-            {
-
-                m_eaItemLists.swap(index, index +1);
-                QJsonValue temp = jsonIcons[index];
-                jsonIcons[index] = jsonIcons[index+1];
-                jsonIcons[index+1] = temp;
-                resetImageProviders();
-                emit eaItemListsChanged();
-                return index +1;
-            }*/
         }
         int delta = directionUp ? -1 : +1;
         m_eaItemLists.swap(index, index + delta);
@@ -252,7 +230,8 @@ int EAContainer::moveItemList(int index, bool directionUp)
     }
     else
     {
-        emit error(tr("Error moving item list")
+        emit error(tr("Error")
+                    ,tr("Error moving item list")
                     ,tr("Invalid index ") + QString::number(index)
                     ,"EAContainer::moveItemList"
                     , Warning);
@@ -282,7 +261,8 @@ bool EAContainer::loadNewEventApp(const QString &filenameUrl)
 
     QFile loadFile(filename);
     if (!loadFile.open(QIODevice::ReadOnly)) {
-        emit error("Error loading event from file"
+        emit error(tr("Error")
+                   ,"Error loading event from file"
                     ,"Cannot open file " + filename
                     ,"EAContainer::loadNewEventApp\nloadFile.open==false"
                     , Warning);
@@ -318,6 +298,15 @@ bool EAContainer::loadEventApp()
     {
         loadNewEventApp(dataFilename());
     }
+    else
+    {
+        emit error(tr("Information")
+                   ,tr("No Event loaded")
+                    ,tr("To load an event use load menu in top right. Follow the details provided by the event organisers")
+                    ,tr("Easy event app displayes event and conference information. Design your own free Event App, check out <html><a href=\"http://www.easyeventapps.com\">www.easyeventapps.com</a></html>")
+                    , Information);
+        return false;
+    }
     qDebug() << "EAContainer::loadEventApp finished";
     emit eaItemListsChanged();
     emit eaConstructionChanged(m_eaConstruction);
@@ -335,7 +324,8 @@ bool EAContainer::saveEventApp(const QString& filenameUrl)
 
     QFile saveFile(filename);
     if (!saveFile.open(QIODevice::WriteOnly)) {
-        emit error(tr("Error saving event to file")
+        emit error(tr("Error")
+                   ,tr("Error saving event to file")
                     ,tr("Cannot open file ") + filename
                     ,"EAContainer::saveEventApp\nsaveFile.open==false"
                     , Critical);
@@ -361,7 +351,8 @@ bool EAContainer::saveDisplayFormat(const QString &filenameUrl)
     QFile saveFile(filename);
     //QFile saveFile(filename);
     if (!saveFile.open(QIODevice::WriteOnly)) {
-        emit error(tr("Error saving dispaly parameters to file")
+        emit error(tr("Error")
+                   ,tr("Error saving dispaly parameters to file")
                     ,tr("Cannot open file ") + filename
                     ,"EAContainer::saveDisplayFormat\nsaveFile.open==false"
                     , Critical);
@@ -554,7 +545,8 @@ void EAContainer::onResponseReady(QByteArray data)
     //qDebug()<<data;
     if (data.size() == 0)
     {
-        emit error(tr("Error downloading app")
+        emit error(tr("Error")
+                   ,tr("Error downloading app")
                    ,tr("Cannot access database")
                    ,"EAContainer::onResponseReady\ndata.size()==0"
                    , Critical);
@@ -562,7 +554,8 @@ void EAContainer::onResponseReady(QByteArray data)
     }
     else if (data == "null")
     {
-        emit error(tr("Error downloading app")
+        emit error(tr("Error")
+                   ,tr("Error downloading app")
                    , tr("Key not recognised")
                    , "EAContainer::onResponseReady\ndata==null"
                    , Critical);
@@ -590,7 +583,8 @@ void EAContainer::onResponseReady(QByteArray data)
         }
         else
         {
-            emit error(tr("Error downloading app")
+            emit error(tr("Error")
+                       ,tr("Error downloading app")
                         ,tr("Invalid date")
                         ,tr("fromDate > today || today > toDate")
                         , Critical);
@@ -624,7 +618,8 @@ void EAContainer::onFindFBUrlRequestReady(QByteArray data)
 {
     if (data.size() == 0 || data == "null")
     {
-        emit error(tr("Error downloading data")
+        emit error(tr("Error")
+                   ,tr("Error downloading data")
                    ,tr("Cannot find database")
                    ,"EAContainer::onResponseReady\ndata.size()==0"
                    , Critical);
@@ -661,15 +656,11 @@ void EAContainer::setAnswers(QString answers)
     m_answers = answers;
     emit answersChanged(answers);
 }
-/*
-void EAContainer::onFileDownloaded(QByteArray data)
-{
-   // onResponseReady
-}
-*/
+
 void EAContainer::onFileDownloadError(QString errorMessage)
 {
-    emit error("Error downloading file from url"
+    emit error(tr("Error")
+               ,"Error downloading file from url"
                 , errorMessage
                 ,"EAContainer::onFileDownloadError slotted from HttpDownload"
                , Critical);
@@ -755,23 +746,15 @@ void EAContainer::read(const QJsonObject &json)
         m_eaConstruction->read(json["construction"].toObject());
         emit eaConstructionChanged(m_eaConstruction);
     }
+
     resetImageProviders();
-/*
-    nextItemListId = json["version"].toInt();
-    setEventKey(json["eventKey"].toString());
-    setIsEventStatic(json["isEv:loentStatic"].toBool());
-    setEventSource((EventSource)json["eventSource"].toInt());
-    setVersion(json["version"].toInt());
-*/
 }
 
 void EAContainer::clearEvent()
 {
     m_eaInfo  = new EAInfo();
     m_user = new EAUser(this);
-    m_dataFilename = "NewEvent";
-    //clearEventIcon();
-    //setEventIcon(QJsonValue());
+    m_dataFilename = "";
     setVersion(0);
     nextItemListId = 1;
     setShowEventIcon(false);
@@ -1010,7 +993,8 @@ bool EAContainer::loadDisplayFormat(const QString &filenameUrl)
     qDebug() << "loadDisplayFormat filename: " << filename;
     QFile loadFile(filename);
     if (!loadFile.open(QIODevice::ReadOnly)) {
-        emit error(tr("Error loading dispaly parameters from file")
+        emit error(tr("Error")
+                   ,tr("Error loading dispaly parameters from file")
                     ,tr("Cannot open file ") + filename
                     ,"EAContainer::loadDisplayFormat\nloadFile.open==false"
                     , Critical);
@@ -1029,7 +1013,8 @@ bool EAContainer::loadDisplayResource(const QString &filename)
     //qDebug() << "loadDisplayFormat filename: " << filename;
     QFile loadFile(filename);
     if (!loadFile.open(QIODevice::ReadOnly)) {
-        emit error(tr("Error loading dispaly parameters from file")
+        emit error(tr("Error")
+                   ,tr("Error loading dispaly parameters from file")
                     ,tr("Cannot open file ") + filename
                     ,"EAContainer::loadDisplayFormat\nloadFile.open==false"
                     , Critical);

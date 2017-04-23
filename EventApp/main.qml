@@ -4,6 +4,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import Qt.labs.settings 1.0
+import QtQuick.Dialogs 1.2
 import EventAppData 1.0
 import "qrc:///shared"
 import com.dreamdev.QtAdMobBanner 1.0
@@ -16,15 +17,15 @@ ApplicationWindow {
     //width: 720; height: 1280
     width: settingsGeometry.width
     height: settingsGeometry.height
-    property bool downloadFileOnly: true
+    property bool downloadFileOnly: false//true
     title: eaContainer.eaInfo.eventName
-
+    color: "white"
     EaContainerObj {
         id: eaContainer
     }
 
     Rectangle {
-        color: appwin.backColour
+        color: "white"
         //width: appwin.width
         //height: appwin.height - 50
         anchors.fill: parent
@@ -37,30 +38,30 @@ ApplicationWindow {
         //height: appwin.height
         height: Qt.platform.os === "android" ? (appwin.height - 50) : appwin.height
     }
-/*
+
     Component.onCompleted: {
-        if (Qt.platform.os === "android" ) {
-            var qmlString = "import QtQuick 2.7\n"
-                    + "import QtQuick 2.7\n"
-                    + "import com.dreamdev.QtAdMobBanner 1.0\n"
-                    + "import com.dreamdev.QtAdMobInterstitial 1.0\n"
-                    +"AdMobBanner {\n"
-                        + "\tid: banner\n"
-                        + "\ty:  Screen.devicePixelRatio * appwin.height -50\n"
-                            + "\t\tComponent.onCompleted: {\n"
-                            + "\t\tbanner.unitId = \"ca-app-pub-1142520693748162/7246793937\"\n"
-                            + "\t\tappwin.height = eaContainer.screenHeight\n"
-                            + "\t\tappwin.width = eaContainer.screenWidth\n"
-                            + "\t}"
-                            + "}\n";
-             var newObject = Qt.createQmlObject(
-                               qmlString
-                              ,appwin
-                              ,"dynamicSnippet1");
+        console.log("in appwin onCompleted");
+    }
+
+    MessageDialog {
+        id: splashReloadQu
+        //title: "Event Reload"
+        //text: "Load Existing event?"
+        //informativeText: "You have an existing event avaliable. Do you want to use that one, or load a new event?"
+        //title: eaContainer.eaConstruction.strings.spalshTitle
+        //text:eaContainer.eaConstruction.strings.spalshText
+        //informativeText: eaContainer.eaConstruction.strings.spalshInfo
+        icon: StandardIcon.Question
+        standardButtons: StandardButton.Yes | StandardButton.No
+        onYes: {
+            eaContainer.reloadEventApp();
+        }
+        onNo: {
+           eventAppPage.stackCtl.currentIndex = eventAppPage.stackCtl.loadEventFile;
         }
     }
 
-*/
+
     AdMobBanner {
         id: banner
         y:  Screen.devicePixelRatio * appwin.height -50
@@ -85,7 +86,8 @@ ApplicationWindow {
     Settings {
         id: settingsData
         category: "data"
-        property string dataFilename: "defaultData"
+        property string eventData: ""
+        property string dataFilename: ""
         property alias firebaseUrl: eaContainer.firbaseUrl
         property string style: "default"
         property string event: ""

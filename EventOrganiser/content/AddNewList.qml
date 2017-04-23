@@ -118,6 +118,7 @@ AddNewListForm {
         var index = listsCreated.currentIndex;
         eaContainer.deleteItemList(index);
         popListsList(eaContainer.eaItemLists);
+        resetDisplay();
     }
 
     upItemListBut.onPressed: {

@@ -160,6 +160,36 @@ QString EAStrings::copyClipbord() const
     return m_copyClipbord;
 }
 
+QString EAStrings::dlKeyExplain() const
+{
+    return m_dlKeyExplain;
+}
+
+QString EAStrings::dlUrlExpalin() const
+{
+    return m_dlUrlExpalin;
+}
+
+QString EAStrings::dlFbUrlExplain() const
+{
+    return m_dlFbUrlExplain;
+}
+
+QString EAStrings::splashTitle() const
+{
+    return m_splashTitle;
+}
+
+QString EAStrings::splashText() const
+{
+    return m_splashText;
+}
+
+QString EAStrings::splashInfo() const
+{
+    return m_splashInfo;
+}
+
 void EAStrings::setTbLoggedOff(QString tbLoggedOff)
 {
     if (m_tbLoggedOff == tbLoggedOff)
@@ -329,4 +359,58 @@ void EAStrings::setCopyClipbord(QString copyClipbord)
 
     m_copyClipbord = copyClipbord;
     emit copyClipbordChanged(copyClipbord);
+}
+
+void EAStrings::setDlKeyExplain(QString dlKeyExplain)
+{
+    if (m_dlKeyExplain == dlKeyExplain)
+        return;
+
+    m_dlKeyExplain = dlKeyExplain;
+    emit dlKeyExplainChanged(dlKeyExplain);
+}
+
+void EAStrings::setDlUrlExpalin(QString dlUrlExpalin)
+{
+    if (m_dlUrlExpalin == dlUrlExpalin)
+        return;
+
+    m_dlUrlExpalin = dlUrlExpalin;
+    emit dlUrlExpalinChanged(dlUrlExpalin);
+}
+
+void EAStrings::setDlFbUrlExplain(QString dlFbUrlExplain)
+{
+    if (m_dlFbUrlExplain == dlFbUrlExplain)
+        return;
+
+    m_dlFbUrlExplain = dlFbUrlExplain;
+    emit dlFbUrlExplainChanged(dlFbUrlExplain);
+}
+
+void EAStrings::setSplashTitle(QString splashTitle)
+{
+    if (m_splashTitle == splashTitle)
+        return;
+
+    m_splashTitle = splashTitle;
+    emit splashTitleChanged(splashTitle);
+}
+
+void EAStrings::setSplashText(QString splashText)
+{
+    if (m_splashText == splashText)
+        return;
+
+    m_splashText = splashText;
+    emit splashTextChanged(splashText);
+}
+
+void EAStrings::setSplashInfo(QString splashInfo)
+{
+    if (m_splashInfo == splashInfo)
+        return;
+
+    m_splashInfo = splashInfo;
+    emit splashInfoChanged(splashInfo);
 }

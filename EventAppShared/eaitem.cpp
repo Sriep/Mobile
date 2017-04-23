@@ -166,7 +166,8 @@ void EAItem::deleteQuestion(int index)
     }
     else
     {
-        emit getEaItemList()->getEaContainer()->error(tr("Error deleting question")
+        emit getEaItemList()->getEaContainer()->error(tr("Error")
+                                                      ,tr("Error deleting question")
                     ,tr("Invalid index ") + QString::number(index)
                     ,"EAItemList::deleteItem"
                     , Warning);
@@ -181,7 +182,8 @@ int EAItem::moveQuestion(int index, bool directionUp)
         {
             if (0 == index)
             {
-                emit getEaItemList()->getEaContainer()->error(tr("Error moving item")
+                emit getEaItemList()->getEaContainer()->error(tr("Error")
+                                                              ,tr("Error moving item")
                             ,tr("Item already at top of list")
                             ,"EAItemList::moveItem"
                             , Warning);
@@ -198,7 +200,8 @@ int EAItem::moveQuestion(int index, bool directionUp)
         {
             if (m_eaQuestions.count()-1 == index)
             {
-                emit getEaItemList()->getEaContainer()->error(tr("Error moving itme")
+                emit getEaItemList()->getEaContainer()->error(tr("Error")
+                                                              ,tr("Error moving itme")
                             ,tr("Item already at bottom of list")
                             ,"EAItemList::moveItem"
                             , Warning);
@@ -214,7 +217,8 @@ int EAItem::moveQuestion(int index, bool directionUp)
     }
     else
     {
-        emit getEaItemList()->getEaContainer()->error(tr("Error moving item")
+        emit getEaItemList()->getEaContainer()->error(tr("Error")
+                                                      ,tr("Error moving item")
                     ,tr("Invalid index ") + QString::number(index)
                     ,"EAItemList::moveItem"
                     , Warning);

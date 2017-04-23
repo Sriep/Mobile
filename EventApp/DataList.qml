@@ -55,6 +55,7 @@ ListView {
             picturePath += "_" + eaContainer.imageVersion;
             picturePath += "/" +j.toString();
             dataModel.setProperty(j, "picture", picturePath);
+            dataModel.setProperty(j,"showPhoto", eaLVItemList.showPhotos)
             console.log("resetDataListModel picturePath", picturePath);
             var newData = dataModel.get(j);
         }

@@ -1,7 +1,8 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 //import QtQuick.Controls.Material 2.0
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.3
+import QtQuick.Dialogs 1.2
 import Qt.labs.settings 1.0
 import EventAppData 1.0
 
@@ -16,8 +17,21 @@ EAContainer {
   Component.onCompleted: {
     dataFilename = settingsData.dataFilename;
     var style = settingsData.style;
-    reloadEventApp()
+    if (splashReloadQu) {
+        if (settingsData.eventData) {
+            splashReloadQu.title = eaContainer.eaConstruction.strings.splashTitle;
+            splashReloadQu.text = eaContainer.eaConstruction.strings.splashText;
+            splashReloadQu.informativeText = eaContainer.eaConstruction.strings.splashInfo;
+            splashReloadQu.visible = true;
+            splashReloadQu.modality = Qt.ApplicationModal;
+        } else {
+            eventAppPage.stackCtl.currentIndex = eventAppPage.stackCtl.loadEventFile;
+        }
+    } else {
+        reloadEventApp()
+    }
   }
+
 
   function reloadEventApp() {
     console.log("In reloadEventApp");
@@ -36,4 +50,22 @@ EAContainer {
     settingsData.dataFilename = dataFilename;
     settingsData.style = eaContainer.eaConstruction.style;
   }
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

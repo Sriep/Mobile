@@ -8,7 +8,6 @@ import "qrc:///shared"
 EventAppPageForm {
   id: eventAppMainPage
   property int testV: 23
-
   function clearStack(stack) {
     console.log("stack count: ", stack.count);
     var dummy = Qt.createQmlObject(
@@ -40,13 +39,17 @@ EventAppPageForm {
   Connections {
       target: eaContainer
       onError: {
-          messageDialog.title = "Error"
+          messageDialog.title = title
           messageDialog.text = message
           messageDialog.informativeText = information
           messageDialog.icon = icon
           messageDialog.detailedText = details
           messageDialog.visible = true
       }
+  }
+
+  Component.onCompleted: {
+    console.log("EventAppPageForm onCompleted");
   }
 
   function refreshLists (stack, model) {

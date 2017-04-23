@@ -69,10 +69,10 @@
         "width": 4,
         "x": 0,
         "xImage": 10,
-        "xText": 100,
+        "xText": 50,
         "y": 0,
-        "yImage": 13,
-        "yText": 6
+        "yImage": 11,
+        "yText": 11
     },
     "strings": {
         "aboutText": "About text\nAbout text\nAbout text\n",

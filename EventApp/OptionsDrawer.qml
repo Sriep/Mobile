@@ -134,9 +134,10 @@ Drawer {
 
           Label {
               width: aboutDialog.availableWidth
-              text: "Easy event app \n"
-                    + "http://www.easyeventapps.com\n"
-                    + "Version " + eaContainer.appVersion() + "\n"
+              text: qsTr("<html><h2>Easy Event App</h2><br>")
+                    + qsTr("Easy event app displayes  custom event and conference information. Design your own free Event App.")
+                    + "<a href=\"http://www.easyeventapps.com\">www.easyeventapps.com</a><br>"
+                    + qsTr("Version ") + eaContainer.appVersion() + "</html>\n"
               wrapMode: Label.Wrap
               font.pixelSize: 12
           }

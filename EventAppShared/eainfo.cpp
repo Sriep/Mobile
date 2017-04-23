@@ -10,17 +10,17 @@ EAInfo::EAInfo()
 void EAInfo::read(const QJsonObject &json)
 {
        setEventName(json["name"].toString());
-       setEventDescription(json["description"].toString());
-       setOrganiserName(json["organizer_name"].toString());
-       setOrganiserDescription(json["organizer_description"].toString());
+       //setEventDescription(json["description"].toString());
+       //setOrganiserName(json["organizer_name"].toString());
+       //setOrganiserDescription(json["organizer_description"].toString());
 }
 
 void EAInfo::write(QJsonObject &json) const
 {
     json["name"] = m_eventName;
-    json["description"] = m_eventDescription;
-    json["organizer_name"] = m_organiserName;
-    json["organizer_description"] = m_organiserDescription;
+    //json["description"] = m_eventDescription;
+    //json["organizer_name"] = m_organiserName;
+    //json["organizer_description"] = m_organiserDescription;
 }
 
 QString EAInfo::eventName() const

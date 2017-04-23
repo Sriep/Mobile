@@ -265,7 +265,7 @@ Item {
         }
         opacity: imageDelegate.detailsOpacity
         text: "Close"
-        //text: dataDelegate.state === 'Details' ? "Close" : "Open"
+        //text: dataDelegate.state === 'Detailszz' ? "Close" : "Open"
         checked: true
         //onClicked: dataDelegate.state === 'Details' ? "Details" : "";
         //onClicked: dataDelegate.state === 'Details' ? "" : "Details";

@@ -5,104 +5,49 @@ import QtQuick.Layouts 1.3
 Item {
     property alias urlText: urlText
     property alias downloadButton: downloadButton
-    property alias progressBar: progressBar
     property alias quitButton: quitButton
-    property alias debugLog: debugLog
-    property alias getDebugLog: getDebugLog
-    property alias copyClipBut: copyClipBut
+    property alias copyClipBut: copyClipBut    
 
-    ColumnLayout {
-        id: columnLayout2
-        width: eventAppMainPage.width
-        x:5
-
+        Text {
+            id: expalinLoadUrl
+            width: parent.width
+            text: eaContainer.eaConstruction.strings.dlUrlExpalin
+            wrapMode: Text.WordWrap  ;//WordWrap WrapAnywhere
+        }
         ColumnLayout {
-            id: columnLayout1
-            width: eventAppMainPage.width
-            height: 139
-/*
-            Label {
-                height: 20
-                text: eaContainer.eaConstruction.strings.lfDownloadUrl
-                verticalAlignment: Text.AlignVCenter
-                font.pixelSize: 12
-            }
-*/
+            width: parent.width
+            anchors.top: expalinLoadUrl.bottom
             TextField {
                 id: urlText
-                height: 30
-                width: eventAppMainPage.width - 20
-                //text: "https://www.dropbox.com/s/inpkybii096m5qh/EA%20test1.json?dl=0"
-                //text: "https://www.dropbox.com/s/inpkybii096m5qh/EA%20test1.json?raw=1"
+                width: parent.width
+                Layout.fillWidth: true
                 text: "http://www."
                 horizontalAlignment: Text.AlignLeft
-                Layout.fillWidth: true
                 placeholderText: qsTr("https://")
                 cursorVisible: true
                 selectByMouse: true
-                ToolTip.delay: 1000
-                ToolTip.timeout: 5000
-                ToolTip.visible: hovered
-                ToolTip.text:  eaContainer.eaConstruction.strings.lfDownloadUrl
             }
-
+            Button {
+             //   anchors.top: urlText.bottom
+                id: copyClipBut
+                //text: qsTr("Copy from clipboard")
+                text: eaContainer.eaConstruction.strings.copyClipbord
+            }
             RowLayout {
                 id: rowLayout1
                 width: 100
                 height: 30
-                anchors.left: parent.left
+               // anchors.left: parent.left
+              //  anchors.top: copyClipBut.bottom
                 Button {
                     id: downloadButton
                     text: eaContainer.eaConstruction.strings.bDownlaod
                 }
+
                 Button {
-                    id: copyClipBut
-                    //text: qsTr("Copy from clipboard")
-                    text: eaContainer.eaConstruction.strings.copyClipbord
-                } //Rectangle
-            }
-
-            ProgressBar {
-                id: progressBar
-                width: 400
-                antialiasing: true
-                visible: false
-                clip: false
-                value: 0
-                Layout.fillWidth: true
-            }
-        }
-
-        Button {
-            id: quitButton
-            text: eaContainer.eaConstruction.strings.bExit
-        }
-
-        Button {
-            id: getDebugLog
-            visible: false
-            text: qsTr("Debug log")
-        }
-
-        Rectangle {
-            width: 450; height: 300
-            border.width : 0.5
-            border.color : "black"
-            anchors.left: parent.left
-            anchors.leftMargin: 0
-            visible: false
-            Flickable {
-                anchors.fill: parent
-                TextArea.flickable: TextArea {
-                    id: debugLog
-                    wrapMode: TextArea.Wrap
-                    readOnly: true
+                    id: quitButton
+                    text: eaContainer.eaConstruction.strings.bExit
                 }
-                ScrollBar.vertical: ScrollBar { }
             }
-        }
-
-
     }
-
 }

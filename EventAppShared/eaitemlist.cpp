@@ -290,9 +290,9 @@ void EAItemList::loadCSV(const QString filenameUrl)
         {
             csvListLines.removeFirst();
             if (headerList[1].toInt() == (int) ListType::Formated)
-                readMixedList(csvListLines);
-            else
                 readFormatedList(csvListLines);
+            else
+                readMixedList(csvListLines);
         }
         else
             readFormatedList(csvListLines);
@@ -573,25 +573,43 @@ void EAItemList::saveTitleChanges()
 void EAItemList::loadPhotos(const QString &format)
 {
     // http://stackoverflow.com/questions/14988455/count-qstring-arguments
-    int argCount = format.count(QRegExp("%\\d{1,2}(?!\\d)"));
-    qDebug() << "arg count " << argCount;
-    QJsonObject obj0 = jsonFields[0].toObject();
-    QString name0 = obj0["modelName"].toString();
+    //int argCount = format.count(QRegExp("%\\d{1,2}(?!\\d)"));
+    //qDebug() << "arg count " << argCount;
+    //QJsonObject obj0 = jsonFields[0].toObject();
+    //QString name0 = obj0["modelName"].toString();
+
+    int indexPct = format.indexOf(QRegExp("%[1-9]"));
+    int column = format[indexPct+1].digitValue();
+    if (0 > column || column >= jsonFields.size())
+    {
+        emit getEaContainer()->error(tr("Error")
+                    ,tr("Incoreectly formated image name")
+                    ,tr("Input filename, where the first % sybol is followed")
+                        + tr("the column entry to use for picture filename")
+                    ,format
+                    ,Warning);
+        return;
+    }
+    QJsonObject objN = jsonFields[column].toObject();
+    QString nameN = objN["modelName"].toString();
 
     for ( int i=0 ; i<jsonData.count() ; i++ )
     {
         QJsonObject ithObj = jsonData[i].toObject();
-        QString firstField = ithObj[name0].toString();
+        QString firstField = ithObj[nameN].toString();
         QString filename = QString(format).arg(firstField);
 
         QImage  picImage(filename);
-        picImage.scaled(100,100, Qt::AspectRatioMode::KeepAspectRatio);
-        QPixmap pix = QPixmap::fromImage(picImage);
-        QJsonValue jsonPic = jsonValFromPixmap(pix);
-        if (jsonPictures.size() > i)
-            jsonPictures[i] = jsonPic;
-        else
-            jsonPictures.append(jsonPic);
+        if (!picImage.isNull())
+        {
+            picImage.scaled(100,100, Qt::AspectRatioMode::KeepAspectRatio);
+            QPixmap pix = QPixmap::fromImage(picImage);
+            QJsonValue jsonPic = jsonValFromPixmap(pix);
+            if (jsonPictures.size() > i)
+                jsonPictures[i] = jsonPic;
+            else
+                jsonPictures.append(jsonPic);
+        }
     }
     resetImageProvider(getEaContainer());
     getEaContainer()->refreshData();

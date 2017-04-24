@@ -37,9 +37,9 @@ int main(int argc, char *argv[])
     QmlAdMobBanner::DeclareQML();           // <== Call it before loading qml
     QmlAdMobInterstitial::DeclareQML();     // <== Call it before loading qml
 
-    app.setOrganizationName("Piers");
+    app.setOrganizationName("easyeventapps.com");
     app.setOrganizationDomain("http://www.easyeventapps.com");
-    app.setApplicationName("Event App");
+    app.setApplicationName("Easy Event App");
     QString version = GIT_VERSION;
     app.setApplicationVersion(GIT_VERSION);
 

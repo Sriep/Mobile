@@ -16,8 +16,9 @@ EAContainer {
   //property alias eaConstruction: eaConstruction
   Component.onCompleted: {
     dataFilename = settingsData.dataFilename;
-    var style = settingsData.style;
-    if (splashReloadQu) {
+    //var style = settingsData.style;
+    //var isSplashMessage = typeof splashReloadQu
+    if (typeof splashReloadQu !== "undefined") {
         if (settingsData.eventData) {
             splashReloadQu.title = eaContainer.eaConstruction.strings.splashTitle;
             splashReloadQu.text = eaContainer.eaConstruction.strings.splashText;

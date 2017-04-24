@@ -34,7 +34,7 @@ Item {
                 nameFilters: ["Csv files (*.csv)", "Other (*.* )" ]
                 folder: eaContainer.workingDirectory
                 Connections {
-                    onAccepted:  loadCsvFile(loadCsvDialog.file);
+                    onAccepted:  loadCsvFileFormatted(loadCsvDialog.file);
                 }
             }
             Button {

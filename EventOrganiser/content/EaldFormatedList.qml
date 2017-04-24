@@ -50,7 +50,7 @@ EaldFormatedListForm {
         eventList.saveTitleChanges();
     }
 
-    function loadCsvFile (filename) {
+    function loadCsvFileFormatted (filename) {
         console.log("EAListDisplayPageForm about to load", filename);
         featuredList.loadCSV(filename)
         popTitlesList(featuredList);

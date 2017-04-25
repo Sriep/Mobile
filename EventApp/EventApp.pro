@@ -9,8 +9,7 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 DEFINES += QTADMOB_QML
 include(../QtAdMob/QtAdMob.pri)
 
-GIT_VERSION = $$system(git describe --always --tags)
-DEFINES += GIT_VERSION=\\\"$$GIT_VERSION\\\"
+
 
 SOURCES += main.cpp \
     ../EventAppShared/eacontainer.cpp \
@@ -65,22 +64,22 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 win32 {
-    DEFINES += "GIT_EXE=\"\\\"C:\\\Program Files\\\Git\\\bin\\\git.exe\\\"\""
+  #  DEFINES += "GIT_EXE=\"\\\"C:\\\Program Files\\\Git\\\bin\\\git.exe\\\"\""
 }
 
 win64 {
-    DEFINES += "GIT_EXE=\"\\\"C:\\\Program Files\\\Git\\\bin\\\git.exe\\\"\""
+  #  DEFINES += "GIT_EXE=\"\\\"C:\\\Program Files\\\Git\\\bin\\\git.exe\\\"\""
 }
 
 macx {
-    message(macx)
+   # message(macx)
 }
 
 unix:!macx{
-    DEFINES += "GIT_EXE=\"\\\"/usr/bin/git\\\"\""
-    message(unix)
-    GIT_VERSION = $$system(git describe --always --tags)
-    DEFINES += "GIT_VERSION=\"\\\"$$GIT_VERSION\\\"\""
+   # DEFINES += "GIT_EXE=\"\\\"/usr/bin/git\\\"\""
+   # message(unix)
+   # GIT_VERSION = $$system(git describe --always --tags)
+   # DEFINES += "GIT_VERSION=\"\\\"$$GIT_VERSION\\\"\""
 }
 
 android: {
@@ -124,7 +123,32 @@ contains(ANDROID_TARGET_ARCH,x86) {
     ANDROID_EXTRA_LIBS =
 }
 
+#https://www.everythingfrontend.com/posts/app-version-from-git-tag-in-qt-qml.html
+GIT_VERSION_LONG = $$system(git describe --always --tags)
+DEFINES += GIT_VERSION_LONG=\\\"$$GIT_VERSION_LONG\\\"
+GIT_VERSION = $$system(git describe --tags)
+DEFINES += GIT_VERSION=\\\"$$GIT_VERSION\\\"
+VERSION = $$GIT_VERSION
+message(versionName from github: $$GIT_VERSION)
+message(long versionName from github: $$GIT_VERSION_LONG)
 
+#http://www.cutehacks.com/blog/2015/5/28/one-version-number-to-rule-them-all
+VERSIONS_ARR = $$split(GIT_VERSION, .)
+VERSION_MAJ = $$member(VERSIONS_ARR, 0)
+VERSION_MIN = $$member(VERSIONS_ARR, 1)
+VERSION_PAT = $$member(VERSIONS_ARR, 2)
+
+message(Major $$VERSION_MAJ Minor $$VERSION_MIN Patch $$VERSION_PAT)
+
+android {
+#http://www.cutehacks.com/blog/2015/5/28/one-version-number-to-rule-them-all
+    QT_varfile = ""
+    for(var, $$list($$find($$list($$enumerate_vars()), ^(?!QMAKE_.*|QT\..*|QT_.*|\.QMAKE.*).*$))) {
+        line = $$var "$$eval($$var)"
+        QT_varfile += $$join(line, "=")
+    }
+    write_file($$absolute_path("VARIABLES.txt", $$OUT_PWD), QT_varfile)
+}
 
 
 

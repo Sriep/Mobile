@@ -124,21 +124,23 @@ Drawer {
       Column {
           id: aboutColumn
           spacing: 20
-
-          Label {
-              width: aboutDialog.availableWidth
+          width: parent.width
+          Text {
+              //width: aboutDialog.availableWidth
+              width: parent.width
               text:  eaContainer.eaConstruction.strings.aboutText
-              wrapMode: Label.Wrap
+              wrapMode: Text.WordWrap
               font.pixelSize: 12
           }
 
-          Label {
-              width: aboutDialog.availableWidth
+          Text {
+              //width: aboutDialog.availableWidth
+              width: parent.width
               text: qsTr("<html><h2>Easy Event App</h2><br>")
-                    + qsTr("Easy event app displayes  custom event and conference information. Design your own free Event App.")
+                    + qsTr("Easy event app displayes  custom event and conference information. Design your own free Event App. ")
                     + "<a href=\"http://www.easyeventapps.com\">www.easyeventapps.com</a><br>"
                     + qsTr("Version ") + eaContainer.appVersion() + "</html>\n"
-              wrapMode: Label.Wrap
+              wrapMode: Text.WordWrap
               font.pixelSize: 12
           }
       }

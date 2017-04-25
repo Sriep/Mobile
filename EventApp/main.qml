@@ -17,7 +17,7 @@ ApplicationWindow {
     //width: 720; height: 1280
     width: settingsGeometry.width
     height: settingsGeometry.height
-    property bool downloadFileOnly: false//true
+    property bool downloadFileOnly: true
     title: eaContainer.eaInfo.eventName
     color: "white"
     EaContainerObj {
@@ -45,12 +45,6 @@ ApplicationWindow {
 
     MessageDialog {
         id: splashReloadQu
-        //title: "Event Reload"
-        //text: "Load Existing event?"
-        //informativeText: "You have an existing event avaliable. Do you want to use that one, or load a new event?"
-        //title: eaContainer.eaConstruction.strings.spalshTitle
-        //text:eaContainer.eaConstruction.strings.spalshText
-        //informativeText: eaContainer.eaConstruction.strings.spalshInfo
         icon: StandardIcon.Question
         standardButtons: StandardButton.Yes | StandardButton.No
         onYes: {

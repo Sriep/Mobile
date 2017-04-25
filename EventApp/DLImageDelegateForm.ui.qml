@@ -146,8 +146,12 @@ Item {
                     visible: imageDelegate.detailsOpacity === 1 && itemType === 2
                     opacity: imageDelegate.detailsOpacity
                     //width: background.width-10; height: background.height-10
-                    width: eventAppMainPage.width -20;
-                    height: eventAppMainPage.height -10
+                    width: eventAppMainPage.width -20
+                    //height: eventAppMainPage.height -100
+                    height: Qt.platform.os === "android"
+                            ? eventAppMainPage.height -100
+                            : eventAppMainPage.height -50
+
                     //width: 300; height: 300
                     //anchors.fill: parent
                     //y: -100//-topLayout.height-100 //; x:5
@@ -156,8 +160,11 @@ Item {
             }
 
             ListView {
-                width: eventAppMainPage.width
-                height: eventAppMainPage.height //600
+               // width: eventAppMainPage.width
+                //height: eventAppMainPage.height //600
+                width: eventAppPage.width
+                height: eventAppPage.height
+
                 model: ListModel {
                     id: questionsModel
                 }

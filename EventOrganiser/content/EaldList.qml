@@ -132,6 +132,7 @@ EaldListForm {
     deleteItemBut.onPressed: {
         var index = itmesEntered.currentIndex;
         eaListDisplayPage.featuredList.deleteItem(index);
+        listView.resetDataImageLM();
         popItemList(eaListDisplayPage.featuredList);
         itmesEntered.currentIndex = index-1;
     }
@@ -140,6 +141,7 @@ EaldListForm {
         var v = itmesEntered.count;
         var index = itmesEntered.currentIndex;
         var newIndex = eaListDisplayPage.featuredList.moveItem(index, true);
+        listView.resetDataImageLM();
         popItemList(eaListDisplayPage.featuredList);
         itmesEntered.currentIndex = newIndex;
     }
@@ -147,6 +149,7 @@ EaldListForm {
     downItemBut.onPressed: {
         var index = itmesEntered.currentIndex;
         var newIndex = eaListDisplayPage.featuredList.moveItem(index, false);
+        listView.resetDataImageLM();
         popItemList(eaListDisplayPage.featuredList);
         itmesEntered.currentIndex = newIndex;
     }

@@ -2,7 +2,7 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.1
 import Qt.labs.settings 1.0
-import QtQuick.Dialogs 1.0
+//import QtQuick.Dialogs 1.0
 import Qt.labs.platform 1.0
 import "qrc:///shared"
 
@@ -35,6 +35,14 @@ Item {
                 folder: eaContainer.workingDirectory
                 Connections {
                     onAccepted:  loadCsvFileFormatted(loadCsvDialog.file);
+                }
+            }
+            FolderDialog {
+                id: picturesPath
+                currentFolder: eaContainer.workingDirectory
+                //folder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
+                Connections {
+                    onAccepted: setPicturesPath(picturesPath.folder);
                 }
             }
             Button {
@@ -176,13 +184,21 @@ Item {
                         //checked: eaListDisplayPage.featuredList.showPhotos
                         //onCheckedChanged: featuredList.showPhotos = usePhotos.checked
                     }
+                    Button {
+                        id: setPath
+                        text: qsTr("Prefix Path")
+                        Connections {
+                            onPressed: picturesPath.open()
+                        }
+                    }
                     TextField {
-                        width:parent.width-20; height: 100
+                        //width:parent.width-20; height: 100
                         Layout.fillWidth: true
                         id: imageFilenameFormat
                         enabled: usePhotos.checked
                         text: "%1.png"
                     }
+
                 }
 
                 Button {

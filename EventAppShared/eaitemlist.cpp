@@ -572,14 +572,8 @@ void EAItemList::saveTitleChanges()
 
 void EAItemList::loadPhotos(const QString &format)
 {
-    // http://stackoverflow.com/questions/14988455/count-qstring-arguments
-    //int argCount = format.count(QRegExp("%\\d{1,2}(?!\\d)"));
-    //qDebug() << "arg count " << argCount;
-    //QJsonObject obj0 = jsonFields[0].toObject();
-    //QString name0 = obj0["modelName"].toString();
-
     int indexPct = format.indexOf(QRegExp("%[1-9]"));
-    int column = format[indexPct+1].digitValue();
+    int column = format[indexPct+1].digitValue() -1;
     if (0 > column || column >= jsonFields.size())
     {
         emit getEaContainer()->error(tr("Error")
@@ -849,18 +843,7 @@ int EAItemList::getIndex()
     }
     return -1;
 }
-/*
-void EAItemList::removeItem(int index)
-{
-    if (0 <= index && index < getEaItems().size())
-    {
-        //getEaItems().removeAt(index);
-        m_eaItems.removeAt(index);
-        resetImageProvider(getEaContainer());
-        emit eaItemListChanged();
-    }
-}
-*/
+
 void EAItemList::deleteItem(int index)
 {
     if (index < m_eaItems.count() && index >= 0)

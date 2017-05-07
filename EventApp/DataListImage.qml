@@ -95,8 +95,6 @@ ListView {
             var picturePath = "image://list_" + index.toString();
             picturePath += "_" + eaContainer.imageVersion;
             picturePath += "/" +i.toString();
-            var uu = items[i].url;
-            var uuu = items[i].urlString;
             var dic = {
                 "itemType" : items[i].itemType
                 ,"title" : items[i].title

@@ -1,0 +1,46 @@
+<html>
+Easy Event App allows you to create a completely free mobile application only hours or minutes before your event.
+
+<p>This contrasts with most other event apps that cost hundreds or even thousands to create, and require several week advance notice.</p>
+<h2>Event App and its data file</h2>
+<p>Our solution consists of two main components. The data for your event stored in JSON format somewhere on the internet, and our Event App which can be downloaded and installed on attendees mobiles. Our Event App acts in similarly to a document viewer; With no event loaded its an empty shell, but after loading your event data it is transformed into a fully functioning Event App.</p>
+<p>
+Your event data can be created using our free custom application Event Organiser. We are also intending to add a form for event data creation to our website. The data is in human readable JSON format, so once you have enough experience you could edit the JSON file directly.
+</p>
+<h2>Getting your event data to an attendees mobile</h2>
+<p>So someone has arrived at your event with our Easy Event App installed on their mobile. How do they load your event on to it? Well, we have several solutions that we are developing and will make available in the coming months.
+</p>
+<h3>Attendee enters data file URL</h3>
+<p>
+[caption id="" align="alignnone" width="637"]<img title="" src="http://www.easyeventapps.com/wp-content/uploads/2017/04/EoFbdbFbdbea.png" alt="User enters url" width="637" height="242" /> Organiser saves event data to an online file. The user enters file URL so that mobile can download event data.[/caption]
+</p><p>
+This is cheap and easy to setup. However, the file format is static, which means that there is no data flow from mobile to the data file. So there can not be any online user specific data.
+</p><p>
+This is the only format we are supporting for our first release.</p>
+<h3>Attendee enters organisers' DB login information</h3>
+<p>
+[caption id="" align="alignnone" width="637"]<img title="" src="http://www.easyeventapps.com/wp-content/uploads/2017/04/EoFDBEea.png" alt="USer uses organisers db login details" width="637" height="242" /> Organiser sets up a database, the user provides database login details to mobile. Mobile then has two-way communication with the database.[/caption]
+</p><p>
+This allows two-way communication between mobile and event data, allowing full Event App functionality. As no Easy Event App resources are being used this solution can be provided free of charge.
+</p><p>
+The main problem is that the attendee has to be provided with database login information. This can lead to security risks, as well as making the event activation process more complicated. For a small private group, this could be an excellent solution.
+</p><p>
+For our initial releases, we will be using Firebase as our online database solution. Creating a Firebase database is straightforward, however, it's something the organiser will need to familiarise themselves with.
+</p>
+<h3>Organiser's DB login information in our DB</h3>
+<p>
+[caption id="" align="alignnone" width="644"]<img title="" src="http://www.easyeventapps.com/wp-content/uploads/2017/04/EoFbdbFbdbea-1.png" alt="" width="644" height="359" /> The organiser creates a database, and we hold the login information to that database in our database. The login details for our database is hard-coded into the Event App on the mobile. So the chained logins allow the mobile app to retrieve the event app data from the organiser's database.[/caption]
+</p><p>
+This allows the user to load the event simply by entering an easily remembered 'Event Id'. Most of the data is downloaded from the organiser's database. Every mobile user will still need to access our database, so there will be a small charge for that. For our initial releases, we will be using Firebase as our online database solution. Creating a Firebase database is straightforward, however, it's something the organiser will need to familiarise themselves with.
+</p>
+<h3>Organiser's DB login information hard coded into mobile Event App</h3>
+<p>
+[caption id="" align="alignnone" width="634"]<img title="" src="http://www.easyeventapps.com/wp-content/uploads/2017/04/EoFbdbFbdbea-2.png" alt="DB loging hard coded into event app" width="634" height="299" /> The organiser's database login information is hard coded and encrypted into the mobile Event App. The user then just need to give an 'Event Id' that identifies the event organisers.[/caption]
+</p><p>
+A regular subscription will be needed to modify the mobile Event App. However after an unlimited number of Event Apps can be freely created. For our initial releases, we will be using Firebase as our online database solution. Creating a Firebase database is straightforward, however, it's something the organiser will need to familiarise themselves with.
+<h3>Event data held in Easy Event App database</h3>
+[caption id="" align="alignnone" width="634"]<img title="" src="http://www.easyeventapps.com/wp-content/uploads/2017/04/EoEeaEea.png" alt="DB loging hard coded into event app" width="634" height="299" /> The event data is stored on our database. The user enters an easy to remember 'Event Id' to load the event.[/caption]
+</p><p>
+This is likely to be the easiest option for the event organiser to set up, as the database storge will be transparent. It will also be the most expensive as well will need to charge in advance for database usage.
+</p>
+</html>

@@ -105,8 +105,7 @@ Item {
         width: parent.width
         //anchors { top: parent.top; bottom: parent.bottom }
         anchors.fill: parent
-
-        contentHeight: bottomText.height
+        //contentHeight: bottomText.height
         clip: true
 
         StackLayout {
@@ -123,12 +122,18 @@ Item {
                     x:20; y:10
                 }
             }
+
             Item {
-                Text {
-                  id: bottomText;
-                  wrapMode: Text.WordWrap;
-                  width: details.width
-                  text: eaLVItemList.items[itemIndex].displayText;
+                Flickable {
+                    anchors.fill: parent
+                    contentHeight: bottomText.height
+                    Text {
+                      id: bottomText;
+                      wrapMode: Text.WordWrap;
+                      width: details.width
+                      text: eaLVItemList.items[itemIndex].displayText;
+                    }
+                    ScrollBar.vertical: ScrollBar { }
                 }
             }
 
@@ -160,10 +165,10 @@ Item {
             }
 
             ListView {
-               // width: eventAppMainPage.width
-                //height: eventAppMainPage.height //600
-                width: eventAppPage.width
-                height: eventAppPage.height
+                width: eventAppMainPage.width
+                height: eventAppMainPage.height
+                //width: eventAppPage.width
+                //height: eventAppPage.height
 
                 model: ListModel {
                     id: questionsModel

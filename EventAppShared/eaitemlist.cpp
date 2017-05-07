@@ -47,6 +47,7 @@ EAItemList::~EAItemList()
 void EAItemList::clear(EAContainer* eacontainer)
 {
     //EAItemList::clear(eacontainer);
+    jsonPictures = QJsonArray();
 }
 
 
@@ -786,21 +787,7 @@ void EAItemList::addPicture(int index, const QString& filename)
     picImage.scaled(100,100);
     QPixmap pix = QPixmap::fromImage(picImage);
     QJsonValue jsonPic = jsonValFromPixmap(pix);
-    /*
-    if (jsonPictures.size() > index)
-        jsonPictures[index] = jsonPic;
-    else if (jsonPictures.size() == index)
-        jsonPictures.append(jsonPic);
-    else
-    {
-        QPixmap nullPix;
-        QJsonValue nullJson = jsonValFromPixmap(nullPix);
-        for ( int i=jsonPictures.size() ; i< index ; i++ )
-            jsonPictures.append(nullJson);
-        jsonPictures.append(jsonPic);
-    }
-    //resetImageProvider(getEaContainer());
-    */
+
     padOutPictures();
     jsonPictures[index] = jsonPic;
 
@@ -849,6 +836,7 @@ void EAItemList::deleteItem(int index)
     if (index < m_eaItems.count() && index >= 0)
     {
         m_eaItems.removeAt(index);
+        jsonPictures.removeAt(index);
         getEaContainer()->resetImageProviders();
         emit eaItemsChnged();
     }
@@ -877,13 +865,6 @@ int EAItemList::moveItem(int index, bool directionUp)
                             , Warning);
                 return index;
             }
-            else
-            {
-                m_eaItems.swap(index, index -1);
-                getEaContainer()->resetImageProviders();
-                emit eaItemsChnged();
-                return index-1;
-            }
         }
         else
         {
@@ -896,14 +877,15 @@ int EAItemList::moveItem(int index, bool directionUp)
                             , Warning);
                 return index;
             }
-            else
-            {
-                m_eaItems.swap(index, index +1);
-                getEaContainer()->resetImageProviders();
-                emit eaItemsChnged();
-                return index +1;
-            }
         }
+        int delta = directionUp ? -1 : +1;
+        m_eaItems.swap(index, index + delta);
+        QJsonValue temp = jsonPictures[index];
+        jsonPictures[index] = jsonPictures[index+delta];
+        jsonPictures[index+delta] = temp;
+        getEaContainer()->resetImageProviders();
+        emit eaItemsChnged();
+        return index + delta;
     }
     else
     {
@@ -1093,9 +1075,6 @@ void EAItemList::setEaItems(const QList<EAItem *> &eaItems)
 
 bool EAItemList::showIcon()
 {
-    //EAContainer* eacontianer = getEaContainer();
-    //QJsonArray array = getEaContainer()->getJsonIcons();
-    //QString icon = array[getIndex()].toString();
     QString icon = getEaContainer()->getJsonIcons()[getIndex()].toString();
     bool m_showIcon =  "" != icon;
     return m_showIcon;

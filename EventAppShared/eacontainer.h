@@ -201,7 +201,7 @@ private:
                             , QList<EaQuestion*> questionList);
     void setAnswers(QJsonObject jsonAnswers);
     QJsonObject getServiceAccountKey(const QString& filename);
-    void padOutIconst();
+    void padOutIcons();
     static void append_eaItemLists(QQmlListProperty<EAItemList> *list
                                    , EAItemList *itemList);
     static int count_eaItemLists(QQmlListProperty<EAItemList> *list);

@@ -54,7 +54,7 @@ void EAContainer::resetImageProviders()
         m_eaItemLists[i]->resetImageProvider(this);
     }
 
-    padOutIconst();
+    padOutIcons();
     QQmlEngine* engine = qmlEngine(this);
     if (engine)
     {
@@ -82,7 +82,7 @@ int EAContainer::imageVersion() const
     return m_imageVersion;
 }
 
-void EAContainer::padOutIconst()
+void EAContainer::padOutIcons()
 {
     QPixmap nullPix;
     QJsonValue nullJson = jsonValFromPixmap(nullPix);
@@ -102,7 +102,7 @@ void EAContainer::addIcon(int index,  const QString& filenameUrl)
     QPixmap pix = QPixmap::fromImage(picImage);
     QJsonValue jsonPic = jsonValFromPixmap(pix);
 
-    padOutIconst();
+    padOutIcons();
     if (0 <= index)
         jsonIcons[index] = jsonPic;
     else
@@ -113,7 +113,7 @@ void EAContainer::addIcon(int index,  const QString& filenameUrl)
 
 void EAContainer::clearIcon(int index)
 {
-    padOutIconst();
+    padOutIcons();
     if (0 <= index)
         jsonIcons[index] = QJsonValue();
     else
@@ -131,7 +131,7 @@ void EAContainer::addEventIcon(const QString &filenameUrl, int height)
     QJsonValue jsonPic = jsonValFromPixmap(pix);
     setShowEventIcon(true);
 
-    padOutIconst();
+    padOutIcons();
     setEventIcon(jsonPic);
     resetImageProviders();
     refreshData();
@@ -141,7 +141,7 @@ void EAContainer::clearEventIcon()
 {
     setShowEventIcon(false);
 
-    padOutIconst();
+    padOutIcons();
     setEventIcon(QJsonValue());
 
     resetImageProviders();

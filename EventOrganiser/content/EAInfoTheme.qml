@@ -7,6 +7,4 @@ EAInfoThemeForm {
     button1.onClicked: eventContainer.saveSaveEventApp();
     button2.onClicked: eventContainer.loadEventApp();
     //textField1.text: eventContainer.dataFilename;
-
-
 }

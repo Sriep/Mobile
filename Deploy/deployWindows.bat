@@ -19,12 +19,12 @@ copy *.dll %EVENTORGANISER_DIR%
 set INNO_DIR="C:\Program Files (x86)\Inno Setup 5"
 set DEPLOYDIR=C:\Deployment
 set OUTDIR=%DEPLOYDIR%\EventOrganiser
-set ISS_FILE=EventOrganiser.iss
+set EO_ISS_FILE=EventOrganiser.iss
 
 REM rmdir /s /q %QUTDIR%
 
 cd %INNO_DIR%
-iscc /Q %MOBILE_DIR%/Deploy/%ISS_FILE%
+iscc /Q %MOBILE_DIR%/Deploy/%EO_ISS_FILE%
 
 
 REM Event App deployment
@@ -44,9 +44,9 @@ copy *.dll %EVENTAPP_DIR%
 set INNO_DIR="C:\Program Files (x86)\Inno Setup 5"
 set DEPLOYDIR=C:\Deployment
 set OUTDIR=%DEPLOYDIR%\EventApp
-set ISS_FILE=EventApp.iss
+set EA_ISS_FILE=EventApp.iss
 
 REM rmdir /s /q %QUTDIR%
 
 cd %INNO_DIR%
-iscc /Q %MOBILE_DIR%/Deploy/%ISS_FILE%
+iscc /Q %MOBILE_DIR%/Deploy/%EA_ISS_FILE%

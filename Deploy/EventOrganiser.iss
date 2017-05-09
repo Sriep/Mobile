@@ -26,7 +26,7 @@ InfoBeforeFile=E:\Mobile\Mobile\Deploy\InfoBeforeWin.txt
 InfoAfterFile=E:\Mobile\Mobile\Deploy\InfoAfterWin.txt
 OutputDir=C:\Deployment
 OutputBaseFilename=EventOrganiserSetup
-; SetupIconFile=C:\Users\Piers\Documents\Websites\EasyEventApp\eventapp.ico
+SetupIconFile=E:\Mobile\Mobile\Deploy\eeventa512_oVF_icon.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -37,7 +37,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Program Files (x86)\Inno Setup 5\Examples\MyProg.exe"; DestDir: "{app}"; Flags: ignoreversion
+; Source: "C:\Program Files (x86)\Inno Setup 5\Examples\MyProg.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "E:\Mobile\Mobile\build-EventOrganiser-Desktop_Qt_5_8_0_MSVC2015_64bit-Release\release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 

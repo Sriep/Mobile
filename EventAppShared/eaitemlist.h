@@ -97,7 +97,7 @@ public:
     Q_INVOKABLE void deleteItem(int index);
     Q_INVOKABLE int moveItem(int index, bool directionUp);
 
-    void resetImageProvider(EAContainer* eacontainer = NULL);
+    void resetImageProvider(EAContainer* eacontainer, int index);
     QString titleFields() const;
     QString dataList() const;
     QString listName() const;

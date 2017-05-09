@@ -8,6 +8,7 @@
 #include <QtWebView>
 #include <QSettings>
 #include <QQuickStyle>
+#include <QDebug>
 
 #include "../QtAdMob/QtAdMobBanner.h"
 #include "../QtAdMob/QtAdMobInterstitial.h"
@@ -26,8 +27,15 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    //QCoreApplication::setOrganizationName("EasyEventApps");
+
     //QGuiApplication app(argc, argv);
     QApplication app(argc, argv);
+    app.setOrganizationName("EasyEventApps");
+    app.setOrganizationDomain("www.easyeventapps.com");
+    app.setApplicationName("EventOrganiser");
+    app.setApplicationVersion(GIT_VERSION);
+
     QtWebView::initialize();
     //QtWebEngine::initialize();
 
@@ -38,6 +46,7 @@ int main(int argc, char *argv[])
         settings.setValue("style", style);
     else
         QQuickStyle::setStyle(settings.value("style").toString());
+    qDebug() << settings.fileName();
 
     QmlAdMobBanner::DeclareQML();           // <== Call it before loading qml
     QmlAdMobInterstitial::DeclareQML();     // <== Call it before loading qml
@@ -45,10 +54,6 @@ int main(int argc, char *argv[])
     QFontDatabase fontDatabase;
     if (fontDatabase.addApplicationFont(":/fonts/fontello.ttf") == -1)
         qWarning() << "Failed to load fontello.ttf";
-
-    app.setOrganizationName("Pierses");
-    app.setOrganizationDomain("eventapps.com");
-    app.setApplicationName("PiersesEventAppDesigner");
 
     qmlRegisterType<EAContainer>("EventAppData", 1,0, "EAContainer");
     qmlRegisterType<EAConstruction>("EventAppData", 1,0, "EAConstruction");

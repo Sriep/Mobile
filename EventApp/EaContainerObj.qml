@@ -29,7 +29,7 @@ EAContainer {
             eventAppPage.stackCtl.currentIndex = eventAppPage.stackCtl.loadEventFile;
         }
     } else {
-        reloadEventApp()
+        eaContainer.loadEventApp(false);
     }
   }
 

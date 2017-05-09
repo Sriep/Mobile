@@ -51,7 +51,7 @@ void EAContainer::resetImageProviders()
 
     for ( int i=0 ; i < m_eaItemLists.length() ; i++ )
     {
-        m_eaItemLists[i]->resetImageProvider(this);
+        m_eaItemLists[i]->resetImageProvider(this, i);
     }
 
     padOutIcons();
@@ -302,7 +302,7 @@ bool EAContainer::loadEventApp()
     {
         emit error(tr("Information")
                    ,tr("No Event loaded")
-                    ,tr("To load an event use load menu in top right. Follow the details provided by the event organisers")
+                    ,tr("No event is currently saved. Load an existing event, or start a new blank event")
                     ,tr("Easy event app displayes event and conference information. Design your own free Event App, check out <html><a href=\"http://www.easyeventapps.com\">www.easyeventapps.com</a></html>")
                     , Information);
         return false;

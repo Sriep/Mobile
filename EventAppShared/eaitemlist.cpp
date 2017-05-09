@@ -51,14 +51,15 @@ void EAItemList::clear(EAContainer* eacontainer)
 }
 
 
-void EAItemList::resetImageProvider(EAContainer* eacontainer)
+void EAItemList::resetImageProvider(EAContainer* eacontainer, int index)
 {
     padOutPictures();
     QQmlEngine* engine = qmlEngine(eacontainer);
-
+    int iIndex = getIndex();
     if (engine)
     {
-        QString providerId = "list_" + QString::number(getIndex())  + "_";
+        QString providerId = "list_" + QString::number(index)  + "_";
+        //QString providerId = "list_" + QString::number(getIndex())  + "_";
         QString oldId = providerId + QString::number(eacontainer->imageVersion()-1);
         QQmlImageProviderBase* provider = engine->imageProvider(oldId);
         if (provider)
@@ -94,6 +95,13 @@ void EAItemList::read(const QJsonObject &json
 
     jsonData = json["dataList"].toArray();
     setDataList(jsonData);
+    for (int i=0; i<jsonData.size() ; i++)
+    {
+        QJsonObject dataJsonObject = jsonData[i].toObject();
+        EAItem* newFormatedItem = new EAItem(dataJsonObject, this);
+        m_eaItems.append(newFormatedItem);
+    }
+
     emit dataListChanged(dataList());
 
     jsonPictures = json["pictures"].toArray();
@@ -606,7 +614,8 @@ void EAItemList::loadPhotos(const QString &format)
                 jsonPictures.append(jsonPic);
         }
     }
-    resetImageProvider(getEaContainer());
+    getEaContainer()->resetImageProviders();
+    //resetImageProvider(getEaContainer());
     getEaContainer()->refreshData();
     qDebug() << "photos read " << jsonPictures.count();
 }
@@ -685,8 +694,8 @@ int EAItemList::insertMapItem(int index, const QString &title
     mapInfo->setLongitude(longitude);
     mapInfo->setZoomLevel(zoomLevel);
     mapInfo->setUseCurrent(useCurrent);
-    resetImageProvider(getEaContainer());
-
+    //resetImageProvider(getEaContainer());
+    getEaContainer()->resetImageProviders();
     emit eaItemListChanged();
     if ( index < 0 )
         return 0;
@@ -732,7 +741,8 @@ int EAItemList::updateListItem(int index
     case EAItem::ItemType::Questions:
         break;
     }
-    resetImageProvider(getEaContainer());
+    //resetImageProvider(getEaContainer());
+    getEaContainer()->resetImageProviders();
     return index;
 }
 
@@ -759,7 +769,8 @@ int EAItemList::updateMapItem(int index
     mapInfo->setLongitude(longitude);
     mapInfo->setZoomLevel(zoomLevel);
     mapInfo->setUseCurrent(useCurrent);
-    resetImageProvider(getEaContainer());
+    //resetImageProvider(getEaContainer());
+    getEaContainer()->resetImageProviders();
     return index;
 }
 
@@ -791,6 +802,8 @@ void EAItemList::addPicture(int index, const QString& filename)
     padOutPictures();
     jsonPictures[index] = jsonPic;
 
+    getEaContainer()->resetImageProviders();
+    emit eaItemsChnged();
 }
 
 void EAItemList::padOutPictures()
@@ -798,7 +811,7 @@ void EAItemList::padOutPictures()
     QPixmap nullPix;
     QJsonValue nullJson = jsonValFromPixmap(nullPix);
 
-    int numItems = m_eaItems.size() + jsonData.size();
+    int numItems = m_eaItems.size();// + jsonData.size();
     for ( int i = jsonPictures.size() ; i<numItems ; i++ )
     {
         jsonPictures.append(nullJson);

@@ -23,7 +23,12 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QCoreApplication::setOrganizationName("EasyEventApps");
     QGuiApplication app(argc, argv);
+    app.setOrganizationName("EasyEventApps");
+    app.setOrganizationDomain("www.easyeventapps.com");
+    app.setApplicationName("EventOrganiser");
+    app.setApplicationVersion(GIT_VERSION);
     QtWebView::initialize();
 
     QSettings::setDefaultFormat(QSettings::IniFormat);
@@ -37,11 +42,8 @@ int main(int argc, char *argv[])
     QmlAdMobBanner::DeclareQML();           // <== Call it before loading qml
     QmlAdMobInterstitial::DeclareQML();     // <== Call it before loading qml
 
-    app.setOrganizationName("easyeventapps.com");
-    app.setOrganizationDomain("http://www.easyeventapps.com");
-    app.setApplicationName("Easy Event App");
-    QString version = GIT_VERSION;
-    app.setApplicationVersion(GIT_VERSION);
+    //QString version = GIT_VERSION;
+
 
     qmlRegisterType<EAContainer>("EventAppData", 1,0, "EAContainer");
     qmlRegisterType<EAConstruction>("EventAppData", 1,0, "EAConstruction");

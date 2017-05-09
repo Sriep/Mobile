@@ -10,9 +10,6 @@ EAListDisplayPageForm {
     property var featuredList: eaContainer.eaItemLists[0];
     property int featuredItemIndex: 0
 
-    //ldpEventAppPage.stackCtl.children[currentIndex].dataList.thisDataDelgate
-
-
     Connections {
         target: ldpEventAppPage.stackCtl
         Component.onCompleted: {

@@ -41,12 +41,12 @@ ListView {
     }
 
     function resetDataListModel() {
+        var itemlist = eaLVItemList;
         var name = eaLVItemList.listName;
         var dataList = JSON.parse(eaLVItemList.dataList);
         var mm = dataModel;
         var dall = dataList["dataItems"].length;
         dataModel.clear();
-        //dataModel.sync();
         for ( var j=0 ; j < dataList["dataItems"].length ; j++ ) {
             var whatis = dataList["dataItems"][j];
             dataModel.append(dataList["dataItems"][j]);
@@ -59,7 +59,6 @@ ListView {
             console.log("resetDataListModel picturePath", picturePath);
             var newData = dataModel.get(j);
         }
-        //dataModel.sync();
     }
 
 }

@@ -24,14 +24,16 @@ class EAItem : public QQuickItem
     Q_PROPERTY(QQmlListProperty<EaQuestion> questions READ questions)
     Q_PROPERTY(EAMap* mapInfo READ mapInfo WRITE setMapInfo NOTIFY mapInfoChanged)
     Q_PROPERTY(bool showPicture READ showPicture WRITE setShowPicture NOTIFY showPictureChanged)
+    Q_PROPERTY(QString formatData READ formatData WRITE setFormatData NOTIFY formatDataChanged)
 
 public:
-    enum ItemType { Image=0, Document, Url, Questions, Map };
+    enum ItemType { Image=0, Document, Url, Questions, Map, FormatListItem };
     Q_ENUM(ItemType)
    // enum ListType { FromCsv=0, Manual, Questions, Users };
     //Q_ENUM(ListType),apInfo
 
     EAItem();
+    explicit EAItem(const QJsonObject& formatedData, EAItemList* eaitemList);
     explicit EAItem(int itemType, const QString& title, const QString& displayText = "");
     explicit EAItem(const QString& title, const QUrl url);
 
@@ -62,6 +64,8 @@ public:
     EAMap* mapInfo() const;    
     bool showPicture() const;
 
+    QString formatData() const;
+
 signals:
     void itemTypeChanged(int itemType);
     void titleChanged(QString title);
@@ -71,7 +75,8 @@ signals:
     void eaQuestionsChanged();
     void urlStringChanged(QString urlString);    
     void mapInfoChanged(EAMap* mapInfo);    
-    void showPictureChanged(bool showPicture);
+    void showPictureChanged(bool showPicture);    
+    void formatDataChanged(QString formatData);
 
 public slots:
     void setItemType(int itemType);
@@ -81,7 +86,8 @@ public slots:
     void setUrl(QUrl url);
     void setUrlString(QString urlString);    
     void setMapInfo(EAMap* mapInfo);    
-    void setShowPicture(bool showPicture);
+    void setShowPicture(bool showPicture);    
+    void setFormatData(QString formatData);
 
 private:
     void loadTextFile();
@@ -106,6 +112,8 @@ private:
     QList<EaQuestion*> m_eaQuestions;
     EAMap* m_mapInfo = NULL;
     bool m_showPicture;
+    //QString m_formatData;
+    QJsonObject formatedData;
 };
 
 #endif // EAITEM_H

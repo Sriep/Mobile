@@ -13,6 +13,11 @@ EAItem::EAItem()
 
 }
 
+EAItem::EAItem(const QJsonObject &formatedData, EAItemList* eaitemList)
+    : eaItemList(eaitemList), formatedData(formatedData)
+{
+}
+
 EAItem::EAItem(int itemType, const QString &title, const QString &displayText)
 {
     setItemType(itemType);
@@ -370,6 +375,26 @@ EAMap *EAItem::mapInfo() const
 bool EAItem::showPicture() const
 {
     return m_showPicture;
+}
+
+void EAItem::setFormatData(QString formatData)
+{
+   QJsonDocument jsonDoc = QJsonDocument::fromJson(formatData.toUtf8());
+   if (!jsonDoc.isObject())
+       return;
+   QJsonObject jsonObject = jsonDoc.object();
+   if (jsonObject == formatedData)
+       return;
+   formatedData = jsonObject;
+
+   emit formatDataChanged(formatData);
+}
+
+QString EAItem::formatData() const
+{
+    QJsonDocument jsonDoc(formatedData);
+    QByteArray jsonBA = jsonDoc.toJson(QJsonDocument::Compact);
+    return QString(jsonBA);
 }
 
 EAItemList *EAItem::getEaItemList() const

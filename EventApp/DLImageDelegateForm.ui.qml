@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.3
 //For 5.7 to 5.8 switch around QtQuickControls 2.1 and 2.0
 //import QtQuick.Controls 2.1
 import QtWebView 1.1
-//import QtWebEngine 1.0
 import QtQuick.Controls 2.0
 import QtLocation 5.6
 import QtPositioning 5.6
@@ -146,22 +145,10 @@ Item {
                 clip: true
                 //y:-100
 
-                WebView {
-                    clip: true
-                    visible: imageDelegate.detailsOpacity === 1 && itemType === 2
-                    opacity: imageDelegate.detailsOpacity
-                    //width: background.width-10; height: background.height-10
-                    width: eventAppMainPage.width -20
-                    //height: eventAppMainPage.height -100
-                    height: Qt.platform.os === "android"
-                            ? eventAppMainPage.height -100
-                            : eventAppMainPage.height -50
-
-                    //width: 300; height: 300
-                    //anchors.fill: parent
-                    //y: -100//-topLayout.height-100 //; x:5
-                    url: eaLVItemList.items[itemIndex].url;
+                WebViewPage {
+                    id: webViewPage
                 }
+
             }
 
             ListView {

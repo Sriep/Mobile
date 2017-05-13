@@ -69,6 +69,7 @@ DLImageDelegateForm {
   function popMapInfo(mapInfo) {
       if (undefined !== mapInfo && null !== mapInfo) {
           setMapPlugin(map, mapInfo.accessToken, mapInfo.mapId);
+
           //setMapPlugin(map
           //             , "pk.eyJ1Ijoic3JpZXAiLCJhIjoiY2l2aWgxb21oMDA2eDJ6cGZzMHBrYmozdCJ9.qiqUQDSmGbN9Yy0856efSQ"
           //             ,"examples.map-zr0njcqy");
@@ -95,13 +96,13 @@ DLImageDelegateForm {
                  ,"dynamicSnippet1");
       map.plugin = newObject;
   }
-
+/*
   PositionSource {
       id: positionSource
       onPositionChanged: {
       }
   }
-
+*/
   function setIDisplayParameters() {
       //DataListJS.setBackgroundDisplayParameters(imageDelegate.itemBackground
       DataListJS.setBackgroundDisplayParameters(imageDelegate.background

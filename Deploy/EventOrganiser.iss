@@ -3,7 +3,7 @@
 
 #define MyAppName "EventOrganiser"
 #define MyAppVersion "1.0"
-#define MyAppPublisher "Easy Event Apps"
+#define MyAppPublisher "EasyEventApps"
 #define MyAppURL "http://www.easyeventapps.com"
 #define MyAppExeName "EventOrganiser.exe"
 

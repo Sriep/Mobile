@@ -581,8 +581,8 @@ void EAItemList::saveTitleChanges()
 
 void EAItemList::loadPhotos(const QString &format)
 {
-    int indexPct = format.indexOf(QRegExp("%[1-9]"));
-    int column = format[indexPct+1].digitValue() -1;
+    int indexPct = format.indexOf(QRegExp("%[0-9]"));
+    int column = format[indexPct+1].digitValue();// -1;
     if (0 > column || column >= jsonFields.size())
     {
         emit getEaContainer()->error(tr("Error")

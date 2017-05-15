@@ -11,8 +11,7 @@ import QtQuick.Controls 2.0
 //import "dataList.js" as DataListJS
 
 WebView {
-    id: webViewPage
- /*   clip: true
+    clip: true
     visible: imageDelegate.detailsOpacity === 1 && itemType === 2
     opacity: imageDelegate.detailsOpacity
     width: eventAppMainPage.width -20
@@ -20,5 +19,4 @@ WebView {
             ? eventAppMainPage.height -100
             : eventAppMainPage.height -50    
     url: eaLVItemList.items[itemIndex].url;
-    */
 }

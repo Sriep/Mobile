@@ -208,7 +208,7 @@ Item {
             } //ListView
 
             Item {
-                Map {
+               /* Map {
                     x: 20
                     id: map
                     //width: 300; height: 499
@@ -233,7 +233,7 @@ Item {
                              source: "qrc:/shared/images/marker.png"
                         }
                     }
-                }
+                }*/
             }
 
         } //StackLayout

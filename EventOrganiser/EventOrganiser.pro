@@ -139,7 +139,6 @@ DISTFILES += \
     content/DlgDownloadEvnetUrl.ui.qml \
     ../EventAppShared/Documents/eventApp.qhcp \
     ../EventAppShared/Documents/eventApp.qhp \
-    ../EventAppShared/Documents/html/index.html \
     ../EventAppShared/displays/grey.json \
     ../EventAppShared/displays/grey-white.json \
     ../EventAppShared/displays/LLaw.json \
@@ -150,4 +149,9 @@ DISTFILES += \
     ../EventApp/displays/pumpkin.json
 
 FORMS +=
+
+# need to find a way of doing the following on widows.
+# cmd.exe /c copy /y %{sourceDir}\Documents\eventApp.qhc %{buildDir}\release\eventApp.qhc
+
+
 

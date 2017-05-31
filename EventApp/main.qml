@@ -7,8 +7,8 @@ import Qt.labs.settings 1.0
 import QtQuick.Dialogs 1.2
 import EventAppData 1.0
 import "qrc:///shared"
-import com.dreamdev.QtAdMobBanner 1.0
-import com.dreamdev.QtAdMobInterstitial 1.0
+//import com.dreamdev.QtAdMobBanner 1.0
+//import com.dreamdev.QtAdMobInterstitial 1.0
 
 ApplicationWindow {
     id: appwin
@@ -55,7 +55,7 @@ ApplicationWindow {
         }
     }
 
-
+/*
     AdMobBanner {
         id: banner
         y:  Screen.devicePixelRatio * appwin.height -50
@@ -67,7 +67,7 @@ ApplicationWindow {
             //heightData();
         }
     }
-
+*/
     Settings {
         id: settingsGeometry
         category: "geometry"

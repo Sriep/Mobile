@@ -12,8 +12,8 @@
         <toc>
             <section title="Event Orgaiser" ref="index.html">
                 <section title="File tab" ref="file.html"/>
-                <section title="Data tab" ref="Data.html"/>
-                <section title="Display tab" ref="Display.html"/>
+                <section title="Data tab" ref="data.html"/>
+                <section title="Display tab" ref="display.html"/>
                 <section title="Event App panel" ref="appwindow.html"/>
             </section>
         </toc>

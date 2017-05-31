@@ -182,7 +182,7 @@ ApplicationWindow {
                      || tabStack.currentIndex === 2
                      || tabStack.currentIndex === 0
             EventAppPage {
-                x:10; y:10
+                //x:10; y:10
                 width: parent.width-20; height: parent.height-20
                 id: ldpEventAppPage
             }

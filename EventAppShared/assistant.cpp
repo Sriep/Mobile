@@ -100,11 +100,17 @@ bool Assistant::initAssistant()
 #else
         app += QLatin1String("Assistant.app/Contents/MacOS/Assistant");
 #endif
+        QString cwd = QDir::currentPath();
 
         QStringList args;
         args << QLatin1String("-collectionFile")
-            << QLatin1String("../EventOrganiser/Documents/eventApp.qhc")
+            //<< QLatin1String("../EventOrganiser/Documents/eventApp.qhc")
+            << QLatin1String("eventApp.qhc")
             << QLatin1String("-enableRemoteControl");
+        //:/Documents/eventApp.qhc
+        //qrc:/Documents/eventApp.qhc
+        //:/images/cut.png or the URL qrc:///images/cut.png
+        // cp ../EventOrganiser/Documents/eventApp.qhc evetApp.qhc
 
         proc->start(app, args);
 

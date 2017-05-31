@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.0'
+        classpath 'com.android.tools.build:gradle:2.2.3'
     }
 }
 
@@ -18,31 +18,13 @@ apply plugin: 'com.android.application'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.google.android.gms:play-services-ads:+'
-    classpath 'com.google.gms:google-services:3.0.0'
-}
-
-def readVarFile() {
-    File varFile = file('../VARIABLES.txt')
-    def qtVars = [:]
-    varFile.eachLine { line ->
-        if (line.trim()) {
-          def eq = line.indexOf('=')
-          if (eq > 0) {
-              def key = line.substring(0, eq)
-              def value = line.substring(eq+1)
-              qtVars."$key" = value
-          }
-        }
-    }
-    return qtVars
 }
 
 //http://www.cutehacks.com/blog/2015/5/28/one-version-number-to-rule-them-all
-def QtApp = readVarFile()
-def versionMajor = QtApp.VERSION_MAJ.toInteger()
-def versionMinor = QtApp.VERSION_MIN.toInteger()
-def versionPatch = QtApp.VERSION_PAT.toInteger()
+//def QtApp = readVarFile()
+//def versionMajor = QtApp.VERSION_MAJ.toInteger()
+//def versionMinor = QtApp.VERSION_MIN.toInteger()
+//def versionPatch = QtApp.VERSION_PAT.toInteger()
 
 android {
     /*******************************************************
@@ -80,9 +62,8 @@ android {
     }
 
     //http://www.cutehacks.com/blog/2015/5/28/one-version-number-to-rule-them-all
-    defaultConfig {
-        versionCode versionMajor * 100000 + versionMinor * 1000 + versionPatch * 10
-        versionName QtApp.GIT_VERSION
-    }
+    //defaultConfig {
+    //    versionCode versionMajor * 100000 + versionMinor * 1000 + versionPatch * 10
+    //    versionName QtApp.GIT_VERSION
+    //}
 }
-

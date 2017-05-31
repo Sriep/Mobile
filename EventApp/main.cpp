@@ -6,8 +6,8 @@
 #include <QQuickStyle>
 #include <QApplication>
 
-#include "../QtAdMob/QtAdMobBanner.h"
-#include "../QtAdMob/QtAdMobInterstitial.h"
+//#include "../QtAdMob/QtAdMobBanner.h"
+//#include "../QtAdMob/QtAdMobInterstitial.h"
 
 #include "eainfo.h"
 #include "eacontainer.h"
@@ -39,8 +39,8 @@ int main(int argc, char *argv[])
     else
         QQuickStyle::setStyle(settings.value("style").toString());
 
-    QmlAdMobBanner::DeclareQML();           // <== Call it before loading qml
-    QmlAdMobInterstitial::DeclareQML();     // <== Call it before loading qml
+    //QmlAdMobBanner::DeclareQML();           // <== Call it before loading qml
+    //QmlAdMobInterstitial::DeclareQML();     // <== Call it before loading qml
 
     //QString version = GIT_VERSION;
 

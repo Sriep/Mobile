@@ -6,8 +6,8 @@ QT += widgets
 CONFIG += c++11
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
-DEFINES += QTADMOB_QML
-include(../QtAdMob/QtAdMob.pri)
+#DEFINES += QTADMOB_QML
+#include(../QtAdMob/QtAdMob.pri)
 
 
 
@@ -82,46 +82,50 @@ unix:!macx{
    # DEFINES += "GIT_VERSION=\"\\\"$$GIT_VERSION\\\"\""
 }
 
-android: {
-    DISTFILES += \
-                $$ANDROID_PACKAGE_SOURCE_DIR/src/org/dreamdev/QtAdMob/QtAdMobActivity.java \
-}
+#android: {
+    #DISTFILES += \
+    #            $$ANDROID_PACKAGE_SOURCE_DIR/src/org/dreamdev/QtAdMob/QtAdMobActivity.java \
+#}
 
 ios {
     QMAKE_INFO_PLIST = ios/Info.plist
 }
 
-contains(ANDROID_TARGET_ARCH, armeabi-v7a) {
-  ANDROID_EXTRA_LIBS += ../libs/libssl.so
-  ANDROID_EXTRA_LIBS += ../libs/libcrypto.so
-}
+#contains(ANDROID_TARGET_ARCH, armeabi-v7a) {
+#  ANDROID_EXTRA_LIBS += ../libs/libssl.so
+#  ANDROID_EXTRA_LIBS += ../libs/libcrypto.so
+#}
 
 INCLUDEPATH += $$PWD/../EventAppShared
 DEPENDPATH += $$PWD/../EventAppShared
-INCLUDEPATH += $$PWD/../QtAddMob
-DEPENDPATH += $$PWD/../QtAddMob
+#INCLUDEPATH += $$PWD/../QtAddMob
+#DEPENDPATH += $$PWD/../QtAddMob
 
 DISTFILES += \
     qml/main.qml \
-    qmldir \
+    qmldir \ #\
     android/AndroidManifest.xml \
     android/gradle/wrapper/gradle-wrapper.jar \
     android/gradlew \
     android/res/values/libs.xml \
-    android/gradle/wrapper/gradle-wrapper.properties \
-    android/main.qml \
     android/build.gradle \
-    android/gradle/wrapper/gradle-wrapper.properties
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat
+    #android/gradle/wrapper/gradle-wrapper.jar \
+    #android/gradlew \
+    #android/res/values/libs.xml \
+    #android/main.qml \
+    #android/build.gradle
 
 FORMS +=
 
-contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
-    ANDROID_EXTRA_LIBS =
-}
+#contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
+#    ANDROID_EXTRA_LIBS =
+#}
 
-contains(ANDROID_TARGET_ARCH,x86) {
-    ANDROID_EXTRA_LIBS =
-}
+#contains(ANDROID_TARGET_ARCH,x86) {
+#    ANDROID_EXTRA_LIBS =
+#}
 
 #https://www.everythingfrontend.com/posts/app-version-from-git-tag-in-qt-qml.html
 GIT_VERSION_LONG = $$system(git describe --always --tags)
@@ -140,15 +144,15 @@ VERSION_PAT = $$member(VERSIONS_ARR, 2)
 
 message(Major $$VERSION_MAJ Minor $$VERSION_MIN Patch $$VERSION_PAT)
 
-android {
+#android {
 #http://www.cutehacks.com/blog/2015/5/28/one-version-number-to-rule-them-all
-    QT_varfile = ""
-    for(var, $$list($$find($$list($$enumerate_vars()), ^(?!QMAKE_.*|QT\..*|QT_.*|\.QMAKE.*).*$))) {
-        line = $$var "$$eval($$var)"
-        QT_varfile += $$join(line, "=")
-    }
-    write_file($$absolute_path("VARIABLES.txt", $$OUT_PWD), QT_varfile)
-}
+#    QT_varfile = ""
+#    for(var, $$list($$find($$list($$enumerate_vars()), ^(?!QMAKE_.*|QT\..*|QT_.*|\.QMAKE.*).*$))) {
+#        line = $$var "$$eval($$var)"
+#        QT_varfile += $$join(line, "=")
+#    }
+#    write_file($$absolute_path("VARIABLES.txt", $$OUT_PWD), QT_varfile)
+#}
 
 
 

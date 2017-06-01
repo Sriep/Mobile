@@ -36,7 +36,13 @@ Page{
 
     StackLayout {
         id: stackCtl
-        anchors.fill: parent
+        //anachors.top
+        //anchors.top: toolBar.bottom
+        //QT5.9 seems to put the stackLayout under the toolBar
+        //y: parent.y + toolBar.height
+        //height: parent.height - toolBar.height - footerBar.height
+        height: parent.height
+        width: parent.width
         property int topDrawerId: 0
         property int userLoginId: 1
         property int loadEventKey: 2

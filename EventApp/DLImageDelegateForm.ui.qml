@@ -21,14 +21,14 @@ Item {
     Layout.fillWidth: true
     height: eaContainer.eaConstruction.display.height
     property alias background: background
-    property alias map: map
-    property alias largePhotoImage: largePhotoImage
+    //property alias map: map
+    //property alias largePhotoImage: largePhotoImage
     property alias maDataDelegate: maDataDelegate
     property alias closeBut: closeBut
-    property alias bottomText: bottomText
     property alias photoImage: photoImage
-    property alias questionsModel: questionsModel
-    property alias topText: topText    
+    //property alias bottomText: bottomText
+    //property alias questionsModel: questionsModel
+    //property alias topText: topText
 
     // A simple rounded rectangle for the background
     Rectangle {
@@ -114,7 +114,7 @@ Item {
             x: 10
             Item {
                 Image {
-                    id: largePhotoImage
+                    //id: largePhotoImage
                     width: parent.width//400//eventAppMainPage.width
                     height: parent.height
                     source: picture
@@ -137,18 +137,13 @@ Item {
             }
 
             Item {
-                //width: background.width-10; height: background.height-10
-                opacity: imageDelegate.detailsOpacity
-                visible: imageDelegate.detailsOpacity === 1 && itemType === 2
-                //width: 300; height: 300
-                //width: eventAppMainPage.width -10; height: eventAppMainPage.height - 50
-                clip: true
-                //y:-100
+               opacity: imageDelegate.detailsOpacity
+               visible: imageDelegate.detailsOpacity === 1 && itemType === 2
+               clip: true
 
-                WebViewPage {
-                    id: webViewPage
-                }
-
+               WebViewPage {
+                   id: webViewPage
+               }
             }
 
             ListView {
@@ -175,7 +170,6 @@ Item {
                             text: question
                         }
                         Rectangle {
-                            id: answerRec
                             y: 5; x:5
                             height: 60
                             width: eventAppMainPage.width - 60 //457
@@ -204,11 +198,12 @@ Item {
                             } // Flickable
                         } //Rectangle
                     } //ColumnLayout
+
                 } //delegate: Item
             } //ListView
 
             Item {
-               /* Map {
+                Map {
                     x: 20
                     id: map
                     //width: 300; height: 499
@@ -233,10 +228,11 @@ Item {
                              source: "qrc:/shared/images/marker.png"
                         }
                     }
-                }*/
+                }
             }
 
         } //StackLayout
+
       }
 
       Image {

@@ -9,8 +9,6 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 #DEFINES += QTADMOB_QML
 #include(../QtAdMob/QtAdMob.pri)
 
-
-
 SOURCES += main.cpp \
     ../EventAppShared/eacontainer.cpp \
     ../EventAppShared/eaconstruction.cpp \
@@ -49,7 +47,6 @@ HEADERS += \
     ../EventAppShared/simplecrypt.h \
     ../EventAppShared/eamap.h \
     ../EventAppShared/eastrings.h \
-
 
 RESOURCES += qml.qrc \
    qmlShared.qrc

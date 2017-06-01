@@ -9,8 +9,6 @@ DataListDelegateForm {
 
     topText.text: setTopText()
     function setTopText() {
-        //var one = JSON.parse(eaLVItemList.titleFields);
-        //var two = dataModel;
         var t = displayText(JSON.parse(eaLVItemList.titleFields)
                                      , dataModel
                                      , true
@@ -28,8 +26,6 @@ DataListDelegateForm {
 
     bottomText.text: setBottomText()
     function setBottomText() {
-        //var one = JSON.parse(eaLVItemList.titleFields);
-        //var two = dataModel;
         var t = displayText(JSON.parse(eaLVItemList.titleFields)
                                      , dataModel
                                      , false
@@ -91,8 +87,6 @@ DataListDelegateForm {
         var t2 = bottomFormat.format(myArr);
         text = header ? t1 : t2;
 */
-
-
     }
 
     function createDelegateBox(parent) {
@@ -135,10 +129,7 @@ DataListDelegateForm {
             if (!showPhoto)
                  dataDelegate.photoImage.width = 0;
         }
-
-
     }
-
 }
 
 

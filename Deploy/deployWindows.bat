@@ -6,7 +6,7 @@ set QT_DIR=C:\Qt\5.9\msvc2015_64
 
 REM EventOrganiser deplyment
 set WINDEPLOYQT_EXE=%QT_DIR%\bin\windeployqt.exe
-set EVENTORGANISER_DIR=E:\Mobile\Mobile\build-EventOrganiser-Desktop_Qt_5_9_0_MSVC2015_64bit3-Release\release
+set EVENTORGANISER_DIR=E:\Mobile\Mobile\build-EventOrganiser-Desktop_Qt_5_9_0_MSVC2015_64bit-Release\release
 set QML_DIR=E:\Mobile\Mobile\EventOrganiser
 set OPENSSL64_DIR=C:\OpenSSL-Win64
 
@@ -48,7 +48,7 @@ iscc /Q %MOBILE_DIR%\Deploy\%EO_ISS_FILE%
 
 REM Event App deployment
 set WINDEPLOYQT_EXE=%QT_DIR%\bin\windeployqt.exe
-set EVENTAPP_DIR=E:\Mobile\Mobile\build-EventApp-Desktop_Qt_5_9_0_MSVC2015_64bit3-Release\release
+set EVENTAPP_DIR=E:\Mobile\Mobile\build-EventApp-Desktop_Qt_5_9_0_MSVC2015_64bit-Release\release
 set QML_DIR=E:\Mobile\Mobile\EventApp
 set OPENSSL64_DIR=C:\OpenSSL-Win64
 

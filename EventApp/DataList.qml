@@ -41,15 +41,16 @@ ListView {
     }
 
     function resetDataListModel() {
+        var tempt = dataList.temp;
         var itemlist = eaLVItemList;
         var name = eaLVItemList.listName;
-        var dataList = JSON.parse(eaLVItemList.dataList);
+        var eaDataList = JSON.parse(eaLVItemList.dataList);
         var mm = dataModel;
-        var dall = dataList["dataItems"].length;
+        var dall = eaDataList["dataItems"].length;
         dataModel.clear();
-        for ( var j=0 ; j < dataList["dataItems"].length ; j++ ) {
-            var whatis = dataList["dataItems"][j];
-            dataModel.append(dataList["dataItems"][j]);
+        for ( var j=0 ; j < eaDataList["dataItems"].length ; j++ ) {
+            var whatis = eaDataList["dataItems"][j];
+            dataModel.append(eaDataList["dataItems"][j]);
             var picturePath = "image://list_";
             picturePath += eaLVItemList.getIndex().toString();
             picturePath += "_" + eaContainer.imageVersion;

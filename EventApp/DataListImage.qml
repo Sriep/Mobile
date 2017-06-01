@@ -37,15 +37,15 @@ ListView {
         onStateChanged: {
             dataListImage.isExpanded = state === "Details";
             console.log("DLImageDelegate", index);
-            popQuestionList(eaLVItemList.items[index]);
-            popMapInfo(eaLVItemList.items[index].mapInfo);
+            //popQuestionList(eaLVItemList.items[index]);
+            //popMapInfo(eaLVItemList.items[index].mapInfo);
         }
 
         Connections {
             target: eaLVItemList.items[index]
             onEaQuestionsChanged: {
                 console.log("DLImageDelegate", index);
-                popQuestionList(eaLVItemList.items[index]);
+                //popQuestionList(eaLVItemList.items[index]);
             }
         }
 

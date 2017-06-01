@@ -137,12 +137,12 @@
     "event": {
         "eventIcon": null,
         "eventKey": "",
-        "isEventStatic": false,
+        "isEventStatic": true,
         "link": false,
         "name": "test event",
         "nextItemListId": 1,
         "showEventIcon": false,
-        "version": 1
+        "version": 2
     },
     "icons": [
         "",
@@ -167,7 +167,7 @@
                 "nextItemId": 0,
                 "shortFormat": "<html>{0}<br></html>\n",
                 "showPhotos": false,
-                "version": 1
+                "version": 2
             }
         },
         {
@@ -494,8 +494,558 @@
                 }
             ],
             "itemsList": [
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                },
+                {
+                    "displayText": "",
+                    "id": 0,
+                    "itemType": -842150451,
+                    "questions": [
+                    ],
+                    "title": "",
+                    "url": "",
+                    "version": 1
+                }
             ],
             "pictures": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
             ],
             "properties": {
                 "formatedList": true,
@@ -506,7 +1056,7 @@
                 "nextItemId": 50,
                 "shortFormat": "<html>{0}<br></html>\n",
                 "showPhotos": false,
-                "version": 1
+                "version": 2
             }
         }
     ]

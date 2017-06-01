@@ -60,14 +60,23 @@ EventAppPageForm {
       for (var i = 0; i < countItemLists; i++) {
           var component;
           //if (eaContainer.eaItemLists[i].formatedList)
-          if (0 === eaContainer.eaItemLists[i].listType)
+          var newList;
+          var texteaLiest = eaContainer.eaItemLists[i];
+          if (0 === eaContainer.eaItemLists[i].listType) {
               component = "qrc:///shared/DataList.qml";
-          else
+              newList = Qt.createComponent(component, stack);
+              newList.createObject(stack
+                  , {"eaLVItemList": eaContainer.eaItemLists[i], "temp": i+14});
+          } else {
               component = "qrc:///shared/DataListImage.qml";
-          var newList = Qt.createComponent(component, stack);
-
-          newList.createObject(stack
-              , {"eaLVItemList": eaContainer.eaItemLists[i]});
+              newList = Qt.createComponent(component, stack);
+              newList.createObject(stack
+                  , {"eaLVItemList": eaContainer.eaItemLists[i], "temp": i+14});
+          }
+          //var newList = Qt.createComponent(component, stack);
+          //var texteaLiest = eaContainer.eaItemLists[i];
+          //newList.createObject(stack
+          //    , {"eaLVItemList": eaContainer.eaItemLists[i], "temp": i+14});
 
           var iconPath = "image://listIcons_" + eaContainer.imageVersion;
           iconPath += "/" + i;

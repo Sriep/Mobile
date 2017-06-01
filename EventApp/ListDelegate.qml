@@ -27,6 +27,7 @@ ListDelegateForm {
             setListDisplayParameters();
         }
     }
+
     Component.onCompleted: {
         setListDisplayParameters();
     }

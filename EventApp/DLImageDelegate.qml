@@ -7,6 +7,7 @@ import QtPositioning 5.6
 import "dataList.js" as DataListJS
 
 DLImageDelegateForm {
+//Item{
   id: imageDelegate
   property int test: 76
 
@@ -37,6 +38,12 @@ DLImageDelegateForm {
 
   photoImage.width: eaLVItemList.showPhotos ? 50 : 0
 
+  closeBut.onPressed: {
+      dataListImage.currentIndex = index;
+      imageDelegate.state = imageDelegate.state == 'Details' ? "" : "Details";
+      console.log("maDataDelegate index",index);
+  }
+
   function popQuestionList (item) {
       console.log("Start popQuestionList");
       questionsModel.clear();
@@ -51,12 +58,6 @@ DLImageDelegateForm {
           };
           questionsModel.append(dic);
       }
-  }
-
-  closeBut.onPressed: {
-      dataListImage.currentIndex = index;
-      imageDelegate.state = imageDelegate.state == 'Details' ? "" : "Details";
-      console.log("maDataDelegate index",index);
   }
 
   Connections {
@@ -96,15 +97,10 @@ DLImageDelegateForm {
                  ,"dynamicSnippet1");
       map.plugin = newObject;
   }
-/*
-  PositionSource {
-      id: positionSource
-      onPositionChanged: {
-      }
-  }
-*/
+
   function setIDisplayParameters() {
       //DataListJS.setBackgroundDisplayParameters(imageDelegate.itemBackground
+
       DataListJS.setBackgroundDisplayParameters(imageDelegate.background
                                                ,eaContainer.eaConstruction.display
                                                ,imageDelegate);

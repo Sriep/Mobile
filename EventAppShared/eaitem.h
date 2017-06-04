@@ -29,7 +29,7 @@ class EAItem : public QQuickItem
 public:
     enum ItemType { Image=0, Document, Url, Questions, Map, FormatListItem };
     Q_ENUM(ItemType)
-   // enum ListType { FromCsv=0, Manual, Questions, Users };
+    //enum ListType { FromCsv=0, Manual, Questions, Users };
     //Q_ENUM(ListType),apInfo
 
     EAItem();

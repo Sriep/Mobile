@@ -5,7 +5,7 @@ import QtQuick.Controls 2.0
 import Qt.labs.settings 1.0
 import "qrc:///shared"
 
-Page{
+Page {
     //id: eventAppMainPage
     //width: 500; height: 600
     property alias stackCtl: stackCtl
@@ -49,6 +49,7 @@ Page{
         property int loadEventFile: 3
         property int loadEventFB: 4
         property int startDrawerId: 5
+        property int splashView: 6
         property alias drawerModel: drawerModel
         ListView {
             id: drawerView
@@ -68,14 +69,15 @@ Page{
         }
 
         DownloadEventKey {
-
         }
+
         DownloadEventFile {
-
         }
+
         DownloadEventFB {
-
         }
+
+
 
     }
 }

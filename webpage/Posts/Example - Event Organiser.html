@@ -1,0 +1,87 @@
+A brief tutorial example of how to construct and Event App with Event Organiser. You can <a href="http://www.easyeventapps.com/eventorganiserexampledata/">download some example data here</a> or follow along and use your own data.
+
+The example data has a .csv data file and some icons, plus a .json file giving the resultant Event App data.
+
+Now download and install Event Organiser from the <a href="https://www.easyeventapps.com/downloads/">download page</a>. When you run Event Organiser you should see something like. If you have already tried to create an event, you could see something different. Hit the "New event" button to erase you previous event and start a new one.
+
+[caption id="attachment_405" align="alignnone" width="300"]<img class="size-medium wp-image-405" src="http://www.easyeventapps.com/wp-content/uploads/2017/05/blankEO-1-300x236.png" alt="Event Organiser with blank event app." width="300" height="236" /> Event Organiser with blank event app.[/caption]
+<h2>Save and load Event App</h2>
+You can save you event anytime from the File tab using the "Save to file" button. You can also "save as" from the context "right click" menu. Save often to safeguard your work.
+<h2>Name event</h2>
+Click the 'Data' tab. This is the page where you enter top level data for your event.
+<img class="alignnone size-medium wp-image-410" src="http://www.easyeventapps.com/wp-content/uploads/2017/05/SetEventTitleEO-300x236.png" alt="" width="300" height="236" />
+Start by entering the "
+<h2>My First Event</h2>
+" in the 'Event name' field; You can use Html to style the text how you like.
+
+Now select the 'Change Icon' button and browse to the eEventa512.png file from the examples download, and select it.
+
+You now have your event name and icon appearing on the toolbar.
+<h2>Set display format</h2>
+Now, let's change the default display format. Switch to the display tab. On the left-hand side, you see a box with a list of display styles. You can choose between different already set up styles or create one for yourself. For the moment right-click select 'blue-white'.
+<img class="alignnone size-medium wp-image-413" src="http://www.easyeventapps.com/wp-content/uploads/2017/05/displayEO-300x229.png" alt="" width="300" height="229" />
+<h2>Add new list item</h2>
+Return to Data tab. Go to the 'Add new list' group box, and make sure the drop down shows 'Formated from CSV'. Now enter "Attendees" into the text field and click the Add button. A list entry "Attendees" should appear on the right-hand display.
+
+Now click Attendees in the Item Lists box. An Icon and Clear Icon button appear in the "Add new list" group box. Now select the icon button and browse to "people_2000px-Group_full.svg.png" in the examples download. The people icon will now display next to the "Attendees" name in the main list and left items menu.
+<img class="alignnone size-medium wp-image-416" src="http://www.easyeventapps.com/wp-content/uploads/2017/05/AddAttendeesEO-300x229.png" alt="" width="300" height="229" />
+<h2>Add formatted list from CSV file</h2>
+Now select the "Attendees" list item in the right-hand panel.
+<img class="alignnone size-medium wp-image-418" src="http://www.easyeventapps.com/wp-content/uploads/2017/05/OpenDrawerEO-300x236.png" alt="" width="300" height="236" />
+Now load the names list. Hit 'Load CSV file' and select 'randomNames.csv' from the examples download. The right-hand panel will be populated with items labelled by the first column of the 'randomNames.csv' file.
+<img class="alignnone size-medium wp-image-419" src="http://www.easyeventapps.com/wp-content/uploads/2017/05/AddNamesCSV-300x236.png" alt="" width="300" height="236" />
+<h2>Add formatting to list</h2>
+Select anyone of the names in the right-hand panel.
+<img class="alignnone size-medium wp-image-420" src="http://www.easyeventapps.com/wp-content/uploads/2017/05/OpenNamesEO-300x229.png" alt="" width="300" height="229" />
+The details display on the right needs a little work.
+There are four boxes on the right.
+<dl>
+ 	<dt>Top left</dt>
+ 	<dd>- list of column in CSV file</dd>
+ 	<dt>Top right</dt>
+ 	<dd>- formatted text, to display at top and in the main list</dd>
+ 	<dt>Middle</dt>
+ 	<dd>- formatted text, to appear in main details area</dd>
+ 	<dt>Bottom</dt>
+ 	<dd>- location of item's images</dd>
+</dl>
+The text appears as here except the {n} tags indicate where the nth column entries in the CSV file will appear.
+<img class="alignnone size-medium wp-image-423" src="http://www.easyeventapps.com/wp-content/uploads/2017/05/OpenNamesLinesCSVEO-300x229.png" alt="" width="300" height="229" />
+Now change the text in the top right to display as header text. Type the following into the top left-hand group box:
+<code>&lt;html&gt;&lt;h2&gt;{0}&lt;/h2&gt;&lt;br&gt;&lt;/html&gt;</code>
+This will make the top header text large and bold.
+Now type the following into the middle group box:
+<code>&lt;html&gt; &lt;h3&gt;Details&lt;/h3&gt; &lt;br&gt;{1}&lt;br&gt; &lt;/html&gt;</code>
+This removes the list column which is just being used for the image filename and gives some formatting. Hit 'Save changes' to see the results.
+<h2>Add images</h2>
+<img class="alignnone size-medium wp-image-425" src="http://www.easyeventapps.com/wp-content/uploads/2017/05/DetailsPlusIconsCSV-300x229.png" alt="" width="300" height="229" />
+Select 'Prefix Path' in the bottom box and browser to the location where you put this example's download data. This will populate the text box to the right with that path. No add "/%1.png" at the end and press "Load photos". This is the text of the file to import with %n indicating the text from the Nth column of the CSV file.
+The head and shoulders image will appear in the top text display.
+<h2>Individually entered lists</h2>
+Navigate back to the main list editorL Hit 'Close; in the bottom right, then the arrow at the bottom.
+
+Select "Manual entry" from the drop down in the middle group box. Enter Venue into the text field then the 'Add' button. There should be a new Venue list in the right-hand panel. Select the .venue' in the bottom left-hand item list group box. Icon and Clear Icon buttons should appear above, select Icon and browser to 'map_2000px-Simpleicons_Places_map-with-placeholder.svg.png' in the download data. The map icon should appear next to the venue in the left-hand panel. You can change the order of the list items using the 'Move up' and 'Move down' button below the Item list box.
+
+<img class="alignnone size-medium wp-image-429" src="http://www.easyeventapps.com/wp-content/uploads/2017/05/AddVenueDrawerCSV-300x236.png" alt="" width="300" height="236" />
+<h3>Add image item</h3>
+Select the venue list item. You go to a page for creating new items. From the middle group box select Image from the drop down; Enter "Big Ben" into the Title text box. Now Use the "Load Image File" button and browse to the bigBen.jpg in the downloaded data.
+<img class="alignnone size-medium wp-image-433" src="http://www.easyeventapps.com/wp-content/uploads/2017/05/AddPicture-1-300x236.png" alt="" width="300" height="236" />
+Selecting the Big Ben list item opens the page.
+<img class="alignnone size-medium wp-image-439" src="http://www.easyeventapps.com/wp-content/uploads/2017/05/BigBenDO-300x229.png" alt="" width="300" height="229" />
+<h3>Add Webpage item</h3>
+Now select the bottom arrow on the right-hand panel, select venue and return to the "Add Item" left-hand panel.
+From the middle drop-down select External URL. Enter "Map to Big Ben" in the Title text box and https://www.google.co.uk/maps/place/Big+Ben/@51.5007292,-0.1246254,15z/data=!4m5!3m4!1s0x0:0xb78f2474b9a45aa9!8m2!3d51.5007292!4d-0.1246254 in the Url field and hit 'Add Item'. There should now be a "Map to Big Ben" list item on the right-hand panel.<img class="alignnone size-medium wp-image-434" src="http://www.easyeventapps.com/wp-content/uploads/2017/05/MapBigBenEO-300x229.png" alt="" width="300" height="229" />
+<h2>Upload onto the internet</h2>
+First, save our work to the hard drive; return to the File tab and selecting 'Save to file', call it MyFirstEvent.json. We now want to place the on the internet so that others can assess it with their mobile.
+
+One option is to use a service like <a href="https://www.dropbox.com">dropbox</a>. Setup a Dropbox account if you already do not have one, and upload your MyFirstEvent.json file to your Dropbox.
+
+<img class="alignnone size-medium wp-image-446" src="http://www.easyeventapps.com/wp-content/uploads/2017/05/DropBoxEO-300x282.png" alt="" width="300" height="282" />
+
+Select "share, then "copy link". This will give you something like https:///www.dropbox.com/...../MyFirstEvent.json?dl=0. In the link that you give to mobile users you want to replace the "?dl=0" at the end with "?raw=1". This ensures that you link to the actuall file, rather than a message informing about the file.
+
+The dropbox link is a little difficult to rember or type, so you might want to set up a redirect from your website. The file is also downable at http://www.easyeventapps.com/wp-content/uploads/2017/05/MyFirstEvent.json
+
+&nbsp;
+
+&nbsp;

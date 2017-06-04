@@ -88,5 +88,7 @@
         <file>images/user-shape_24white.png</file>
         <file>displays/blue-white.json</file>
         <file>WebViewPage.ui.qml</file>
+        <file>PageDisplayForm.ui.qml</file>
+        <file>PageDisplay.qml</file>
     </qresource>
 </RCC>

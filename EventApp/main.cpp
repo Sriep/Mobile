@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     app.setOrganizationName("EasyEventApps");
     app.setOrganizationDomain("www.easyeventapps.com");
-    app.setApplicationName("EventOrganiser");
+    app.setApplicationName("EventApp");
     app.setApplicationVersion(GIT_VERSION);
     QtWebView::initialize();
 

@@ -33,6 +33,10 @@ Page {
     MessageDialog {
         id: messageDialog
     }
+    AboutDialog {
+        width: parent.width
+        id: aboutDialog
+    }
 
     StackLayout {
         id: stackCtl

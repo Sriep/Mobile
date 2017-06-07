@@ -90,5 +90,6 @@
         <file>WebViewPage.ui.qml</file>
         <file>PageDisplayForm.ui.qml</file>
         <file>PageDisplay.qml</file>
+        <file>AboutDialog.qml</file>
     </qresource>
 </RCC>

@@ -102,6 +102,8 @@ DISTFILES += \
     qml/main.qml \
     qmldir \ #\
     android/AndroidManifest.xml \
+    android/build.gradle \
+    android/AndroidManifest.xml \
     android/gradle/wrapper/gradle-wrapper.jar \
     android/gradlew \
     android/res/values/libs.xml \

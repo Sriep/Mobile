@@ -36,7 +36,8 @@ ApplicationWindow {
         width: appwin.width
         //height: appwin.height
         //height: appwin.height
-        height: Qt.platform.os === "android" ? (appwin.height - 50) : appwin.height
+        //height: Qt.platform.os === "android" ? (appwin.height - 50) : appwin.height
+        height: appwin.height
     }
 
     Component.onCompleted: {

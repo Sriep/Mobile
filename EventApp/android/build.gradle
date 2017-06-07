@@ -20,12 +20,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
-//http://www.cutehacks.com/blog/2015/5/28/one-version-number-to-rule-them-all
-//def QtApp = readVarFile()
-//def versionMajor = QtApp.VERSION_MAJ.toInteger()
-//def versionMinor = QtApp.VERSION_MIN.toInteger()
-//def versionPatch = QtApp.VERSION_PAT.toInteger()
-
 android {
     /*******************************************************
      * The following variables:
@@ -60,10 +54,4 @@ android {
     lintOptions {
         abortOnError false
     }
-
-    //http://www.cutehacks.com/blog/2015/5/28/one-version-number-to-rule-them-all
-    //defaultConfig {
-    //    versionCode versionMajor * 100000 + versionMinor * 1000 + versionPatch * 10
-    //    versionName QtApp.GIT_VERSION
-    //}
 }

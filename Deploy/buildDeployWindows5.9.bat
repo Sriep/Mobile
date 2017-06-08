@@ -1,42 +1,50 @@
-REM buildwindows.bat
+REM buildDeployWindows5.9.bat
+
+REM Initilise builds
+call C:\"Program Files (x86)\Microsoft Visual Studio 14.0\VC"\vcvarsall.bat amd64
+
 REM Download files from GitHub
-set MOBILE_DIR=E:\Mobile\build
+REM the MOBIL_DIR needs to be synced with EventOrganiser.iss and EventApp.iss
+set MOBILE_DIR=E:\Mobile\Build
 set QT_DIR=C:\Qt\5.9\msvc2015_64
 set PATH=%QT_DIR%\bin;%PATH%
 set QMAKE_MSC_VER=1900
-e:
+set WINDEPLOYQT_EXE=%QT_DIR%\bin\windeployqt.execd
+set OPENSSL64_DIR=C:\OpenSSL-Win64
+set INNO_DIR="C:\Program Files (x86)\Inno Setup 5"
 REM Clean directoy
-rmdir %MOBILE_DIR% /s /q
 del /s /q  %MOBILE_DIR%
+rmdir %MOBILE_DIR% /s /q
 mkdir %MOBILE_DIR%
 cd %MOBILE_DIR%
+
 REM Download from GitHub
 git clone https://github.com/Sriep/Mobile.git
 cd Mobile
 git clone https://github.com/yevgeniy-logachev/QtAdMob.git
 
 REM *********************************************** Build Event Organiser *******************************************
-REM Build Event Organiser
 set EVENTORGANOSER_SRCDIR=%MOBILE_DIR%\Mobile\EventOrganiser
+set ASSISTANT_SRCDIR=%EVENTORGANOSER_SRCDIR%\Documents
+
+REM Build assistant help files
+cd %ASSISTANT_SRCDIR%
+del eventApp.qhc
+del eventApp.qch
+qhelpgenerator eventApp.qhp -o eventApp.qch
+qcollectiongenerator eventApp.qhcp -o eventApp.qhc
+
+REM Build Event Organiser
+
 cd %EVENTORGANOSER_SRCDIR%
-"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
 qmake.exe %EVENTORGANOSER_SRCDIR%\EventOrganiser.pro -spec win32-msvc && C:/Qt/qtcreator-4.3.0/bin/jom.exe qmake_all
 jom.exe 
 jom.exe clean
 
-REM buildwindows.bat
-set MOBILE_DIR=E:\Mobile\Mobile
-set QT_DIR=C:\Qt\5.9\msvc2015_64
-set WINDEPLOYQT_EXE=%QT_DIR%\bin\windeployqt.exe
-set OPENSSL64_DIR=C:\OpenSSL-Win64
 REM EventOrganiser deplyment
-REM set EVENTORGANISER_DIR=E:\Mobile\Mobile\build-EventOrganiser-Desktop_Qt_5_9_0_MSVC2015_64bit-Release\release
 set EVENTORGANISER_DIR=%EVENTORGANOSER_SRCDIR%\release
 set QML_DIR=%EVENTORGANOSER_SRCDIR%
 %WINDEPLOYQT_EXE% --qmldir %QML_DIR% %EVENTORGANISER_DIR%\EventOrganiser.exe
-REM del /s /q %EVENTORGANISER_DIR%\*.obj
-REM del /s /q %EVENTORGANISER_DIR%\*.cpp
-REM del /s /q %EVENTORGANISER_DIR%\*.h
 cd %OPENSSL64_DIR%
 c:
 copy /y  *.dll %EVENTORGANISER_DIR%
@@ -46,6 +54,7 @@ xcopy /y  %QT_DIR%\qml\QtWebEngine %EVENTORGANISER_DIR%\QtWebEngine\*
 xcopy /y  %QT_DIR%\qml\QtPositioning %EVENTORGANISER_DIR%\QtPositioning\*
 xcopy /y  %QT_DIR%\qml\QtLocation %EVENTORGANISER_DIR%\QtLocation\*
 xcopy /y  %QT_DIR%\plugins\geoservices %EVENTORGANISER_DIR%\geoservices\*
+
 REM Copy for asssistant
 mkdir %EVENTORGANISER_DIR%\bin
 copy /y  %QT_DIR%\bin\assistant.exe %EVENTORGANISER_DIR%\bin\assistant.exe
@@ -57,33 +66,24 @@ copy /y  %QT_DIR%\bin\Qt5Sql.dll %EVENTORGANISER_DIR%\bin\Qt5Sql.dll
 copy /y  %QT_DIR%\bin\Qt5Core.dll %EVENTORGANISER_DIR%\bin\Qt5Core.dll
 copy /y  %QT_DIR%\bin\Qt5Network.dll %EVENTORGANISER_DIR%\bin\Qt5Network.dll
 copy /y  %QML_DIR%\Documents\eventApp.qhc  %EVENTORGANISER_DIR%\eventApp.qhc
-set INNO_DIR="C:\Program Files (x86)\Inno Setup 5"
-set DEPLOYDIR=C:\Deployment
-set OUTDIR=%DEPLOYDIR%\EventOrganiser
-set EO_ISS_FILE=EventOrganiser.iss
+
+REM Create install files
+REM set DEPLOYDIR=C:\Deployment
+REM set OUTDIR=%DEPLOYDIR%\EventOrganiser
 REM rmdir /s /q %QUTDIR%
 cd %INNO_DIR%
-iscc /Q %MOBILE_DIR%\Deploy\%EO_ISS_FILE%
+iscc /Q %EVENTORGANOSER_SRCDIR%\EventOrganiser.iss
 
 
 REM *********************************************** Build Event App *******************************************
 REM Build Event App
 set EVENTAPP_SRCDIR=%MOBILE_DIR%\Mobile\EventApp
 cd %EVENTAPP_SRCDIR%
-REM mkdir %MOBILE_DIR%\Mobile\build-EventOrganiser-Desktop_Qt_5_8_0_MSVC2015_64bit-Release
-"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
-REM qmake.exe %EVENTAPP_SRCDIR%\EventOrganiser.pro -spec win32-msvc && C:/Qt/qtcreator-4.3.0/bin/jom.exe qmake_all
 qmake.exe %EVENTAPP_SRCDIR%\EventApp.pro -spec win32-msvc && C:/Qt/qtcreator-4.3.0/bin/jom.exe qmake_all
 jom.exe 
 jom.exe clean
 
-REM buildwindows.bat
-set MOBILE_DIR=E:\Mobile\Mobile
-set QT_DIR=C:\Qt\5.9\msvc2015_64
-set WINDEPLOYQT_EXE=%QT_DIR%\bin\windeployqt.exe
-set OPENSSL64_DIR=C:\OpenSSL-Win64
-REM EventOrganiser deplyment
-REM set EVENTAPP_DIR=E:\Mobile\Mobile\build-EventOrganiser-Desktop_Qt_5_9_0_MSVC2015_64bit-Release\release
+REM EventOApp deplyment
 set EVENTAPP_DIR=%EVENTAPP_SRCDIR%\release
 set QML_DIR=%EVENTAPP_SRCDIR%
 %WINDEPLOYQT_EXE% --qmldir %QML_DIR% %EVENTAPP_DIR%\EventApp.exe
@@ -99,10 +99,7 @@ xcopy /y  %QT_DIR%\qml\QtWebEngine %EVENTAPP_DIR%\QtWebEngine\*
 xcopy /y  %QT_DIR%\qml\QtPositioning %EVENTAPP_DIR%\QtPositioning\*
 xcopy /y  %QT_DIR%\qml\QtLocation %EVENTAPP_DIR%\QtLocation\*
 xcopy /y  %QT_DIR%\plugins\geoservices %EVENTAPP_DIR%\geoservices\*
-set INNO_DIR="C:\Program Files (x86)\Inno Setup 5"
-set DEPLOYDIR=C:\Deployment
-set OUTDIR=%DEPLOYDIR%\EventApp
-set EO_ISS_FILE=EventApp.iss
-REM rmdir /s /q %QUTDIR%
+
+REM Create install files
 cd %INNO_DIR%
-iscc /Q %MOBILE_DIR%\Deploy\%EO_ISS_FILE%
+iscc /Q %EVENTAPP_SRCDIR%\EventApp.iss

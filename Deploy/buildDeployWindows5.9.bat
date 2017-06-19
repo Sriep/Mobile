@@ -55,7 +55,7 @@ xcopy /y  %QT_DIR%\qml\QtPositioning %EVENTORGANISER_DIR%\QtPositioning\*
 xcopy /y  %QT_DIR%\qml\QtLocation %EVENTORGANISER_DIR%\QtLocation\*
 xcopy /y  %QT_DIR%\plugins\geoservices %EVENTORGANISER_DIR%\geoservices\*
 
-REM Copy for asssistant
+REM Copy for assistant.exe
 mkdir %EVENTORGANISER_DIR%\bin
 copy /y  %QT_DIR%\bin\assistant.exe %EVENTORGANISER_DIR%\bin\assistant.exe
 copy /y  %QT_DIR%\bin\Qt5Help.dll %EVENTORGANISER_DIR%\bin\Qt5Help.dll

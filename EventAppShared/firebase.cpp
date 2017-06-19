@@ -274,7 +274,7 @@ QString Firebase::buildPath(int mode, const QString endPath)
         //destination
         //        .append(host)
         //        .append("/.json");
-        destination .append(host).append(endPath).append(".json");
+        destination.append(host).append(endPath).append(".json");
     }
     else
     {
@@ -289,6 +289,25 @@ QString Firebase::buildPath(int mode, const QString endPath)
     return destination;
 
 }
+
+QString Firebase::buildSetPath(const QString endPath)
+{
+     QString destination="";
+     destination.append(host).append(endPath).append(".json");
+     if(!firebaseToken.isEmpty())
+         destination.append("?auth=").append(firebaseToken);
+     return destination;
+}
+
+QString Firebase::buildGetPath()
+{
+    QString destination="";
+    destination.append(host).append(currentNode).append(".json");
+    if(!firebaseToken.isEmpty())
+        destination.append("?auth=").append(firebaseToken);
+    return destination;
+}
+
 QByteArray Firebase::trimValue(const QByteArray &line) const
 {
     QByteArray value;

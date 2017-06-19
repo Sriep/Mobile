@@ -19,7 +19,7 @@ public:
     explicit Firebase(QObject *parent = 0);
     Firebase(QString hostName,QString child);
     Firebase(QString hostName);
-    void init();
+
     void setValue(QString str);
     void setValue(QJsonDocument jsonDoc
                   , const QString& verb = "PATCH"
@@ -42,6 +42,8 @@ public slots:
     void eventFinished();
     void eventReadyRead();
 private:
+    void init();
+
     QByteArray signMessage(QByteArray toSign, QByteArray privateKey);
 
     QString host;
@@ -50,6 +52,8 @@ private:
     QString currentNode;
     QString latestNode;
     QString buildPath(int, const QString endPath = "");
+    QString buildSetPath(const QString endPath = "");
+    QString buildGetPath();
     QString createJson(QString);
     void open(const QUrl &url);
     QByteArray trimValue(const QByteArray &line) const;

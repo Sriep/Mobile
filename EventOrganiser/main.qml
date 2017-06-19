@@ -14,7 +14,7 @@ ApplicationWindow {
     visible: true
     width: 1280;    height: 1024
     title: qsTr("Event App designer:\t" + eaContainer.eaInfo.eventName)
-    property bool downloadFileOnly: true
+    property bool downloadFileOnly: false
 
     Connections {
         target: eaContainer.eaInfo

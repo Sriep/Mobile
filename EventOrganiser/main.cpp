@@ -10,8 +10,8 @@
 #include <QQuickStyle>
 #include <QDebug>
 
-#include "../QtAdMob/QtAdMobBanner.h"
-#include "../QtAdMob/QtAdMobInterstitial.h"
+//#include "../QtAdMob/QtAdMobBanner.h"
+//#include "../QtAdMob/QtAdMobInterstitial.h"
 #include "eainfo.h"
 #include "eacontainer.h"
 #include "eaconstruction.h"
@@ -48,8 +48,8 @@ int main(int argc, char *argv[])
         QQuickStyle::setStyle(settings.value("style").toString());
     qDebug() << settings.fileName();
 
-    QmlAdMobBanner::DeclareQML();           // <== Call it before loading qml
-    QmlAdMobInterstitial::DeclareQML();     // <== Call it before loading qml
+    //QmlAdMobBanner::DeclareQML();           // <== Call it before loading qml
+    //QmlAdMobInterstitial::DeclareQML();     // <== Call it before loading qml
 
     QFontDatabase fontDatabase;
     if (fontDatabase.addApplicationFont(":/fonts/fontello.ttf") == -1)

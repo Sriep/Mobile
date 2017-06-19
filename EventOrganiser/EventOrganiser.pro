@@ -5,9 +5,9 @@ QT += location
 QT += widgets
 CONFIG += c++11
 
-ANDROID_PACKAGE_SOURCE_DIR = $$PWD/../build-EventOrganiser-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/android-build
-DEFINES += QTADMOB_QML
-include(../QtAdMob/QtAdMob.pri)
+#ANDROID_PACKAGE_SOURCE_DIR = $$PWD/../build-EventOrganiser-Android_for_armeabi_v7a_GCC_4_9_Qt_5_7_0-Debug/android-build
+#DEFINES += QTADMOB_QML
+#include(../QtAdMob/QtAdMob.pri)
 
 
 #ios {

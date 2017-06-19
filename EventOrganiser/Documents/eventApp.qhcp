@@ -3,13 +3,13 @@
     <assistant>
         <startPage>qthelp://easyeventapps.com.eventorganiser/doc/index.html</startPage>
     </assistant>
-  <docFiles>
+    <docFiles>
         <generate>
         <file>
             <input>eventApp.qhp</input>
             <output>eventApp.qch</output>
         </file>
-	</generate>
+        </generate>
         <register>
             <file>eventApp.qch</file>
         </register>
